@@ -3,7 +3,7 @@ MAINTAINER Viacheslav  <coffeeturbo@gmail.com>
 
 RUN docker-php-ext-install pdo pdo_mysql opcache
 
-RUN echo 'alias sf3="php bin/console"' >> ~/.bashrc
+RUN echo 'alias sf3="php backend/bin/console"' >> ~/.bashrc
 
 # Setup composer
 
