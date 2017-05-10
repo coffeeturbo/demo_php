@@ -6,8 +6,6 @@ read -p "DB_NAME: " DB_NAME
 read -p "DB_USER: " DB_USER
 read -p "DB_PASS: " DB_PASS
 
-#FOO=${FOO:-default_value}
-
 echo DB_ROOT_PASS=${DB_ROOT_PASS} > .env
 echo DB_NAME=${DB_NAME} >> .env
 echo DB_USER=${DB_USER} >> .env
