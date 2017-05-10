@@ -1,29 +1,26 @@
 version: '2.1'
 services:
-  db:
+  mysql:
     image: mysql
-    ports:
-      - "3306:3306"
+    ports: ["3306:3306"]
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: symfony
-      MYSQL_USER: symfony
-      MYSQL_PASSWORD: symfony
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
     volumes:
-      - ./support-files/docker/build/db/data:/var/lib/mysql
-  web:
-    image: nginx:latest
-    ports:
-    - "80:80"
+      - ./docker/mysql/data:/var/lib/mysql
+  nginx:
+    build: ./docker/nginx
+    ports: ["80:8080"]
     volumes:
-    - ./src:/src
-    - ./support-files/docker/build/nginx/conf.d:/etc/nginx/conf.d
-    links:
-      - php
+      - ./src:/opt/jet
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on: [php]
+
   php:
+    build: ./docker/php
     stdin_open: true
-    build: ./support-files/docker/build/php
-    volumes:
-    - ./src:/src
-    links:
-      - db
+    volumes: 
+      - ./src:/opt/jet
+    depends_on: [mysql]
