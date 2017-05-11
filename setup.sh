@@ -5,7 +5,7 @@ setup_docker() {
     
     type docker-compose >/dev/null 2>&1 || { echo >&2 "Required docker-compose but it's not installed. Aborting."; exit 1;}
     
-    if [ ${quite} != "1" ]; then
+    if [ "${quite}" != "1" ]; then
         read -p "Generate .env file? [y]: " is_generage_env
     fi
     is_generage_env=${is_generage_env:-y}
@@ -30,24 +30,24 @@ setup_docker() {
 }
 
 build_backend() {
-    if [ ${quite} != "1" ]; then
+    if [ "${quite}" != "1" ]; then
         read -p "Do you want run composer install? [y]: " is_composer_install
     fi
     
     if [ ${is_composer_install:-y} == "y" ]; then
-        cd ${PROJECT_PATH}src/backend
+        cd ${PROJECT_PATH}/src/backend
         echo "Execute composer install...!"
         docker run --rm -v $(pwd):/app composer/composer install
     fi
 }
 
 build_frontend() {
-    if [ ${quite} != "1" ]; then
+    if [ "${quite}" != "1" ]; then
         read -p "Do you want build Angular? [y]: " angular2_buuld
     fi
 
     if [ ${angular2_buuld:-y} == "y" ]; then
-        # cd ${PROJECT_PATH}src/frontend
+        cd ${PROJECT_PATH}/src/frontend
         echo "Execute angular2 install...!"
     fi
 }
