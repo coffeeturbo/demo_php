@@ -48,6 +48,7 @@ build_frontend() {
 
     if [ ${angular2_buuld:-y} == "y" ]; then
         cd ${PROJECT_PATH}/src/frontend
+        npm install
         echo "Execute angular2 install...!"
     fi
 }
