@@ -2,8 +2,8 @@
   "name": "angular2-jet-app",
   "version": "0.0.1",
   "scripts": {
-    "dev": "rimraf ../www/dist && webpack --config config/webpack.dev.js --progress --watch --hide-modules",
-    "prod": "rimraf ../www/dist && webpack --config config/webpack.prod.js --progress --hide-modules"
+    "dev": "rimraf ../web/dist && webpack --config config/webpack.dev.js --progress --watch --hide-modules",
+    "prod": "rimraf ../web/dist && webpack --config config/webpack.prod.js --progress --hide-modules"
   },
   "dependencies": {
     "@angular/animations": "4.0.2",
