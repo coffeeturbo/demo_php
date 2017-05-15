@@ -7,3 +7,16 @@ services:
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+    security.oauth.success_handler:
+        class:  AuthBundle\Handler\OAuthSuccessHandler
+        arguments:
+          - '@lexik_jwt_authentication.jwt_manager'
+          - '@event_dispatcher'
+          - '@router'
+  
+    auth.oauth_account_provider.service:
+        class: AuthBundle\Security\Core\Account\OAuthAccountProvider
+        arguments:
+            - '@fos_user.user_manager'
+            - vk: vkId
+              facebook: facebookId

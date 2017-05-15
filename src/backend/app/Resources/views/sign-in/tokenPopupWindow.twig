@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% endblock %}
+{% block javascripts %}
+    <script>
+      window.opener.postMessage( {{ (response|json_encode|raw)}}, "*");
+    </script>
+{% endblock %}

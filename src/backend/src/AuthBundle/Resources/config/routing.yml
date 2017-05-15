@@ -1,0 +1,18 @@
+sign_in:
+  path: /sign-in
+  defaults:  
+    _controller: AuthBundle:SignIn:index 
+  methods: [POST]
+
+sign_up:
+  path: /sign-up
+  defaults:
+    _controller: AuthBundle:SignUp:index 
+  methods: [PUT]
+
+get_token:
+  path: /getToken/{token}
+  defaults:  
+    _controller: AuthBundle:SignIn:renderToken
+  methods: [GET]
+  

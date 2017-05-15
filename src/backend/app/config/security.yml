@@ -2,10 +2,12 @@
 # http://symfony.com/doc/current/security.html
 security:
 
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -13,12 +15,27 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        login_protected_api:
+            pattern: ^/api/oAuth
             anonymous: ~
-            # activate different ways to authenticate
+            stateless: true
+            oauth:
+                login_path:   /api/oAuth
+                check_path:   /api/oAuth
+                oauth_user_provider:
+                    service: auth.oauth_account_provider.service
+                resource_owners:
+                    vk:       /api/oAuth/vk
+                    facebook: /api/oAuth/facebook
+                success_handler: security.oauth.success_handler
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+        protected_api:
+            pattern: ^/api/protected
+            anonymous: false
+            stateless: true
+            lexik_jwt: 
+                authorization_header:
+                    enabled: true
+                    prefix:  Bearer
+                throw_exceptions:        false
+                create_entry_point:      true

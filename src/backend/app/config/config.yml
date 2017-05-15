@@ -68,3 +68,44 @@ swiftmailer:
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }
+
+lexik_jwt_authentication:
+    private_key_path: '%jwt_private_key_path%'
+    public_key_path:  '%jwt_public_key_path%'
+    pass_phrase:      '%jwt_key_pass_phrase%'
+    token_ttl:        '%jwt_token_ttl%'
+
+fos_user:
+    db_driver: orm
+    firewall_name: protected_api
+    user_class: AuthBundle\Entity\Account
+    from_email:
+        address: "noreply@yourcompany.com"
+        sender_name: "No Reply"
+    registration:
+        confirmation:
+            enabled: true
+
+nelmio_api_doc:
+    name: JET-API
+    sandbox:
+        authentication:
+            delivery: header
+            name:     token    
+        body_format:
+            formats:
+                - json
+                - json
+
+hwi_oauth:
+    firewall_names: [login_protected_api]
+    resource_owners:
+        vk:
+            type:                vkontakte
+            client_id:           '%hwi_oauth_vk_id%'
+            client_secret:       '%hwi_oauth_vk_secret%'
+        facebook:
+            type:                facebook
+            client_id:           '%hwi_oauth_facebook_id%'
+            client_secret:       '%hwi_oauth_facebook_secret%'
+            scope:               "email"                
