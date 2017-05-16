@@ -2,7 +2,10 @@
 namespace AuthBundle\Controller;
 
 use AuthBundle\Entity\Account;
+use AuthBundle\Entity\SignIn;
+use AuthBundle\Form\SignInType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,12 +19,45 @@ class SignInController extends Controller
     /**
      * @ApiDoc(
      *  section="Auth",
+     *  input = {
+     *      "class" = "AuthBundle\Form\SignInType",
+     *      "name"  = ""
+     *  }
      * )
+     * 
      * @param Request $request
      * @TODO: Переписать метод
      */
     public function indexAction(Request $request)
     {
+        $requestParams = json_decode($request->getContent(), true);
+       
+        $form = $this->createForm(SignInType::class, null, ['csrf_protection' => false]);
+        
+        $form->submit($requestParams);
+
+        var_dump($form->isSubmitted() && $form->isValid());
+
+        echo (string) $form->getErrors(true, false);
+
+        return new Response('200', 201);
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         try {
             $requestParams = json_decode($request->getContent());
             if(!isset($requestParams->username) || !isset($requestParams->password)) {

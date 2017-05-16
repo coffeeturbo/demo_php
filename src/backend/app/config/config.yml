@@ -108,4 +108,4 @@ hwi_oauth:
             type:                facebook
             client_id:           '%hwi_oauth_facebook_id%'
             client_secret:       '%hwi_oauth_facebook_secret%'
-            scope:               "email"                
+            scope:               "email"
