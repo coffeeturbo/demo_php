@@ -16,7 +16,7 @@ framework:
         resource: '%kernel.root_dir%/config/routing.yml'
         strict_requirements: ~
     form: ~
-    csrf_protection: ~
+    csrf_protection: false
     validation: { enable_annotations: true }
     #serializer: { enable_annotations: true }
     templating:
@@ -96,7 +96,8 @@ nelmio_api_doc:
             formats:
                 - json
                 - json
-
+        request_format:
+            method: accept_header
 hwi_oauth:
     firewall_names: [login_protected_api]
     resource_owners:

@@ -2,103 +2,112 @@
 namespace AuthBundle\Controller;
 
 use AuthBundle\Entity\Account;
-use AuthBundle\Entity\SignIn;
 use AuthBundle\Form\SignInType;
+use AuthBundle\Http\TokenResponse;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class SignInController extends Controller
 {
+    private $account;
+
     /**
+     * Account authorization 
+     * 
      * @ApiDoc(
-     *  section="Auth",
-     *  input = {
-     *      "class" = "AuthBundle\Form\SignInType",
-     *      "name"  = ""
+     *  section = "Auth",
+     *  input = {"class" = "AuthBundle\Form\SignInType", "name"  = ""},
+     *  output = {"class" = "AuthBundle\Http\TokenResponse"},
+     *  statusCodes = {
+     *      200 = "Успешная авторизация",
+     *      400 = "Неправильный запрос",
+     *      401 = {
+     *          "Неверный логин или пароль",
+     *          "Пользователь не найден"
+     *      }
      *  }
      * )
-     * 
      * @param Request $request
-     * @TODO: Переписать метод
+     * @return Response
      */
     public function indexAction(Request $request)
     {
-        $requestParams = json_decode($request->getContent(), true);
-       
-        $form = $this->createForm(SignInType::class, null, ['csrf_protection' => false]);
-        
-        $form->submit($requestParams);
-
-        var_dump($form->isSubmitted() && $form->isValid());
-
-        echo (string) $form->getErrors(true, false);
-
-        return new Response('200', 201);
-        
-        
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         try {
-            $requestParams = json_decode($request->getContent());
-            if(!isset($requestParams->username) || !isset($requestParams->password)) {
-                throw new BadRequestHttpException("Bad parameters");
-            }
-        } catch (HttpException $e) {
+            $body = $this->validateRequest($request);
+            $account = $this->validateCredentials($body["username"], $body["password"]);
+        } catch(BadRequestHttpException | UnauthorizedHttpException $e) {
             return new JsonResponse(['code' => $e->getStatusCode(), "message" => $e->getMessage()], $e->getStatusCode());
         }
 
-        $account = $this->getDoctrine()
-            ->getRepository('AuthBundle:Account')
-            ->findOneBy(['username' => $requestParams->username]);
-
-        if (!$account instanceof Account) {
-            return new JsonResponse(['code' => Response::HTTP_UNAUTHORIZED, "message" => "User not found"], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $isValid = $this->get('security.password_encoder')->isPasswordValid($account, $requestParams->password);
-
-        if (!$isValid) {
-            return new JsonResponse(['code' => Response::HTTP_UNAUTHORIZED, "message" => "Wrong password"], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $ttl = $requestParams->dont_remember ?? false ? 60/*sec*/ * 5/*min*/ : $this->getParameter('lexik_jwt_authentication.token_ttl');
-        $now = new \DateTime();
-        $now->add(new \DateInterval('PT' . $ttl . 'S'));
-        $ttl = $now->format('U');
+        $ttl = $body["dont_remember"] === true ?
+            time() + 300 : /* 5 min */
+            $this->getParameter('lexik_jwt_authentication.token_ttl');
         
-        $token = $this->get('lexik_jwt_authentication.encoder')
-            ->encode([
-                'username' => $requestParams->username,
-                'roles' => $account->getRoles(),
-                'exp' => $ttl
-            ]);
+        $token = $this->get('lexik_jwt_authentication.encoder')->encode([
+            'username' => $body["username"],
+            'roles' => $account->getRoles(),
+            'exp' => $ttl 
+        ]);
+        
         return $this->renderTokenAction($token, $request);
     }
 
+    /**
+     * Вывод сгенерированного токена в json формате или всплывающем окне (если запрос не rest)
+     * 
+     * @ApiDoc(
+     *  section = "Auth",
+     *  output = {"class" = "AuthBundle\Http\TokenResponse"},
+     *  headers = {
+     *      {
+     *          "name" = "Accept",
+     *          "default" = "application/json",
+     *          "description" = "Если не указан будет сгенерировано всплывающее окно"
+     *      }
+     *  }
+     * )
+     * @param string $token
+     * @param Request $request
+     * @return Response
+     */
     public function renderTokenAction(string $token, Request $request)
     {
         return in_array("application/json", $request->getAcceptableContentTypes()) ?
-            new JsonResponse(["token" => $token]) :
+            new TokenResponse($token) :
             $this->render('sign-in/tokenPopupWindow.twig', ["response" => ['token' => $token]]);
     }
+
+    private function validateRequest(Request $request)
+    {
+        $body = json_decode($request->getContent(), true);
+        $form = $this->createForm(SignInType::class);
+        $form->submit($body);
+
+        if(!$form->isValid()) 
+            throw new BadRequestHttpException("Bad parameters");
+        
+        return $form->getData(); 
+    }
+
+    private function validateCredentials($username, $password) : Account
+    {
+        /** @var Account $account */
+        $account = $this->getDoctrine()
+            ->getRepository('AuthBundle:Account')
+            ->findOneBy(['username' => $username]);
+        
+        if (!$account instanceof Account)
+            throw new UnauthorizedHttpException(null,"User not found");
+
+        if (!$this->get('security.password_encoder')->isPasswordValid($account, $password))
+            throw new UnauthorizedHttpException(null, "Wrong password");
+        
+        return $account;
+    }
+
 }
