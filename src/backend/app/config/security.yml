@@ -16,21 +16,21 @@ security:
             security: false
 
         login_protected_api:
-            pattern: ^/api/oAuth
+            pattern: ^/oAuth
             anonymous: ~
             stateless: true
             oauth:
-                login_path:   /api/oAuth
-                check_path:   /api/oAuth
+                login_path:   /oAuth
+                check_path:   /oAuth
                 oauth_user_provider:
                     service: auth.oauth_account_provider.service
                 resource_owners:
-                    vk:       /api/oAuth/vk
-                    facebook: /api/oAuth/facebook
+                    vk:       /oAuth/vk
+                    facebook: /oAuth/facebook
                 success_handler: security.oauth.success_handler
 
         protected_api:
-            pattern: ^/api/protected
+            pattern: ^/protected
             anonymous: false
             stateless: true
             lexik_jwt: 
