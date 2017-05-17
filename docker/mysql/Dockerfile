@@ -1,4 +1,3 @@
 FROM mysql
 
-COPY docker-entrypoint-initdb.d /docker-entrypoint-initdb.d/
-
+ADD init.sh /docker-entrypoint-initdb.d/

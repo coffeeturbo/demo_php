@@ -5,6 +5,14 @@ setup_docker() {
     
     type docker-compose >/dev/null 2>&1 || { echo >&2 "Required docker-compose but it's not installed. Aborting."; exit 1;}
     
+    echo "Setup nginx config...";
+    EXT=.dist
+    ls docker/nginx/conf.d/*${EXT} | while read FILEPATH
+    do
+        NAME=${FILEPATH%${EXT}}
+        cp ${NAME}{${EXT},}
+    done
+
     if [ "${quite}" != "1" ]; then
         read -p "Generate .env file? [y]: " is_generage_env
     fi
@@ -16,15 +24,16 @@ setup_docker() {
         echo ""
         read -p "DB_ROOT_PASS: " DB_ROOT_PASS
         read -p "DB_NAME: " DB_NAME
+        read -p "DB_TEST_NAME: " DB_TEST_NAME
         read -p "DB_USER: " DB_USER
         read -p "DB_PASS: " DB_PASS
 
         echo DB_ROOT_PASS=${DB_ROOT_PASS:rootpass} > .env
         echo DB_NAME=${DB_NAME:db} >> .env
+        echo DB_TEST_NAME=${DB_TEST_NAME:test_db} >> .env
         echo DB_USER=${DB_USER:db_user} >> .env
         echo DB_PASS=${DB_PASS:db_pass} >> .env
     fi
-    
     docker-compose build
     docker-compose up -d
 }
