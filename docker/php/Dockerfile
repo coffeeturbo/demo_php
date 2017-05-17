@@ -1,6 +1,5 @@
 FROM php:fpm
 
-ENV APP_PATH /bar
 ENV APP_USER jet
 ENV APP_PATH /opt/${APP_USER}
 ENV HOME_PATH /home/${APP_USER}
