@@ -2,32 +2,34 @@
 
 namespace AuthBundle\Tests;
 
-use AuthBundle\DataFixtures\ORM\LoadAccountData;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\StringInput;
 
 class SignInControllerTest extends WebTestCase
 {
-
-    /** @var \Doctrine\ORM\EntityManager */
-    private $em;
+    protected static $application;
     private $accountsData;
 
-    /**
-     * {@inheritDoc}
-     */
     protected function setUp()
     {
-        self::bootKernel();
-        
-        $this->em = static::$kernel->getContainer()
-            ->get('doctrine')
-            ->getManager();
-        
-//        $fixtures = new LoadAccountData();
-//        $fixtures->load($this->em);
-//        $this->accountsData = $fixtures->accountsData; 
+        self::getApplication()->run(new StringInput('doctrine:database:create --quiet'));
+        self::getApplication()->run(new StringInput('doctrine:schema:update --force --quiet'));
+        self::getApplication()->run(new StringInput('doctrine:fixtures:load --purge-with-truncate --quiet'));
     }
-    
+
+    protected static function getApplication()
+    {
+        if (null === self::$application) {
+            $client = static::createClient();
+
+            self::$application = new Application($client->getKernel());
+            self::$application->setAutoExit(false);
+        }
+
+        return self::$application;
+    }
+
     public function testIndex()
     {
        $client = static::createClient();
@@ -38,7 +40,7 @@ class SignInControllerTest extends WebTestCase
             "password"=>"4zFBLC"
         ]
         ));
-        echo $client->getResponse()->getContent();die;
+
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         //$this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
     }
