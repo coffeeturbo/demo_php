@@ -2,6 +2,13 @@
 # http://symfony.com/doc/current/security.html
 security:
 
+    role_hierarchy:
+        ROLE_CREATED: ROLE_USER
+        ROLE_REGISTERED: ROLE_CREATED
+        ROLE_PHONE_VERIFED: ROLE_CREATED
+        ROLE_EMAIL_VERIFED: ROLE_CREATED
+        ROLE_VERIFED: ROLE_CREATED
+
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username
