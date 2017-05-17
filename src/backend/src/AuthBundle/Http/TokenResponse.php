@@ -15,8 +15,6 @@ class TokenResponse extends JsonResponse implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        return [
-            "token"=> (string) $this->token
-        ];
+        return ["token" => (string) $this->token];
     }
 }

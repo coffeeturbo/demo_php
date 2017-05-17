@@ -2,6 +2,7 @@
 
 namespace AuthBundle\Controller;
 use AuthBundle\Entity\Account;
+use AuthBundle\Form\SignUpType;
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,56 +14,62 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class SignUpController extends Controller
 {
     /**
+     * Регистрация аккаунта
+     *
      * @ApiDoc(
-     *  section="Auth",
+     *  section = "Auth",
+     *  input = {"class" = "AuthBundle\Form\SignUpType", "name"  = ""},
+     *  output = {"class" = "AuthBundle\Http\TokenResponse"},
+     *  statusCodes = {
+     *      200 = "Успешная авторизация",
+     *      400 = "Неправильный запрос",
+     *  }
      * )
+     * 
      * @param Request $request
-     * @TODO: Переписать метод
      */
     public function indexAction(Request $request)
     {
         try {
-            $this->checkParametrs($request);
-        } catch (HttpException $e) {
+            $body = $this->validateRequest($request);
+        } catch (BadRequestHttpException $e) {
             return new JsonResponse(['code' => $e->getStatusCode(), "message" => $e->getMessage()], $e->getStatusCode());
         }
 
-        $request = json_decode($request->getContent());
         /** @var UserManager $userManager */
         $userManager = $this->get('fos_user.user_manager');
         
         /** @var Account $account */
         $account = $userManager->createUser();
-        $account->setEnabled(true);
-        $account->setPlainPassword($request->password);
-        $account->setUsername($request->email);
-        $account->setEmail($request->email);
-        $account->setRoles([$request->role]);
         
+        $account
+            ->setEnabled(true)
+            ->setPlainPassword($body['password'])
+            ->setUsername($request['email'])
+            ->setEmail($request['email']);
+
         $userManager->updateUser($account);
-        $token = $this->get('lexik_jwt_authentication.encoder')
-            ->encode([
-                'username' => $request->email,
-                'roles' => $account->getRoles(),
-                'exp' => $this->getTokenExpiryDateTime($this->getParameter('lexik_jwt_authentication.token_ttl'))
-            ]);
-        return new JsonResponse(['token' => $token]);
+
+        $jwtData = [
+            'username' => $account->getUsername(),
+            'roles' => $account->getRoles(),
+            'exp' => time() + $this->getParameter('lexik_jwt_authentication.token_ttl')
+        ];
+        
+        return new JsonResponse([
+            'token' => $this->get('lexik_jwt_authentication.encoder')->encode($jwtData)
+        ]);
     }
 
-    private function getTokenExpiryDateTime($ttl)
+    private function validateRequest(Request $request)
     {
-        $now = new \DateTime();
-        $now->add(new \DateInterval('PT' . $ttl . 'S'));
+        $body = json_decode($request->getContent(), true);
+        $form = $this->createForm(SignUpType::class);
+        $form->submit($body);
 
-        return $now->format('U');
-    }
-
-    private function checkParametrs(Request $request)
-    {
-        $request = json_decode($request->getContent());
-        if(!isset($request->email) || !isset($request->password) || !isset($request->role)) {
+        if(!$form->isValid())
             throw new BadRequestHttpException("Bad parameters");
-        }
-    }
-    
+
+        return $form->getData();
+    }    
 }
