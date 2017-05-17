@@ -1,23 +1,21 @@
 <?php
 namespace AuthBundle\Controller;
 
+use AppBundle\Http\ErrorResponse;
 use AuthBundle\Entity\Account;
 use AuthBundle\Form\SignInType;
 use AuthBundle\Http\TokenResponse;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class SignInController extends Controller
 {
-    private $account;
-
     /**
-     * Account authorization 
+     * Авторизация аккаунта 
      * 
      * @ApiDoc(
      *  section = "Auth",
@@ -41,7 +39,7 @@ class SignInController extends Controller
             $body = $this->validateRequest($request);
             $account = $this->validateCredentials($body["username"], $body["password"]);
         } catch(BadRequestHttpException | UnauthorizedHttpException $e) {
-            return new JsonResponse(['code' => $e->getStatusCode(), "message" => $e->getMessage()], $e->getStatusCode());
+            return new ErrorResponse($e->getMessage(), $e->getStatusCode());
         }
 
         $ttl = $body["dont_remember"] === true ?
@@ -109,5 +107,4 @@ class SignInController extends Controller
         
         return $account;
     }
-
 }

@@ -1,8 +1,8 @@
 <?php
-namespace AuthBundle;
+namespace AppBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AuthBundle extends Bundle
+class AppBundle extends Bundle
 {
 }
