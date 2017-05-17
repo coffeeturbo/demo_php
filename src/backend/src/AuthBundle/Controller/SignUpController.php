@@ -46,7 +46,8 @@ class SignUpController extends Controller
             ->setEnabled(true)
             ->setPlainPassword($body['password'])
             ->setUsername($request['email'])
-            ->setEmail($request['email']);
+            ->setEmail($request['email'])
+            ->setRoles([Account::ROLE_CREATED]);
 
         $userManager->updateUser($account);
 

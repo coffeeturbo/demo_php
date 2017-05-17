@@ -13,6 +13,11 @@ use FOS\UserBundle\Model\User;
  */
 class Account extends User
 {
+    const ROLE_CREATED = "ROLE_CREATED";
+    const ROLE_PHONE_VERIFED = "ROLE_PHONE_VERIFED";
+    const ROLE_EMAIL_VERIFED = "ROLE_EMAIL_VERIFED";
+    const ROLE_VERIFED = "ROLE_VERIFED";
+    
     /**
      * @var int
      *
