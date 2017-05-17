@@ -119,3 +119,4 @@ composer.lock
 
 .idea
 Vagrantfile
+jet.conf
