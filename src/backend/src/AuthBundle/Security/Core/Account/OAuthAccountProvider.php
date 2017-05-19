@@ -2,6 +2,7 @@
 
 namespace AuthBundle\Security\Core\Account;
 
+use AuthBundle\Entity\Account;
 use FOS\UserBundle\Model\User;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;
@@ -20,6 +21,7 @@ class OAuthAccountProvider extends FOSUBUserProvider
                 $user->setEnabled(true);
                 $user->setUsername($response->getEmail());
                 $user->setEmail($response->getEmail());
+                $user->setRoles([Account::ROLE_CREATED]);
                 $user->setPassword('');
             }
             $this->connect($user, $response);
