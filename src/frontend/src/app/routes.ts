@@ -13,11 +13,11 @@ import {SignUpRoute} from "../module/Auth/Route/SignUpRoute/index";
 export const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'feed',
         pathMatch: 'full'
     },
     {
-        path: 'dashboard',
+        path: 'feed',
         component: FeedRoute,
         data: {title: 'Самое интересное'}
     },
