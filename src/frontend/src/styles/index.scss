@@ -1,2 +1,72 @@
 @import '~reset.css';
 @import "./global.scss";
+@import "./loader.scss";
+@import "./form/input.scss";
+@import "./form/button.scss";
+
+body {
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: $font_size;
+  -webkit-font-smoothing: antialiased;
+  color: $font_color_dark;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button, input {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+
+h1 {
+  font-size: $h1_size;
+}
+
+h2 {
+  font-size: $h2_size;
+}
+
+h3 {
+  font-size: $h3_size;
+}
+
+small {
+  font-size: 0.9em;
+}
+
+main a{
+  color: $link_color;
+
+  &:hover {
+    color: $link_color_hover
+  }
+}
+
+.hr-box {
+  position: relative;
+  text-align: center;
+  margin: 10px 0;
+
+  .hr-title {
+    color: material-color("grey", "400");
+    background: white;
+    position: relative;
+    z-index: 9;
+    display: inline-block;
+    padding: 0 5px;
+  }
+
+  hr {
+    position: absolute;
+    border: none;
+    border-bottom: 1px solid material-color("grey", "400");
+    width: 100%;
+    top: 0;
+  }
+}

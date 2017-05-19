@@ -6,7 +6,7 @@ var helpers = require('./helpers');
 
 module.exports = {
   entry: {
-    'app': './src/main.ts'
+    'app': './src/app/main.ts'
   },
   output:{
       path: helpers.root('../web/dist'),
@@ -26,21 +26,30 @@ module.exports = {
           {
             loader: 'awesome-typescript-loader',
             options: { configFileName: helpers.root('src', 'tsconfig.json') }
-          } , 'angular2-template-loader'
+          } , 
+          'angular2-template-loader'
         ]
       },
       {
         test: /\.html$/,
         loader: 'html-loader'
       },
-      {
+      { // FontAwesome
           test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          use: "url-loader?limit=10000&minetype=application/font-woff"
+          loader: "url-loader",
+          query: {
+            limit: 10000,
+            mimetype: "application/font-woff",
+          }
       },
-      {
-          test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          use: "file-loader"
-      },      
+      { // FontAwesome
+          test: /\.(jpg|png|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          loader: "file-loader"
+      },
+      { 
+          test: /\.ico.png$/, 
+          use: [ "url-loader?mimetype=image/png" ] 
+      },
       {
           test: /\.shadow.scss$/,
           use: ['to-string-loader', 'css-loader', 'sass-loader']
@@ -55,12 +64,15 @@ module.exports = {
       },
       {
           test: /\.(jade|pug)$/,
-          use: ['raw-loader', 'pug-html-loader']
-      }      
-        
+          use: ['html-loader?attrs=link:href img:src', 'pug-html-loader']
+      },
+      {
+          test: /manifest.json$/,
+          loader: 'file-loader?name=manifest.json!web-app-manifest-loader'
+      }
     ]
   },
-
+  
   plugins: [
     // Workaround for angular/angular#11580
     new webpack.ContextReplacementPlugin(
@@ -73,7 +85,7 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      template: 'src/index.pug'
+      template: 'src/app/template.pug'
     }),
 
     new AppCachePlugin({
@@ -88,4 +100,3 @@ module.exports = {
     })
   ]
 };
-

@@ -1,0 +1,22 @@
+{
+    "product_name": "Социлайт",
+    "short_product_name": "JET",
+    "account": {
+        "constraints": {
+            "username": {
+                "min_length": 4
+            },
+            "password": {
+                "match": "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[\\S]{8,}$",
+                "invalid_message": "Пароль должен содержать не менее 8 символов, включая цифры, прописные и строчные буквы"
+            }
+        },
+        "roles": [
+            "ROLE_CREATED",
+            "ROLE_REGISTERED",
+            "ROLE_PHONE_VERIFED",
+            "ROLE_EMAIL_VERIFED",
+            "ROLE_VERIFED"
+        ]
+    }
+}

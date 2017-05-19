@@ -1,0 +1,35 @@
+form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  .field
+    i.fa.fa-user.fa-lg.fa-fw
+    .input-box
+      input(type="text", formControlName="username", placeholder="Имя пользователя или почта", auto-focus)
+      hr
+  .field
+    i.fa.fa-lock.fa-lg.fa-fw
+    .input-box
+      input(type="{{isPasswordHidden?'password':'text'}}", formControlName="password", placeholder="Пароль")
+      hr
+    i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
+    
+  label.field
+    .input-box
+      input(type="checkbox", formControlName="dont_remember")
+      .checkbox 
+        | Чужой компьютер 
+        .fa.fa-question-circle(title="Система автоматически выйдет через 10 минут")
+
+          
+  .controls(*ngIf="showControls")
+    button.btn(type="button", routerLink="/register")
+      .fa.fa-user-plus
+      span Регистрация
+    button.btn.primary(type="submit", [disabled]="!form.valid")
+      .fa.fa-sign-in
+      span Войти
+  br
+  .hr-box
+    .hr-title или войти с помощью
+    hr
+  
+  .controls.center
+    social-buttons((onConnect)="disabled = true; fail = false", (onComplete)="disabled = false", (onFail)="fail = true")

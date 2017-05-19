@@ -1,0 +1,5 @@
+modal(width="330px", [can-close]="false", [ngClass]="{shake: signInForm.fail}")
+  loader(*ngIf="signInForm.disabled")
+  modal-header([title]="'Вход в систему'")
+  modal-body
+    sign-in-form

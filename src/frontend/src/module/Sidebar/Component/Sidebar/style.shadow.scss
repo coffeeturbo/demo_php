@@ -1,0 +1,90 @@
+@import '../../../../styles/global.scss';
+
+:host {
+  bottom: 0;
+  width: 280px;
+  height: calc(100vh - 100%);
+  position: absolute;
+  top: 100%;
+  background: #fff;
+  will-change: visibility;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  padding: 10px 0;
+
+  @include mq($until: tablet) {
+    top: 0;
+    height: 100vh;
+    z-index: 1;
+    padding: 0;
+  }
+
+  &:hover {
+    overflow-y: auto;
+  }
+
+  &.hidden {
+    visibility: hidden;
+    transform: translateX(-280px);
+    transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
+    visibility 0s linear 250ms;
+  }
+
+  &.visible {
+    visibility: visible;
+    transform: translateX(0);
+    transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
+    visibility 0s linear 0s;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
+  }
+  hr {
+    border: none;
+    height: 1px;
+    margin: 10px 0;
+    background: material-color($secondary_material, '300');
+  }
+  aside {
+    header {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid material-color($secondary_material, '300');
+      background: material-color($secondary_material, '200');
+      cursor: pointer;
+
+      @include mq($from: tablet) {
+        display: none;
+      }
+
+      .logo {
+        height: 1.9em;
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+
+      h3 {
+        flex-grow: 1;
+      }
+    }
+
+    > * {
+      display: block;
+      padding: 15px 27px;
+      color: material-color($secondary_material, '900');
+    }
+
+    > a {
+      .fa {
+        margin-right: 15px;
+        color: material-color($secondary_material, '600');
+      }
+
+      &:hover {
+        background: material-color($secondary_material, '200');
+      }
+    }
+  }
+}
+

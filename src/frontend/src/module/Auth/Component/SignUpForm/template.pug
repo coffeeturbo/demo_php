@@ -1,0 +1,38 @@
+form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  .field
+    i.fa.fa-at.fa-lg.fa-fw
+    .input-box
+      input(type="text", formControlName="email", placeholder="Укажите Ваш Email", auto-focus)
+      hr
+  
+  .field
+    i.fa.fa-lock.fa-lg.fa-fw
+    .input-box
+      input(type="{{isPasswordHidden?'password':'text'}}", formControlName="password", placeholder="Придумайте пароль")
+      hr
+      tooltip(*ngIf="form.controls['password'].touched && form.controls['password'].invalid")
+        small Пароль должен содержать не менее 8 символов, включая цифры, прописные и строчные буквы
+    i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
+  .field
+    i.fa.fa-lg.fa-fw
+    .input-box
+      input(type="password", formControlName="password_confirm", placeholder="Подтвердите пароль")
+      hr
+      tooltip(*ngIf="form.hasError('not_equal_passwords') && form.controls['password_confirm'].touched")
+        small Введенные пароли не совпадают
+
+  .controls
+    button.btn.primary(type="submit", [disabled]="!form.valid")
+      .fa.fa-user-plus
+      span Зарегистрироваться
+    button.btn(type="button", routerLink="/login")
+      .fa.fa-sign-in
+      span Войти
+
+  br
+  .hr-box
+    .hr-title или войти с помощью
+    hr
+  
+  .controls.center
+    social-buttons((onConnect)="disabled = true; fail = false", (onComplete)="disabled = false", (onFail)="fail = true")

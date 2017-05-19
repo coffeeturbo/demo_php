@@ -26,7 +26,7 @@ if (process.env.ENV === 'production') {
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode } from '@angular/core';
 
-import {AppModule} from "./module/Application/module";
+import {AppModule} from "./module";
 
 
 if (process.env.ENV === 'production') {

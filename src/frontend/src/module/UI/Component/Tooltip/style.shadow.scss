@@ -1,0 +1,28 @@
+@import '../../../../styles/global.scss';
+
+$bg: rgba(0,0,0,0.7); 
+$bg: material-color($secondary_material,"800"); 
+$arrow_size: 7;
+
+:host {
+  position: absolute;
+  padding: $arrow_size + px;
+  background: $bg;
+  color: $font_color_light;
+  border-radius: 3px;
+  z-index: 1000;
+  top: 100%;
+  margin-top: $arrow_size + px;
+}
+
+:host:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: $arrow_size + px solid $bg;
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) $bg rgba(0, 0, 0, 0);;
+  top: -($arrow_size*2) + px;
+  left: 50%;
+  margin-left: -$arrow_size + px;
+}

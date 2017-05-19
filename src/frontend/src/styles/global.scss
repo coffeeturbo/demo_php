@@ -1,3 +1,17 @@
 @import "~font-awesome/css/font-awesome.css";
 @import '~sass-material-colors';
 @import '~sass-mq';
+@import "./animations.scss";
+
+$primary_material:  "blue-grey";
+//$primary_material:  "teal";
+$secondary_material:"grey";
+$font_color_light:  #FFFFFF;
+$font_color_dark:   #333333;
+$link_color:        material-color("red", "600");
+$link_color_hover:  material-color("red", "a700");
+
+$h1_size:   30px;
+$h2_size:   21px;
+$h3_size:   19px;
+$font_size: 14px;
