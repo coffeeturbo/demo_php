@@ -34,6 +34,7 @@ import {SidebarService} from "../module/Sidebar/Service/SidebarService";
 import {TranslatePipe} from "../module/Translate/Pipe/TranslationPipe";
 import {TranslationService} from "../module/Translate/Service/TranslationService";
 import {LocaleService} from "../module/Translate/Service/LocaleService";
+import {ProfileSettingsRoute} from "../module/Profile/Route/ProfileSettingsRoute/index";
 
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -73,6 +74,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         ForbiddenRoute,
         PageNotFoundRoute,
         ProfileRoute,
+        ProfileSettingsRoute,
         SignInRoute,
         SignUpRoute,
         
