@@ -6,6 +6,7 @@ import '../../../../assets/styles/index.scss';
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {Device} from "../../Service/DeviceService";
+import {TranslationService} from "../../../Translate/Service/TranslationService";
 
 @Component({
     selector: 'application',
@@ -21,7 +22,8 @@ export class ApplicationComponent {
         public  device: Device,
         private titleService: Title,
         private router: Router,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private translationService: TranslationService
     ) {
         
         // Set title from route data
@@ -35,7 +37,8 @@ export class ApplicationComponent {
             .filter(route => route.outlet === 'primary')
             .mergeMap(route => route.data)
             .subscribe((event) => {
-                titleService.setTitle(event['title'])
+                let title = this.translationService.translate(event['title']);
+                titleService.setTitle(title)
             });
     }
 }

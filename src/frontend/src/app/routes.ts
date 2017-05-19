@@ -11,13 +11,8 @@ import {JetRoutes} from "../module/Application/Entity/JetRoute";
 export const appRoutes: JetRoutes = [
     {
         path: '',
-        redirectTo: 'feed',
-        pathMatch: 'full'
-    },
-    {
-        path: 'feed',
         component: FeedRoute,
-        data: {title: 'Самое интересное'}
+        data: {title: 'Hot'}
     },
     {
         path: 'profile',
@@ -27,39 +22,39 @@ export const appRoutes: JetRoutes = [
                 path: 'feed',
                 component: ProfileRoute,
                 canActivate: [CanActivateService],
-                data: { title: 'Новости', allow: ["ROLE_CREATED"]},
+                data: { title: 'News', allow: ["ROLE_CREATED"]},
             },
             {
                 path: ':id',
                 component: ProfileRoute,
-                data: { title: 'Профиль'},
+                data: { title: 'Profile'},
             },
             {
                 path: 'settings',
                 component: ProfileSettingsRoute,
                 canActivate: [CanActivateService],
-                data: { title: 'Настройки', allow: ["ROLE_CREATED"] },
+                data: { title: 'Settings', allow: ["ROLE_CREATED"] },
             }
         ]
     },
     {
         path: 'login',
         component: SignInRoute,
-        data: { title: 'Страница входа', returnUrl: '/' }
+        data: { title: 'Login page', returnUrl: '/' }
     },
     {
         path: 'register',
         component: SignUpRoute,
-        data: { title: 'Регистрация', returnUrl: '/'}
+        data: { title: 'Registration', returnUrl: '/'}
     },
     {
         path: 'forbidden',
         component: ForbiddenRoute,
-        data: { title: '403 - Доступ запрещен' }
+        data: { title: '403 - Access denied' }
     },
     {
         path: '**',
         component: PageNotFoundRoute,
-        data: { title: '404 - Страница не найдена' }
+        data: { title: '404 - Now found' }
     }
 ];
