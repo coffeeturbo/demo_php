@@ -31,6 +31,9 @@ import {CanActivateService} from "../module/Auth/Service/CanActivateService";
 import {Device} from "../module/Application/Service/DeviceService";
 import {StartupService} from "../module/Application/Service/StartupService";
 import {SidebarService} from "../module/Sidebar/Service/SidebarService";
+import {TranslatePipe} from "../module/Translate/Pipe/TranslationPipe";
+import {TranslationService} from "../module/Translate/Service/TranslationService";
+import {LocaleService} from "../module/Translate/Service/LocaleService";
 
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -71,7 +74,9 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         PageNotFoundRoute,
         ProfileRoute,
         SignInRoute,
-        SignUpRoute
+        SignUpRoute,
+        
+        TranslatePipe
     ],
     providers: [
         AuthRESTService,
@@ -81,6 +86,8 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         RESTService,
         StartupService,
         SidebarService,
+        TranslationService,
+        LocaleService,
         {
             provide: AuthHttp,
             useFactory: AuthHttpServiceFactory,

@@ -1,6 +1,7 @@
 {
     "product_name": "Социлайт",
     "short_product_name": "JET",
+    "locale" : "RU",
     "account": {
         "constraints": {
             "username": {
