@@ -1,4 +1,4 @@
-import {Role} from "./Role";
+import {Roles} from "./Role";
 
 export interface Account {
     id: number,
@@ -11,5 +11,5 @@ export interface Account {
     confirmationToken?: string,
     passwordRequestedAt?: string,
     groups?: Array<any>,
-    roles: Role[],
+    roles: Roles,
 }

@@ -6,3 +6,4 @@ export type Role =
     "ROLE_VERIFED" |
     "ROLE_USER"
 ;
+export type Roles = Role[];

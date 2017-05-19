@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot} from '@angular/router';
 import {CanActivate} from '@angular/router';
 import {AuthService} from "./AuthService";
-import {Role} from "../Entity/Role";
+import {Roles} from "../Entity/Role";
 
 @Injectable()
 export class CanActivateService implements CanActivate {
@@ -25,7 +25,7 @@ export class CanActivateService implements CanActivate {
         }
     }
 
-    canActivateByRole(roles: Role[]): boolean {
+    canActivateByRole(roles: Roles): boolean {
         return this.authService.getRoles().filter(n => roles.indexOf(n) !== -1).length > 0
     }
 }

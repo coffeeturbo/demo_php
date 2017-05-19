@@ -10,14 +10,14 @@ import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 import {SignUpRequest} from "../Http/Request/SignUpRequest";
 import {SignUpResponse} from "../Http/Response/SignUpResponse";
 import {Token} from "../Entity/Token";
-import {Role} from "../Entity/Role";
+import {Roles} from "../Entity/Role";
 import {TokenResponse} from "../Http/Response/TokenResponse";
 
 const jwtHelper: JwtHelper = new JwtHelper();
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
-    getRoles(): Role[];
+    getRoles(): Roles;
     signIn(body: SignInRequest): Observable<SignInResponse | ResponseFailure>;
     signUp(body: SignUpRequest): Observable<SignUpResponse | ResponseFailure>;
     connectVK(): Observable<TokenResponse | ResponseFailure>
@@ -35,7 +35,7 @@ export class AuthService implements AuthServiceInterface {
         return tokenNotExpired();
     }
 
-    public getRoles(): Role[] 
+    public getRoles(): Roles 
     {
         let tokenData: Token = jwtHelper.decodeToken(localStorage.getItem("token"));
         return tokenData.roles;
