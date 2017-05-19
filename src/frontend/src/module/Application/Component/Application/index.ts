@@ -13,6 +13,7 @@ import {Device} from "../../Service/DeviceService";
     styleUrls: ['./style.shadow.scss']
 })
 export class ApplicationComponent {
+    config = require('../../../../app/config.json');
 
     constructor(
         public  sidebarService: SidebarService,
