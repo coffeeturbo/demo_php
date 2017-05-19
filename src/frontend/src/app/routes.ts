@@ -14,38 +14,38 @@ export const appRoutes: JetRoutes = [
         component: FeedRoute,
         data: {title: 'Hot'}
     },
-    {
-        path: 'profile',
-        children: [
-            { path: '', redirectTo: 'feed', pathMatch: 'full' },
-            {
-                path: 'feed',
-                component: ProfileRoute,
-                canActivate: [CanActivateService],
-                data: { title: 'News', allow: ["ROLE_CREATED"]},
-            },
-            {
-                path: ':id',
-                component: ProfileRoute,
-                data: { title: 'Profile'},
-            },
-            {
-                path: 'settings',
-                component: ProfileSettingsRoute,
-                canActivate: [CanActivateService],
-                data: { title: 'Settings', allow: ["ROLE_CREATED"] },
-            }
-        ]
-    },
-    {
+    { // Страница авторизации
         path: 'login',
         component: SignInRoute,
         data: { title: 'Login page', returnUrl: '/' }
     },
-    {
+    { // Страница регистрации
         path: 'register',
         component: SignUpRoute,
         data: { title: 'Registration', returnUrl: '/'}
+    },
+    { // Новости профиля
+        path: 'feed',
+        component: ProfileRoute,
+        canActivate: [CanActivateService],
+        data: { title: 'News', allow: ["ROLE_CREATED"]},
+    },
+    { // Настройки профиля
+        path: 'settings',
+        component: ProfileSettingsRoute,
+        canActivate: [CanActivateService],
+        data: { title: 'Settings', allow: ["ROLE_CREATED"] },
+    },
+    { // Страница профиля (редирект на новости если не указан id профиля)
+        path: 'profile',
+        children: [
+            { path: '', redirectTo: '/feed', pathMatch: 'full' },
+            {
+                path: ':id',
+                component: ProfileRoute,
+                data: { title: 'Profile'}
+            }
+        ]
     },
     {
         path: 'forbidden',
