@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
-import '../../../../styles/index.scss';
+import '../../../../assets/styles/index.scss';
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {Device} from "../../Service/DeviceService";

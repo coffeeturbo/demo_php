@@ -1,4 +1,4 @@
-@import "../../../../styles/global";
+@import "../../../../assets/styles/global";
 
 @include mq($from: desktop) {
   :host.shake .modal-box {

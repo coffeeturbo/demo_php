@@ -1,8 +1,8 @@
 @import '~reset.css';
-@import "./global.scss";
-@import "./loader.scss";
-@import "./form/input.scss";
-@import "./form/button.scss";
+@import "global";
+@import "loader";
+@import "form/input";
+@import "form/button";
 
 body {
   background: #fff;
