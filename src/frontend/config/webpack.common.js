@@ -39,7 +39,7 @@ module.exports = {
           loader: "url-loader",
           query: {
             limit: 10000,
-            mimetype: "application/font-woff",
+            mimetype: "application/font-woff"
           }
       },
       { // FontAwesome
@@ -51,16 +51,17 @@ module.exports = {
           use: [ "url-loader?mimetype=image/png" ] 
       },
       {
-          test: /\.shadow.scss$/,
-          use: ['to-string-loader', 'css-loader', 'sass-loader']
+          test: /\.scss$/,
+          use: ['to-string-loader', 'css-loader', 'sass-loader'],
+          exclude: helpers.root('src','assets')
       },
       {
           test: /\.scss$/,
           loader: ExtractTextPlugin.extract({
-              fallbackLoader: 'style-loader',
+              fallback: 'style-loader',
               loader: ['css-loader', 'sass-loader']
           }),
-          include: /styles/
+          include: helpers.root('src','assets')
       },
       {
           test: /\.(jade|pug)$/,
@@ -76,7 +77,7 @@ module.exports = {
   plugins: [
     // Workaround for angular/angular#11580
     new webpack.ContextReplacementPlugin(
-      /angular(\\|\/)core(\\|\/)@angular/,
+      /angular([\\\/])core([\\\/])@angular/,
       helpers.root('./src'),
       {}
     ), 

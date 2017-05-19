@@ -1,8 +1,12 @@
+@import "~font-awesome/css/font-awesome.css";
 @import '~reset.css';
 @import "global";
 @import "loader";
 @import "form/input";
 @import "form/button";
+@import "animations";
+
+
 
 body {
   background: #fff;
@@ -34,6 +38,10 @@ h2 {
 
 h3 {
   font-size: $h3_size;
+}
+
+h4 {
+  font-size: $h4_size;
 }
 
 small {

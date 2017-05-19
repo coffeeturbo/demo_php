@@ -5,24 +5,23 @@ aside
 
 
     h3 {{config.product_name}}
+    
     i.fa.fa-chevron-left
-  a
-    i.fa.fa-fw.fa-lg.fa-list-alt
-    span Позиция меню1
-  a
+  h4 Подборки
+  a(routerLink="/", routerLinkActive="active", [routerLinkActiveOptions]="{ exact: true }")
+    i.fa.fa-fw.fa-lg.fa-fire
+    span {{ "Hot" | translate }} 
+  a(routerLink="/best", routerLinkActive="active")
     i.fa.fa-fw.fa-lg.fa-line-chart
-    span Позиция меню2
-  a
-    i.fa.fa-fw.fa-lg.fa-users
-    span Позиция меню3
+    span {{ "Best" | translate }} 
+  a(routerLink="/new", routerLinkActive="active")
+    i.fa.fa-fw.fa-lg.fa-newspaper-o
+    span {{ "New" | translate }} 
 hr
-aside
-  a
+aside(*ngIf="authService.isSignedIn()")
+  a(routerLink="/feed", routerLinkActive="active")
     i.fa.fa-fw.fa-lg.fa-list-alt
-    span Позиция меню4
-  a
-    i.fa.fa-fw.fa-lg.fa-line-chart
-    span Позиция меню5
-  a
-    i.fa.fa-fw.fa-lg.fa-users
-    span Позиция меню6
+    span {{ "Feed" | translate }} 
+  a(routerLink="/settings", routerLinkActive="active")
+    i.fa.fa-fw.fa-lg.fa-cog
+    span {{ "Edit" | translate }}

@@ -14,6 +14,16 @@ export const appRoutes: JetRoutes = [
         component: FeedRoute,
         data: {title: 'Hot'}
     },
+    {
+        path: 'new',
+        component: FeedRoute,
+        data: {title: 'Hot'}
+    },
+    {
+        path: 'best',
+        component: FeedRoute,
+        data: {title: 'Hot'}
+    },
     { // Страница авторизации
         path: 'login',
         component: SignInRoute,
