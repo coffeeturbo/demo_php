@@ -43,13 +43,13 @@ class SignInController extends Controller
         }
 
         $ttl = $body["dont_remember"] === true ?
-            time() + 300 : /* 5 min */
+            300 : /* 5 min */
             $this->getParameter('lexik_jwt_authentication.token_ttl');
         
         $token = $this->get('lexik_jwt_authentication.encoder')->encode([
             'username' => $body["username"],
             'roles' => $account->getRoles(),
-            'exp' => $ttl 
+            'exp' => $ttl+time() 
         ]);
         
         return $this->renderTokenAction($token, $request);
