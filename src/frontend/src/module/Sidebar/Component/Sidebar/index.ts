@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {SidebarService} from "../../Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
+import {SettingsModalComponentService} from "../../../Settings/Service/SettingsModalComponentService";
 
 @Component({
     selector: 'sidebar',
@@ -9,5 +10,9 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 })
 export class SidebarComponent {
     config = require('../../../../app/config.json');
-    constructor(public service: SidebarService, public authService: AuthService) {}
+    constructor(
+        public service: SidebarService,
+        public authService: AuthService,
+        public settingsModalComponentService: SettingsModalComponentService) {
+    }
 }

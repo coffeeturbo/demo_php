@@ -1,0 +1,11 @@
+form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  .field
+    i.fa.fa-globe.fa-lg.fa-fw
+    .input-box
+      select(formControlName="locale")
+        option(value="RU") Русский
+        option(value="EN") Английский
+        //input(type="text", , placeholder="Язык")
+
+  .controls
+    button.btn.primary(type="submit", [disabled]="!form.valid") {{"Save" | translate}}

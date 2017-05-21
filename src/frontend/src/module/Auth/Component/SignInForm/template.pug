@@ -2,12 +2,12 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
   .field
     i.fa.fa-user.fa-lg.fa-fw
     .input-box
-      input(type="text", formControlName="username", placeholder="Имя пользователя или почта", auto-focus)
+      input(type="text", formControlName="username", placeholder="{{'Username or email' | translate }}", auto-focus)
       hr
   .field
     i.fa.fa-lock.fa-lg.fa-fw
     .input-box
-      input(type="{{isPasswordHidden?'password':'text'}}", formControlName="password", placeholder="Пароль")
+      input(type="{{isPasswordHidden?'password':'text'}}", formControlName="password", placeholder="{{'Password' | translate}}")
       hr
     i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
     
@@ -15,20 +15,20 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
     .input-box
       input(type="checkbox", formControlName="dont_remember")
       .checkbox 
-        | Чужой компьютер 
-        .fa.fa-question-circle(title="Система автоматически выйдет через 10 минут")
+        | {{"Not my PC" | translate }} 
+        .fa.fa-question-circle(title="{{'Auto sign out after 10 minutes' | translate}}")
 
           
   .controls(*ngIf="showControls")
     button.btn(type="button", routerLink="/register")
       .fa.fa-user-plus
-      span Регистрация
+      span {{"Registration" | translate }}
     button.btn.primary(type="submit", [disabled]="!form.valid")
       .fa.fa-sign-in
-      span Войти
+      span {{"Sign in" | translate }}
   br
   .hr-box
-    .hr-title или войти с помощью
+    .hr-title {{"or sign in with" | translate }}
     hr
   
   .controls.center

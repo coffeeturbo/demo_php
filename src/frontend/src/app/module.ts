@@ -35,6 +35,9 @@ import {TranslatePipe} from "../module/Translate/Pipe/TranslationPipe";
 import {TranslationService} from "../module/Translate/Service/TranslationService";
 import {LocaleService} from "../module/Translate/Service/LocaleService";
 import {ProfileSettingsRoute} from "../module/Profile/Route/ProfileSettingsRoute/index";
+import {SettingsComponent} from "../module/Settings/Component/SettingsComponent/index";
+import {SettingsModalComponent} from "../module/Settings/Component/SetingsModalComponent/index";
+import {SettingsModalComponentService} from "../module/Settings/Service/SettingsModalComponentService";
 
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -69,7 +72,9 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         SignUpFormComponent,
         TooltipComponent,
         SocialButtonsComponent,
-
+        SettingsComponent,
+        SettingsModalComponent,
+        
         FeedRoute,
         ForbiddenRoute,
         PageNotFoundRoute,
@@ -90,6 +95,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         SidebarService,
         TranslationService,
         LocaleService,
+        SettingsModalComponentService,
         {
             provide: AuthHttp,
             useFactory: AuthHttpServiceFactory,

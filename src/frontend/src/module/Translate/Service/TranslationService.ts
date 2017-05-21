@@ -10,15 +10,14 @@ export class TranslationService {
     constructor(private localeService: LocaleService) {}
 
     public translate(value: string): string {
-        let locale: Locale = this.localeService.getLocale();
 
         if (!this.dictionaries.hasOwnProperty(this.localeService.getLocale()))
-            throw new Error(`Dictionary ${locale} does not exist`);
+            throw new Error(`Dictionary ${this.localeService.getLocale()} does not exist`);
 
-        return this.dictionaries[locale][value] || value; 
+        return this.dictionaries[this.localeService.getLocale()][value] || value; 
     }
     
-    addToDictionary(locale:Locale, dictionary:Dictionary) {
+    addToDictionary(locale: Locale, dictionary: Dictionary) {
         if (!this.dictionaries.hasOwnProperty(locale))
             throw new Error(`Dictionary ${locale} does not exist`);
         

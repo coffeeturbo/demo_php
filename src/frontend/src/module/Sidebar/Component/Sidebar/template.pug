@@ -25,3 +25,6 @@ aside(*ngIf="authService.isSignedIn()")
   a(routerLink="/settings", routerLinkActive="active")
     i.fa.fa-fw.fa-lg.fa-cog
     span {{ "Edit" | translate }}
+  a((click)="settingsModalComponentService.show()")
+    i.fa.fa-fw.fa-lg.fa-cog
+    span {{ "Settings" | translate }}
