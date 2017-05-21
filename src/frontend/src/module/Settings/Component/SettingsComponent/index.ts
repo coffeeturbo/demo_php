@@ -13,7 +13,8 @@ export class SettingsComponent {
     
     
     public form: FormGroup = new FormGroup({
-        locale: new FormControl(this.localeService.getLocale())
+        locale: new FormControl(this.localeService.getLocale()),
+        show_porno: new FormControl(false)
     });
 
     constructor(public localeService: LocaleService){}

@@ -16,6 +16,7 @@
   "Locale":     "Язык",
   "Password":   "Пароль",
   "Error":      "Ошибка",
+  "Collections":"Подборки",
   
   "Registration":         "Регистрация",
   "Login page":           "Страница входа",
@@ -32,5 +33,6 @@
   "Enter password": "Придумайте пароль",
   "Confirm password": "Подтвердите пароль",
   "Login to the resource": "Вход на ресурс",
-  "New user registration": "Регистрация нового пользователя"
+  "New user registration": "Регистрация нового пользователя",
+  "Show 18+ content":"Показывать контент 18+"
 }

@@ -3,7 +3,7 @@
 :host {
   bottom: 0;
   width: 280px;
-  height: calc(100vh - 100%);
+  height: calc(100vh - 100% - 10px);
   position: absolute;
   top: 100%;
   background: #fff;
@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
-  padding: 10px 0;
+  padding-top: 10px;
 
   @include mq($until: tablet) {
     top: 0;
@@ -38,12 +38,19 @@
     visibility 0s linear 0s;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
   }
+
   hr {
     border: none;
     height: 1px;
     margin: 10px 0;
     background: material-color($secondary_material, '300');
+    flex-shrink: 0;
   }
+
+  .space-between {
+    flex-grow: 1;
+  }
+
   aside {
     header {
       margin-bottom: 10px;
@@ -77,7 +84,9 @@
 
     > a {
       .fa {
-        margin-right: 15px;
+        & + * {
+          margin-left: 15px;
+        }
         color: material-color($secondary_material, '600');
       }
 
@@ -87,6 +96,38 @@
 
       &:hover {
         background: material-color($secondary_material, '200');
+      }
+    }
+  }
+
+  footer {
+    background: material-color($secondary_material, '800');
+    display: flex;
+    font-size: 1.6em;
+    justify-content:flex-end;
+    position: relative;
+
+    > a {
+      padding: 15px;
+      color: material-color($secondary_material, '50');
+
+      &:hover {
+        background: material-color($primary_material, '600');
+      }
+
+      .counter {
+        position: absolute;
+        background: material-color("cyan", 'a200');
+        font-size: 0.5em;
+        right: 10px;
+        top: 7px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 18px;
+        color:material-color($primary_material, '700');
+        font-weight: bold;
       }
     }
   }

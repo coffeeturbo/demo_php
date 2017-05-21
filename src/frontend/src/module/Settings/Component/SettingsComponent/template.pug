@@ -6,6 +6,10 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
         option(value="RU") Русский
         option(value="EN") Английский
         //input(type="text", , placeholder="Язык")
+  label.field
+    .input-box
+      input(type="checkbox", formControlName="show_porno")
+      .checkbox {{"Show 18+ content" | translate }} 
 
   .controls
     button.btn.primary(type="submit", [disabled]="!form.valid") {{"Save" | translate}}
