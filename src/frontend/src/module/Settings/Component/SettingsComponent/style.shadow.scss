@@ -1,5 +1,5 @@
 @import "../../../../assets/styles/global";
-// DOTO REMOVE ALL AND REWORK!!!
+
 .field {
   display: flex;
   align-items: center;
@@ -13,37 +13,14 @@
     color: material-color($secondary_material, "400");
   }
 
-  .show-password {
-    position: absolute;
-    right: 0;
-    z-index: 99;
-    animation: fade 100ms ease-in-out 0s 1 normal both;
-
-    &:hover {
-      color: material-color($secondary_material, "600");
-    }
-  }
-
   .input-box {
     flex-grow: 1;
-  }
-
-  tooltip {
-    display: none
-  }
-
-  input:focus ~ tooltip {
-    display: block;
   }
 }
 
 .controls {
   display: flex;
   justify-content: flex-end;
-
-  &.center {
-    justify-content: center;
-  }
 }
 
 .fa + * {

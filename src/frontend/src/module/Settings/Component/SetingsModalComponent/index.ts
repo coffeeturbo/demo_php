@@ -3,8 +3,7 @@ import {SettingsModalService} from "../../Service/SettingsModalService";
 
 @Component({
     selector: 'settings-modal',
-    templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss']
+    templateUrl: './template.pug'
 })
 export class SettingsModalComponent {
     constructor(public settingsModalService: SettingsModalService) {}

@@ -12,6 +12,7 @@
   flex-direction: column;
   overflow-y: hidden;
   padding-top: 10px;
+  font-weight: 500;
 
   @include mq($until: tablet) {
     top: 0;
@@ -70,6 +71,11 @@
       h3 {
         flex-grow: 1;
       }
+      
+    }
+    
+    h4 {
+      color: material-color($secondary_material, '500');
     }
 
     > * {
