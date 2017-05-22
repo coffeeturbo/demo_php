@@ -3,4 +3,4 @@
     a.close((click)="close()", *ngIf="canClose")
       i.fa.fa-times
     ng-content
-.backdrop(*ngIf="backdrop")
+  .backdrop(*ngIf="backdrop", (click)="canClose && close()")

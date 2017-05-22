@@ -1,6 +1,7 @@
 import {NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
 
 import {UIModule} from "../UI/UIModule";
 import {TranslateModule} from "../Translate/TranslateModule";
@@ -21,6 +22,7 @@ import {CanActivateService} from "./Service/CanActivateService";
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
+        RouterModule,
         UIModule,
         TranslateModule
     ],
