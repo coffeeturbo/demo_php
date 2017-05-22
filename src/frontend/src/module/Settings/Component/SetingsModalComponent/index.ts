@@ -1,7 +1,5 @@
 import {Component} from "@angular/core";
-import {FormControl, FormGroup} from "@angular/forms";
-import {LocaleService} from "../../../Translate/Service/LocaleService";
-import {SettingsModalComponentService} from "../../Service/SettingsModalComponentService";
+import {SettingsModalService} from "../../Service/SettingsModalService";
 
 @Component({
     selector: 'settings-modal',
@@ -9,5 +7,5 @@ import {SettingsModalComponentService} from "../../Service/SettingsModalComponen
     styleUrls: ['./style.shadow.scss']
 })
 export class SettingsModalComponent {
-    constructor(public settingsModalComponentService: SettingsModalComponentService) {}
+    constructor(public settingsModalService: SettingsModalService) {}
 }

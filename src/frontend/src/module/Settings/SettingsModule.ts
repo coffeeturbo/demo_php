@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {SettingsComponent} from "./Component/SettingsComponent/index";
 import {SettingsModalComponent} from "./Component/SetingsModalComponent/index";
-import {SettingsModalComponentService} from "./Service/SettingsModalComponentService";
+import {SettingsModalService} from "./Service/SettingsModalService";
 import {BrowserModule} from "@angular/platform-browser";
 import {TranslateModule} from "../Translate/TranslateModule";
 import {RouterModule} from "@angular/router";
@@ -22,7 +22,7 @@ import {UIModule} from "../UI/UIModule";
         SettingsModalComponent
     ],
     providers: [
-        SettingsModalComponentService
+        SettingsModalService
     ],
     exports: [
         SettingsModalComponent

@@ -26,12 +26,13 @@ ng-container(*ngIf="authService.isSignedIn()")
       i.fa.fa-fw.fa-lg.fa-sliders
       span {{ "Edit" | translate }}
 
-.space-between
+.flex-space
 
 footer
   a
     i.fa.fa-info-circle
-  a((click)="settingsModalComponentService.show()")
+  .flex-space
+  a((click)="settingsModalService.show()")
     i.fa.fa-cog
   a
     i.fa.fa-bell-o

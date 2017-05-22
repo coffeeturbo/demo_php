@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ModalHeaderComponent} from "./layout/ModalHeaderComponent/index";
 import {ModalBodyComponent} from "./layout/ModalBodyComponent/index";
 import {ModalFooterComponent} from "./layout/ModalFooterComponent/index";
@@ -15,7 +15,7 @@ export class ModalComponent {
     @Input('height') height: string = 'auto';
     @Input('backdrop') backdrop: boolean = true;
     @Input('can-close') canClose: boolean = true;
-    private isClosed: boolean = false;
+    @Output('on-close') onClose = new EventEmitter<any>();
 
     private onKeyDown($event: KeyboardEvent) {
         if ($event.key === "Escape" && this.canClose) {
@@ -24,11 +24,7 @@ export class ModalComponent {
     }
 
     public close() {
-        this.isClosed = true;
-    }
-
-    public open() {
-        this.isClosed = false;
+        this.onClose.emit();
     }
 }
 

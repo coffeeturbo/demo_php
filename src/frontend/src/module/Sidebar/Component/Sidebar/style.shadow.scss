@@ -47,10 +47,6 @@
     flex-shrink: 0;
   }
 
-  .space-between {
-    flex-grow: 1;
-  }
-
   aside {
     header {
       margin-bottom: 10px;
@@ -103,18 +99,18 @@
   footer {
     background: material-color($secondary_material, '800');
     display: flex;
+    flex-shrink: 0;
     font-size: 1.6em;
     justify-content:flex-end;
     position: relative;
-
+    margin-top:10px;
     > a {
       padding: 15px;
       color: material-color($secondary_material, '50');
-
       &:hover {
         background: material-color($primary_material, '600');
       }
-
+      
       .counter {
         position: absolute;
         background: material-color("cyan", 'a200');

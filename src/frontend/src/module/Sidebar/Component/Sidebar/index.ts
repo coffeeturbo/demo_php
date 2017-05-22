@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {SidebarService} from "../../Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
-import {SettingsModalComponentService} from "../../../Settings/Service/SettingsModalComponentService";
+import {SettingsModalService} from "../../../Settings/Service/SettingsModalService";
 
 @Component({
     selector: 'sidebar',
@@ -13,6 +13,6 @@ export class SidebarComponent {
     constructor(
         public service: SidebarService,
         public authService: AuthService,
-        public settingsModalComponentService: SettingsModalComponentService) {
+        public settingsModalService: SettingsModalService) {
     }
 }

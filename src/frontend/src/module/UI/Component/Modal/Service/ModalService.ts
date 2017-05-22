@@ -1,14 +1,14 @@
 import {Injectable} from "@angular/core";
 
 @Injectable()
-export class SettingsModalComponentService {
+export class ModalService {
     public isVisible: boolean = false;
-    
+
     public show() {
         this.isVisible = true;
     }
-    
+
     public hide() {
-        this.isVisible = true;
+        this.isVisible = false;
     }
 }
