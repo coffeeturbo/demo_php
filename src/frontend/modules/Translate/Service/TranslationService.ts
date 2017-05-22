@@ -12,14 +12,14 @@ export class TranslationService {
     public translate(value: string): string {
 
         if (!this.dictionaries.hasOwnProperty(this.localeService.getLocale()))
-            throw new Error(`Dictionary ${this.localeService.getLocale()} does not exist`);
+            throw new Error(`Locale ${this.localeService.getLocale()} does not exist`);
 
         return this.dictionaries[this.localeService.getLocale()][value] || value; 
     }
     
     addToDictionary(locale: Locale, dictionary: Dictionary) {
         if (!this.dictionaries.hasOwnProperty(locale))
-            throw new Error(`Dictionary ${locale} does not exist`);
+            throw new Error(`Locale ${locale} does not exist`);
         
         Object.assign(this.dictionaries[locale], dictionary);
     }
