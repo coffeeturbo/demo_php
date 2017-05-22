@@ -2,46 +2,59 @@
 
 namespace AuthBundle\Tests;
 
+use AuthBundle\DataFixtures\ORM\LoadAccountData;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\StringInput;
 
-class SignInControllerTest extends WebTestCase
+class SignInControllerTest extends BaseTestSetup
 {
     protected static $application;
-    private $accountsData;
+    /** @var  LoadAccountData */
+    protected $fixtures;
 
-    protected function setUp()
+    public function setUp()
     {
-        self::getApplication()->run(new StringInput('doctrine:database:create --quiet'));
-        self::getApplication()->run(new StringInput('doctrine:schema:update --force --quiet'));
-        self::getApplication()->run(new StringInput('doctrine:fixtures:load --purge-with-truncate --quiet'));
+        parent::setUp();
+
+        $this->fixtures = $fixture = new LoadAccountData();
+        $this->fixtures->setContainer($this->container);
+        $fixture->load($this->em);
+
     }
 
-    protected static function getApplication()
+    public function test200()
     {
-        if (null === self::$application) {
-            $client = static::createClient();
+        $accountData = $this->fixtures->getAccountDataByReference('success-account');
 
-            self::$application = new Application($client->getKernel());
-            self::$application->setAutoExit(false);
-        }
-
-        return self::$application;
-    }
-
-    public function testIndex()
-    {
-       $client = static::createClient();
+        $client = static::createClient();
 
         $client->request('POST', '/auth/sign-in', [], [], ['content-type' => 'application/json'], json_encode(
-        [
-            "username"=>"testuser1@domain.com",
-            "password"=>"4zFBLC"
-        ]
+            [
+                "username" => $accountData['email'],
+                "password" => $accountData['password'],
+            ]
         ));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        //$this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
+    }
+
+    public function test401()
+    {
+        $accountData = $this->fixtures->getAccountDataByReference('success-account');
+
+        $client = static::createClient();
+        $client->request('POST', '/auth/sign-in', [], [], ['content-type' => 'application/json'], json_encode(
+            [
+                "username" => $accountData['email'],
+                "password" => 'wrong_password',
+            ]
+        ));
+
+        $this->assertEquals(401, $client->getResponse()->getStatusCode());
     }
 }

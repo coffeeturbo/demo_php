@@ -1,21 +1,29 @@
 <?php
 namespace AuthBundle\DataFixtures\ORM;
 
+use AuthBundle\Entity\Account;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\UserBundle\Model\UserManager;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadAccountData implements FixtureInterface, ContainerAwareInterface
+class LoadAccountData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
 
-    public $accountsData = [
-        ["email"=>"testuser1@domain.com","password"=>"4zFBLC", "roles"=>[]],
-        ["email"=>"testuser2@domain.com","password"=>"UjqjCB", "roles"=>[]],
-        ["email"=>"testuser3@domain.com","password"=>"GhuxMb", "roles"=>[]]
+    protected $accountsData = [
+        'success-account' =>
+            [
+                "email" => "testuser1@domain.com", "password"=>"4zFBLC", "roles"=>[], 'reference' => 'success-account'
+            ],
     ];
-    
+
+    protected $accounts;
+
+
+
     /**
      * @var ContainerInterface
      */
@@ -37,8 +45,31 @@ class LoadAccountData implements FixtureInterface, ContainerAwareInterface
             $account->setUsername($data['email']);
             $account->setEmail($data['email']);
             $account->setRoles($data['roles']);
+
+            if(isset($data['reference'])){
+                $this->addAccountReference($data['reference'], $account);
+            }
+
             $userManager->updateUser($account);
         }
     }
+
+
+    public function getAccountDataByReference($ref)
+    {
+        return $this->accountsData[$ref] ?? $this->accounts[$ref];
+    }
+    public function getAccountByReference($ref): Account
+    {
+        return $this->accounts[$ref] ?? $this->accounts[$ref];
+    }
+
+    public function addAccountReference($ref, $accoount )
+    {
+        if(isset($this->accounts[$ref])) throw new Exception("account already exists");
+
+        $this->accounts[$ref] = $accoount;
+    }
+
 }
 
