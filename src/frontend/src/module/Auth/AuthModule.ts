@@ -16,9 +16,6 @@ import {AuthRESTService} from "./Service/AuthRESTService";
 import {AuthService} from "./Service/AuthService";
 import {CanActivateService} from "./Service/CanActivateService";
 
-
-
-
 @NgModule({
     imports: [
         BrowserModule,
