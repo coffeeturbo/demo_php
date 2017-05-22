@@ -4,8 +4,8 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "dev": "rimraf ../web/dist && webpack --config config/webpack.dev.js --progress --watch --hide-modules",
-    "prod": "rimraf ../web/dist && webpack --config config/webpack.prod.js --progress --hide-modules"
+    "dev": "rimraf ../web/dist && webpack --config webpack/webpack.dev.js --progress --watch --hide-modules",
+    "prod": "rimraf ../web/dist && webpack --config webpack/webpack.prod.js --progress --hide-modules"
   },
   "dependencies": {
     "@angular/animations": "~4.1.0",

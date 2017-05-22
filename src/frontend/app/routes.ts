@@ -1,12 +1,12 @@
-import {CanActivateService} from "../module/Auth/Service/CanActivateService";
-import {FeedRoute} from "../module/Feed/Route/FeedRoute/index";
-import {ForbiddenRoute} from "../module/Application/Route/ForbiddenRoute/index";
-import {PageNotFoundRoute} from "../module/Application/Route/PageNotFoundRoute/index";
-import {ProfileRoute} from "../module/Profile/Route/ProfileRoute/index";
-import {SignInRoute} from "../module/Auth/Route/SignInRoute/index";
-import {SignUpRoute} from "../module/Auth/Route/SignUpRoute/index";
-import {ProfileSettingsRoute} from "../module/Profile/Route/ProfileSettingsRoute/index";
-import {JetRoutes} from "../module/Application/Entity/JetRoute";
+import {CanActivateService} from "../modules/Auth/Service/CanActivateService";
+import {FeedRoute} from "../modules/Feed/Route/FeedRoute/index";
+import {ForbiddenRoute} from "../modules/Application/Route/ForbiddenRoute/index";
+import {PageNotFoundRoute} from "../modules/Application/Route/PageNotFoundRoute/index";
+import {ProfileRoute} from "../modules/Profile/Route/ProfileRoute/index";
+import {SignInRoute} from "../modules/Auth/Route/SignInRoute/index";
+import {SignUpRoute} from "../modules/Auth/Route/SignUpRoute/index";
+import {ProfileSettingsRoute} from "../modules/Profile/Route/ProfileSettingsRoute/index";
+import {JetRoutes} from "../modules/Application/Entity/JetRoute";
 
 export const appRoutes: JetRoutes = [
     {

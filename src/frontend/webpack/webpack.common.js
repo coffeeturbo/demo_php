@@ -6,7 +6,7 @@ var helpers = require('./helpers');
 
 module.exports = {
   entry: {
-    'app': './src/app/main.ts'
+    'app': './app/main.ts'
   },
   output:{
       path: helpers.root('../web/dist'),
@@ -25,7 +25,7 @@ module.exports = {
         loaders: [
           {
             loader: 'awesome-typescript-loader',
-            options: { configFileName: helpers.root('src', 'tsconfig.json') }
+            options: { configFileName: helpers.root('tsconfig.json') }
           } , 
           'angular2-template-loader'
         ]
@@ -53,7 +53,7 @@ module.exports = {
       {
           test: /\.scss$/,
           use: ['to-string-loader', 'css-loader', 'sass-loader'],
-          exclude: helpers.root('src','assets')
+          exclude: helpers.root('assets')
       },
       {
           test: /\.scss$/,
@@ -61,7 +61,7 @@ module.exports = {
               fallback: 'style-loader',
               loader: ['css-loader', 'sass-loader']
           }),
-          include: helpers.root('src','assets')
+          include: helpers.root('assets')
       },
       {
           test: /\.(jade|pug)$/,
@@ -78,7 +78,7 @@ module.exports = {
     // Workaround for angular/angular#11580
     new webpack.ContextReplacementPlugin(
       /angular([\\\/])core([\\\/])@angular/,
-      helpers.root('./src'),
+      helpers.root('.'),
       {}
     ), 
     new webpack.optimize.CommonsChunkPlugin({
@@ -86,7 +86,7 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      template: 'src/app/template.pug'
+      template: 'app/template.pug'
     }),
 
     new AppCachePlugin({
