@@ -1,0 +1,4 @@
+services:
+  nelmio_api_doc.yml_provider.acseo_yml_provider:
+    class: CoreBundle\Service\NelmioApiYmlProvider
+    arguments:  ['%kernel.root_dir%/config/apidoc']

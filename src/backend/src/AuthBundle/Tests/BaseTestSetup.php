@@ -19,15 +19,11 @@ abstract class BaseTestSetup extends WebTestCase
         $this->em = static::$kernel->getContainer()
             ->get('doctrine.orm.default_entity_manager');
 
-        if (!isset($metadatas)) {
-            $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
-        }
+        $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
 
         $schemaTool = new SchemaTool($this->em);
         $schemaTool->dropDatabase();
-        if (!empty($metadatas)) {
-            $schemaTool->createSchema($metadatas);
-        }
+        $schemaTool->createSchema($metadatas);
 
     }
 }
