@@ -35,7 +35,7 @@ class SignUpController extends Controller
     public function signUpAction(Request $request)
     {
         try {
-            $body = $this->get('app.request.service')->validate($request, SignUpType::class);
+            $body = $this->get('app.validate_request.service')->validate($request, SignUpType::class);
         } catch (BadRequestHttpException $e) {
             return new ErrorResponse($e->getMessage(), $e->getStatusCode());
         }

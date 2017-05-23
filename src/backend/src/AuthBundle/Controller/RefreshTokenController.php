@@ -38,7 +38,7 @@ class RefreshTokenController extends Controller
     public function refreshAction(Request $request)
     {
         try {
-            $this->get('app.request.service')->validate($request, RefreshTokenType::class);
+            $this->get('app.validate_request.service')->validate($request, RefreshTokenType::class);
         } catch(BadRequestHttpException $e) {
             return new ErrorResponse($e->getMessage(), $e->getStatusCode());
         }
