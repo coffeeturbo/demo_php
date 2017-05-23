@@ -1,0 +1,55 @@
+ProfileBundle\Entity\Profile:
+  type: entity
+  repositoryClass: ProfileBundle\Repository\ProfileRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    created:
+      type: datetime
+      nullable: false
+    name:
+      type: string
+      nullable: false
+    gender:
+      type: smallint
+      nullable: false
+    birth_date:
+      type: datetime
+      nullable: false
+    verified:
+      type: smallint
+      nullable: false
+    privacy_opts:
+      type: json_array
+      nullable: false
+
+#    alias:
+#      type: string
+#      nullable: true
+#    family_status:
+#      nullable: true
+#    interests:
+#      nullable: true
+#    education:
+#      nullable: true
+#    languages:
+#      nullable: true
+#    city:
+#      nullable: true
+#    contacts:
+#      nullable: true
+#    social_networks:
+#      nullable: true
+#    work:
+#      nullable: false
+#    education_places:
+#      nullable: false
+#    military_service:
+#      nullable: false
+#  oneToMany:
+#    cities:
+#      targetEntity: City
+#      mappedBy: region
