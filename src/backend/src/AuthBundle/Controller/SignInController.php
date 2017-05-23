@@ -1,4 +1,5 @@
 <?php
+
 namespace AuthBundle\Controller;
 
 use AppBundle\Http\ErrorResponse;
@@ -41,11 +42,11 @@ class SignInController extends Controller
         } catch (BadRequestHttpException | UnauthorizedHttpException $e) {
             return new ErrorResponse($e->getMessage(), $e->getStatusCode());
         }
-        
+
         $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);
-        
+
         $event = new AuthenticationSuccessEvent(['token' => $token], $account, new Response());
-        
+
         if ($body["dont_remember"] !== true) {
             $this->get('gesdinet.jwtrefreshtoken.send_token')->attachRefreshToken($event);
         }

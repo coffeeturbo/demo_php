@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthBundle\Security\Core\Account;
+namespace OAuthBundle\Security\Core\Account;
 
 use AuthBundle\Entity\Account;
 use FOS\UserBundle\Model\User;

@@ -7,5 +7,5 @@ auth:
   prefix:   /auth
 
 oAuth:
-  resource: '@AuthBundle/Resources/config/routing_oauth.yml'
+  resource: '@OAuthBundle/Resources/config/routing.yml'
   prefix:   /oAuth

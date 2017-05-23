@@ -1,4 +1,5 @@
 <?php
+
 namespace AuthBundle\DataFixtures\ORM;
 
 use AuthBundle\Entity\Account;
@@ -14,22 +15,21 @@ class LoadAccountData extends AbstractFixture implements FixtureInterface, Conta
 {
 
     protected $accountsData = [
-        'success-account' =>
-            [
-                "email" => "testuser1@domain.com", "password"=>"4zFBLC", "roles"=>[], 'reference' => 'success-account'
-            ],
+        'success-account' => [
+            "email" => "testuser1@domain.com", "password" => "4zFBLC", "roles" => [], 'reference' => 'success-account'
+        ],
     ];
 
     protected $accounts;
-
 
 
     /**
      * @var ContainerInterface
      */
     private $container;
-    
-    public function setContainer(ContainerInterface $container = null) {
+
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
     }
 
@@ -46,7 +46,7 @@ class LoadAccountData extends AbstractFixture implements FixtureInterface, Conta
             $account->setEmail($data['email']);
             $account->setRoles($data['roles']);
 
-            if(isset($data['reference'])){
+            if (isset($data['reference'])) {
                 $this->addAccountReference($data['reference'], $account);
             }
 
@@ -59,14 +59,15 @@ class LoadAccountData extends AbstractFixture implements FixtureInterface, Conta
     {
         return $this->accountsData[$ref] ?? $this->accounts[$ref];
     }
+
     public function getAccountByReference($ref): Account
     {
         return $this->accounts[$ref] ?? $this->accounts[$ref];
     }
 
-    public function addAccountReference($ref, $accoount )
+    public function addAccountReference($ref, $accoount)
     {
-        if(isset($this->accounts[$ref])) throw new Exception("account already exists");
+        if (isset($this->accounts[$ref])) throw new Exception("account already exists");
 
         $this->accounts[$ref] = $accoount;
     }

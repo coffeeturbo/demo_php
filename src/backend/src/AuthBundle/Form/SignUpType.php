@@ -1,6 +1,7 @@
 <?php
 
 namespace AuthBundle\Form;
+
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,14 +15,14 @@ class SignUpType extends AbstractType
     {
         $builder
             ->add(
-                'email', TextType::class, ["constraints"=> [
+                'email', TextType::class, ["constraints" => [
                     new NotBlank(),
                     new Email()
                 ]]
             )
-            ->add('password', TextType::class, ["constraints"=> [ 
+            ->add('password', TextType::class, ["constraints" => [
                     new NotBlank(),
-                    new Regex('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\S]{8,}$/') 
+                    new Regex('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\S]{8,}$/')
                 ]]
             )
         ;

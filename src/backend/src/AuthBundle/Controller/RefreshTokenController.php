@@ -1,4 +1,5 @@
 <?php
+
 namespace AuthBundle\Controller;
 
 use AppBundle\Http\ErrorResponse;
@@ -39,10 +40,10 @@ class RefreshTokenController extends Controller
     {
         try {
             $this->get('app.validate_request.service')->validate($request, RefreshTokenType::class);
-        } catch(BadRequestHttpException $e) {
+        } catch (BadRequestHttpException $e) {
             return new ErrorResponse($e->getMessage(), $e->getStatusCode());
         }
-        
+
         return $this->forward('gesdinet.jwtrefreshtoken:refresh');
     }
 }

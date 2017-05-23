@@ -30,7 +30,7 @@ security:
                 login_path:   /oAuth
                 check_path:   /oAuth
                 oauth_user_provider:
-                    service: auth.oauth_account_provider.service
+                    service: security.oauth.account_provider.service
                 resource_owners:
                     vk:       /oAuth/vk
                     facebook: /oAuth/facebook

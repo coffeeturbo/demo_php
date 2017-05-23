@@ -1,13 +1,14 @@
 <?php
-namespace AuthBundle\Http;
+
+namespace AuthBundle\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class TokenResponse extends JsonResponse implements \JsonSerializable 
+class SuccessAuthResponse extends JsonResponse implements \JsonSerializable
 {
     private $token;
     private $refresh_token;
-    
+
     function __construct($token = null, $refresh_token = null)
     {
         $this->token = $token;
@@ -18,8 +19,8 @@ class TokenResponse extends JsonResponse implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            "token" => (string) $this->token,
-            "refresh_token" => (string) $this->refresh_token,
+            "token" => (string)$this->token,
+            "refresh_token" => (string)$this->refresh_token,
         ];
     }
 }

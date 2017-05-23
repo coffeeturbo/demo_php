@@ -1,10 +1,11 @@
 <?php
+
 namespace AuthBundle\Controller;
 
 use AppBundle\Http\ErrorResponse;
 use AuthBundle\Entity\Account;
 use AuthBundle\Form\SignUpType;
-use AuthBundle\Http\TokenResponse;
+use AuthBundle\Response\SuccessAuthResponse;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class SignUpController extends Controller
 {
@@ -28,7 +28,7 @@ class SignUpController extends Controller
      *      400 = "Неправильный запрос",
      *  }
      * )
-     * 
+     *
      * @param Request $request
      * @return Response
      */
@@ -42,7 +42,7 @@ class SignUpController extends Controller
 
         /** @var UserManager $userManager */
         $userManager = $this->get('fos_user.user_manager');
-        
+
         /** @var Account $account */
         $account = $userManager->createUser();
         $account
@@ -51,10 +51,10 @@ class SignUpController extends Controller
             ->setUsername($body['email'])
             ->setEmail($body['email'])
             ->setRoles([Account::ROLE_CREATED]);
-        
+
         try {
             $userManager->updateUser($account);
-        } catch (UniqueConstraintViolationException $e ) {
+        } catch (UniqueConstraintViolationException $e) {
             return new ErrorResponse("User already exists", Response::HTTP_CONFLICT);
         }
 
@@ -63,8 +63,8 @@ class SignUpController extends Controller
             'roles' => $account->getRoles(),
             'exp' => time() + $this->getParameter('lexik_jwt_authentication.token_ttl')
         ];
-        
-        return new TokenResponse(
+
+        return new SuccessAuthResponse(
             $this->get('lexik_jwt_authentication.encoder')->encode($jwtData)
         );
     }

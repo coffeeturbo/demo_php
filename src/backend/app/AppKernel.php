@@ -24,8 +24,9 @@ class AppKernel extends Kernel
             new Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle(),
 
             /* App Bundles */
-            new AuthBundle\AuthBundle(),
             new AppBundle\AppBundle(),
+            new AuthBundle\AuthBundle(),
+            new OAuthBundle\OAuthBundle(),
             new ProfileBundle\ProfileBundle()
         ];
 

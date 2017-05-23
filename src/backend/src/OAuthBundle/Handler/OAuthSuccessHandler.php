@@ -1,5 +1,6 @@
 <?php
-namespace AuthBundle\Handler;
+
+namespace OAuthBundle\Handler;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler as LexikAuthenticationSuccessHandler;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
@@ -9,7 +10,7 @@ use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class OAuthSuccessHandler extends LexikAuthenticationSuccessHandler   
+class OAuthSuccessHandler extends LexikAuthenticationSuccessHandler
 {
     private $router;
 
@@ -19,9 +20,10 @@ class OAuthSuccessHandler extends LexikAuthenticationSuccessHandler
         $this->router = $router;
     }
 
-    public function onAuthenticationSuccess( Request $request, TokenInterface $token ) {
-        $response = parent::onAuthenticationSuccess($request, $token );
-        $response = new RedirectResponse($this->router->generate('get_token', json_decode($response->getContent(),true)));
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token)
+    {
+        $response = parent::onAuthenticationSuccess($request, $token);
+        $response = new RedirectResponse($this->router->generate('get_token', json_decode($response->getContent(), true)));
         return $response;
     }
 }
