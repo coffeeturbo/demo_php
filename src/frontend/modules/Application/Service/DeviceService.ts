@@ -1,16 +1,22 @@
 import {Injectable} from "@angular/core";
 
-@Injectable()
-export class Device {
+type Devices = "mobile" | "tablet" | "wide" | "desktop";
+type Breakpoints = {
+    [key in Devices]: number
+};
 
-    isMobile() : boolean {
-        return window.innerWidth < breakpoints.tablet;
-    }
-}
-
-const breakpoints:any = {
+const breakpoints: Breakpoints = {
     mobile:  320,
     tablet:  740,
     desktop: 980,
     wide:    1300
 };
+
+@Injectable()
+export class Device {
+    
+    isMobile() : boolean {
+        return window.innerWidth < breakpoints.tablet;
+    }
+}
+
