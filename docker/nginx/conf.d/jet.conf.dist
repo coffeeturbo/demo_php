@@ -1,0 +1,32 @@
+server {
+    root /opt/jet/web;
+    listen 8080;
+    sendfile off;
+
+    # Frontend (Angular2)
+    location / {
+        try_files $uri /dist/index.html =404;
+    }
+
+    # REST BACKEND (Symfony3)
+    location /api {
+        try_files $uri /api/app.php$is_args$args;
+    }
+
+    location /api/app_dev.php {
+        fastcgi_pass php:9000;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+    }
+
+    location /api/app.php {
+        fastcgi_pass php:9000;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+        internal;
+    }
+}
