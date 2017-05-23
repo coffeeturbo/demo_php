@@ -110,3 +110,6 @@ hwi_oauth:
             client_id:           '%hwi_oauth_facebook_id%'
             client_secret:       '%hwi_oauth_facebook_secret%'
             scope:               "email"
+            
+gesdinet_jwt_refresh_token:
+    ttl: 2592000            

@@ -1,18 +1,23 @@
 sign_in:
   path: /sign-in
   defaults:  
-    _controller: AuthBundle:SignIn:index 
+    _controller: AuthBundle:SignIn:signIn
   methods: [POST]
 
 sign_up:
   path: /sign-up
   defaults:
-    _controller: AuthBundle:SignUp:index 
+    _controller: AuthBundle:SignUp:signUp
   methods: [PUT]
 
 get_token:
-  path: /getToken/{token}
+  path: /token/get/{token}/{refresh_token}
   defaults:  
-    _controller: AuthBundle:SignIn:renderToken
+    _controller: AuthBundle:RenderToken:render
   methods: [GET]
   
+refresh_token:
+  path:     /token/refresh
+  defaults: 
+   _controller: AuthBundle:RefreshToken:refresh 
+  methods: [POST]

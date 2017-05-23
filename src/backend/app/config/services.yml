@@ -20,3 +20,8 @@ services:
             - '@fos_user.user_manager'
             - vk: vkId
               facebook: facebookId
+    app.validate_request.service:
+        class: AppBundle\Service\ValidateRequestService
+        arguments:
+            - '@form.factory'
+        

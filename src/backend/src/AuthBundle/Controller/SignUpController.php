@@ -32,10 +32,10 @@ class SignUpController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function signUpAction(Request $request)
     {
         try {
-            $body = $this->validateRequest($request);
+            $body = $this->get('app.request.service')->validate($request, SignUpType::class);
         } catch (BadRequestHttpException $e) {
             return new ErrorResponse($e->getMessage(), $e->getStatusCode());
         }
@@ -68,17 +68,4 @@ class SignUpController extends Controller
             $this->get('lexik_jwt_authentication.encoder')->encode($jwtData)
         );
     }
-
-    private function validateRequest(Request $request)
-    {
-        $body = json_decode($request->getContent(), true);
-        $form = $this->createForm(SignUpType::class);
-        $form->submit($body);
-
-        if(!$form->isValid()) {
-            throw new BadRequestHttpException("Bad parameters");
-        }
-
-        return $form->getData();
-    }    
 }
