@@ -30,11 +30,11 @@ security:
                 login_path:   /oAuth
                 check_path:   /oAuth
                 oauth_user_provider:
-                    service: security.oauth.account_provider.service
+                    service: oauth.security.account_provider
                 resource_owners:
                     vk:       /oAuth/vk
                     facebook: /oAuth/facebook
-                success_handler: security.oauth.success_handler
+                success_handler: lexik_jwt_authentication.handler.authentication_success
 
         protected_api:
             pattern: ^/protected

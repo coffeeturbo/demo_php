@@ -4,24 +4,22 @@ parameters:
     #parameter_name: value
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
-    security.oauth.success_handler:
-        class:  OAuthBundle\Handler\OAuthSuccessHandler
-        arguments:
-          - '@lexik_jwt_authentication.jwt_manager'
-          - '@event_dispatcher'
-          - '@router'
+    oauth.security.success_handler:
+        class: OAuthBundle\EventListener\AuthenticationSuccessListener
+        tags:
+            - name: kernel.event_listener
+              event: lexik_jwt_authentication.on_authentication_success
+              method: redirectOnSuccess
+              priority: -10 # gesdinet.jwtrefreshtoken.send_token must be executed before this
+        arguments: ['@router']
   
-    security.oauth.account_provider.service:
+    oauth.security.account_provider:
         class: OAuthBundle\Security\Core\Account\OAuthAccountProvider
         arguments:
             - '@fos_user.user_manager'
-            - vk: vkId
-              facebook: facebookId
+            - { vk: vkId, facebook: facebookId }
+
     app.validate_request.service:
         class: AppBundle\Service\ValidateRequestService
-        arguments:
-            - '@form.factory'
+        arguments: ['@form.factory']
         
