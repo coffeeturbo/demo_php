@@ -1,0 +1,21 @@
+AuthBundle\Entity\Account:
+  type: entity
+  repositoryClass: AuthBundle\Repository\AccountRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    vkId:
+      type: integer
+      column: vk_id
+      nullable: true
+    facebookId:
+      type: integer
+      column: facebook_id
+      nullable: true
+    googleId:
+      type: integer
+      column: google_id
+      nullable: true
