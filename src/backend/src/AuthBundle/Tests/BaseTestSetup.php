@@ -1,10 +1,10 @@
 <?php
 namespace AuthBundle\Tests;
 
-
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+error_reporting(0);
 abstract class BaseTestSetup extends WebTestCase
 {
     protected $client;
@@ -13,11 +13,9 @@ abstract class BaseTestSetup extends WebTestCase
 
     public function setUp()
     {
-        $this->client = static::createClient();
-        $this->container = $this->client->getContainer();
+        $this->container = static::createClient()->getContainer();
 
-        $this->em = static::$kernel->getContainer()
-            ->get('doctrine.orm.default_entity_manager');
+        $this->em = $this->container->get('doctrine.orm.default_entity_manager');
 
         $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
 
@@ -27,31 +25,28 @@ abstract class BaseTestSetup extends WebTestCase
 
     }
 
-    /**
-     * Create a client with a default Authorization header.
-     *
-     * @param string $username
-     * @param string $password
-     *
-     * @return \Symfony\Bundle\FrameworkBundle\Client
-     */
     protected function createAuthenticatedClient($username = 'user', $password = 'password')
     {
-        $client = static::createClient();
-        $client->request(
-            'POST',
-            '/api/login_check',
-            array(
-                '_username' => $username,
-                '_password' => $password,
-            )
-        );
+        $client = static::createSignInClient(json_encode([
+            "username" => $username,
+            "password" => $password
+        ]));
 
-        $data = json_decode($client->getResponse()->getContent(), true);
+        $body = json_decode($client->getResponse()->getContent(), true)['token'];
 
         $client = static::createClient();
-        $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
+        $client->setServerParameter('Authorization', sprintf('Bearer %s', $body['token'] ?? null));
+
+        return $client;
+
+    }
+
+    protected static function createSignInClient($body, Array $headers = [])
+    {
+        $client = static::createClient();
+        $client->request('POST', '/auth/sign-in', [], [], $headers, $body);
 
         return $client;
     }
+
 }

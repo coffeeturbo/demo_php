@@ -24,43 +24,60 @@ class SignInControllerTest extends BaseTestSetup
     {
         $accountData = $this->fixtures->getAccountDataByReference('success-account');
 
-        $client = static::createClient();
-
-        $client->request('POST', '/auth/sign-in', [], [], ['content-type' => 'application/json'], json_encode(
-            [
-                "username" => $accountData['email'],
-                "password" => $accountData['password'],
-            ]
-        ));
+        $client = static::createSignInClient(json_encode([
+            "username" => $accountData['email'],
+            "password" => $accountData['password'],
+        ]));
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function test400()
-    {
-        $client = static::createClient();
-        $client->request('POST', '/auth/sign-in', [], [], ['content-type' => 'application/json'], json_encode(
-            [
-                "username" => '',
-                "password" => '',
-            ]
-        ));
-
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
-    }
-
-    public function test401()
+    public function test400() // 400 Bad request
     {
         $accountData = $this->fixtures->getAccountDataByReference('success-account');
 
-        $client = static::createClient();
-        $client->request('POST', '/auth/sign-in', [], [], ['content-type' => 'application/json'], json_encode(
+        $test_data = [
+            [
+                "username" => $accountData['email'] // без пароля
+            ],
+            [
+                "password" => $accountData['password'] // без логина
+            ],
+            [
+                "foo" => 'bar', // с неправильным параметром без правильных параметров
+            ],
+            [
+                "username" => $accountData['email'],    // с неправильным параметром 
+                "password" => $accountData['password'], // и правильными параметрами
+                "foobar" => $accountData['password']
+            ],
+            [
+                null
+            ]
+        ];
+        foreach ($test_data as $data) {
+            $client = static::createSignInClient(json_encode($data));
+            $this->assertEquals(400, $client->getResponse()->getStatusCode());
+        }
+    }
+
+    public function test401() // 401 Unauthorized
+    {
+        $accountData = $this->fixtures->getAccountDataByReference('success-account');
+        $test_data = [
             [
                 "username" => $accountData['email'],
-                "password" => 'wrong_password',
+                "password" => 'wrong_password', // с неправильным паролем
+            ],
+            [
+                "username" => 'wrong_username', // с неправильным логином
+                "password" => $accountData['password'],
             ]
-        ));
+        ];
 
-        $this->assertEquals(401, $client->getResponse()->getStatusCode());
+        foreach ($test_data as $data) {
+            $client = static::createSignInClient(json_encode($data));
+            $this->assertEquals(401, $client->getResponse()->getStatusCode());
+        }
     }
 }
