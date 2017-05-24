@@ -24,4 +24,9 @@ services:
         class: AppBundle\Service\ValidateRequestService
         arguments:
             - '@form.factory'
-        
+            
+    jet.security.authentication.listener.form:
+        class: AuthBundle\Security\Http\Firewall\JetAuthenticationListener
+        parent: "security.authentication.listener.abstract"
+        abstract: "true"
+          

@@ -23,9 +23,16 @@ security:
             security: false
 
         login_protected_api:
-            pattern: ^/oAuth
+            pattern: ^/(oA|a)uth
             anonymous: ~
             stateless: true
+            jet_form_login:
+                check_path:               /auth/sign-in
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+                username_parameter:       username
+                password_parameter:       password
             oauth:
                 login_path:   /oAuth
                 check_path:   /oAuth

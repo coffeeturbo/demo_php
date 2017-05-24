@@ -1,7 +1,5 @@
 sign_in:
   path: /sign-in
-  defaults:  
-    _controller: AuthBundle:SignIn:signIn
   methods: [POST]
 
 sign_up:
