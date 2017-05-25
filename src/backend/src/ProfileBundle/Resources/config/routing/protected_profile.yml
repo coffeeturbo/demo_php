@@ -1,0 +1,4 @@
+profile_create:
+  path: create
+  defaults: { _controller: ProfileBundle:Profile:create }
+  methods: [ PUT ]

@@ -4,11 +4,18 @@ namespace ProfileBundle\Entity;
 
 use ProfileBundle\Entity\Profile\Gender\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
+use ProfileBundle\Exception\InvalidBirthDateException;
+
 /**
  * Profile
  */
 class Profile
 {
+
+    const ADULT_AGE = 18;
+    const MAX_AGE = 150;
+
+
     /**
      * @var integer
      */
@@ -27,7 +34,7 @@ class Profile
     /**
      * @var \DateTime
      */
-    private $birth_date;
+    private $birthDate;
 
     /**
      * @var integer
@@ -37,7 +44,7 @@ class Profile
     /**
      * @var array
      */
-    private $privacy_opts;
+    private $privacyOpts;
 
     /**
      * @var integer
@@ -48,6 +55,8 @@ class Profile
     public function __construct()
     {
         $this->gender = (new NoneGender())->getIntCode();
+        $this->created = new \DateTime();
+        $this->verified = false;
     }
 
     /**
@@ -110,38 +119,39 @@ class Profile
 
 
 
-    /**
-     * Set birthDate
-     *
-     * @param \DateTime $birthDate
-     *
-     * @return Profile
-     */
-    public function setBirthDate($birthDate)
+    public function getBirthDate(): \DateTime
     {
-        $this->birth_date = $birthDate;
+        return $this->birthDate;
+    }
+
+    public function setBirthDate(\DateTime $birthday): self
+    {
+        $now = new \DateTime();
+
+        if($now < $birthday) {
+            throw new InvalidBirthDateException(sprintf("UnAccetable age you cannot be younger %s", $now));
+        }
+
+        $diff = $birthday->diff(new \DateTime());
+        $years = $diff->y;
+
+        if($years > self::MAX_AGE) {
+            throw new InvalidBirthDateException(sprintf("sorry age %s unreachable", $years));
+        }
+
+        $this->birthDate = $birthday;
 
         return $this;
     }
 
     /**
-     * Get birthDate
-     *
-     * @return \DateTime
-     */
-    public function getBirthDate()
-    {
-        return $this->birth_date;
-    }
-
-    /**
      * Set verified
      *
-     * @param integer $verified
+     * @param bool $verified
      *
      * @return Profile
      */
-    public function setVerified($verified)
+    public function setVerified(bool $verified)
     {
         $this->verified = $verified;
 
@@ -151,9 +161,9 @@ class Profile
     /**
      * Get verified
      *
-     * @return integer
+     * @return bool
      */
-    public function getVerified()
+    public function getVerified(): bool
     {
         return $this->verified;
     }
@@ -167,7 +177,7 @@ class Profile
      */
     public function setPrivacyOpts($privacyOpts)
     {
-        $this->privacy_opts = $privacyOpts;
+        $this->privacyOpts = $privacyOpts;
 
         return $this;
     }
@@ -179,7 +189,7 @@ class Profile
      */
     public function getPrivacyOpts()
     {
-        return $this->privacy_opts;
+        return $this->privacyOpts;
     }
 
     public function setGender(Gender $gender)

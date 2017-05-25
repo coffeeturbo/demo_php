@@ -1,0 +1,7 @@
+protected_profile:
+  resource: '@ProfileBundle/Resources/config/routing/protected_profile.yml'
+  prefix: /protected/profile
+
+profile:
+  resource: '@ProfileBundle/Resources/config/routing/profile.yml'
+  prefix: /profile

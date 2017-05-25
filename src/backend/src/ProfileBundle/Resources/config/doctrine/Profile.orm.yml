@@ -16,15 +16,17 @@ ProfileBundle\Entity\Profile:
     gender:
       type: smallint
       nullable: false
-    birth_date:
+    birthDate:
       type: datetime
+      column: birth_date
       nullable: false
     verified:
-      type: smallint
+      type: boolean
       nullable: false
-    privacy_opts:
+    privacyOpts:
       type: json_array
-      nullable: false
+      column: privacy_opts
+      nullable: true
 
 #    alias:
 #      type: string

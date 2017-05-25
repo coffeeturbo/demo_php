@@ -9,3 +9,7 @@ auth:
 oAuth:
   resource: '@OAuthBundle/Resources/config/routing.yml'
   prefix:   /oAuth
+
+profile:
+  resource: '@ProfileBundle/Resources/config/routing.yml'
+  prefix: /
