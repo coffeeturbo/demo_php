@@ -19,14 +19,6 @@ class RefreshTokenController extends Controller
      *  section = "Auth",
      *  input = {"class" = "AuthBundle\Form\RefreshTokenType", "name"  = ""},
      *  output = {"class" = "AuthBundle\Http\TokenResponse"},
-     *  headers = {
-     *      {
-     *          "name" = "Content-Type",
-     *          "default" = "application/json",
-     *          "required" = true,
-     *          "description" = "Необходим для отправки данных в RAW"
-     *      }
-     *  },
      *  statusCodes = {
      *      200 = "Успешная авторизация",
      *      400 = "Неверный токен",
@@ -39,6 +31,7 @@ class RefreshTokenController extends Controller
     public function refreshAction(Request $request)
     {
         try {
+            $request->headers->add(["Content-Type"=>"application/json"]);
             $this->get('app.validate_request.service')->validate($request, RefreshTokenType::class);
         } catch (BadRequestHttpException $e) {
             return new ErrorResponse($e->getMessage(), $e->getStatusCode());
