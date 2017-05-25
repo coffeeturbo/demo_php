@@ -1,4 +1,4 @@
-import {Dictionaries} from "../modules/Translate/Entity/Definitions";
+import {Dictionaries, DictionariesNavigatorAliases} from "../modules/Translate/Entity/Definitions";
 
 export const dictionaries: Dictionaries = {
     "RU": Object.assign(
@@ -7,4 +7,13 @@ export const dictionaries: Dictionaries = {
         require('../modules/Settings/Dictionaries/RU.json')
     ),
     "EN": {}
+};
+
+export const dictionariesNavigatorAliases: DictionariesNavigatorAliases = {
+    'RU': [
+        'ru', 'ru-RU',  // Russian 
+        'be', 'be-BE',  // Belarusian
+        'uk', 'uk-UA'   // Ukraine
+    ],
+    'EN': ['en', 'en-US']
 };

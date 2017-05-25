@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Locale} from "../Entity/Definitions";
+import {dictionariesNavigatorAliases} from "../../../translations/dictionaries";
 
 @Injectable()
 export class LocaleService {
-    private defaultTocale: Locale = require('../../../app/config.json').locale;
     private locale: Locale;
     
     constructor() {
-        this.locale = <Locale>localStorage.getItem('locale') || this.defaultTocale;
+        this.locale = <Locale>localStorage.getItem('locale') || LocaleService.getDefaultLocale();
     }
     
     public getLocale(): Locale {
@@ -17,5 +17,19 @@ export class LocaleService {
     public setLocale(locale: Locale): void {
         this.locale = locale;
         localStorage.setItem('locale', locale);
+    }
+    
+    public static getDefaultLocale(): Locale {
+        for (let locale in dictionariesNavigatorAliases) {
+            if (dictionariesNavigatorAliases.hasOwnProperty(locale)) {
+
+                let isLangExist = dictionariesNavigatorAliases[locale].filter(
+                        (navigatorLanguage: string) => navigatorLanguage === navigator.language
+                    ).length > 0;
+
+                if (isLangExist) return <Locale>locale;
+            }
+        }
+        return require('../../../app/config.json').locale;
     }
 }

@@ -9,3 +9,7 @@ export type Dictionary = {
 export type Dictionaries = {
     [key in Locale]: Dictionary;
 }
+
+export type DictionariesNavigatorAliases = {
+    [key in Locale]: string[];
+}

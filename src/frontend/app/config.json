@@ -1,7 +1,7 @@
 {
     "product_name": "Socilite",
     "short_product_name": "SoL",
-    "locale" : "RU",
+    "locale" : "EN",
     "account": {
         "constraints": {
             "username": {
