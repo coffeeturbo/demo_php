@@ -13,6 +13,7 @@ class ProfileController extends Controller
      *     section="Profile",
      *     resource=true,
      *     description= "Создаем профиль",
+     *     authentication=true,
      *     requirements={
      *          {
      *              "name" = "name",
