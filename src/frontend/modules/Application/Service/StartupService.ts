@@ -1,43 +1,26 @@
-import {Injectable} from '@angular/core';
+import {Injectable, Injector} from '@angular/core';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
-import {RESTService} from "./RESTService";
-import {Response} from "@angular/http";
+import {AuthService} from "../../Auth/Service/AuthService";
+import {TokenStorageService} from "../../Auth/Service/TokenStorageService";
 
 @Injectable()
 export class StartupService {
 
-    private data : any;
+    private promises: Promise<any>[] = [];
 
-    constructor(private rest: RESTService) {}
+    constructor(private tokenStorage: TokenStorageService, private injector: Injector) {}
 
+    init(): Promise<any> {
+        let authService: AuthService = this.injector.get(AuthService);
 
-    fakeload() : Promise<any> {
-        return new Promise((resolve) => resolve());
-        
-        /*
-         *!DOTO: make pre refreshing token if expired:
-         */  
-        /*this.authService.addTokenExpirationSchedule();
-        if(this.authService.getExpTime() > this.authService.offset) {
-        } else {
-            return this.authService.onRefresh.toPromise();
-        }
-        */
+        if (this.tokenStorage.getTokenExpTime() < 0) // If token expired wait before get a new
+            this.promises.push(authService.onRefreshToken.toPromise());
+
+        authService.addTokenExpirationSchedule();
+
+        return Promise.all(this.promises);
     }
-
-    // Important: It should return a Promise
-    load() : Promise<any> {
-        return this.rest
-                    .get('/config/')
-                    .toPromise()
-                    .then((data: Response) => this.data = data.json());
-    }
-
-    get get() {
-        return this.data;
-    }
-    
 }

@@ -32,7 +32,7 @@ export function RESTServiceFacroty(backend: XHRBackend, options: RequestOptions,
 }
 
 export function StartupServiceFactory(startupService: StartupService): Function {
-    return () => startupService.fakeload/*load*/();
+    return () => startupService.init();
 }
  
 

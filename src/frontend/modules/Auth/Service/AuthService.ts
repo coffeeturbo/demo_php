@@ -1,4 +1,4 @@
-import {Injectable, NgZone} from '@angular/core';
+import {EventEmitter, Injectable, NgZone} from '@angular/core';
 
 import {JwtHelper, tokenNotExpired} from "angular2-jwt";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -29,8 +29,10 @@ export interface AuthServiceInterface {
 @Injectable()
 export class AuthService implements AuthServiceInterface 
 {
-    private tokenExpirationSchedule: Subscription;
+    public onRefreshToken: EventEmitter<any> = new EventEmitter();
     
+    private tokenExpirationSchedule: Subscription;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute, 
@@ -64,11 +66,15 @@ export class AuthService implements AuthServiceInterface
         );
     }
 
-    public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse | ResponseFailure>
+    public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse | ResponseFailure> 
     {
-        return this.handleTokenResponse(
-            this.rest.refreshToken(body)
+        let refreshToken = this.rest.refreshToken(body).share();
+        refreshToken.subscribe(
+            (next)  => this.onRefreshToken.emit(next),
+            (error) => this.onRefreshToken.error(error),
+            ()      => this.onRefreshToken.complete()
         );
+        return this.handleTokenResponse(refreshToken);
     }
 
     public connectVK(): Observable<TokenResponse | ResponseFailure> 
@@ -84,23 +90,24 @@ export class AuthService implements AuthServiceInterface
     public signOut(): void 
     {
         this.tokenStorage.removeTokens();
+        this.tokenExpirationSchedule.unsubscribe();
         this.router.navigate(["login"]);
     }
+
 
     public addTokenExpirationSchedule()/*: Observable<TokenResponse | ResponseFailure>*/
     {
         if(this.tokenStorage.isTokenExist()) {
-            let offset:number = 5000;  // Make it 5 sec before token expired
+            
+            
+            let offset: number = 1000;  // Make it 5 sec before token expired
             let delay = this.tokenStorage.getTokenExpTime() - offset;
-
             if(this.tokenExpirationSchedule) {
                 this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
             }
 
             this.tokenExpirationSchedule = Scheduler.queue.schedule(() => {
-                this.refreshToken({
-                    "refresh_token": this.tokenStorage.getRefreshToken()
-                });
+                this.refreshToken({"refresh_token": this.tokenStorage.getRefreshToken()});
             }, delay);
         }
     }
@@ -139,7 +146,9 @@ export class AuthService implements AuthServiceInterface
                 this.tokenStorage.saveToken(tokenResponse.token);
                 this.tokenStorage.saveRefreshToken(tokenResponse.refresh_token);
                 this.addTokenExpirationSchedule();
-                this.router.navigate([this.route.data['returnUrl'] || "/"]);
+                if(this.route.data.hasOwnProperty('returnUrl')) {
+                    this.router.navigate([this.route.data['returnUrl']]);
+                }
             },
             (tokenResponseFailure: ResponseFailure) => {
                 console.log(tokenResponseFailure.message);
