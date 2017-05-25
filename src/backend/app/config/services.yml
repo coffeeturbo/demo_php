@@ -5,13 +5,19 @@ parameters:
 
 services:
     oauth.security.success_handler:
-        class: OAuthBundle\EventListener\AuthenticationSuccessListener
-        tags:
-            - name: kernel.event_listener
-              event: lexik_jwt_authentication.on_authentication_success
-              method: redirectOnSuccess
-              priority: -10 # gesdinet.jwtrefreshtoken.send_token must be executed before this
-        arguments: ['@router']
+        class:  OAuthBundle\Handler\OAuthSuccessHandler
+        arguments:
+          - '@lexik_jwt_authentication.jwt_manager'
+          - '@event_dispatcher'
+          - '@router'    
+    
+#        class: OAuthBundle\EventListener\AuthenticationSuccessListener
+#        tags:
+#            - name: kernel.event_listener
+#              event: lexik_jwt_authentication.on_authentication_success
+#              method: redirectOnSuccess
+#              priority: -10 # gesdinet.jwtrefreshtoken.send_token must be executed before this
+#        arguments: ['@router']
   
     oauth.security.account_provider:
         class: OAuthBundle\Security\Core\Account\OAuthAccountProvider

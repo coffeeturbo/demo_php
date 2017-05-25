@@ -34,7 +34,7 @@ security:
                 resource_owners:
                     vk:       /oAuth/vk
                     facebook: /oAuth/facebook
-                success_handler: lexik_jwt_authentication.handler.authentication_success
+                success_handler: oauth.security.success_handler
 
         protected_api:
             pattern: ^/protected
