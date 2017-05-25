@@ -17,8 +17,10 @@ class Account extends User
     protected $vkId;
 
     protected $facebookId;
+    
+    protected $googleId;
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -43,5 +45,14 @@ class Account extends User
         $this->facebookId = $facebookId;
     }
 
-}
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
 
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+    }
+
+}
