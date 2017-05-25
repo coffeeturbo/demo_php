@@ -5,14 +5,13 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import {RESTService} from "./RESTService";
 import {Response} from "@angular/http";
-import {AuthService} from "../../Auth/Service/AuthService";
 
 @Injectable()
 export class StartupService {
 
     private data : any;
 
-    constructor(private rest: RESTService, private authService: AuthService) {}
+    constructor(private rest: RESTService) {}
 
 
     fakeload() : Promise<any> {
