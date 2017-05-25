@@ -18,7 +18,7 @@ setup.sh
 docker-compose exec php bash # go into php container
 mkdir var/jwt
 # Passphrase must by same %jwt_key_pass_phrase% (parameters.yml) 
-openssl genrsa -out var/jwt/private.pem -aes256 4096 \
+openssl genrsa -out var/jwt/private.pem -aes256 4096
 openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 exit # exit from container
 
