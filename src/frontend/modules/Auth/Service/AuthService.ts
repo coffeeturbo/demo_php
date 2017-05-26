@@ -10,7 +10,7 @@ import {SignUpRequest} from "../Http/Request/SignUpRequest";
 import {Token} from "../Entity/Token";
 import {Roles} from "../Entity/Role";
 import {TokenResponse} from "../Http/Response/TokenResponse";
-import {TokenStorageService} from "./TokenStorageService";
+import {TokenRepository} from "../Repository/TokenRepository";
 import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 
 const jwtHelper: JwtHelper = new JwtHelper();
@@ -25,7 +25,9 @@ export interface AuthServiceInterface {
     signOut(): void;
 }
 
-
+/** 
+ * @TODO: replace subscribe handleTokenResponse on TokenResponseListner
+ */
 @Injectable()
 export class AuthService implements AuthServiceInterface 
 {
@@ -37,7 +39,6 @@ export class AuthService implements AuthServiceInterface
         private router: Router,
         private route: ActivatedRoute, 
         private rest: AuthRESTService, 
-        private tokenStorage: TokenStorageService, 
         private zone: NgZone
     ) {}
 
@@ -48,33 +49,37 @@ export class AuthService implements AuthServiceInterface
 
     public getRoles(): Roles 
     {
-        let tokenData: Token = jwtHelper.decodeToken(this.tokenStorage.getToken());
+        let tokenData: Token = jwtHelper.decodeToken(TokenRepository.getToken());
         return tokenData.roles;
     }
 
     public signIn(body: SignInRequest): Observable<TokenResponse | ResponseFailure> 
     {
-        return this.handleTokenResponse(
-            this.rest.signIn(body)
+        let observableTokenResponse = this.handleTokenResponse(this.rest.signIn(body)).share();
+        observableTokenResponse.subscribe(
+            ()=> this.router.navigate([this.route.data['returnUrl'] || "/"])
         );
+        return observableTokenResponse;
     }
 
     public signUp(body: SignUpRequest): Observable<TokenResponse | ResponseFailure> 
     {
-        return this.handleTokenResponse(
-            this.rest.signUp(body)
+        let observableTokenResponse = this.handleTokenResponse(this.rest.signUp(body)).share();
+        observableTokenResponse.subscribe(
+            ()=> this.router.navigate(["/"])
         );
+        return observableTokenResponse;
     }
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse | ResponseFailure> 
     {
-        let refreshToken = this.rest.refreshToken(body).share();
-        refreshToken.subscribe(
+        let observableTokenResponse = this.handleTokenResponse(this.rest.refreshToken(body)).share();
+        observableTokenResponse.subscribe(
             (next)  => this.onRefreshToken.emit(next),
             (error) => this.onRefreshToken.error(error),
             ()      => this.onRefreshToken.complete()
         );
-        return this.handleTokenResponse(refreshToken);
+        return observableTokenResponse;
     }
 
     public connectVK(): Observable<TokenResponse | ResponseFailure> 
@@ -89,25 +94,24 @@ export class AuthService implements AuthServiceInterface
 
     public signOut(): void 
     {
-        this.tokenStorage.removeTokens();
+        TokenRepository.removeTokens();
         this.tokenExpirationSchedule.unsubscribe();
         this.router.navigate(["login"]);
     }
 
-
     public addTokenExpirationSchedule()/*: Observable<TokenResponse | ResponseFailure>*/
     {
-        if(this.tokenStorage.isTokenExist()) {
+        if(TokenRepository.isTokenExist()) {
             
             
             let offset: number = 1000;  // Make it 5 sec before token expired
-            let delay = this.tokenStorage.getTokenExpTime() - offset;
+            let delay = TokenRepository.getTokenExpTime() - offset;
             if(this.tokenExpirationSchedule) {
                 this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
             }
 
             this.tokenExpirationSchedule = Scheduler.queue.schedule(() => {
-                this.refreshToken({"refresh_token": this.tokenStorage.getRefreshToken()});
+                this.refreshToken({"refresh_token": TokenRepository.getRefreshToken()});
             }, delay);
         }
     }
@@ -143,12 +147,9 @@ export class AuthService implements AuthServiceInterface
 
         observableTokenResponse.subscribe(
             (tokenResponse: TokenResponse) => {
-                this.tokenStorage.saveToken(tokenResponse.token);
-                this.tokenStorage.saveRefreshToken(tokenResponse.refresh_token);
+                TokenRepository.saveToken(tokenResponse.token);
+                TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
                 this.addTokenExpirationSchedule();
-                if(this.route.data.hasOwnProperty('returnUrl')) {
-                    this.router.navigate([this.route.data['returnUrl']]);
-                }
             },
             (tokenResponseFailure: ResponseFailure) => {
                 console.log(tokenResponseFailure.message);
