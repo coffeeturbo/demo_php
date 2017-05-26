@@ -11,11 +11,11 @@ export class SidebarService {
 
     private visibility: SidebarState = "visible";
 
-    constructor(private router: Router, private device: Device) {
-        let defaultState: SidebarState = device.isMobile() ? "hidden" : "visible";
+    constructor(private router: Router) {
+        let defaultState: SidebarState = Device.isMobile() ? "hidden" : "visible";
         this.visibility = defaultState;
         router.events.subscribe(() => {
-            if (device.isMobile()) {
+            if (Device.isMobile()) {
                 this.visibility = defaultState;
             }
         })

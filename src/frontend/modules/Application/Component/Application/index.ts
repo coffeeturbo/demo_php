@@ -19,7 +19,6 @@ export class ApplicationComponent {
     constructor(
         public  sidebarService: SidebarService,
         public  authService: AuthService,
-        public  device: Device,
         private titleService: Title,
         private router: Router,
         private activatedRoute: ActivatedRoute,

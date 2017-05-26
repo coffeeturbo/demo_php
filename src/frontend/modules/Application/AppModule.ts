@@ -12,7 +12,6 @@ import {RESTService} from "./Service/RESTService";
 import {ApplicationComponent} from "./Component/Application/index";
 import {ForbiddenRoute} from "./Route/ForbiddenRoute/index";
 import {PageNotFoundRoute} from "./Route/PageNotFoundRoute/index";
-import {Device} from "./Service/DeviceService";
 import {StartupService} from "./Service/StartupService";
 import {AuthModule} from "../Auth/AuthModule";
 import {UIModule} from "../UI/UIModule";
@@ -35,7 +34,6 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     return () => startupService.init();
 }
  
-
 @NgModule({
     imports: [
         BrowserModule,
@@ -58,7 +56,6 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         PageNotFoundRoute,
     ],
     providers: [
-        Device,
         RESTService,
         StartupService,
         {

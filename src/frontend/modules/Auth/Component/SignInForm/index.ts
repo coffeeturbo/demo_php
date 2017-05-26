@@ -13,7 +13,7 @@ export class SignInFormComponent {
 
     @Input('show-controls') showControls: boolean = true;
     protected isPasswordHidden: boolean = true;
-    protected disabled: boolean = false;
+    public disabled: boolean = false;
     public fail: boolean = false;
 
     constructor(private authService: AuthService) {}

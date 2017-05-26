@@ -6,10 +6,10 @@ import {Device} from "../../Application/Service/DeviceService";
 })
 export class AutoFocusDirective implements OnInit {
 
-    constructor(private elementRef: ElementRef, private device: Device) { };
+    constructor(private elementRef: ElementRef) { };
 
     ngOnInit(): void {
-        if(!this.device.isMobile())
+        if(!Device.isMobile())
             this.elementRef.nativeElement.focus();
     }
 

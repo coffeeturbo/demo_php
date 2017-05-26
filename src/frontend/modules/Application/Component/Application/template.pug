@@ -1,4 +1,4 @@
-.header-container((panleft)="device.isMobile() && sidebarService.hide()")
+.header-container((panleft)="Device.isMobile() && sidebarService.hide()")
   header
     button.sidebar((click)="sidebarService.toggle()")
       i.fa.fa-2x.fa-bars
@@ -62,7 +62,7 @@
         i.fa.fa-2x.fa-sign-out
         span {{"Sign out" | translate}}
 
-  sidebar([ngClass]="sidebarService.state", (swipeleft)="device.isMobile() && sidebarService.hide()")
+  sidebar([ngClass]="sidebarService.state", (swipeleft)="Device.isMobile() && sidebarService.hide()")
 
 main([ngClass]="'sidebar-' + sidebarService.state")
   router-outlet
