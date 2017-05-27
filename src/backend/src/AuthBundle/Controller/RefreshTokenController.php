@@ -32,7 +32,7 @@ class RefreshTokenController extends Controller
     {
         try {
             $request->headers->add(["Content-Type"=>"application/json"]);
-            $this->get('app.validate_request.service')->validate($request, RefreshTokenType::class);
+            $this->get('app.validate_request')->validate($request, RefreshTokenType::class);
         } catch (BadRequestHttpException $e) {
             return new ErrorResponse($e->getMessage(), $e->getStatusCode());
         }
