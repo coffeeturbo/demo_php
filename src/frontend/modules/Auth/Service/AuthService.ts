@@ -57,7 +57,7 @@ export class AuthService implements AuthServiceInterface
     {
         let observableTokenResponse = this.handleTokenResponse(this.rest.signIn(body)).share();
         observableTokenResponse.subscribe(
-            ()=> this.router.navigate([this.route.data['returnUrl'] || "/"])
+            () => this.router.navigate([this.route.data['returnUrl'] || "/"])
         );
         return observableTokenResponse;
     }
@@ -66,7 +66,7 @@ export class AuthService implements AuthServiceInterface
     {
         let observableTokenResponse = this.handleTokenResponse(this.rest.signUp(body)).share();
         observableTokenResponse.subscribe(
-            ()=> this.router.navigate(["/"])
+            () => this.router.navigate(["/"])
         );
         return observableTokenResponse;
     }
@@ -74,11 +74,7 @@ export class AuthService implements AuthServiceInterface
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse | ResponseFailure> 
     {
         let observableTokenResponse = this.handleTokenResponse(this.rest.refreshToken(body)).share();
-        observableTokenResponse.subscribe(
-            (next)  => this.onRefreshToken.emit(next),
-            (error) => this.onRefreshToken.error(error),
-            ()      => this.onRefreshToken.complete()
-        );
+        observableTokenResponse.finally(() => this.onRefreshToken.complete());
         return observableTokenResponse;
     }
 
@@ -152,6 +148,7 @@ export class AuthService implements AuthServiceInterface
                 this.addTokenExpirationSchedule();
             },
             (tokenResponseFailure: ResponseFailure) => {
+                this.signOut();
                 console.log(tokenResponseFailure.message);
             }
         );
