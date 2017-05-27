@@ -1,7 +1,6 @@
 server {
     root /opt/jet/web;
     listen 8080;
-    sendfile off;
 
     # Frontend (Angular2)
     location / {
