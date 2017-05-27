@@ -1,7 +1,7 @@
 <?php
 namespace ProfileBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -39,7 +39,7 @@ class ProfileController extends Controller
     public function createAction(Request $request)
     {
         dump($request);
-        dump($this->getUser());
+        dump($this->getAccount());
         dump($this->get('security.token_storage')->getToken());
 
         return new JsonResponse([

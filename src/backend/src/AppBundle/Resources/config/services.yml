@@ -1,0 +1,5 @@
+services:
+    app.validate_request:
+        class: AppBundle\Service\ValidateRequestService
+        arguments: ['@form.factory']
+        
