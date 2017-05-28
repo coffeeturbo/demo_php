@@ -115,6 +115,10 @@
       color: material-color($secondary_material, '50');
       &:hover {
         background: material-color($primary_material, '600');
+
+        .counter {
+          border-color: material-color($primary_material, '600');
+        }
       }
       
       .counter {
@@ -123,13 +127,14 @@
         font-size: 0.5em;
         right: 10px;
         top: 7px;
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
         text-align: center;
-        line-height: 18px;
-        color:material-color($primary_material, '700');
+        line-height: 16px;
+        color: material-color($primary_material, '700');
         font-weight: bold;
+        border: 2px material-color($secondary_material, '800') solid;  
       }
     }
   }
