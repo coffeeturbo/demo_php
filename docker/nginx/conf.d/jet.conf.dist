@@ -28,4 +28,12 @@ server {
         fastcgi_param DOCUMENT_ROOT $realpath_root;
         internal;
     }
+
+    # Websocket
+    location /ws {
+        proxy_pass http://php:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }    
 }

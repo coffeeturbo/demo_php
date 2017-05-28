@@ -2,6 +2,12 @@
     "product_name": "Socilite",
     "short_product_name": "SoL",
     "locale" : "EN",
+    "websocket" : {
+        "path" : "/ws" 
+    },
+    "api" : {
+        "path" : "/api"
+    },
     "account": {
         "constraints": {
             "username": {

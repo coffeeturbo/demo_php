@@ -13,7 +13,7 @@ import 'rxjs/add/operator/catch';
 
 import {AuthHttp} from "angular2-jwt/angular2-jwt";
 
-const API_PATH = "/api";
+const API_PATH = require('../../../app/config.json').api.path;
 
 @Injectable()
 export class RESTService extends Http
