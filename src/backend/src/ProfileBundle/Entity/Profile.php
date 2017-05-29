@@ -2,18 +2,20 @@
 
 namespace ProfileBundle\Entity;
 
-use ProfileBundle\Entity\Profile\Gender\Gender;
+use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Exception\InvalidBirthDateException;
 
 /**
  * Profile
  */
-class Profile
+class Profile implements \JsonSerializable
 {
 
     const ADULT_AGE = 18;
     const MAX_AGE = 150;
+
+    const BIRTH_DATE_FORMAT = 'd-m-Y';
 
 
     /**
@@ -202,5 +204,44 @@ class Profile
     public function getGender(): Gender
     {
         return Gender::createFromIntCode($this->gender);
+    }
+    /**
+     * @var \AuthBundle\Entity\Account
+     */
+    private $account;
+
+
+    /**
+     * Set account
+     *
+     * @param \AuthBundle\Entity\Account $account
+     *
+     * @return Profile
+     */
+    public function setAccount(\AuthBundle\Entity\Account $account = null)
+    {
+        $this->account = $account;
+
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return \AuthBundle\Entity\Account
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'gender' => $this->getGender()->getStringCode(),
+            'name' => $this->name,
+            'birth_date' => $this->getBirthDate()->format(self::BIRTH_DATE_FORMAT),
+        ];
     }
 }

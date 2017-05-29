@@ -1,0 +1,10 @@
+services:
+  profile.repository:
+    class: ProfileBundle\Repository\ProfileRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - ProfileBundle\Entity\Profile
+
+  profile.service:
+    class: ProfileBundle\Service\ProfileService
+    arguments: ['@profile.repository']

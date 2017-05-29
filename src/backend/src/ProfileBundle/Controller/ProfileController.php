@@ -1,17 +1,18 @@
 <?php
 namespace ProfileBundle\Controller;
 
-use AppBundle\Controller\Controller;
+use ProfileBundle\Entity\Profile;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileController extends Controller
 {
     /**
      * @ApiDoc(
      *     section="Profile",
-     *     resource=true,
      *     description= "Создаем профиль",
      *     authentication=true,
      *     requirements={
@@ -28,7 +29,7 @@ class ProfileController extends Controller
      *          {
      *              "name" = "birthDate",
      *              "dataType" = "datetime",
-     *              "description" = "Дата рождения"
+     *              "description" = "27-05-2017"
      *          }
      *
      *     }
@@ -38,12 +39,88 @@ class ProfileController extends Controller
      */
     public function createAction(Request $request)
     {
-        dump($request);
-        dump($this->getAccount());
-        dump($this->get('security.token_storage')->getToken());
+        $r = [];
+        try {
+
+            $profileService = $this->get('profile.service');
+
+            $profile = $profileService->createProfileFromRequest($request, $this->getUser());
+            $profileService->saveProfile($profile);
+
+            $r = $profile->jsonSerialize();
+
+        } catch(\Exception $e){
+            $r['error'] = $e->getMessage();
+        }
+
+
 
         return new JsonResponse([
-            'success' => true
+            'entity' => $r
+        ]);
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Profile",
+     *     description= "Получаем профиль по id",
+     *     requirements={
+     *          {
+     *              "name" = "id",
+     *              "dataType" = "integer",
+     *              "description" = "id профиля"
+     *          }
+     *     }
+     * )
+     *
+     * @param Profile $profile
+     * @return JsonResponse
+     */
+    public function getProfileAction(Profile $profile)
+    {
+        return new JsonResponse([
+            'entity' => $profile->jsonSerialize()
+        ]);
+    }
+
+    public function updateAction(Profile $profile)
+    {
+
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Profile",
+     *     description= "Получаем профиль по id",
+     *     authentication=true,
+     *     requirements={
+     *          {
+     *              "name" = "id",
+     *          }
+     *     }
+     * )
+     *
+     * @param Profile $profile
+     * @return JsonResponse
+     */
+    public function deleteAction($id)
+    {
+        try {
+            $profileService = $this->get('profile.service');
+
+            $profile = $profileService->getProfileById($id);
+
+            $profileService->deleteProfile($profile);
+
+        } catch(NotFoundHttpException $e){
+
+            return new JsonResponse([
+                'error' => $e->getMessage()
+            ], 404);
+        }
+
+        return new JsonResponse([
+            'success' => $profile->jsonSerialize()
         ]);
     }
 }

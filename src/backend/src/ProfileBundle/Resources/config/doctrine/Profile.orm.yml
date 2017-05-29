@@ -28,6 +28,14 @@ ProfileBundle\Entity\Profile:
       column: privacy_opts
       nullable: true
 
+  manyToOne:
+    account:
+      targetEntity: AuthBundle\Entity\Account
+      joinColumn:
+        name: account_id
+        referencedColumnName: id
+
+
 #    alias:
 #      type: string
 #      nullable: true

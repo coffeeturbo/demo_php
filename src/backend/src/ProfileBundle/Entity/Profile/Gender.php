@@ -1,6 +1,9 @@
 <?php
-namespace ProfileBundle\Entity\Profile\Gender;
+namespace ProfileBundle\Entity\Profile;
 
+use ProfileBundle\Entity\Profile\Gender\FemaleGender;
+use ProfileBundle\Entity\Profile\Gender\MaleGender;
+use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Exception\UnknownGenderException;
 
 abstract class Gender

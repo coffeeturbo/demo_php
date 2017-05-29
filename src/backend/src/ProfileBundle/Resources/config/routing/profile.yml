@@ -1,0 +1,7 @@
+profile_get_by_id:
+  path: '{id}/get'
+  defaults: { _controller: ProfileBundle:Profile:getProfile }
+  requirements:
+    id: '\d+'
+  methods: [ GET ]
+

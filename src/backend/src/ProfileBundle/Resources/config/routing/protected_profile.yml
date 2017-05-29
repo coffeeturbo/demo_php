@@ -2,3 +2,18 @@ profile_create:
   path: create
   defaults: { _controller: ProfileBundle:Profile:create }
   methods: [ PUT ]
+
+
+profile_update:
+  path: '{id}/update'
+  defaults: { _controller: ProfileBundle:Profile:update }
+  methods: [ POST ]
+  requirements:
+    id: '/d+'
+
+profile_delete:
+  path: '{id}/delete'
+  defaults: { _controller: ProfileBundle:Profile:delete }
+  methods: [ DELETE ]
+  requirements:
+    id: '\d+'

@@ -1,6 +1,8 @@
 <?php
 namespace ProfileBundle\Entity\Profile\Gender;
 
+use ProfileBundle\Entity\Profile\Gender;
+
 class FemaleGender extends Gender
 {
     const STRING_CODE = 'female';
