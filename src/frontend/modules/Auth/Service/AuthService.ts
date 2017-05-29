@@ -74,7 +74,9 @@ export class AuthService implements AuthServiceInterface
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse | ResponseFailure> 
     {
         let observableTokenResponse = this.handleTokenResponse(this.rest.refreshToken(body)).share();
-        observableTokenResponse.finally(() => this.onRefreshToken.complete());
+        observableTokenResponse
+            .finally(() => this.onRefreshToken.complete())
+            .subscribe(() => this.onRefreshToken.emit());
         return observableTokenResponse;
     }
 
@@ -98,9 +100,7 @@ export class AuthService implements AuthServiceInterface
     public addTokenExpirationSchedule()/*: Observable<TokenResponse | ResponseFailure>*/
     {
         if(TokenRepository.isTokenExist()) {
-            
-            
-            let offset: number = 1000;  // Make it 5 sec before token expired
+            let offset: number = 5000;  // Make it 5 sec before token expired
             let delay = TokenRepository.getTokenExpTime() - offset;
             if(this.tokenExpirationSchedule) {
                 this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
