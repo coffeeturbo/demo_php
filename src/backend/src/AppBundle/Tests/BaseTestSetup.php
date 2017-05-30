@@ -1,10 +1,9 @@
 <?php
-namespace AuthBundle\Tests;
+namespace AppBundle\Tests;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-error_reporting(0);
 abstract class BaseTestSetup extends WebTestCase
 {
     protected $client;
@@ -32,19 +31,47 @@ abstract class BaseTestSetup extends WebTestCase
             "password" => $password
         ]));
 
-        $body = json_decode($client->getResponse()->getContent(), true)['token'];
+        $token = json_decode($client->getResponse()->getContent(), true)['token'];
 
         $client = static::createClient();
-        $client->setServerParameter('Authorization', sprintf('Bearer %s', $body['token'] ?? null));
+        $client->setServerParameter('Authorization', sprintf('Bearer %s', $token ?? null));
+
+
 
         return $client;
-
     }
 
-    protected static function createSignInClient($body, Array $headers = [])
+    static protected function createSignInClient($body, Array $headers = [])
     {
         $client = static::createClient();
+
+
+        $headers =
+            [
+                'HTTP_X_CUSTOM_VAR' =>
+                    [
+                        'CONTENT_TYPE' => 'application/json',
+                        'Accept' => 'application/json',
+                    ]
+        ];
+
+
+
         $client->request('POST', '/auth/sign-in', [], [], $headers, $body);
+
+//        print_r($client->getRequest()->headers);
+//        die;
+
+
+
+
+        return $client;
+    }
+
+    final public function request($method, $uri, array $parameters = array(), array $files = array(), array $server = array(), $content = null, $changeHistory = true)
+    {
+        $client = static::createClient();
+        $client->request($method, $uri, $parameters = array(), $files = array(), $server = array(), $content = null, $changeHistory = true);
 
         return $client;
     }

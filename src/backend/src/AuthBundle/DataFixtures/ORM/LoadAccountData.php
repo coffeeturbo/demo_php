@@ -16,7 +16,10 @@ class LoadAccountData extends AbstractFixture implements FixtureInterface, Conta
 
     protected $accountsData = [
         'success-account' => [
-            "email" => "testuser1@domain.com", "password" => "4zFBLC", "roles" => [], 'reference' => 'success-account'
+            "email" => "testuser1@domain.com",
+            "password" => "4zFBLC",
+            "roles" => [],
+            'reference' => 'success-account'
         ],
     ];
 

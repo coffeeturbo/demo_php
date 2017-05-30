@@ -2,6 +2,7 @@
 
 namespace ProfileBundle\Entity;
 
+use AuthBundle\Entity\Account;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Exception\InvalidBirthDateException;
@@ -17,41 +18,19 @@ class Profile implements \JsonSerializable
 
     const BIRTH_DATE_FORMAT = 'd-m-Y';
 
-
-    /**
-     * @var integer
-     */
     private $id;
-
-    /**
-     * @var \DateTime
-     */
     private $created;
 
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var \DateTime
-     */
     private $birthDate;
-
-    /**
-     * @var integer
-     */
     private $verified;
-
-    /**
-     * @var array
-     */
     private $privacyOpts;
-
-    /**
-     * @var integer
-     */
     private $gender;
+    private $nickName;
+    private $firstName;
+    private $lastName;
+    private $patronymic;
+    private $alias;
+    private $account;
 
 
     public function __construct()
@@ -61,65 +40,39 @@ class Profile implements \JsonSerializable
         $this->verified = false;
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'gender' => $this->getGender()->getStringCode(),
+            'nick_name' => $this->nickName,
+            'first_name' => $this->firstName,
+            'last_name' => $this->lastName,
+            'patronymic' => $this->patronymic,
+            'alias' => $this->alias,
+            'birth_date' => $this->getBirthDate()->format(self::BIRTH_DATE_FORMAT),
+            'verified' => $this->verified,
+            'privacy_opts' => $this->privacyOpts,
+            'created' => $this->created
+        ];
+    }
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     *
-     * @return Profile
-     */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created)
     {
         $this->created = $created;
 
         return $this;
     }
 
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
+    public function getCreated(): \DateTime
     {
         return $this->created;
     }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Profile
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-
 
     public function getBirthDate(): \DateTime
     {
@@ -146,55 +99,31 @@ class Profile implements \JsonSerializable
         return $this;
     }
 
-    /**
-     * Set verified
-     *
-     * @param bool $verified
-     *
-     * @return Profile
-     */
-    public function setVerified(bool $verified)
+    public function setVerified(bool $verified): self
     {
         $this->verified = $verified;
 
         return $this;
     }
 
-    /**
-     * Get verified
-     *
-     * @return bool
-     */
     public function getVerified(): bool
     {
         return $this->verified;
     }
 
-    /**
-     * Set privacyOpts
-     *
-     * @param array $privacyOpts
-     *
-     * @return Profile
-     */
-    public function setPrivacyOpts($privacyOpts)
+    public function setPrivacyOpts($privacyOpts): self
     {
         $this->privacyOpts = $privacyOpts;
 
         return $this;
     }
 
-    /**
-     * Get privacyOpts
-     *
-     * @return array
-     */
     public function getPrivacyOpts()
     {
         return $this->privacyOpts;
     }
 
-    public function setGender(Gender $gender)
+    public function setGender(Gender $gender): self
     {
         $this->gender = $gender->getIntCode();
 
@@ -205,43 +134,76 @@ class Profile implements \JsonSerializable
     {
         return Gender::createFromIntCode($this->gender);
     }
-    /**
-     * @var \AuthBundle\Entity\Account
-     */
-    private $account;
 
-
-    /**
-     * Set account
-     *
-     * @param \AuthBundle\Entity\Account $account
-     *
-     * @return Profile
-     */
-    public function setAccount(\AuthBundle\Entity\Account $account = null)
+    public function setAccount(Account $account = null): self
     {
         $this->account = $account;
 
         return $this;
     }
 
-    /**
-     * Get account
-     *
-     * @return \AuthBundle\Entity\Account
-     */
-    public function getAccount()
+    public function getAccount(): Account
     {
         return $this->account;
     }
 
-    function jsonSerialize()
+    public function setNickName(string $nickName): self
     {
-        return [
-            'id' => $this->id,
-            'gender' => $this->getGender()->getStringCode(),
-            'name' => $this->name,
-            'birth_date' => $this->getBirthDate()->format(self::BIRTH_DATE_FORMAT),
-        ];
+        $this->nickName = $nickName;
+
+        return $this;
+    }
+
+    public function getNickName(): string
+    {
+        return $this->nickName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function setPatronymic(string $patronymic): self
+    {
+        $this->patronymic = $patronymic;
+
+        return $this;
+    }
+
+    public function getPatronymic(): string
+    {
+        return $this->patronymic;
+    }
+
+    public function setAlias(string $alias = null): self
+    {
+        $this->alias = $alias;
+
+        return $this;
+    }
+
+    public function getAlias(): string
+    {
+        return $this->alias;
     }
 }

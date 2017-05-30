@@ -10,7 +10,22 @@ ProfileBundle\Entity\Profile:
     created:
       type: datetime
       nullable: false
-    name:
+    nickName:
+      column: nick_name
+      type: string
+      nullable: true
+    firstName:
+      column: first_name
+      type: string
+      nullable: true
+    lastName:
+      column: last_name
+      type: string
+      nullable: true
+    patronymic:
+      type: string
+      nullable: true
+    alias:
       type: string
       nullable: false
     gender:
@@ -27,7 +42,6 @@ ProfileBundle\Entity\Profile:
       type: json_array
       column: privacy_opts
       nullable: true
-
   manyToOne:
     account:
       targetEntity: AuthBundle\Entity\Account

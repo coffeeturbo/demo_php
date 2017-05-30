@@ -17,9 +17,29 @@ class ProfileController extends Controller
      *     authentication=true,
      *     requirements={
      *          {
-     *              "name" = "name",
+     *              "name" = "first_name",
      *              "dataType" = "string",
-     *              "description" = "Имя профиля"
+     *              "description" = "Имя"
+     *          },
+     *          {
+     *              "name" = "last_name",
+     *              "dataType" = "string",
+     *              "description" = "Фамилия"
+     *          },
+     *          {
+     *              "name" = "patronymic",
+     *              "dataType" = "string",
+     *              "description" = "Отчество"
+     *          },
+     *          {
+     *              "name" = "alias",
+     *              "dataType" = "string",
+     *              "description" = "alias"
+     *          },
+     *          {
+     *              "name" = "nickname",
+     *              "dataType" = "string",
+     *              "description" = "alias"
      *          },
      *          {
      *              "name" = "gender",
@@ -27,7 +47,7 @@ class ProfileController extends Controller
      *              "description" = "выберитье пол 0- нет пола 1- мужской  2-Женский"
      *          },
      *          {
-     *              "name" = "birthDate",
+     *              "name" = "birth_date",
      *              "dataType" = "datetime",
      *              "description" = "27-05-2017"
      *          }
@@ -83,6 +103,37 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * @ApiDoc(
+     *     section="Profile",
+     *     description= "Редактировать профиль",
+     *     authentication=true,
+     *     requirements={
+     *          {
+     *              "name" = "id",
+     *          },
+     *
+     *          {
+     *              "name" = "name",
+     *              "dataType" = "string",
+     *              "description" = "Имя профиля"
+     *          },
+     *          {
+     *              "name" = "gender",
+     *              "dataType" = "integer",
+     *              "description" = "выберитье пол 0- нет пола 1- мужской  2-Женский"
+     *          },
+     *          {
+     *              "name" = "birthDate",
+     *              "dataType" = "datetime",
+     *              "description" = "27-05-2017"
+     *          }
+     *     }
+     * )
+     *
+     * @param Profile $profile
+     * @return JsonResponse
+     */
     public function updateAction(Profile $profile)
     {
 

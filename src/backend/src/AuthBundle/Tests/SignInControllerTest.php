@@ -2,6 +2,7 @@
 
 namespace AuthBundle\Tests;
 
+use AppBundle\Tests\BaseTestSetup;
 use AuthBundle\DataFixtures\ORM\LoadAccountData;
 
 class SignInControllerTest extends BaseTestSetup
@@ -17,7 +18,6 @@ class SignInControllerTest extends BaseTestSetup
         $this->fixtures = $fixture = new LoadAccountData();
         $this->fixtures->setContainer($this->container);
         $fixture->load($this->em);
-
     }
 
     public function test200()
@@ -29,10 +29,13 @@ class SignInControllerTest extends BaseTestSetup
             "password" => $accountData['password'],
         ]));
 
+        $token = json_decode($client->getResponse()->getContent(), true)['token'];
+
+        $this->assertNotNull($token, 'Token null');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function test400() // 400 Bad request
+    public function test400()
     {
         $accountData = $this->fixtures->getAccountDataByReference('success-account');
 

@@ -17,6 +17,9 @@
         <testsuite name="auth_bundle">
             <directory>src/AuthBundle/Tests</directory>
         </testsuite>
+        <testsuite name="profile_bundle">
+            <directory>src/ProfileBundle/Tests</directory>
+        </testsuite>
     </testsuites>
 
     <filter>

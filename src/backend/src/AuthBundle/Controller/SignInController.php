@@ -29,7 +29,15 @@ class SignInController extends Controller
      *          "Неверный логин или пароль",
      *          "Пользователь не найден"
      *      }
+     *  },
+     *     headers = {
+     *      {
+     *          "name" = "Accept",
+     *          "default" = "application/json",
+     *          "description" = "Если не указан будет сгенерировано всплывающее окно"
+     *      }
      *  }
+     *
      * )
      * @param Request $request
      * @return Response
