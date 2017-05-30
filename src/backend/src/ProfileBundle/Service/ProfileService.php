@@ -29,7 +29,7 @@ class ProfileService
             ->setPatronymic($json_request->patronymic ?? null)
             ->setAlias($json_request->alias ?? null)
             ->setNickName($json_request->nickname ?? null)
-            ->setGender(Gender::createFromIntCode($json_request->gender))
+            ->setGender(Gender::createFromStringCode($json_request->gender))
             ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $json_request->birth_date));
         ;
 

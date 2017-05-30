@@ -25,18 +25,29 @@ class ProfileControllerTest extends BaseTestSetup
 
         $client = $this->createAuthenticatedClient($accountData['email'], $accountData['password']);
 
-        $body = json_encode([
+        $request = [
             "first_name" => "Имя",
             "last_name" => "Фамилия",
             "patronymic" => "Отчество",
             "alias" => "alias",
             "nickname" => "nickName",
-            "gender" => "2",
+            "gender" => "male",
             "birth_date" => "20-02-2000",
-        ]);
+        ];
+
+        $body = json_encode($request);
 
         $client->request('PUT', '/protected/profile/create', [], [], [], $body);
-
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $result = json_decode($client->getResponse()->getContent(), true);
+
+        $this->recursiveEquals($request, $result['entity']);
+    }
+
+    public function recursiveEquals(array $expects, array $actual){
+        foreach($expects as $index => $value){
+            $this->assertEquals($value, $actual[$index], "index not equals:  ".$index);
+        }
     }
 }
