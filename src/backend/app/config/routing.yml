@@ -13,3 +13,6 @@ oAuth:
 profile:
   resource: '@ProfileBundle/Resources/config/routing.yml'
   prefix: /
+  
+acme:
+  resource: '@AcmeBundle/Resources/config/routing.yml'

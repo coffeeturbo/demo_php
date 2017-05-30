@@ -7,6 +7,7 @@ import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {Device} from "../../Service/DeviceService";
 import {TranslationService} from "../../../Translate/Service/TranslationService";
+import {WebSocketService} from "../../Service/WebSocketService";
 
 @Component({
     selector: 'application',
@@ -22,8 +23,10 @@ export class ApplicationComponent {
         private titleService: Title,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private translationService: TranslationService
+        private translationService: TranslationService,
+        private wamp: WebSocketService
     ) {
+        wamp.subscribeToTestTopic();
         
         // Set title from route data
         router.events

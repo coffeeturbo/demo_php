@@ -1,0 +1,5 @@
+websocket_send:
+  path: /websocket-send
+  defaults:  
+    _controller: AcmeBundle:Acme:sendMessage
+  methods: [POST]

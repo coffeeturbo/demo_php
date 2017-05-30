@@ -113,3 +113,17 @@ hwi_oauth:
             
 gesdinet_jwt_refresh_token:
     ttl: 2592000            
+
+voryx_thruway:
+    user_provider: 'fos_user.user_provider.username_email'
+    realm: 'jet_ws'
+    url: 'ws://127.0.0.1:8000'
+    trusted_url: 'ws://127.0.0.1:8001'
+    router:
+        ip: '0.0.0.0'
+        port: '8000'
+        trusted_port: '8001'
+#        authentication: true
+    locations:
+        bundles: 
+          - "AcmeBundle"

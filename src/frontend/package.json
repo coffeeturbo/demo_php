@@ -34,6 +34,7 @@
     "sass-loader": "~4.1.1",
     "sass-material-colors": "0.0.5",
     "sass-mq": "^3.3.2",
+    "thruway.js": "^1.1.21",
     "url-loader": "^0.5.7",
     "webpack-manifest-plugin": "^1.1.0",
     "zone.js": "^0.8.4"

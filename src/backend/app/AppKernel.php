@@ -22,8 +22,11 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle(),
+            new Voryx\ThruwayBundle\VoryxThruwayBundle($this),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
 
             /* App Bundles */
+            new AcmeBundle\AcmeBundle(),
             new AppBundle\AppBundle(),
             new AuthBundle\AuthBundle(),
             new OAuthBundle\OAuthBundle(),

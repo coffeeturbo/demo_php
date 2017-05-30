@@ -20,6 +20,7 @@ import {SidebarModule} from "../Sidebar/SidebarModule";
 import {SettingsModule} from "../Settings/SettingsModule";
 import {FeedModule} from "../Feed/FeedModule";
 import {ProfileModule} from "../Profile/ProfileModule";
+import {WebSocketService} from "./Service/WebSocketService";
 
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -58,6 +59,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     providers: [
         RESTService,
         StartupService,
+        WebSocketService,
         {
             provide: AuthHttp,
             useFactory: AuthHttpServiceFactory,
