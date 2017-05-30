@@ -45,7 +45,7 @@ class Profile implements \JsonSerializable
         return [
             'id' => $this->id,
             'gender' => $this->getGender()->getStringCode(),
-            'nick_name' => $this->nickName,
+            'nickname' => $this->nickName,
             'first_name' => $this->firstName,
             'last_name' => $this->lastName,
             'patronymic' => $this->patronymic,
