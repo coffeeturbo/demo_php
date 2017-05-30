@@ -30,14 +30,13 @@ class SignInController extends Controller
      *          "Пользователь не найден"
      *      }
      *  },
-     *     headers = {
+     *  headers = {
      *      {
      *          "name" = "Accept",
      *          "default" = "application/json",
      *          "description" = "Если не указан будет сгенерировано всплывающее окно"
      *      }
      *  }
-     *
      * )
      * @param Request $request
      * @return Response

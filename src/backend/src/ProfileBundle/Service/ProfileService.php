@@ -32,6 +32,7 @@ class ProfileService
             ->setGender(Gender::createFromIntCode($json_request->gender))
             ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $json_request->birth_date));
         ;
+
         return $profile;
     }
 

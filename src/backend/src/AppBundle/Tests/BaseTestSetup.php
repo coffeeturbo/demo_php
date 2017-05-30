@@ -26,17 +26,19 @@ abstract class BaseTestSetup extends WebTestCase
 
     protected function createAuthenticatedClient($username = 'user', $password = 'password')
     {
-        $client = static::createSignInClient(json_encode([
+        $body = [
             "username" => $username,
             "password" => $password
-        ]));
+        ];
+        
+        $header = ['HTTP_Accept' => 'application/json']; 
+        
+        $client = static::createSignInClient(json_encode($body), $header);
 
-        $token = json_decode($client->getResponse()->getContent(), true)['token'];
+        $body = json_decode($client->getResponse()->getContent(), true);
 
         $client = static::createClient();
-        $client->setServerParameter('Authorization', sprintf('Bearer %s', $token ?? null));
-
-
+        $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $body['token'] ?? null));
 
         return $client;
     }
@@ -44,36 +46,8 @@ abstract class BaseTestSetup extends WebTestCase
     static protected function createSignInClient($body, Array $headers = [])
     {
         $client = static::createClient();
-
-
-        $headers =
-            [
-                'HTTP_X_CUSTOM_VAR' =>
-                    [
-                        'CONTENT_TYPE' => 'application/json',
-                        'Accept' => 'application/json',
-                    ]
-        ];
-
-
-
         $client->request('POST', '/auth/sign-in', [], [], $headers, $body);
 
-//        print_r($client->getRequest()->headers);
-//        die;
-
-
-
-
         return $client;
     }
-
-    final public function request($method, $uri, array $parameters = array(), array $files = array(), array $server = array(), $content = null, $changeHistory = true)
-    {
-        $client = static::createClient();
-        $client->request($method, $uri, $parameters = array(), $files = array(), $server = array(), $content = null, $changeHistory = true);
-
-        return $client;
-    }
-
 }

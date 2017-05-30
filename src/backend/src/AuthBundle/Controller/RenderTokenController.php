@@ -31,7 +31,6 @@ class RenderTokenController extends Controller
      */
     public function renderAction(string $token, string $refresh_token = null, Request $request)
     {
-        return new SuccessAuthResponse($token, $refresh_token);
         return in_array("application/json", $request->getAcceptableContentTypes()) ?
             new SuccessAuthResponse($token, $refresh_token) :
             $this->render('sign-in/tokenPopupWindow.twig', ["response" => ['token' => $token, 'refresh_token' => $refresh_token]]);

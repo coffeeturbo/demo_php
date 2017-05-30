@@ -21,7 +21,6 @@ class ProfileControllerTest extends BaseTestSetup
 
     public function test200()
     {
-
         $accountData = $this->accountFixtures->getAccountDataByReference('success-account');
 
         $client = $this->createAuthenticatedClient($accountData['email'], $accountData['password']);
@@ -36,12 +35,7 @@ class ProfileControllerTest extends BaseTestSetup
             "birth_date" => "20-02-2000",
         ]);
 
-
-        $token = $client->getServerParameter('Authorization');
-
-        $client->request('PUT', '/protected/profile/create', [],[], [
-            'Authorization' => $token
-        ], $body);
+        $client->request('PUT', '/protected/profile/create', [], [], [], $body);
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
