@@ -1,34 +1,18 @@
 import {NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {HttpModule} from "@angular/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
-import {LoaderComponent} from "./Component/Loader/index";
-import {ModalComponents} from "./Component/Modal/index";
-import {NotImplementedComponent} from "./Component/NotImplemented/index";
-import {TooltipComponent} from "./Component/Tooltip/index";
-import {AutoFocusDirective} from "./Directive/AutoFocusDirective";
+import {LoaderModule} from "./Loader/LoaderModule";
+import {AutoFocusModule} from "./AutoFocus/AutoFocusModule";
+import {ModalModule} from "./Modal/ModalModule";
+import {TooltipModule} from "./Tooltip/TooltipModule";
+import {NotImplementedModule} from "./NotImplemented/NotImplementedModule";
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpModule,
-    ],
-    declarations: [
-        AutoFocusDirective,
-        LoaderComponent,
-        ModalComponents,
-        NotImplementedComponent,
-        TooltipComponent
-    ],
     exports: [
-        AutoFocusDirective,
-        LoaderComponent,
-        ModalComponents,
-        NotImplementedComponent,
-        TooltipComponent
+        LoaderModule,
+        AutoFocusModule,
+        ModalModule,
+        TooltipModule,
+        NotImplementedModule
     ]
 })
 export class UIModule {} 
