@@ -1,0 +1,4 @@
+im:
+  channel: im/{account}
+  handler:
+    callback: ['AcmeBundle\Controller\AcmeController', 'send']

@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle(),
             new Voryx\ThruwayBundle\VoryxThruwayBundle($this),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new \Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
 
             /* App Bundles */
             new AcmeBundle\AcmeBundle(),

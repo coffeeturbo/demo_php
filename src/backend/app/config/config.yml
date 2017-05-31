@@ -127,3 +127,11 @@ voryx_thruway:
     locations:
         bundles: 
           - "AcmeBundle"
+
+gos_pubsub_router:
+    routers:
+        websocket: #available from container through gos_pubsub_router.websocket
+            context:
+                tokenSeparator: '/'
+            resources:
+                - '@AcmeBundle/Resources/config/pubsub/routing.yml'
