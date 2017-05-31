@@ -1,5 +1,5 @@
 import { Directive, OnInit, ElementRef } from '@angular/core';
-import {Device} from "../../Application/Service/DeviceService";
+import {Device} from "../../../Application/Service/DeviceService";
 
 @Directive({
     selector: '[auto-focus]'

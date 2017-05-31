@@ -1,7 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ModalHeaderComponent} from "./layout/ModalHeaderComponent/index";
-import {ModalBodyComponent} from "./layout/ModalBodyComponent/index";
-import {ModalFooterComponent} from "./layout/ModalFooterComponent/index";
 
 @Component({
     selector: 'modal',
@@ -27,10 +24,3 @@ export class ModalComponent {
         this.onClose.emit();
     }
 }
-
-export const ModalComponents = [
-    ModalComponent,
-    ModalHeaderComponent,
-    ModalFooterComponent,
-    ModalBodyComponent
-];

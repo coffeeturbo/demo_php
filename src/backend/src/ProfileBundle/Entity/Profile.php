@@ -53,7 +53,7 @@ class Profile implements \JsonSerializable
             'birth_date' => $this->getBirthDate()->format(self::BIRTH_DATE_FORMAT),
             'verified' => $this->verified,
             'privacy_opts' => $this->privacyOpts,
-            'created' => $this->created
+            'created' => $this->created->format(\DateTime::W3C)
         ];
     }
 
