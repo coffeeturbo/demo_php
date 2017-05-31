@@ -3,3 +3,13 @@ imports:
       resource: '@AppBundle/Resources/config/services.yml'
    OAuth:
       resource: '@OAuthBundle/Resources/config/services.yml'
+
+services:
+  jwt_auth_provider:
+      class: AcmeBundle\Security\JwtAuthProvider
+      arguments:
+          - ["@=parameter('voryx_thruway')['realm']"]
+          - '@lexik_jwt_authentication.jwt_manager'
+          - '@doctrine'
+      tags:
+          - { name: thruway.internal_client }

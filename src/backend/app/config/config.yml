@@ -123,7 +123,7 @@ voryx_thruway:
         ip: '0.0.0.0'
         port: '8000'
         trusted_port: '8001'
-#        authentication: true
+        authentication: true
     locations:
         bundles: 
           - "AcmeBundle"
