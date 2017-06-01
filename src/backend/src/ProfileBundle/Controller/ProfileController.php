@@ -44,7 +44,7 @@ class ProfileController extends Controller
      *          {
      *              "name" = "gender",
      *              "dataType" = "integer",
-     *              "description" = "выберитье пол 0- нет пола 1- мужской  2-Женский"
+     *              "description" = "выберитье пол none- нет пола male- мужской  female-Женский"
      *          },
      *          {
      *              "name" = "birth_date",

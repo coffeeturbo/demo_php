@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileService
 {
+    const PROFILES_LIMIT = 1;
 
     private $profileRepository;
 
@@ -38,6 +39,9 @@ class ProfileService
 
     public function saveProfile(Profile $profile): Profile
     {
+        // проверяем есть ли у акккаунта уже профайл
+
+
         return $this->profileRepository->saveProfile($profile);
     }
 
