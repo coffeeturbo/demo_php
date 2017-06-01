@@ -36,7 +36,6 @@ class ProfileControllerTest extends BaseTestSetup
         ];
 
         $body = json_encode($request);
-
         $client->request('PUT', '/protected/profile/create', [], [], [], $body);
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
