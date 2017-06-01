@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {
-    Http, 
-    XHRBackend, 
-    RequestOptions, 
-    Request, 
-    RequestOptionsArgs, 
+    Http,
+    XHRBackend,
+    RequestOptions,
+    Request,
+    RequestOptionsArgs,
     Response
 } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -31,8 +31,12 @@ export class RESTService extends Http
             url = API_PATH + url;
         }
 
-        return super.request(url, options).catch(error => {
-            return Observable.throw(JSON.parse(error._body));
+        return super.request(url, options).catch((error: Response)  => {
+            try {
+                error = error.json();
+            } catch(e){}
+            
+            return Observable.throw(error);
         });
     }
 }

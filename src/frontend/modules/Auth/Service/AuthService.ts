@@ -33,7 +33,7 @@ export class AuthService implements AuthServiceInterface
 {
     public onRefreshToken: EventEmitter<any> = new EventEmitter();
     
-    private tokenExpirationSchedule: Subscription;
+    private tokenExpirationSchedule: Subscription = new Subscription();
 
     constructor(
         private router: Router,
@@ -102,9 +102,7 @@ export class AuthService implements AuthServiceInterface
         if(TokenRepository.isTokenExist()) {
             let offset: number = 5000;  // Make it 5 sec before token expired
             let delay = TokenRepository.getTokenExpTime() - offset;
-            if(this.tokenExpirationSchedule) {
-                this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
-            }
+            this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
 
             this.tokenExpirationSchedule = Scheduler.queue.schedule(() => {
                 this.refreshToken({"refresh_token": TokenRepository.getRefreshToken()});
