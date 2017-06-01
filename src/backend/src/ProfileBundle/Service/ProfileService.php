@@ -4,6 +4,7 @@ namespace ProfileBundle\Service;
 use AuthBundle\Entity\Account;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender;
+use ProfileBundle\Exception\ProfilesLimitException;
 use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -40,9 +41,16 @@ class ProfileService
     public function saveProfile(Profile $profile): Profile
     {
         // проверяем есть ли у акккаунта уже профайл
+        $profiles = $this->getAccountProfiles($profile->getAccount()->getId());
 
+        if(count($profiles) >= self::PROFILES_LIMIT) throw new ProfilesLimitException("The limit of account profiles has been Exceeded");
 
         return $this->profileRepository->saveProfile($profile);
+    }
+
+
+    public function getAccountProfiles(int $accountId){
+        return $this->profileRepository->getAccountProfiles($accountId);
     }
 
     public function getProfileByIdRequest(Request $request)

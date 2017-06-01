@@ -26,4 +26,9 @@ class ProfileRepository extends EntityRepository
         return $profile;
     }
 
+    public function getAccountProfiles(int $accountId): ?array
+    {
+        return $this->findBy(['account' => $accountId], null);
+    }
+
 }

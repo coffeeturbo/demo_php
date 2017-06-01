@@ -3,15 +3,18 @@ namespace AppBundle\Tests;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\BrowserKit\Client;
 
 abstract class BaseTestSetup extends WebTestCase
 {
+    /** @var  Client */
     protected $client;
     protected $container;
     protected $em;
 
     public function setUp()
     {
+        $this->client = static::createClient();
         $this->container = static::createClient()->getContainer();
 
         $this->em = $this->container->get('doctrine.orm.default_entity_manager');
@@ -49,5 +52,11 @@ abstract class BaseTestSetup extends WebTestCase
         $client->request('POST', '/auth/sign-in', [], [], $headers, $body);
 
         return $client;
+    }
+
+    public function recursiveEquals(array $expects, array $actual){
+        foreach($expects as $index => $value){
+            $this->assertEquals($value, $actual[$index], "index not equals:  ".$index);
+        }
     }
 }

@@ -1,11 +1,14 @@
 <?php
 namespace ProfileBundle\Controller;
 
+use AppBundle\Http\ErrorResponse;
 use ProfileBundle\Entity\Profile;
+use ProfileBundle\Exception\ProfilesLimitException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileController extends Controller
@@ -69,11 +72,12 @@ class ProfileController extends Controller
 
             $r = $profile->jsonSerialize();
 
-        } catch(\Exception $e){
+        } catch(ProfilesLimitException $exception) {
+            return new ErrorResponse($exception, Response::HTTP_FORBIDDEN);
+        }
+        catch(\Exception $e){
             $r['error'] = $e->getMessage();
         }
-
-
 
         return new JsonResponse([
             'entity' => $r
