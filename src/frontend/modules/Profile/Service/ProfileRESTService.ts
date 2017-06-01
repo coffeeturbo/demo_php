@@ -5,19 +5,36 @@ import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateReq
 import {Observable} from "rxjs";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 import {ResponseFailure} from "../../Application/Http/ResponseFailure";
+import {Gender} from "../Entity/Gender";
 
 @Injectable()
 export class ProfileRESTService {
 
     constructor(private rest: RESTService){}
 
-    public get(profileId: number): Observable<ProfileGetResponse | ResponseFailure>
+    public getById(profileId: number): Observable<ProfileGetResponse | ResponseFailure>
     {
         let url = `/profile/${profileId}/get`;
         
         return this.rest
             .get(url)
             .map(res => res.json())
+    }
+
+    public getByAlias(profileAlias: string): Observable<ProfileGetResponse>
+    {
+        return Observable.of({"entity": {
+            "id": 1,
+            "gender": Gender.Male,
+            "nickname": "hck",
+            "first_name": "Артём",
+            "last_name": "Байдин",
+            "patronymic": "Георгиевич",
+            "alias": "killers",
+            "birth_date": "17-08-1991",
+            "verified": false,
+            "created": "2017-06-01T09:09:41+00:00"
+        }}).delay(1000);
     }
 
     public create(profileCreateRequest:ProfileCreateUpdateRequest): Observable<ProfileGetResponse | ResponseFailure>

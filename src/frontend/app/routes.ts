@@ -52,7 +52,7 @@ export const appRoutes: JetRoutes = [
         children: [
             { path: '', redirectTo: '/feed', pathMatch: 'full' },
             {
-                path: 'user/:id',
+                path: ':path',
                 component: ProfileRoute,
                 resolve: {
                     profile: ProfileResolver
