@@ -1,0 +1,12 @@
+.loading-indicator(
+  [style.width]="loadingBar.getProgress() + '%'",
+  [style.opacity]="loadingBar.getOpacity()"
+)
+//Debug buttons
+//div(style="position:relative; left:300px; z-index:9")
+//  button.btn.primary((click)="loadingBar.setProgress(30)") setProgress(30)
+//  button.btn.primary((click)="loadingBar.incProgress()") incProgress()
+//  button.btn.primary((click)="loadingBar.resetProgress()") resetProgress()
+//  button.btn.primary((click)="loadingBar.startProgress()") startProgress()
+//  button.btn.primary((click)="loadingBar.stopProgress()") stopProgress()
+//  button.btn.primary((click)="loadingBar.completeProgress()") completeProgress()
