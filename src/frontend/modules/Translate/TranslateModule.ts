@@ -1,7 +1,5 @@
 import {NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
+import {CommonModule} from "@angular/common";
 
 import {TranslatePipe} from "./Pipe/TranslationPipe";
 import {TranslationService} from "./Service/TranslationService";
@@ -9,10 +7,7 @@ import {LocaleService} from "./Service/LocaleService";
 
 @NgModule({
     imports: [
-        BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpModule,
+        CommonModule
     ],
     declarations: [
         TranslatePipe,
@@ -21,7 +16,7 @@ import {LocaleService} from "./Service/LocaleService";
         TranslationService,
         LocaleService,
     ],
-    exports:[
+    exports: [
         TranslatePipe
     ]
 })
