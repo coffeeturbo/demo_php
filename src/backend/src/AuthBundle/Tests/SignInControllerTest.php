@@ -27,7 +27,9 @@ class SignInControllerTest extends BaseTestSetup
         $client = static::createSignInClient(json_encode([
             "username" => $accountData['email'],
             "password" => $accountData['password'],
-        ]));
+        ]), [
+            'HTTP_ACCEPT' => 'application/json'
+        ]);
 
         $token = json_decode($client->getResponse()->getContent(), true)['token'];
 
