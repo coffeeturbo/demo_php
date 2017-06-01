@@ -55,6 +55,7 @@ export class LoadingBarService {
     }
 
     public completeProgress() {
+        this.stopProgress();
         this.setProgress(100);
     }
 

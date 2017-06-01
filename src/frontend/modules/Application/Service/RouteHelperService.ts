@@ -28,6 +28,7 @@ export class RouteHelperService {
                     this.onLoading.emit(true);
                     this.showProgressBarSubscription = Observable.of([]).delay(100).subscribe(()=>{
                         this.loadingBar.setProgress(30);
+                        this.loadingBar.startProgress();
                     });
                 break;
                 case NavigationEnd:
