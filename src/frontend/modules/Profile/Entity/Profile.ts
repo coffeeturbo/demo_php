@@ -10,7 +10,7 @@ export interface Profile {
     gender:     Gender;
     first_name: string;
     last_name:  string;
-    nick_name:  string;
+    nickname:  string;
     patronymic: string;
     verified:   boolean;
 }
