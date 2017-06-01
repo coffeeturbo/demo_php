@@ -1,5 +1,10 @@
 @import '../../../../assets/styles/global';
 
+:host(.progress) {
+  cursor: progress;
+  background: red;
+}
+
 .header-container {
   position: fixed;
   width: 100%;
@@ -73,28 +78,32 @@ header {
     svg {
       height: 2em;
       vertical-align: middle;
-      
+
       & + * {
         margin-left: 15px;
       }
-      
-      .left-cloud{fill:material-color($primary_material, '50');}
-      .right-cloud{
-        fill:material-color($primary_material, '100');
+
+      .left-cloud {
+        fill: material-color($primary_material, '50');
+      }
+      .right-cloud {
+        fill: material-color($primary_material, '100');
       }
 
-      .big-circle{
-        fill:material-color("cyan", 'a200');
+      .big-circle {
+        fill: material-color("cyan", 'a200');
       }
 
-      .circ{
-        fill:material-color("cyan", '500')/*#00D2FF*/;
+      .circ {
+        fill: material-color("cyan", '500') /*#00D2FF*/
+      ;
       }
-      .brain{
-        fill:material-color("cyan", 'a200')/*#00D2FF*/;
+      .brain {
+        fill: material-color("cyan", 'a200') /*#00D2FF*/
+      ;
       }
-      .brain-bg{
-        fill:material-color($primary_material, '700');
+      .brain-bg {
+        fill: material-color($primary_material, '700');
       }
 
     }

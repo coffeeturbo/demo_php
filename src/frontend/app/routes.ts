@@ -7,6 +7,7 @@ import {SignInRoute} from "../modules/Auth/Route/SignInRoute/index";
 import {SignUpRoute} from "../modules/Auth/Route/SignUpRoute/index";
 import {ProfileSettingsRoute} from "../modules/Profile/Route/ProfileSettingsRoute/index";
 import {JetRoutes} from "../modules/Application/Entity/JetRoute";
+import {ProfileResolver} from "../modules/Profile/Service/ProfileResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -51,8 +52,11 @@ export const appRoutes: JetRoutes = [
         children: [
             { path: '', redirectTo: '/feed', pathMatch: 'full' },
             {
-                path: ':id',
+                path: 'user/:id',
                 component: ProfileRoute,
+                resolve: {
+                    profile: ProfileResolver
+                },
                 data: { title: 'Profile'}
             }
         ]

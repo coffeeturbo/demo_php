@@ -1,4 +1,4 @@
-import {BrowserModule} from "@angular/platform-browser";
+import {CommonModule} from "@angular/common";
 import {NgModule} from "@angular/core";
 
 import {ModalComponent} from "./Component/Modal/index";
@@ -8,7 +8,7 @@ import {ModalFooterComponent} from "./Component/Modal/layout/ModalFooterComponen
 
 @NgModule({
     imports: [
-        BrowserModule
+        CommonModule
     ],
     declarations: [
         ModalComponent,

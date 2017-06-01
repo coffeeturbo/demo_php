@@ -2,6 +2,7 @@ import DateTimeFormat = Intl.DateTimeFormat;
 import {Gender} from "./Gender";
 
 export interface Profile {
+    id:         number;
     account:    Account;
     alias:      string;
     birth_date: string;

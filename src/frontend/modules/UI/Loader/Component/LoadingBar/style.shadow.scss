@@ -1,0 +1,25 @@
+@import '../../../../../assets/styles/global.scss';
+
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: #18ffff;
+  background: $font_color_light;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  transition: all .5s;
+
+  @include mq($from: tablet) {
+    &:after {
+      content: '';
+      display: block;
+      width: 17px;
+      height: 3px;
+      position: absolute;
+      right: 0;
+      box-shadow: -15px 0 1px #fff, -10px 0 2px #fff, -5px 0 3px #fff, 0px 0 5px #fff, 0px 0 3px #fff, 2px 0 1px #fff
+    }
+  }
+}

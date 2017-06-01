@@ -1,1 +1,3 @@
-not-implemented(title="Profile Page")
+ng-container(*ngIf="profile")
+  h1 {{profile.last_name}} {{profile.first_name}} {{profile.patronymic}}
+  pre {{ profile |  json }}

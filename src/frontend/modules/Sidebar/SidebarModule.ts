@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
+import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
 import {TranslateModule} from "../Translate/TranslateModule";
@@ -9,7 +9,7 @@ import {SidebarService} from "./Service/SidebarService";
 
 @NgModule({
     imports: [
-        BrowserModule,
+        CommonModule,
         RouterModule,
         TranslateModule
     ],
