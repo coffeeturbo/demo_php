@@ -1,12 +1,10 @@
-import {Component} from '@angular/core';
-import {Title} from "@angular/platform-browser";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {Component, HostBinding} from '@angular/core';
 
 import '../../../../assets/styles/index.scss';
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
+import {RouteHelperService} from "../../Service/RouteHelperService";
 import {Device} from "../../Service/DeviceService";
-import {TranslationService} from "../../../Translate/Service/TranslationService";
 
 @Component({
     selector: 'application',
@@ -14,30 +12,20 @@ import {TranslationService} from "../../../Translate/Service/TranslationService"
     styleUrls: ['./style.shadow.scss']
 })
 export class ApplicationComponent {
+    @HostBinding('class') className: string;
+    
     config = require('../../../../app/config.json');
 
     constructor(
-        public  sidebarService: SidebarService,
-        public  authService: AuthService,
-        private titleService: Title,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private translationService: TranslationService
+        public sidebarService: SidebarService,
+        public authService: AuthService,
+        public routeHelperService: RouteHelperService
     ) {
+        routeHelperService.onLoading
+            .map(loading => loading ? 'progress' : '')
+            .subscribe(className => this.className = className);
         
-        // Set title from route data
-        router.events
-            .filter(event => event instanceof NavigationEnd)
-            .map(() => activatedRoute)
-            .map(route => {
-                while (route.firstChild) route = route.firstChild;
-                return route;
-            })
-            .filter(route => route.outlet === 'primary')
-            .mergeMap(route => route.data)
-            .subscribe((event) => {
-                let title = this.translationService.translate(event['title']);
-                titleService.setTitle(title)
-            });
+        this.routeHelperService.titleWatcher();
+        this.routeHelperService.loadingIndicatorWatcher();
     }
 }

@@ -1,18 +1,19 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule}  from '@angular/platform-browser';
 import {RouterModule} from "@angular/router";
-import {Http, HttpModule, RequestOptions, XHRBackend} from "@angular/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {Http, RequestOptions, XHRBackend} from "@angular/http";
+import {AuthConfig, AuthHttp} from "angular2-jwt";
 
 import 'hammerjs';
 
 import {appRoutes} from "../../app/routes";
-import {AuthConfig, AuthHttp} from "angular2-jwt";
-import {RESTService} from "./Service/RESTService";
+
 import {ApplicationComponent} from "./Component/Application/index";
 import {ForbiddenRoute} from "./Route/ForbiddenRoute/index";
 import {PageNotFoundRoute} from "./Route/PageNotFoundRoute/index";
+import {RESTService} from "./Service/RESTService";
 import {StartupService} from "./Service/StartupService";
+
 import {AuthModule} from "../Auth/AuthModule";
 import {UIModule} from "../UI/UIModule";
 import {TranslateModule} from "../Translate/TranslateModule";
@@ -20,7 +21,7 @@ import {SidebarModule} from "../Sidebar/SidebarModule";
 import {SettingsModule} from "../Settings/SettingsModule";
 import {FeedModule} from "../Feed/FeedModule";
 import {ProfileModule} from "../Profile/ProfileModule";
-
+import {RouteHelperService} from "./Service/RouteHelperService";
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig(), http, options);
@@ -37,9 +38,6 @@ export function StartupServiceFactory(startupService: StartupService): Function 
 @NgModule({
     imports: [
         BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpModule,
         RouterModule.forRoot(appRoutes),
 
         AuthModule,
@@ -58,6 +56,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     providers: [
         RESTService,
         StartupService,
+        RouteHelperService,
         {
             provide: AuthHttp,
             useFactory: AuthHttpServiceFactory,

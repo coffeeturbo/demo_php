@@ -49,7 +49,7 @@
         span {{config.product_name | translate}}
 
     nav.menu
-      a(*ngIf="authService.isSignedIn()", routerLink="/profile/user1", routerLinkActive="active")
+      a(*ngIf="authService.isSignedIn()", [routerLink]="['profile', 'user', 1]", routerLinkActive="active")
         i.fa.fa-2x.fa-user-circle
         span {{"Profile" | translate}}  
       a(*ngIf="authService.isSignedIn()", routerLink="/profile", routerLinkActive="active")
@@ -67,4 +67,5 @@
 main([ngClass]="'sidebar-' + sidebarService.state")
   router-outlet
   
+loading-indicator
 settings-modal
