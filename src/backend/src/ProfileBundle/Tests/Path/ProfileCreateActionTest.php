@@ -2,7 +2,6 @@
 namespace ProfileBundle\Tests\Path;
 
 use ProfileBundle\Tests\ProfileController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileCreateActionTest extends ProfileController

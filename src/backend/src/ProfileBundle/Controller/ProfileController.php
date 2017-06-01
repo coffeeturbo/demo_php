@@ -74,9 +74,8 @@ class ProfileController extends Controller
 
         } catch(ProfilesLimitException $exception) {
             return new ErrorResponse($exception, Response::HTTP_FORBIDDEN);
-        }
-        catch(\Exception $e){
-            $r['error'] = $e->getMessage();
+        } catch(\Exception $e){
+            return new ErrorResponse($e->getMessage());
         }
 
         return new JsonResponse([
