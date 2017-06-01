@@ -24,21 +24,13 @@ export class SidebarService {
     public toggle() {
         return this.visibility = this.visibility == "visible" ? "hidden" : "visible"
     }
-    
+
     public hide() {
         return this.visibility = "hidden";
     }
 
-    get state(): "visible" | "hidden" {
+    public get state(): "visible" | "hidden" {
         return this.visibility;
-    }
-
-    public isVisible(): boolean {
-        return this.state === 'visible'
-    }
-
-    public isHidden(): boolean {
-        return this.state === 'hidden'
     }
 
 }
