@@ -14,6 +14,7 @@ export class ProfileService {
 
     public get(path: string): Observable<Profile | ResponseFailure> 
     {
+        console.log(this.profiles);
         try {
             return this.getFromCache(path);
         } catch (e) {
@@ -55,7 +56,10 @@ export class ProfileService {
 
     public replaceInCache(oldProfile: Profile, newProfile: Profile) 
     {
-        this.profiles[this.profiles.indexOf(oldProfile)] = newProfile;
+        let index: number = this.profiles.indexOf(oldProfile);
+        if(index != -1) {
+            this.profiles[this.profiles.indexOf(oldProfile)] = newProfile;
+        } else throw new Error(`${index} not found in cache file`);
     }
 
 

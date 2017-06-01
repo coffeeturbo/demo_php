@@ -1,1 +1,12 @@
-not-implemented(title="Settings Page")
+form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  .field
+    i.fa.fa-user.fa-lg.fa-fw
+    .input-box
+      input(type="text", formControlName="alias", placeholder="{{'Alias' | translate }}", auto-focus)
+      hr
+
+
+  .controls
+    button.btn.primary(type="submit", [disabled]="!form.valid")
+      .fa.fa-sign-in
+      span {{"Save" | translate }}

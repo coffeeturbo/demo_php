@@ -8,7 +8,7 @@ import {ProfileService} from "./ProfileService";
 @Injectable()
 export class ProfileResolver implements Resolve<Profile> {
 
-    private currentProfilePath = "killers";
+    private currentProfilePath = 1;
     constructor(private profileService: ProfileService) {}
     
     resolve(route: ActivatedRouteSnapshot): Observable<Profile | ResponseFailure> 
