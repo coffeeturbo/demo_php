@@ -1,0 +1,33 @@
+@import '../../../../assets/styles/global';
+
+svg {
+  height: 2em;
+  vertical-align: middle;
+
+  & + * {
+    margin-left: 15px;
+  }
+
+  .left-cloud {
+    fill: material-color($primary_material, '50');
+  }
+  .right-cloud {
+    fill: material-color($primary_material, '100');
+  }
+
+  .big-circle {
+    fill: material-color("cyan", 'a200');
+  }
+
+  .circ {
+    fill: material-color("cyan", '500') /*#00D2FF*/
+  ;
+  }
+  .brain {
+    fill: material-color("cyan", 'a200') /*#00D2FF*/
+  ;
+  }
+  .brain-bg {
+    fill: material-color($primary_material, '700');
+  }
+}

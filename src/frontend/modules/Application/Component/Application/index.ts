@@ -13,7 +13,6 @@ import {Device} from "../../Service/DeviceService";
 export class ApplicationComponent {
     @HostBinding('class') className: string;
     
-    config = require('../../../../app/config.json');
 
     constructor(
         public sidebarService: SidebarService,
