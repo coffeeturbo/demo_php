@@ -7,6 +7,7 @@ import {AuthConfig, AuthHttp} from "angular2-jwt";
 import 'hammerjs';
 
 import {appRoutes} from "../../app/routes";
+import '../../assets/styles/index.scss';
 
 import {ApplicationComponent} from "./Component/Application/index";
 import {ForbiddenRoute} from "./Route/ForbiddenRoute/index";

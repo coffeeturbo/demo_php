@@ -120,3 +120,4 @@ composer.lock
 .idea
 Vagrantfile
 jet.conf
+package-lock.json

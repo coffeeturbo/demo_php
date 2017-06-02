@@ -1,6 +1,5 @@
 import {Component, HostBinding} from '@angular/core';
 
-import '../../../../assets/styles/index.scss';
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {RouteHelperService} from "../../Service/RouteHelperService";
