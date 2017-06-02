@@ -2,6 +2,11 @@ server {
     root /opt/jet/web;
     listen 8080;
 
+    gzip on;
+    gzip_comp_level 3; 
+    gzip_types text/css application/x-javascript text/plain text/xml image/x-icon application/x-font-ttf application/x-font-otf application/font-woff application/font-woff2 application/vnd.ms-fontobject;
+    expires max;
+
     # Frontend (Angular2)
     location / {
         try_files $uri /dist/index.html =404;
