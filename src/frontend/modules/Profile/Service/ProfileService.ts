@@ -14,7 +14,6 @@ export class ProfileService {
 
     public get(path: string): Observable<Profile | ResponseFailure> 
     {
-        console.log(this.profiles);
         try {
             return this.getFromCache(path);
         } catch (e) {
