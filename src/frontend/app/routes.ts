@@ -45,7 +45,10 @@ export const appRoutes: JetRoutes = [
         path: 'settings',
         component: ProfileSettingsRoute,
         canActivate: [CanActivateService],
-        data: { title: 'Settings', allow: ["ROLE_CREATED"] },
+        resolve: {
+            profile: ProfileResolver
+        },
+        data: { title: 'Settings', allow: ["ROLE_CREATED"] }
     },
     { // Страница профиля (редирект на новости если не указан id профиля)
         path: 'profile',

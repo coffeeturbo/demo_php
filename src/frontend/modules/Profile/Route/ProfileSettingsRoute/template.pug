@@ -1,8 +1,19 @@
 form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
   .field
-    i.fa.fa-user.fa-lg.fa-fw
     .input-box
-      input(type="text", formControlName="alias", placeholder="{{'Alias' | translate }}", auto-focus)
+      input(type="text", formControlName="last_name", placeholder="{{'Name' | translate }}", auto-focus)
+      hr
+  .field
+    .input-box
+      input(type="text", formControlName="first_name", placeholder="{{'Name' | translate }}", auto-focus)
+      hr
+  .field
+    .input-box
+      input(type="text", formControlName="patronymic", placeholder="{{'Name' | translate }}", auto-focus)
+      hr
+  .field
+    .input-box
+      input(type="text", formControlName="nickname", placeholder="{{'Name' | translate }}", auto-focus)
       hr
 
 

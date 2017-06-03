@@ -37,6 +37,15 @@ export class ProfileService {
 
     }
 
+    /**
+     * @DOTO: Implement method
+     * 
+     */
+    getOwn(): Observable<Profile>
+    {
+        return this.get("killers");
+    }
+
     private getFromCache(path: number | string): Observable<Profile> 
     {
         let profile: Profile = this.profiles.filter((profile) => profile.id == path || profile.alias == path).shift();

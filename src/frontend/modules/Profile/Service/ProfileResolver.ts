@@ -8,11 +8,13 @@ import {ProfileService} from "./ProfileService";
 @Injectable()
 export class ProfileResolver implements Resolve<Profile> {
 
-    private currentProfilePath = 1;
     constructor(private profileService: ProfileService) {}
     
     resolve(route: ActivatedRouteSnapshot): Observable<Profile> 
     {
-        return this.profileService.get(route.params.path || this.currentProfilePath)
+        return route.params.hasOwnProperty("path") ? 
+            this.profileService.get(route.params.path) : 
+            this.profileService.getOwn()
+        ;
     }
 }
