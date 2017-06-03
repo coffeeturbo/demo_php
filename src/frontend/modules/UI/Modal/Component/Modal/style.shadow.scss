@@ -1,11 +1,5 @@
 @import "../../../../../assets/styles/global";
 
-@include mq($from: desktop) {
-  :host.shake .modal-box {
-    animation: shake 600ms cubic-bezier(.36,.07,.19,.97) both;
-  }
-}
-
 .modal, .backdrop {
   position: fixed;
   top: 0;
@@ -57,5 +51,14 @@
   
   .backdrop {
     background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+@include mq($from: desktop) {
+  :host.shake .modal-box {
+    animation: 
+            fade 600ms ease-in-out both, 
+            zoom 600ms ease-in-out both, 
+            shake 600ms cubic-bezier(.36,.07,.19,.97) both;
   }
 }
