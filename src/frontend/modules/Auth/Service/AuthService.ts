@@ -1,46 +1,55 @@
-import {EventEmitter, Injectable, NgZone} from '@angular/core';
-
-import {JwtHelper, tokenNotExpired} from "angular2-jwt";
+import {EventEmitter, Injectable} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {Observable, Observer, Scheduler, Subscription} from "rxjs";
+import {JwtHelper, tokenNotExpired} from "angular2-jwt";
+
 import {AuthRESTService} from "./AuthRESTService";
 import {SignInRequest} from "../Http/Request/SignInRequest";
-import {Observable, Observer, Scheduler, Subscription} from "rxjs";
-import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 import {SignUpRequest} from "../Http/Request/SignUpRequest";
+import {TokenResponse} from "../Http/Response/TokenResponse";
+import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 import {Token} from "../Entity/Token";
 import {Roles} from "../Entity/Role";
-import {TokenResponse} from "../Http/Response/TokenResponse";
+import {AuthEvents} from "../Event/AuthEvents";
 import {TokenRepository} from "../Repository/TokenRepository";
-import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
+import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 
 const jwtHelper: JwtHelper = new JwtHelper();
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
     getRoles(): Roles;
-    signIn(body: SignInRequest): Observable<TokenResponse | ResponseFailure>;
-    signUp(body: SignUpRequest): Observable<TokenResponse | ResponseFailure>;
-    connectVK(): Observable<TokenResponse | ResponseFailure>
-    connectFacebook(): Observable<TokenResponse | ResponseFailure>
+    signIn(body: SignInRequest): Observable<TokenResponse>;
+    signUp(body: SignUpRequest): Observable<TokenResponse>;
+    connectVK(): Observable<TokenResponse>
+    connectFacebook(): Observable<TokenResponse>
     signOut(): void;
+    addTokenExpirationSchedule() : void
 }
 
-/** 
- * @TODO: replace subscribe handleTokenResponse on TokenResponseListner
- */
 @Injectable()
 export class AuthService implements AuthServiceInterface 
 {
     public onRefreshToken: EventEmitter<any> = new EventEmitter();
     
     private tokenExpirationSchedule: Subscription = new Subscription();
+    private returlUrl: string = "/";
 
     constructor(
         private router: Router,
         private route: ActivatedRoute, 
-        private rest: AuthRESTService, 
-        private zone: NgZone
-    ) {}
+        private rest: AuthRESTService,
+        private authEvents: AuthEvents
+    ) {
+        this.authEvents.onSuccess.subscribe((tokenResponse: TokenResponse)=>{
+            TokenRepository.saveToken(tokenResponse.token);
+            TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
+            this.addTokenExpirationSchedule();
+            this.router.navigateByUrl(this.returlUrl);
+        });
+        
+        this.authEvents.onFail.subscribe(()=> this.signOut());
+    }
 
     public isSignedIn(): boolean 
     {
@@ -53,25 +62,19 @@ export class AuthService implements AuthServiceInterface
         return tokenData.roles;
     }
 
-    public signIn(body: SignInRequest): Observable<TokenResponse | ResponseFailure> 
+    public signIn(body: SignInRequest): Observable<TokenResponse> 
     {
-        let observableTokenResponse = this.handleTokenResponse(this.rest.signIn(body)).share();
-        observableTokenResponse.subscribe(
-            () => this.router.navigate([this.route.data['returnUrl'] || "/"])
-        );
-        return observableTokenResponse;
+        this.returlUrl = this.route.data['returnUrl'] || "/";
+        return this.handleTokenResponse(this.rest.signIn(body)).share();
     }
 
-    public signUp(body: SignUpRequest): Observable<TokenResponse | ResponseFailure> 
+    public signUp(body: SignUpRequest): Observable<TokenResponse> 
     {
-        let observableTokenResponse = this.handleTokenResponse(this.rest.signUp(body)).share();
-        observableTokenResponse.subscribe(
-            () => this.router.navigate(["/"])
-        );
-        return observableTokenResponse;
+        this.returlUrl = "/";
+        return this.handleTokenResponse(this.rest.signUp(body)).share();
     }
 
-    public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse | ResponseFailure> 
+    public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse> 
     {
         let observableTokenResponse = this.handleTokenResponse(this.rest.refreshToken(body)).share();
         observableTokenResponse
@@ -80,12 +83,12 @@ export class AuthService implements AuthServiceInterface
         return observableTokenResponse;
     }
 
-    public connectVK(): Observable<TokenResponse | ResponseFailure> 
+    public connectVK(): Observable<TokenResponse> 
     {
         return this.connectSocial(`/api/oAuth/connect/vk`);
     }
 
-    public connectFacebook(): Observable<TokenResponse | ResponseFailure> 
+    public connectFacebook(): Observable<TokenResponse> 
     {
         return this.connectSocial(`/api/oAuth/connect/facebook`);
     }
@@ -97,7 +100,7 @@ export class AuthService implements AuthServiceInterface
         this.router.navigate(["login"]);
     }
 
-    public addTokenExpirationSchedule()/*: Observable<TokenResponse | ResponseFailure>*/
+    public addTokenExpirationSchedule() : void
     {
         if(TokenRepository.isTokenExist()) {
             let offset: number = 5000;  // Make it 5 sec before token expired
@@ -110,46 +113,43 @@ export class AuthService implements AuthServiceInterface
         }
     }
 
-    private connectSocial(url: string): Observable<TokenResponse | ResponseFailure>
+    private connectSocial(url: string): Observable<TokenResponse>
     {
         let connectWindow: Window = window.open(url, null, "menubar=no,toolbar=no,location=no");
+        this.returlUrl = this.route.data['returnUrl'] || "/";
 
         return this.handleTokenResponse(
             new Observable((observer: Observer<TokenResponse>) => {
 
-                let interval = window.setInterval(() => {
-                    if (connectWindow && connectWindow.closed) {
-                        window.clearInterval(interval);
-                        observer.error({"code": 410, "message": "Authorization aborted"});
-                    }
-                }, 100);
+                let connectWindowSubscription = Observable
+                    .interval(100)
+                    .subscribe(() => {
+                        if (connectWindow && connectWindow.closed) {
+                            connectWindowSubscription.unsubscribe();
+                            observer.error({"code": 410, "message": "Authorization aborted"});
+                        }
+                    });
 
                 connectWindow.opener.onmessage = (event: MessageEvent) => {
-                    this.zone.run(() => { // Forse refresh component
-                        window.clearInterval(interval);
-                        connectWindow.close();
-                        observer.next(event.data);
-                    })
+                    connectWindow.close();
+                    connectWindowSubscription.unsubscribe();
+                    observer.next(event.data);
                 }
             })
         );
     }
 
-    private handleTokenResponse(observableTokenResponse: Observable<TokenResponse | ResponseFailure>): Observable<TokenResponse | ResponseFailure> 
+    private handleTokenResponse(observableTokenResponse: Observable<TokenResponse>): Observable<TokenResponse> 
     {
         observableTokenResponse = observableTokenResponse.share();
 
-        observableTokenResponse.subscribe(
-            (tokenResponse: TokenResponse) => {
-                TokenRepository.saveToken(tokenResponse.token);
-                TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
-                this.addTokenExpirationSchedule();
-            },
-            (tokenResponseFailure: ResponseFailure) => {
-                this.signOut();
-                console.log(tokenResponseFailure.message);
-            }
-        );
+        observableTokenResponse
+            .finally(() => this.authEvents.onSuccess.complete())
+            .subscribe(
+                (tokenResponse: TokenResponse) => this.authEvents.onSuccess.emit(tokenResponse),
+                (tokenResponseFailure: ResponseFailure) => this.authEvents.onFail.emit(tokenResponseFailure)
+            )
+        ;
 
         return observableTokenResponse;
     }
