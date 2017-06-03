@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 
+import {Config} from "../../../../app/config";
+
 @Component({
     selector: 'application-logo',
     templateUrl: './template.pug',
@@ -7,5 +9,5 @@ import {Component} from '@angular/core';
 })
 
 export class ApplicationLogoComponent {
-    public product_name = require('../../../../app/config.json').product_name;
+    public product_name = Config.product_name;
 }

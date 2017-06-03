@@ -1,4 +1,4 @@
-{
+export const Config = {
   "product_name": "Socilite",
   "short_product_name": "SoL",
   "locale" : "EN",
@@ -17,4 +17,4 @@
       }
     }
   }
-}
+};

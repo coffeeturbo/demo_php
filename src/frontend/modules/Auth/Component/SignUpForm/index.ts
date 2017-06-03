@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {AuthService} from "../../Service/AuthService";
+import {Config} from "../../../../app/config";
 
 
 @Component({
@@ -11,7 +12,7 @@ import {AuthService} from "../../Service/AuthService";
 })
 
 export class SignUpFormComponent {
-    config = require('../../../../app/config.json');
+    public config = Config;
 
     @Input('show-controls') showControls: boolean = true;
     protected isPasswordHidden: boolean = true;

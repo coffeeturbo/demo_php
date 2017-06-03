@@ -20,7 +20,7 @@ export class ApplicationComponent {
         public sidebar: SidebarService,
         public auth: AuthService,
         private routeHelper: RouteHelperService,
-        private loadingBarEvents: LoadingBarEvents
+        private loadingBarEvents: LoadingBarEvents,
     ) {
         loadingBarEvents.onChangeState
             .map((loaderBar: LoaderBar) => loaderBar.state)

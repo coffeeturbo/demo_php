@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
+
 import {Locale} from "../Entity/Definitions";
 import {dictionariesNavigatorAliases} from "../../../translations/dictionaries";
+import {Config} from "../../../app/config";
 
 @Injectable()
 export class LocaleService {
@@ -30,6 +32,6 @@ export class LocaleService {
                 if (isLangExist) return <Locale>locale;
             }
         }
-        return require('../../../app/config.json').locale;
+        return <Locale>Config.locale;
     }
 }
