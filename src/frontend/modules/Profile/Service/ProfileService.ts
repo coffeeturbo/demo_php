@@ -3,7 +3,6 @@ import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
 import {Observable} from "rxjs";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
-import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 
 @Injectable()
 export class ProfileService {
@@ -12,7 +11,7 @@ export class ProfileService {
     constructor(private rest: ProfileRESTService) {
     }
 
-    public get(path: string): Observable<Profile | ResponseFailure> 
+    public get(path: string): Observable<Profile> 
     {
         try {
             return this.getFromCache(path);

@@ -4,7 +4,6 @@ import {RESTService} from "../../Application/Service/RESTService";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {Observable} from "rxjs";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
-import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 import {Gender} from "../Entity/Gender";
 
 @Injectable()
@@ -12,7 +11,7 @@ export class ProfileRESTService {
 
     constructor(private rest: RESTService){}
 
-    public getById(profileId: number): Observable<ProfileGetResponse | ResponseFailure>
+    public getById(profileId: number): Observable<ProfileGetResponse>
     {
         let url = `/profile/${profileId}/get`;
         
@@ -37,7 +36,7 @@ export class ProfileRESTService {
         }}).delay(1000);
     }
 
-    public create(profileCreateRequest:ProfileCreateUpdateRequest): Observable<ProfileGetResponse | ResponseFailure>
+    public create(profileCreateRequest:ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
     {
         let url = "/protected/profile/create";
         
@@ -46,7 +45,7 @@ export class ProfileRESTService {
             .map(res => res.json())
     }
 
-    public update(profileId: number, profileUpdateRequest:ProfileCreateUpdateRequest): Observable<ProfileGetResponse | ResponseFailure>
+    public update(profileId: number, profileUpdateRequest:ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
     {
         let url = `/protected/profile/${profileId}/update`;
         
