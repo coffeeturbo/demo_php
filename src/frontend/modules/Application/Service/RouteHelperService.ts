@@ -1,15 +1,14 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
 import {TranslationService} from "../../Translate/Service/TranslationService";
-import {LoadingBarService} from "../../UI/Loader/Service/LoadingIndicatorService";
+import {LoadingBarService} from "../../UI/LoadingBar/Service/LoadingBarService";
 
 @Injectable()
 export class RouteHelperService {
 
-    public onLoading: EventEmitter<boolean> = new EventEmitter();
     private showProgressBarSubscription: Subscription = new Subscription();
     
     constructor(
@@ -25,7 +24,6 @@ export class RouteHelperService {
 
             switch (event.constructor) {
                 case NavigationStart:
-                    this.onLoading.emit(true);
                     this.showProgressBarSubscription = Observable.of([]).delay(100).subscribe(()=>{
                         this.loadingBar.setProgress(30);
                         this.loadingBar.startProgress();
@@ -34,9 +32,8 @@ export class RouteHelperService {
                 case NavigationEnd:
                 case NavigationCancel:
                 case NavigationError:
-                    this.onLoading.emit(false);
                     this.showProgressBarSubscription.unsubscribe();
-                    if(this.loadingBar.getProgress() > 0) {
+                    if(this.loadingBar.get().progress > 0) {
                         this.loadingBar.completeProgress();
                     }
                 break;

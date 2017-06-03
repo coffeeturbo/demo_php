@@ -1,26 +1,26 @@
-.header-container((panleft)="Device.isMobile() && sidebarService.hide()")
+.header-container((panleft)="device.isMobile() && sidebar.hide()")
   header
-    button.sidebar((click)="sidebarService.toggle()")
+    button.sidebar((click)="sidebar.toggle()")
       i.fa.fa-2x.fa-bars
     .logo
       a(routerLink="/")
         application-logo
 
     nav.menu
-      a(*ngIf="authService.isSignedIn()", [routerLink]="['profile', 'killers']", routerLinkActive="active")
+      a(*ngIf="auth.isSignedIn()", [routerLink]="['profile', 'killers']", routerLinkActive="active")
         i.fa.fa-2x.fa-user-circle
         span {{"Profile" | translate}}  
-      a(*ngIf="!authService.isSignedIn()" routerLink="/login")
+      a(*ngIf="!auth.isSignedIn()" routerLink="/login")
         i.fa.fa-2x.fa-sign-in
         span {{"Sign in" | translate}}  
-      a(*ngIf="authService.isSignedIn()", (click)="authService.signOut()")
+      a(*ngIf="auth.isSignedIn()", (click)="auth.signOut()")
         i.fa.fa-2x.fa-sign-out
         span {{"Sign out" | translate}}
 
-  sidebar([ngClass]="sidebarService.state", (swipeleft)="Device.isMobile() && sidebarService.hide()")
+  sidebar([ngClass]="sidebar.state", (swipeleft)="device.isMobile() && sidebar.hide()")
 
-main([ngClass]="'sidebar-' + sidebarService.state")
+main([ngClass]="'sidebar-' + sidebar.state")
   router-outlet
   
-loading-indicator
+application-loading-bar
 settings-modal

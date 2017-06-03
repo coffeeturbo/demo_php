@@ -24,6 +24,7 @@ import {FeedModule} from "../Feed/FeedModule";
 import {ProfileModule} from "../Profile/ProfileModule";
 import {RouteHelperService} from "./Service/RouteHelperService";
 import {ApplicationLogoComponent} from "./Component/ApplicationLogo/index";
+import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/index";
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp(new AuthConfig(), http, options);
@@ -53,6 +54,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
     declarations: [
         ApplicationComponent,
         ApplicationLogoComponent,
+        ApplicationLoadingBarComponent,
         ForbiddenRoute,
         PageNotFoundRoute,
     ],
