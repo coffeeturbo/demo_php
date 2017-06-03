@@ -65,13 +65,13 @@ export class AuthService implements AuthServiceInterface
     public signIn(body: SignInRequest): Observable<TokenResponse> 
     {
         this.returlUrl = this.route.data['returnUrl'] || "/";
-        return this.handleTokenResponse(this.rest.signIn(body)).share();
+        return this.handleTokenResponse(this.rest.signIn(body));
     }
 
     public signUp(body: SignUpRequest): Observable<TokenResponse> 
     {
         this.returlUrl = "/";
-        return this.handleTokenResponse(this.rest.signUp(body)).share();
+        return this.handleTokenResponse(this.rest.signUp(body));
     }
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse> 

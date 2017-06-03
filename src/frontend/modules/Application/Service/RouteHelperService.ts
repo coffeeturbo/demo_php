@@ -51,9 +51,9 @@ export class RouteHelperService {
             })
             .filter(route => route.outlet === 'primary')
             .mergeMap(route => route.data)
-            .subscribe((event) => {
-                let title = this.translationService.translate(event['title']);
-                this.titleService.setTitle(title)
-            });
+            .filter(event => event['title'] !== undefined)
+            .map(event => event['title'])
+            .map(title => this.translationService.translate(title))
+            .subscribe((title) => this.titleService.setTitle(title));
     }
 }
