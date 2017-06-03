@@ -17,7 +17,6 @@ import {StartupService} from "./Service/StartupService";
 
 import {AuthModule} from "../Auth/AuthModule";
 import {UIModule} from "../UI/UIModule";
-import {TranslateModule} from "../Translate/TranslateModule";
 import {SidebarModule} from "../Sidebar/SidebarModule";
 import {SettingsModule} from "../Settings/SettingsModule";
 import {FeedModule} from "../Feed/FeedModule";
@@ -48,7 +47,6 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         ProfileModule,
         SettingsModule,
         SidebarModule,
-        TranslateModule,
         UIModule,
     ],
     declarations: [

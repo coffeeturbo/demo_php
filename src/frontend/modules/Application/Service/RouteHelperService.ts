@@ -3,7 +3,7 @@ import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
-import {TranslationService} from "../../Translate/Service/TranslationService";
+import {TranslationService} from "../../UI/Translate/Service/TranslationService";
 import {LoadingBarService} from "../../UI/LoadingBar/Service/LoadingBarService";
 
 @Injectable()

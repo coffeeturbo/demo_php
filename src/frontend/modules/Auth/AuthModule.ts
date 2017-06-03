@@ -4,7 +4,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 
 import {UIModule} from "../UI/UIModule";
-import {TranslateModule} from "../Translate/TranslateModule";
 
 import {SignInFormComponent} from "./Component/SignInForm/index";
 import {SignUpFormComponent} from "./Component/SignUpForm/index";
@@ -24,8 +23,7 @@ import {AuthEvents} from "./Event/AuthEvents";
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        UIModule,
-        TranslateModule
+        UIModule
     ],
     declarations:[
         SignInFormComponent,

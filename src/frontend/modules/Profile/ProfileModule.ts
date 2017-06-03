@@ -7,16 +7,14 @@ import {ProfileRoute} from "./Route/ProfileRoute/index";
 import {ProfileSettingsRoute} from "./Route/ProfileSettingsRoute/index";
 import {ProfileRESTService} from "./Service/ProfileRESTService";
 import {ProfileResolver} from "./Service/ProfileResolver";
-import {TranslateModule} from "../Translate/TranslateModule";
 import {ProfileService} from "./Service/ProfileService";
 
 @NgModule({
     imports:[
-        UIModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        TranslateModule
+        UIModule
     ],
     declarations: [
         ProfileRoute,

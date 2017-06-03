@@ -6,7 +6,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SettingsComponent} from "./Component/Settings/index";
 import {SettingsModalComponent} from "./Component/SettingsModal/index";
 import {SettingsModalService} from "./Service/SettingsModalService";
-import {TranslateModule} from "../Translate/TranslateModule";
 import {UIModule} from "../UI/UIModule";
 
 @NgModule({
@@ -15,7 +14,6 @@ import {UIModule} from "../UI/UIModule";
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        TranslateModule,
         UIModule
     ],
     declarations: [

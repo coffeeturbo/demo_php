@@ -2,16 +2,16 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
-import {TranslateModule} from "../Translate/TranslateModule";
 
 import {SidebarComponent} from "./Component/Sidebar/index";
 import {SidebarService} from "./Service/SidebarService";
+import {UIModule} from "../UI/UIModule";
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        TranslateModule
+        UIModule
     ],
     declarations: [
         SidebarComponent

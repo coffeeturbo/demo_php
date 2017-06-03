@@ -6,6 +6,7 @@ import {TooltipModule} from "./Tooltip/TooltipModule";
 import {NotImplementedModule} from "./NotImplemented/NotImplementedModule";
 import {LoadingBoxModule} from "./LoadingBox/LoadingBoxModule";
 import {LoadingBarModule} from "./LoadingBar/LoadingBarModule";
+import {TranslateModule} from "./Translate/TranslateModule";
 
 @NgModule({
     exports: [
@@ -14,6 +15,7 @@ import {LoadingBarModule} from "./LoadingBar/LoadingBarModule";
         AutoFocusModule,
         ModalModule,
         TooltipModule,
+        TranslateModule,
         NotImplementedModule
     ]
 })
