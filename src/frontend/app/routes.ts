@@ -9,6 +9,9 @@ import {ProfileSettingsRoute} from "../modules/Profile/Route/ProfileSettingsRout
 import {JetRoutes} from "../modules/Application/Entity/JetRoute";
 import {ProfileResolver} from "../modules/Profile/Service/ProfileResolver";
 import {ProfileTitleResolver} from "../modules/Profile/Service/ProfileTitleResolver";
+import {PostRoute} from "../modules/Post/Route/PostRoute/index";
+import {PostResolver} from "../modules/Post/Service/PostResolver";
+import {PostTitleResolver} from "../modules/Post/Service/PostTitleResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -25,6 +28,21 @@ export const appRoutes: JetRoutes = [
         path: 'best',
         component: FeedRoute,
         data: {title: 'Hot'}
+    },
+    {
+        "path": 'post',
+        children: [
+            { path: '', component: PageNotFoundRoute },
+            {
+                path: ':path',
+                component: PostRoute,
+                resolve: {
+                    post: PostResolver,
+                    title: PostTitleResolver,
+                }
+            }
+        ]
+        
     },
     { // Страница авторизации
         path: 'login',

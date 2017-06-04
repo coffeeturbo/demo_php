@@ -24,6 +24,8 @@ import {ProfileModule} from "../Profile/ProfileModule";
 import {RouteHelperService} from "./Service/RouteHelperService";
 import {ApplicationLogoComponent} from "./Component/ApplicationLogo/index";
 import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/index";
+import {AttachmentModel} from "../Attachment/AttachmentModel";
+import {PostModule} from "../Post/PostModule";
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {
     return new AuthHttp(new AuthConfig(), http, options);
@@ -42,8 +44,10 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         BrowserModule,
         RouterModule.forRoot(appRoutes),
         HttpModule,
+        AttachmentModel,
         AuthModule,
         FeedModule,
+        PostModule,
         ProfileModule,
         SettingsModule,
         SidebarModule,
