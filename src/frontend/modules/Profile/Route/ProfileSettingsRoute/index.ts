@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {ProfileService} from "../../Service/ProfileService";
 import {Profile} from "../../Entity/Profile";
@@ -8,7 +8,7 @@ import {ActivatedRoute} from "@angular/router";
     templateUrl: './template.pug',
     styleUrls: ["../../../Auth/Component/SignInForm/style.shadow.scss"]
 })
-export class ProfileSettingsRoute implements OnInit, OnChanges {
+export class ProfileSettingsRoute implements OnInit {
     public profile: Profile;
     public form: FormGroup; 
 
@@ -30,19 +30,10 @@ export class ProfileSettingsRoute implements OnInit, OnChanges {
         });
     }
 
-    public submit() {
-        let formData = this.form.value;
-
-        let profile: Profile = JSON.parse(JSON.stringify(this.profile));
-
-        profile.first_name = formData['first_name']; 
-       
-        this.profileService.replaceInCache(this.profile, profile);
-        
-        this.profile = JSON.parse(JSON.stringify(profile));
-    }
-
-    ngOnChanges(){
-        console.log("Change!");
+    public submit(): void {
+        this.profileService.replaceInCache(
+            this.profile,
+            Object.assign(this.profile, this.form.value)
+        );
     }
 }

@@ -11,7 +11,7 @@ import {Config} from "../../../../app/config";
     styleUrls: ['./style.shadow.scss']
 })
 export class SidebarComponent {
-    public product_name = Config.product_name;
+    public product_name: string = Config.product_name;
     
     constructor(
         public service: SidebarService,

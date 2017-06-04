@@ -47,50 +47,50 @@ export class LoadingBarService {
         });
     }
 
-    public setProgress(progress: number) {
+    public setProgress(progress: number): void {
         this.loaderBar.progress = progress;
-        this.event.onChangeProgress.emit(this.get());
+        this.event.onChangeProgress.emit(this.getLoaderBar);
     }
 
-    public incProgress() {
-        this.setProgress(this.get().progress + 1);
+    public incProgress(): void {
+        this.setProgress(this.getLoaderBar.progress + 1);
     }
 
-    public completeProgress() {
+    public completeProgress(): void {
         this.stopProgress();
         this.setProgress(100);
     }
 
-    public resetProgress() {
+    public resetProgress(): void {
         this.stopProgress();
         this.deactivate();
         this.setProgress(0);
     }
 
-    public startProgress(duration = 500) {
+    public startProgress(duration = 500): void {
         this.stopProgress();
         this.incProgress();
         this.subscription.startProgressSubscription = Observable
             .interval(duration)
-            .take(100 - this.get().progress)
+            .take(100 - this.getLoaderBar.progress)
             .subscribe(() => this.incProgress());
     }
 
-    public stopProgress() {
+    public stopProgress(): void {
         this.subscription.startProgressSubscription.unsubscribe();
     }
 
-    public activate() {
+    public activate(): void {
         this.loaderBar.state = LoaderBarState.Active;
-        this.event.onChangeState.emit(this.get());
+        this.event.onChangeState.emit(this.getLoaderBar);
     }
 
-    public deactivate() {
+    public deactivate(): void {
         this.loaderBar.state = LoaderBarState.Inactive;
-        this.event.onChangeState.emit(this.get());
+        this.event.onChangeState.emit(this.getLoaderBar);
     }
 
-    public get(): LoaderBar {
+    public get getLoaderBar(): LoaderBar {
         return this.loaderBar;
     }
 }

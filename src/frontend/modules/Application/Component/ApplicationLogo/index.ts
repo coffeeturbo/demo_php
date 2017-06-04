@@ -9,5 +9,5 @@ import {Config} from "../../../../app/config";
 })
 
 export class ApplicationLogoComponent {
-    public product_name = Config.product_name;
+    public product_name: string = Config.product_name;
 }

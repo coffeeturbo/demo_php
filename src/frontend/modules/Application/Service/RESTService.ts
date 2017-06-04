@@ -17,7 +17,7 @@ import {Config} from "../../../app/config";
 @Injectable()
 export class RESTService extends Http
 {
-    private path = Config.uri.api;
+    private path: string = Config.uri.api;
     
     constructor (backend: XHRBackend, options: RequestOptions, public authHttp: AuthHttp) 
     {

@@ -30,14 +30,14 @@ export class SignUpFormComponent {
     });
     
     constructor(private authService: AuthService) {}
-
-    private onKeyDown($event: KeyboardEvent) {
+    
+    private onKeyDown($event: KeyboardEvent): void {
         if ($event.key === "Enter" && this.form.valid && !this.disabled) {
             this.submit()
         }
     }
 
-    public submit() {
+    public submit(): void {
         let formData = this.form.value;
         this.disabled = true;
         this.fail = false;

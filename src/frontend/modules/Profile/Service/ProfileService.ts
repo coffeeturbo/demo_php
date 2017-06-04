@@ -3,13 +3,11 @@ import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
 import {Observable} from "rxjs";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
-import {Observer} from "rxjs/Observer";
-import {ProfileTitleResolver} from "./ProfileTitleResolver";
 
 @Injectable()
 export class ProfileService {
     private profiles: Profile[] = [];
-    public onProfileResolve: EventEmitter<Profile> = new EventEmitter(true);
+    public onProfileResolve = new EventEmitter<Profile>(true);
     
     constructor(private rest: ProfileRESTService) {}
 
@@ -60,12 +58,12 @@ export class ProfileService {
         return Observable.of(profile);
     }
 
-    public saveToCache(profile: Profile) 
+    public saveToCache(profile: Profile) : void 
     {
         this.profiles.push(profile);
     }
 
-    public replaceInCache(oldProfile: Profile, newProfile: Profile) 
+    public replaceInCache(oldProfile: Profile, newProfile: Profile) : void
     {
         let index: number = this.profiles.indexOf(oldProfile);
         if(index != -1) {
@@ -74,9 +72,9 @@ export class ProfileService {
     }
 
 
-    private getPathType(path): PathType 
+    private getPathType(path: string): PathType 
     {
-        return !isNaN(parseFloat(path)) && isFinite(path) ? 'id' : 'alias';
+        return !isNaN(parseFloat(path)) ? 'id' : 'alias';
     }
 }
 

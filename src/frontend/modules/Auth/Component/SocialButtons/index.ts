@@ -9,14 +9,23 @@ import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
 })
 
 export class SocialButtonsComponent {
-    @Output('onConnect') onConnect = new EventEmitter<any>();
+    @Output('onConnect') onConnect = new EventEmitter<void>();
+
+    /**
+     * @DOTO Сделать один event вместо 3х и хэндлить так:
+     * event.subscribe(
+     *  (onSuccess)=>{...}
+     *  (onFail)=>{...}
+     *  (onComplete)=>{...}
+     *  )
+     */
     @Output('onSuccess') onSuccess = new EventEmitter<TokenResponse>();
-    @Output('onComplete') onComplete = new EventEmitter<any>();
+    @Output('onComplete') onComplete = new EventEmitter<void>();
     @Output('onFail') onFail = new EventEmitter<ResponseFailure>();
 
     constructor(private authService: AuthService) {}
     
-    public connectVK() {
+    public connectVK(): void {
         this.onConnect.emit();
         this.authService.connectVK()
             .finally(() => this.onComplete.emit())
@@ -26,7 +35,7 @@ export class SocialButtonsComponent {
             );
     }
 
-    public connectFacebook() {
+    public connectFacebook(): void {
         this.onConnect.emit();
         this.authService.connectFacebook()
             .finally(() => this.onComplete.emit())

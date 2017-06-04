@@ -4,6 +4,6 @@ import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 
 @Injectable()
 export class AuthEvents {
-    public onSuccess: EventEmitter<TokenResponse> = new EventEmitter();
-    public onFail: EventEmitter<ResponseFailure> = new EventEmitter();
+    public onSuccess = new EventEmitter<TokenResponse>();
+    public onFail = new EventEmitter<ResponseFailure>();
 }

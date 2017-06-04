@@ -18,7 +18,7 @@ export class TranslationService {
         return this.dictionaries[this.localeService.getLocale()][value] || value;
     }
 
-    public addToDictionary(locale: Locale, dictionary: Dictionary) {
+    public addToDictionary(locale: Locale, dictionary: Dictionary): void {
         if (!this.dictionaries.hasOwnProperty(locale))
             throw new Error(`Locale ${locale} does not exist`);
 

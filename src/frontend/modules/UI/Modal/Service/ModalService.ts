@@ -4,11 +4,11 @@ import {Injectable} from "@angular/core";
 export class ModalService {
     public isVisible: boolean = false;
 
-    public show() {
+    public show(): void {
         this.isVisible = true;
     }
 
-    public hide() {
+    public hide(): void {
         this.isVisible = false;
     }
 }

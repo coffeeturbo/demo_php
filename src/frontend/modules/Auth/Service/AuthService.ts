@@ -30,7 +30,7 @@ export interface AuthServiceInterface {
 @Injectable()
 export class AuthService implements AuthServiceInterface 
 {
-    public onRefreshToken: EventEmitter<any> = new EventEmitter();
+    public onRefreshToken = new EventEmitter<void>();
     
     private tokenExpirationSchedule: Subscription = new Subscription();
     private returlUrl: string = "/";

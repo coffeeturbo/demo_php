@@ -1,20 +1,17 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/router";
+import {Resolve} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
-import {Profile} from "../Entity/Profile";
 import {ProfileService} from "./ProfileService";
-import {Observer} from "rxjs/Observer";
-import {ProfileRESTService} from "./ProfileRESTService";
 
 @Injectable()
 export class ProfileTitleResolver implements Resolve<string> {
 
     constructor(private profileService: ProfileService) {}
     
-    resolve(route: ActivatedRouteSnapshot): Observable<string>
+    resolve(): Observable<string>
     {
-        let onTitleLoad: EventEmitter<string> = new EventEmitter();
+        let onTitleLoad = new EventEmitter<string>();
         
         this.profileService.onProfileResolve
             .map(profile => profile.first_name + " " + profile.last_name)

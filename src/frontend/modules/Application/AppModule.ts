@@ -25,11 +25,11 @@ import {RouteHelperService} from "./Service/RouteHelperService";
 import {ApplicationLogoComponent} from "./Component/ApplicationLogo/index";
 import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/index";
 
-export function AuthHttpServiceFactory(http: Http, options: RequestOptions) {
+export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {
     return new AuthHttp(new AuthConfig(), http, options);
 }
 
-export function RESTServiceFacroty(backend: XHRBackend, options: RequestOptions, authHttp: AuthHttp) {
+export function RESTServiceFacroty(backend: XHRBackend, options: RequestOptions, authHttp: AuthHttp): RESTService {
     return new RESTService(backend, options, authHttp);
 }
 

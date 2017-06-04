@@ -3,8 +3,8 @@ import {LoaderBar} from "../Entity/LoaderBar";
 
 @Injectable()
 export class LoadingBarEvents {
-    public onChangeProgress: EventEmitter<LoaderBar> = new EventEmitter();
-    public onCompleteProgress: EventEmitter<LoaderBar> = new EventEmitter();
-    public onResetProgress: EventEmitter<LoaderBar> = new EventEmitter();
-    public onChangeState: EventEmitter<LoaderBar> = new EventEmitter();
+    public onChangeProgress = new EventEmitter<LoaderBar>();
+    public onCompleteProgress = new EventEmitter<LoaderBar>();
+    public onResetProgress = new EventEmitter<LoaderBar>();
+    public onChangeState = new EventEmitter<LoaderBar>();
 }

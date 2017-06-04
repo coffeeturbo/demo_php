@@ -12,15 +12,15 @@ export class ModalComponent {
     @Input('height') height: string = 'auto';
     @Input('backdrop') backdrop: boolean = true;
     @Input('can-close') canClose: boolean = true;
-    @Output('on-close') onClose = new EventEmitter<any>();
+    @Output('on-close') onClose = new EventEmitter<void>();
 
-    private onKeyDown($event: KeyboardEvent) {
+    private onKeyDown($event: KeyboardEvent): void {
         if ($event.key === "Escape" && this.canClose) {
             this.close()
         }
     }
 
-    public close() {
+    public close(): void {
         this.onClose.emit();
     }
 }

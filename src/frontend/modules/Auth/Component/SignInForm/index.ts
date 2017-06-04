@@ -24,13 +24,13 @@ export class SignInFormComponent {
         dont_remember: new FormControl(false)
     });
 
-    private onKeyDown($event: KeyboardEvent) {
+    private onKeyDown($event: KeyboardEvent): void {
         if ($event.key === "Enter" && this.form.valid && !this.disabled) {
             this.submit()
         }
     }
 
-    public submit() {
+    public submit(): void {
         let formData = this.form.value;
         this.disabled = true;
         this.fail = false;

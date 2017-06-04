@@ -19,7 +19,7 @@ export class SettingsComponent {
 
     constructor(public localeService: LocaleService){}
     
-    public submit() {
+    public submit(): void {
         let formData = this.form.value;
         this.localeService.setLocale(formData['locale']);
     }
