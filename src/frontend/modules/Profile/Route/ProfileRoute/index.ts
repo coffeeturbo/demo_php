@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {Profile} from "../../Entity/Profile";
 
 @Component({
     templateUrl: './template.pug'
 })
 export class ProfileRoute implements OnInit {
 
-    public profile;
+    public profile: Profile;
 
     constructor(private route: ActivatedRoute) {}
     

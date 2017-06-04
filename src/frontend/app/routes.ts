@@ -8,6 +8,7 @@ import {SignUpRoute} from "../modules/Auth/Route/SignUpRoute/index";
 import {ProfileSettingsRoute} from "../modules/Profile/Route/ProfileSettingsRoute/index";
 import {JetRoutes} from "../modules/Application/Entity/JetRoute";
 import {ProfileResolver} from "../modules/Profile/Service/ProfileResolver";
+import {ProfileTitleResolver} from "../modules/Profile/Service/ProfileTitleResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -58,9 +59,9 @@ export const appRoutes: JetRoutes = [
                 path: ':path',
                 component: ProfileRoute,
                 resolve: {
-                    profile: ProfileResolver
-                },
-                data: { title: 'Profile'}
+                    profile: ProfileResolver,
+                    title: ProfileTitleResolver,
+                }
             }
         ]
     },

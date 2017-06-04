@@ -1,40 +1,44 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
 import {Observable} from "rxjs";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
+import {Observer} from "rxjs/Observer";
+import {ProfileTitleResolver} from "./ProfileTitleResolver";
 
 @Injectable()
 export class ProfileService {
     private profiles: Profile[] = [];
-
-    constructor(private rest: ProfileRESTService) {
-    }
+    public onProfileResolve: EventEmitter<Profile> = new EventEmitter(true);
+    
+    constructor(private rest: ProfileRESTService) {}
 
     public get(path: string): Observable<Profile> 
     {
+        let profileObservable: Observable<Profile>;
         try {
-            return this.getFromCache(path);
+            profileObservable = this.getFromCache(path);
         } catch (e) {
-            let profileGetResponse: Observable<ProfileGetResponse>;
+            let profileGetResponseObservable: Observable<ProfileGetResponse>;
 
             switch (this.getPathType(path)) {
                 case "id":
-                    profileGetResponse = this.rest.getById(+path);
+                    profileGetResponseObservable = this.rest.getById(+path);
                     break;
                 case "alias":
-                    profileGetResponse = this.rest.getByAlias(path);
+                    profileGetResponseObservable = this.rest.getByAlias(path);
                     break;
-                default:
-                    throw new Error(`Invalid call. Alias or id must be defined`);
             }
 
-            return profileGetResponse.map((profileGetResponse: ProfileGetResponse) => {
-                this.saveToCache(profileGetResponse.entity);
-                return profileGetResponse.entity;
-            });
+            profileObservable = profileGetResponseObservable
+                .map(profileGetResponse => profileGetResponse.entity)
+                .do(profile => this.saveToCache(profile))
+            ;
         }
 
+        return profileObservable
+            .do(profile => this.onProfileResolve.emit(profile))
+        ;
     }
 
     /**

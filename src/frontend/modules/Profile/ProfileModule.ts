@@ -8,6 +8,7 @@ import {ProfileSettingsRoute} from "./Route/ProfileSettingsRoute/index";
 import {ProfileRESTService} from "./Service/ProfileRESTService";
 import {ProfileResolver} from "./Service/ProfileResolver";
 import {ProfileService} from "./Service/ProfileService";
+import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
 
 @NgModule({
     imports:[
@@ -23,7 +24,8 @@ import {ProfileService} from "./Service/ProfileService";
     providers: [
         ProfileRESTService,
         ProfileService,
-        ProfileResolver
+        ProfileResolver,
+        ProfileTitleResolver
     ]
 })
 export class ProfileModule {} 
