@@ -1,11 +1,11 @@
 import {NgModule} from "@angular/core";
 
 import {FeedRoute} from "./Route/FeedRoute/index";
-import {UIModule} from "../UI/UIModule";
+import {CommonModule} from "../Common/CommonModule";
 
 @NgModule({
     imports: [
-        UIModule
+        CommonModule
     ],
     declarations: [
         FeedRoute,

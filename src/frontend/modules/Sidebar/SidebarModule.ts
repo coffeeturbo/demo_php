@@ -1,17 +1,15 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
 
 
 import {SidebarComponent} from "./Component/Sidebar/index";
 import {SidebarService} from "./Service/SidebarService";
-import {UIModule} from "../UI/UIModule";
+import {CommonModule} from "../Common/CommonModule";
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule,
-        UIModule
+        RouterModule
     ],
     declarations: [
         SidebarComponent

@@ -16,7 +16,7 @@ import {RESTService} from "./Service/RESTService";
 import {StartupService} from "./Service/StartupService";
 
 import {AuthModule} from "../Auth/AuthModule";
-import {UIModule} from "../UI/UIModule";
+import {CommonModule} from "../Common/CommonModule";
 import {SidebarModule} from "../Sidebar/SidebarModule";
 import {SettingsModule} from "../Settings/SettingsModule";
 import {FeedModule} from "../Feed/FeedModule";
@@ -47,7 +47,7 @@ export function StartupServiceFactory(startupService: StartupService): Function 
         ProfileModule,
         SettingsModule,
         SidebarModule,
-        UIModule,
+        CommonModule,
     ],
     declarations: [
         ApplicationComponent,

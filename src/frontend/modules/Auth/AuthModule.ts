@@ -1,9 +1,8 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 
-import {UIModule} from "../UI/UIModule";
+import {CommonModule} from "../Common/CommonModule";
 
 import {SignInFormComponent} from "./Component/SignInForm/index";
 import {SignUpFormComponent} from "./Component/SignUpForm/index";
@@ -22,8 +21,7 @@ import {AuthEvents} from "./Event/AuthEvents";
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        RouterModule,
-        UIModule
+        RouterModule
     ],
     declarations: [
         SignInFormComponent,

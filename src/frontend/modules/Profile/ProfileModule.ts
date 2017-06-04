@@ -1,8 +1,7 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
-import {UIModule} from "../UI/UIModule";
+import {CommonModule} from "../Common/CommonModule";
 import {ProfileRoute} from "./Route/ProfileRoute/index";
 import {ProfileSettingsRoute} from "./Route/ProfileSettingsRoute/index";
 import {ProfileRESTService} from "./Service/ProfileRESTService";
@@ -14,8 +13,7 @@ import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
     imports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        UIModule
+        ReactiveFormsModule
     ],
     declarations: [
         ProfileRoute,

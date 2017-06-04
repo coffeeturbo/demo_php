@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 
-import {LocaleService} from "../../../UI/Translate/Service/LocaleService";
+import {LocaleService} from "../../../Common/Translate/Service/LocaleService";
 
 @Component({
     selector: "settings",

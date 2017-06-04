@@ -12,8 +12,8 @@ import {
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
 
-import {TranslationService} from "../../UI/Translate/Service/TranslationService";
-import {LoadingBarService} from "../../UI/LoadingBar/Service/LoadingBarService";
+import {TranslationService} from "../../Common/Translate/Service/TranslationService";
+import {LoadingBarService} from "../../Common/LoadingBar/Service/LoadingBarService";
 
 @Injectable()
 export class RouteHelperService {

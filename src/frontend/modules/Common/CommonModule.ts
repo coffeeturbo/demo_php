@@ -7,9 +7,11 @@ import {NotImplementedModule} from "./NotImplemented/NotImplementedModule";
 import {LoadingBoxModule} from "./LoadingBox/LoadingBoxModule";
 import {LoadingBarModule} from "./LoadingBar/LoadingBarModule";
 import {TranslateModule} from "./Translate/TranslateModule";
+import {CommonModule as NgCommonModule} from "@angular/common";
 
 @NgModule({
     exports: [
+        NgCommonModule,
         LoadingBoxModule,
         LoadingBarModule,
         AutoFocusModule,
@@ -19,5 +21,5 @@ import {TranslateModule} from "./Translate/TranslateModule";
         NotImplementedModule
     ]
 })
-export class UIModule {
-} 
+export class CommonModule {
+}

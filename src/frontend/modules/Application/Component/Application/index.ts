@@ -4,8 +4,8 @@ import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {RouteHelperService} from "../../Service/RouteHelperService";
 import {Device} from "../../Service/DeviceService";
-import {LoadingBarEvents} from "../../../UI/LoadingBar/Event/LoadingBarEvents";
-import {LoaderBar, LoaderBarState} from "../../../UI/LoadingBar/Entity/LoaderBar";
+import {LoadingBarEvents} from "../../../Common/LoadingBar/Event/LoadingBarEvents";
+import {LoaderBar, LoaderBarState} from "../../../Common/LoadingBar/Entity/LoaderBar";
 
 @Component({
     selector: "application",
