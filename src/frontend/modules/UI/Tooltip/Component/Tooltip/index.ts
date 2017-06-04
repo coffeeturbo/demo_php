@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-    selector: 'tooltip',
-    templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss']
+    selector: "tooltip",
+    templateUrl: "./template.pug",
+    styleUrls: ["./style.shadow.scss"]
 })
 
 export class TooltipComponent {

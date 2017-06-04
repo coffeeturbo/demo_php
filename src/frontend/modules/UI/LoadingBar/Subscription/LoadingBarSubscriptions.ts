@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {Subscription} from "rxjs/Subscription";
 
 @Injectable()

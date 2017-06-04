@@ -23,4 +23,5 @@ import {UIModule} from "../UI/UIModule";
         SidebarComponent
     ]
 })
-export class SidebarModule {} 
+export class SidebarModule {
+} 

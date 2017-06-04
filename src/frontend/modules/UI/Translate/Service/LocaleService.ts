@@ -7,20 +7,20 @@ import {Config} from "../../../../app/config";
 @Injectable()
 export class LocaleService {
     private locale: Locale;
-    
+
     constructor() {
-        this.locale = <Locale>localStorage.getItem('locale') || LocaleService.getDefaultLocale();
+        this.locale = <Locale>localStorage.getItem("locale") || LocaleService.getDefaultLocale();
     }
-    
+
     public getLocale(): Locale {
         return this.locale;
     }
 
     public setLocale(locale: Locale): void {
         this.locale = locale;
-        localStorage.setItem('locale', locale);
+        localStorage.setItem("locale", locale);
     }
-    
+
     public static getDefaultLocale(): Locale {
         for (let locale in dictionariesNavigatorAliases) {
             if (dictionariesNavigatorAliases.hasOwnProperty(locale)) {

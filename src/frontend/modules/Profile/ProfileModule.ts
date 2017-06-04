@@ -11,7 +11,7 @@ import {ProfileService} from "./Service/ProfileService";
 import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
 
 @NgModule({
-    imports:[
+    imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -28,4 +28,5 @@ import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
         ProfileTitleResolver
     ]
 })
-export class ProfileModule {} 
+export class ProfileModule {
+} 

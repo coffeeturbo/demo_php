@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 
-import {Locale, Dictionary, Dictionaries} from "../Entity/Definitions";
+import {Dictionaries, Dictionary, Locale} from "../Entity/Definitions";
 import {LocaleService} from "./LocaleService";
 import {dictionaries} from "../../../../translations/dictionaries";
 

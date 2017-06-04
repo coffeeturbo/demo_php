@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 
 import {SignInRequest} from "../Http/Request/SignInRequest";
 import {RESTService} from "../../Application/Service/RESTService";
@@ -10,12 +10,12 @@ import {TokenResponse} from "../Http/Response/TokenResponse";
 @Injectable()
 export class AuthRESTService
 {
-    constructor(private rest: RESTService){}
-    
+    constructor(private rest: RESTService) {}
+
     public signIn(signInRequest: SignInRequest): Observable<TokenResponse> 
     {
-        let url = '/auth/sign-in';
-        
+        let url = "/auth/sign-in";
+
         return this.rest
             .post(url, JSON.stringify(signInRequest))
             .map(res => res.json())
@@ -23,8 +23,8 @@ export class AuthRESTService
 
     public signUp(signUpRequest: SignUpRequest): Observable<TokenResponse> 
     {
-        let url = '/auth/sign-up';
-        
+        let url = "/auth/sign-up";
+
         return this.rest
             .put(url, JSON.stringify(signUpRequest))
             .map(res => res.json())
@@ -32,8 +32,8 @@ export class AuthRESTService
 
     public refreshToken(refreshTokenRequest: RefreshTokenRequest): Observable<TokenResponse> 
     {
-        let url = '/auth/token/refresh';
-        
+        let url = "/auth/token/refresh";
+
         return this.rest
             .post(url, JSON.stringify(refreshTokenRequest))
             .map(res => res.json())

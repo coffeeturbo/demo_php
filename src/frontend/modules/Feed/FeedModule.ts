@@ -4,7 +4,7 @@ import {FeedRoute} from "./Route/FeedRoute/index";
 import {UIModule} from "../UI/UIModule";
 
 @NgModule({
-    imports:[
+    imports: [
         UIModule
     ],
     declarations: [

@@ -1,11 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input} from "@angular/core";
 
 @Component({
-    selector: 'not-implemented',
-    templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss']
+    selector: "not-implemented",
+    templateUrl: "./template.pug",
+    styleUrls: ["./style.shadow.scss"]
 })
 
 export class NotImplementedComponent {
-    @Input('title') title: string = "Work in progress";
+    @Input("title") title: string = "Work in progress";
 }

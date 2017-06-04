@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-    selector: 'modal-footer',
-    templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss']
+    selector: "modal-footer",
+    templateUrl: "./template.pug",
+    styleUrls: ["./style.shadow.scss"]
 })
-export class ModalFooterComponent {}
+export class ModalFooterComponent {
+}

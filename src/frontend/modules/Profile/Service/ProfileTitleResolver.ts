@@ -8,11 +8,10 @@ import {ProfileService} from "./ProfileService";
 export class ProfileTitleResolver implements Resolve<string> {
 
     constructor(private profileService: ProfileService) {}
-    
-    resolve(): Observable<string>
-    {
+
+    resolve(): Observable<string> {
         let onTitleLoad = new EventEmitter<string>();
-        
+
         this.profileService.onProfileResolve
             .map(profile => profile.first_name + " " + profile.last_name)
             .subscribe((title) => {

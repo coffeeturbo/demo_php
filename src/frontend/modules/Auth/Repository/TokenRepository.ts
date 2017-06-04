@@ -21,7 +21,7 @@ export class TokenRepository
         localStorage.removeItem(tokenKey);
         localStorage.removeItem(refreshTokenKey);
     }
-    
+
     public static saveToken(value: string): void
     {
         localStorage.setItem(tokenKey, value);
@@ -34,9 +34,9 @@ export class TokenRepository
 
     public static getTokenExpTime(): number
     {
-        return (jwtHelper.decodeToken(TokenRepository.getToken()).exp  * 1000) - Date.now();
+        return (jwtHelper.decodeToken(TokenRepository.getToken()).exp * 1000) - Date.now();
     }
-    
+
     public static isTokenExist(): boolean
     {
         return !!TokenRepository.getToken();

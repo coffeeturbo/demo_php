@@ -9,11 +9,10 @@ import {ProfileService} from "./ProfileService";
 export class ProfileResolver implements Resolve<Profile> {
 
     constructor(private profileService: ProfileService) {}
-    
-    resolve(route: ActivatedRouteSnapshot): Observable<Profile> 
-    {
-        return route.params.hasOwnProperty("path") ? 
-            this.profileService.get(route.params.path) : 
+
+    resolve(route: ActivatedRouteSnapshot): Observable<Profile> {
+        return route.params.hasOwnProperty("path") ?
+            this.profileService.get(route.params.path) :
             this.profileService.getOwn()
         ;
     }

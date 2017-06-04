@@ -11,11 +11,10 @@ const breakpoints: Breakpoints = {
 };
 
 /**
- * @DOTO: Move to better folder. It's not a service!
+ * @DOTO: Move to better folder. It"s not a service!
  */
 export class Device {
-    
-    public static isMobile() : boolean {
+    public static isMobile(): boolean {
         return window.innerWidth < breakpoints.tablet;
     }
 }

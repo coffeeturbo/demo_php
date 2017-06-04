@@ -1,3 +1,2 @@
-export interface Response
-{
+export interface Response {
 }

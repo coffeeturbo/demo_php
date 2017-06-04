@@ -19,4 +19,5 @@ import {TranslateModule} from "./Translate/TranslateModule";
         NotImplementedModule
     ]
 })
-export class UIModule {} 
+export class UIModule {
+} 

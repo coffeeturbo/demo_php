@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Observer, Scheduler, Subscription} from "rxjs";
 import {JwtHelper, tokenNotExpired} from "angular2-jwt";
@@ -24,31 +24,31 @@ export interface AuthServiceInterface {
     connectVK(): Observable<TokenResponse>
     connectFacebook(): Observable<TokenResponse>
     signOut(): void;
-    addTokenExpirationSchedule() : void
+    addTokenExpirationSchedule(): void
 }
 
 @Injectable()
 export class AuthService implements AuthServiceInterface 
 {
     public onRefreshToken = new EventEmitter<void>();
-    
+
     private tokenExpirationSchedule: Subscription = new Subscription();
     private returlUrl: string = "/";
 
     constructor(
         private router: Router,
-        private route: ActivatedRoute, 
+        private route: ActivatedRoute,
         private rest: AuthRESTService,
         private authEvents: AuthEvents
     ) {
-        this.authEvents.onSuccess.subscribe((tokenResponse: TokenResponse)=>{
+        this.authEvents.onSuccess.subscribe((tokenResponse: TokenResponse) => {
             TokenRepository.saveToken(tokenResponse.token);
             TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
             this.addTokenExpirationSchedule();
             this.router.navigateByUrl(this.returlUrl);
         });
-        
-        this.authEvents.onFail.subscribe(()=> this.signOut());
+
+        this.authEvents.onFail.subscribe(() => this.signOut());
     }
 
     public isSignedIn(): boolean 
@@ -64,7 +64,7 @@ export class AuthService implements AuthServiceInterface
 
     public signIn(body: SignInRequest): Observable<TokenResponse> 
     {
-        this.returlUrl = this.route.data['returnUrl'] || "/";
+        this.returlUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.rest.signIn(body));
     }
 
@@ -100,9 +100,9 @@ export class AuthService implements AuthServiceInterface
         this.router.navigate(["login"]);
     }
 
-    public addTokenExpirationSchedule() : void
+    public addTokenExpirationSchedule(): void
     {
-        if(TokenRepository.isTokenExist()) {
+        if (TokenRepository.isTokenExist()) {
             let offset: number = 5000;  // Make it 5 sec before token expired
             let delay = TokenRepository.getTokenExpTime() - offset;
             this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
@@ -116,7 +116,7 @@ export class AuthService implements AuthServiceInterface
     private connectSocial(url: string): Observable<TokenResponse>
     {
         let connectWindow: Window = window.open(url, null, "menubar=no,toolbar=no,location=no");
-        this.returlUrl = this.route.data['returnUrl'] || "/";
+        this.returlUrl = this.route.data["returnUrl"] || "/";
 
         return this.handleTokenResponse(
             new Observable((observer: Observer<TokenResponse>) => {

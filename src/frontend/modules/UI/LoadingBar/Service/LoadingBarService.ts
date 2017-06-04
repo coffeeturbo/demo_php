@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 
 import {LoadingBarEvents} from "../Event/LoadingBarEvents";
@@ -9,7 +9,7 @@ import {LoadingBarSubscriptions} from "../Subscription/LoadingBarSubscriptions";
 export class LoadingBarService {
 
     private loaderBar: LoaderBar = {
-        progress: 0, 
+        progress: 0,
         state: LoaderBarState.Inactive
     };
 

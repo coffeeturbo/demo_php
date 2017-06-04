@@ -23,4 +23,5 @@ import {ModalFooterComponent} from "./Component/Modal/layout/ModalFooterComponen
         ModalBodyComponent
     ]
 })
-export class ModalModule {}
+export class ModalModule {
+}

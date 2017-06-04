@@ -1,5 +1,4 @@
-export interface ResponseFailure
-{
+export interface ResponseFailure {
     "code": number,
     "message": string
 }

@@ -1,5 +1,5 @@
-export type Locale = 
-    "RU" | 
+export type Locale =
+    "RU" |
     "EN";
 
 export type Dictionary = {

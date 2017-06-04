@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
+import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: './template.pug'
+    templateUrl: "./template.pug"
 })
 export class PageNotFoundRoute {
 }

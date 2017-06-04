@@ -1,11 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input} from "@angular/core";
 
 @Component({
-    selector: 'loader',
-    templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss']
+    selector: "loader",
+    templateUrl: "./template.pug",
+    styleUrls: ["./style.shadow.scss"]
 })
 
 export class LoaderComponent {
-    @Input('active') active: boolean = false;
+    @Input("active") active: boolean = false;
 }

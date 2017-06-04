@@ -1,4 +1,5 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from "@angular/core";
+
 import {LoaderBar} from "../Entity/LoaderBar";
 
 @Injectable()

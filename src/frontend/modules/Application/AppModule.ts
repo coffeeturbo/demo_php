@@ -1,13 +1,13 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {BrowserModule}  from '@angular/platform-browser';
+import {APP_INITIALIZER, NgModule} from "@angular/core";
+import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
-import {Http, RequestOptions, XHRBackend} from "@angular/http";
+import {Http, HttpModule, RequestOptions, XHRBackend} from "@angular/http";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 
-import 'hammerjs';
+import "hammerjs";
 
 import {appRoutes} from "../../app/routes";
-import '../../assets/styles/index.scss';
+import "../../assets/styles/index.scss";
 
 import {ApplicationComponent} from "./Component/Application/index";
 import {ForbiddenRoute} from "./Route/ForbiddenRoute/index";
@@ -36,12 +36,12 @@ export function RESTServiceFacroty(backend: XHRBackend, options: RequestOptions,
 export function StartupServiceFactory(startupService: StartupService): Function {
     return () => startupService.init();
 }
- 
+
 @NgModule({
     imports: [
         BrowserModule,
         RouterModule.forRoot(appRoutes),
-
+        HttpModule,
         AuthModule,
         FeedModule,
         ProfileModule,

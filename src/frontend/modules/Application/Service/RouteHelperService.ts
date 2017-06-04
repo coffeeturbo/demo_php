@@ -1,8 +1,17 @@
-import {Injectable} from '@angular/core';
+import {Injectable} from "@angular/core";
 import {Title} from "@angular/platform-browser";
-import {ActivatedRoute, Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from "@angular/router";
+import {
+    ActivatedRoute,
+    Event,
+    NavigationCancel,
+    NavigationEnd,
+    NavigationError,
+    NavigationStart,
+    Router
+} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
+
 import {TranslationService} from "../../UI/Translate/Service/TranslationService";
 import {LoadingBarService} from "../../UI/LoadingBar/Service/LoadingBarService";
 
@@ -10,7 +19,7 @@ import {LoadingBarService} from "../../UI/LoadingBar/Service/LoadingBarService";
 export class RouteHelperService {
 
     private showProgressBarSubscription: Subscription = new Subscription();
-    
+
     constructor(
         private titleService: Title,
         private router: Router,
@@ -19,31 +28,29 @@ export class RouteHelperService {
         private loadingBar: LoadingBarService
     ) {}
 
-    loadingIndicatorWatcher(): void 
-    {
+    loadingIndicatorWatcher(): void {
         this.router.events.subscribe((event: Event) => {
 
             switch (event.constructor) {
                 case NavigationStart:
-                    this.showProgressBarSubscription = Observable.of([]).delay(100).subscribe(()=>{
+                    this.showProgressBarSubscription = Observable.of([]).delay(100).subscribe(() => {
                         this.loadingBar.setProgress(30);
                         this.loadingBar.startProgress();
                     });
-                break;
+                    break;
                 case NavigationEnd:
                 case NavigationCancel:
                 case NavigationError:
                     this.showProgressBarSubscription.unsubscribe();
-                    if(this.loadingBar.getLoaderBar.progress > 0) {
+                    if (this.loadingBar.getLoaderBar.progress > 0) {
                         this.loadingBar.completeProgress();
                     }
-                break;
+                    break;
             }
         });
     }
-    
-    titleWatcher(): void
-    {
+
+    titleWatcher(): void {
         this.router.events
             .filter(event => event instanceof NavigationEnd)
             .map(() => this.activatedRoute)
@@ -51,10 +58,10 @@ export class RouteHelperService {
                 while (route.firstChild) route = route.firstChild;
                 return route;
             })
-            .filter(route => route.outlet === 'primary')
+            .filter(route => route.outlet === "primary")
             .mergeMap(route => route.data)
-            .filter(event => event['title'] !== undefined)
-            .map(event => event['title'])
+            .filter(event => event["title"] !== undefined)
+            .map(event => event["title"])
             .map(title => this.translationService.translate(title))
             .subscribe((title) => this.titleService.setTitle(title))
         ;

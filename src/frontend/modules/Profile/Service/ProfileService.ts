@@ -1,14 +1,15 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from "@angular/core";
+
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
-import {Observable} from "rxjs";
+import {Observable} from "rxjs/Observable";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 
 @Injectable()
 export class ProfileService {
     private profiles: Profile[] = [];
     public onProfileResolve = new EventEmitter<Profile>(true);
-    
+
     constructor(private rest: ProfileRESTService) {}
 
     public get(path: string): Observable<Profile> 
@@ -41,15 +42,14 @@ export class ProfileService {
 
     /**
      * @DOTO: Implement method
-     * 
+     *
      */
     getOwn(): Observable<Profile>
     {
         return this.get("killers");
     }
 
-    private getFromCache(path: number | string): Observable<Profile> 
-    {
+    private getFromCache(path: number | string): Observable<Profile> {
         let profile: Profile = this.profiles.filter((profile) => profile.id == path || profile.alias == path).shift();
         if (!profile) {
             throw new Error(`Profile with path "${path}" is not cached`);
@@ -58,23 +58,23 @@ export class ProfileService {
         return Observable.of(profile);
     }
 
-    public saveToCache(profile: Profile) : void 
+    public saveToCache(profile: Profile): void
     {
         this.profiles.push(profile);
     }
 
-    public replaceInCache(oldProfile: Profile, newProfile: Profile) : void
+    public replaceInCache(oldProfile: Profile, newProfile: Profile): void
     {
         let index: number = this.profiles.indexOf(oldProfile);
-        if(index != -1) {
+        if (index != -1) {
             this.profiles[this.profiles.indexOf(oldProfile)] = newProfile;
         } else throw new Error(`${index} not found in cache file`);
     }
 
 
-    private getPathType(path: string): PathType 
+    private getPathType(path: string): PathType
     {
-        return !isNaN(parseFloat(path)) ? 'id' : 'alias';
+        return !isNaN(parseFloat(path)) ? "id" : "alias";
     }
 }
 

@@ -25,7 +25,7 @@ import {AuthEvents} from "./Event/AuthEvents";
         RouterModule,
         UIModule
     ],
-    declarations:[
+    declarations: [
         SignInFormComponent,
         SignUpFormComponent,
         SignInRoute,

@@ -1,8 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild} from "@angular/core";
+
 import {SignInFormComponent} from "../../Component/SignInForm/index";
 
 @Component({
-    templateUrl: './template.pug',
+    templateUrl: "./template.pug",
 })
 
 export class SignInRoute {

@@ -1,13 +1,14 @@
-import {Directive, HostBinding} from '@angular/core';
+import {Directive, HostBinding} from "@angular/core";
+
 import {LoadingBarEvents} from "../Event/LoadingBarEvents";
 import {LoaderBar, LoaderBarState} from "../Entity/LoaderBar";
 
 @Directive({
-    selector: '[loading-bar]'
+    selector: "[loading-bar]"
 })
 export class LoadingBarDirective {
-    @HostBinding('style.width.%') width: number = 0;
-    @HostBinding('style.opacity') opacty: number = 0;
+    @HostBinding("style.width.%") width: number = 0;
+    @HostBinding("style.opacity") opacty: number = 0;
 
     constructor(loadingBarEvents: LoadingBarEvents) {
         loadingBarEvents.onChangeProgress

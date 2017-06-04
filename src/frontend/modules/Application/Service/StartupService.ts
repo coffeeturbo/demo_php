@@ -1,8 +1,5 @@
-import {Injectable, Injector} from '@angular/core';
+import {Injectable, Injector} from "@angular/core";
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/catch';
 import {AuthService} from "../../Auth/Service/AuthService";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 

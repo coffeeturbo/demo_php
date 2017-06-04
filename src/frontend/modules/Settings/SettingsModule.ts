@@ -27,4 +27,5 @@ import {UIModule} from "../UI/UIModule";
         SettingsModalComponent
     ]
 })
-export class SettingsModule {} 
+export class SettingsModule {
+} 

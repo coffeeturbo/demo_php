@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+
 import {TooltipComponent} from "./Component/Tooltip/index";
 
 @NgModule({
@@ -9,4 +10,5 @@ import {TooltipComponent} from "./Component/Tooltip/index";
         TooltipComponent
     ]
 })
-export class TooltipModule {}
+export class TooltipModule {
+}

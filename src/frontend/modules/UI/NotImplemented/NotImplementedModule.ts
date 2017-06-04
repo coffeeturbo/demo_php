@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+
 import {NotImplementedComponent} from "./Component/NotImplemented/index";
 
 @NgModule({
@@ -9,4 +10,5 @@ import {NotImplementedComponent} from "./Component/NotImplemented/index";
         NotImplementedComponent
     ]
 })
-export class NotImplementedModule {}
+export class NotImplementedModule {
+}

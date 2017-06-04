@@ -1,17 +1,18 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+
 import {AuthService} from "../../Service/AuthService";
 
 @Component({
-    selector: 'sign-in-form',
-    templateUrl: './template.pug',
-    host: {'(window:keydown)': 'onKeyDown($event)'},
-    styleUrls: ['./style.shadow.scss']
+    selector: "sign-in-form",
+    templateUrl: "./template.pug",
+    host: {"(window:keydown)": "onKeyDown($event)"},
+    styleUrls: ["./style.shadow.scss"]
 })
 
 export class SignInFormComponent {
 
-    @Input('show-controls') showControls: boolean = true;
+    @Input("show-controls") showControls: boolean = true;
     protected isPasswordHidden: boolean = true;
     public disabled: boolean = false;
     public fail: boolean = false;

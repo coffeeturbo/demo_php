@@ -1,8 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild} from "@angular/core";
+
 import {SignUpFormComponent} from "../../Component/SignUpForm/index";
 
 @Component({
-    templateUrl: './template.pug'
+    templateUrl: "./template.pug"
 })
 
 export class SignUpRoute {
