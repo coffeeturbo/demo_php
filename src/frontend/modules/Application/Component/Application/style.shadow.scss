@@ -65,18 +65,12 @@ header {
       display: inline-block;
       cursor: pointer;
       outline: none;
+      padding: 15px 18px;
 
       @include mq($from: tablet) {
         padding: 13px 23px;
         font-size: 21px;
         width: 157px;
-      }
-
-      @include mq($until: tablet) {
-        padding: 15px 18px;
-        span {
-          display: none;
-        }
       }
     }
   }

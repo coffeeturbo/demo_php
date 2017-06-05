@@ -31,3 +31,9 @@ svg {
     fill: material-color($primary_material, '700');
   }
 }
+
+@include mq($until: tablet) {
+  span {
+    display: none;
+  }
+}

@@ -10,9 +10,6 @@ const breakpoints: Breakpoints = {
     wide:    1300
 };
 
-/**
- * @TODO: Move to better folder. It"s not a service!
- */
 export class Device {
     public static isMobile(): boolean {
         return window.innerWidth < breakpoints.tablet;
