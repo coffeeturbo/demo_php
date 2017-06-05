@@ -41,7 +41,7 @@ export class ProfileService {
     }
 
     /**
-     * @DOTO: Implement method
+     * @TODO: Implement method
      *
      */
     getOwn(): Observable<Profile>

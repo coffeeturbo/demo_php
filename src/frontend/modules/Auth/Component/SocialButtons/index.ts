@@ -13,7 +13,7 @@ export class SocialButtonsComponent {
     @Output("onConnect") onConnect = new EventEmitter<void>();
 
     /**
-     * @DOTO Сделать один event вместо 3х и хэндлить так:
+     * @TODO Сделать один event вместо 3х и хэндлить так:
      * event.subscribe(
      *  (onSuccess)=>{...}
      *  (onFail)=>{...}

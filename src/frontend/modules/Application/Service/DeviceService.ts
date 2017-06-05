@@ -11,7 +11,7 @@ const breakpoints: Breakpoints = {
 };
 
 /**
- * @DOTO: Move to better folder. It"s not a service!
+ * @TODO: Move to better folder. It"s not a service!
  */
 export class Device {
     public static isMobile(): boolean {
