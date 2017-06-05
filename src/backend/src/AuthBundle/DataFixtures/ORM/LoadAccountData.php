@@ -19,7 +19,7 @@ class LoadAccountData extends AbstractFixture
     static protected $accountsData = [
         'success-account' => [
             "email" => "testuser1@domain.com",
-            "password" => "4zFBLC",
+            "password" => "4zFBLC32",
             "roles" => [],
             'reference' => 'success-account'
         ],
@@ -45,11 +45,11 @@ class LoadAccountData extends AbstractFixture
 
         foreach (self::$accountsData as $data) {
             $account = $userManager->createUser();
-            $account->setEnabled(true);
-            $account->setPlainPassword($data['password']);
-            $account->setUsername($data['email']);
-            $account->setEmail($data['email']);
-            $account->setRoles($data['roles']);
+            $account->setEnabled(true)
+                ->setPlainPassword($data['password'])
+                ->setUsername($data['email'])
+                ->setEmail($data['email'])
+                ->setRoles($data['roles']);
 
             if (isset($data['reference'])) {
                 $this->addAccountReference($data['reference'], $account);

@@ -22,6 +22,7 @@ class ValidateRequestService
         $form->submit($body);
 
         if (!$form->isValid())
+            // TODO тут пиздец полный если пароль будет недолстаточно сильный выкинет ошибку не понятно что за ошибка
             throw new BadRequestHttpException("Bad parameters");
 
         return $form->getData();

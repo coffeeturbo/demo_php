@@ -1,17 +1,34 @@
 <?php
 namespace ProfileBundle\Tests\Path;
 
+use AuthBundle\DataFixtures\ORM\LoadAccountData;
+use ProfileBundle\DataFixtures\ORM\LoadProfileData;
 use ProfileBundle\Tests\ProfileController;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileCreateActionTest extends ProfileController
 {
 
+    /** @var  LoadAccountData */
+    protected $fixtures;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->fixtures['account'] = $fixtureAccount = new LoadAccountData();
+        $fixtureAccount->setContainer($this->container);
+        $fixtureAccount->load($this->em);
+
+        $this->fixtures['account'] = $fixtureProfile = new LoadProfileData();
+        $fixtureProfile->setContainer($this->container);
+        $fixtureProfile->load($this->em);
+    }
+
     public function getPathRequestClient($json)
     {
         return $this->client->request('PUT', '/protected/profile/create', [], [], [], json_encode($json));
     }
-
 
     public function test200()
     {

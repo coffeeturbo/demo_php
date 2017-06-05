@@ -20,7 +20,7 @@ class ProfileService
         $this->profileRepository = $profileRepository;
     }
 
-    public function createProfileFromArray(array $request, Account $account): Profile
+    public function createProfileFromArray(array $request, Account $account, bool $persist = false): Profile
     {
         $profile = new Profile();
         $profile->setAccount($account)
@@ -32,8 +32,34 @@ class ProfileService
             ->setGender(Gender::createFromStringCode($request['gender']))
             ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $request['birth_date']));
         ;
+        if($persist) $this->saveProfile($profile);
 
         return $profile;
+    }
+
+    public function updateProfileFromArray(Profile $profile, array $updateData, bool $persist = false): Profile
+    {
+        $profile
+            ->setFirstName($updateData['first_name' ?? $profile->getFirstName()])
+            ->setLastName($updateData['last_name'] ?? $profile->getLastName())
+            ->setPatronymic($updateData['patronymic'] ?? $profile->getPatronymic())
+            ->setAlias($updateData['alias'] ?? $profile->getAlias())
+            ->setNickName($updateData['nickname'] ?? $profile->getNickName())
+            ->setGender(
+                isset($updateData['gender']) ?
+                Gender::createFromStringCode($updateData['gender']) : $profile->getGender()
+
+            )
+            ->setBirthDate(
+                isset($updateData['birth_date']) ?
+                \DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $updateData['birth_date']):
+                    $profile->getBirthDate()
+            );
+
+        if($persist) $this->saveProfile($profile);
+
+        return $profile;
+
     }
 
 

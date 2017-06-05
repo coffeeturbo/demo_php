@@ -37,7 +37,7 @@ class SignInControllerTest extends BaseTestSetup
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
-    public function test400() // 400 Bad request
+    public function test400()
     {
         $accountData = $this->fixtures->getAccountDataByReference('success-account');
 
