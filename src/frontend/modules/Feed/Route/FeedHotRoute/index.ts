@@ -3,5 +3,5 @@ import {Component} from "@angular/core";
 @Component({
     templateUrl: "./template.pug",
 })
-export class FeedRoute {
+export class FeedHotRoute {
 }

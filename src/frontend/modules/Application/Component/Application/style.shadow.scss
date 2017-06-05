@@ -2,7 +2,12 @@
 
 :host(.progress) {
   cursor: progress;
-  background: red;
+  
+  main {
+    animation: fade 300ms reverse both;
+    transition: transform 1s;
+    transform: translate(0, 50px);
+  }
 }
 
 .header-container {

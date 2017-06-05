@@ -1,5 +1,4 @@
 import {CanActivateService} from "../modules/Auth/Service/CanActivateService";
-import {FeedRoute} from "../modules/Feed/Route/FeedRoute/index";
 import {ForbiddenRoute} from "../modules/Application/Route/ForbiddenRoute/index";
 import {PageNotFoundRoute} from "../modules/Application/Route/PageNotFoundRoute/index";
 import {ProfileRoute} from "../modules/Profile/Route/ProfileRoute/index";
@@ -12,22 +11,26 @@ import {ProfileTitleResolver} from "../modules/Profile/Service/ProfileTitleResol
 import {PostRoute} from "../modules/Post/Route/PostRoute/index";
 import {PostResolver} from "../modules/Post/Service/PostResolver";
 import {PostTitleResolver} from "../modules/Post/Service/PostTitleResolver";
+import {FeedHotRoute} from "../modules/Feed/Route/FeedHotRoute/index";
+import {FeedNewRoute} from "../modules/Feed/Route/FeedNewRoute/index";
+import {FeedBestRoute} from "../modules/Feed/Route/FeedBestRoute/index";
+import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute/index";
 
 export const appRoutes: JetRoutes = [
     {
         path: '',
-        component: FeedRoute,
+        component: FeedHotRoute,
         data: {title: 'Hot'}
     },
     {
         path: 'new',
-        component: FeedRoute,
-        data: {title: 'Hot'}
+        component: FeedNewRoute,
+        data: {title: 'New'}
     },
     {
         path: 'best',
-        component: FeedRoute,
-        data: {title: 'Hot'}
+        component: FeedBestRoute,
+        data: {title: 'Best'}
     },
     {
         "path": 'post',
@@ -42,7 +45,6 @@ export const appRoutes: JetRoutes = [
                 }
             }
         ]
-        
     },
     { // Страница авторизации
         path: 'login',
@@ -56,7 +58,7 @@ export const appRoutes: JetRoutes = [
     },
     { // Новости профиля
         path: 'feed',
-        component: ProfileRoute,
+        component: FeedProfileRoute,
         canActivate: [CanActivateService],
         data: { title: 'News', allow: ["ROLE_CREATED"]},
     },
