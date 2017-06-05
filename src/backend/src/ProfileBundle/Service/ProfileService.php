@@ -20,23 +20,22 @@ class ProfileService
         $this->profileRepository = $profileRepository;
     }
 
-    public function createProfileFromRequest(Request $request, Account $account): Profile
+    public function createProfileFromArray(array $request, Account $account): Profile
     {
-        $json_request = json_decode($request->getContent());
-
         $profile = new Profile();
         $profile->setAccount($account)
-            ->setFirstName($json_request->first_name ?? null)
-            ->setLastName($json_request->last_name ?? null)
-            ->setPatronymic($json_request->patronymic ?? null)
-            ->setAlias($json_request->alias ?? null)
-            ->setNickName($json_request->nickname ?? null)
-            ->setGender(Gender::createFromStringCode($json_request->gender))
-            ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $json_request->birth_date));
+            ->setFirstName($request['first_name'] ?? null)
+            ->setLastName($request['last_name'] ?? null)
+            ->setPatronymic($request['patronymic'] ?? null)
+            ->setAlias($request['alias'] ?? null)
+            ->setNickName($request['nickname'] ?? null)
+            ->setGender(Gender::createFromStringCode($request['gender']))
+            ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $request['birth_date']));
         ;
 
         return $profile;
     }
+
 
     public function saveProfile(Profile $profile): Profile
     {

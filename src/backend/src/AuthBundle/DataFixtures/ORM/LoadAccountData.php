@@ -5,16 +5,18 @@ namespace AuthBundle\DataFixtures\ORM;
 use AuthBundle\Entity\Account;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadAccountData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
+class LoadAccountData extends AbstractFixture
+    implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
 {
 
-    protected $accountsData = [
+    static protected $accountsData = [
         'success-account' => [
             "email" => "testuser1@domain.com",
             "password" => "4zFBLC",
@@ -41,7 +43,7 @@ class LoadAccountData extends AbstractFixture implements FixtureInterface, Conta
         /** @var UserManager $userManager */
         $userManager = $this->container->get('fos_user.user_manager');
 
-        foreach ($this->accountsData as $data) {
+        foreach (self::$accountsData as $data) {
             $account = $userManager->createUser();
             $account->setEnabled(true);
             $account->setPlainPassword($data['password']);
@@ -58,9 +60,9 @@ class LoadAccountData extends AbstractFixture implements FixtureInterface, Conta
     }
 
 
-    public function getAccountDataByReference($ref)
+    static public function getAccountDataByReference($ref)
     {
-        return $this->accountsData[$ref] ?? $this->accounts[$ref];
+        return self::$accountsData[$ref] ?? self::$accountsData[$ref];
     }
 
     public function getAccountByReference($ref): Account
@@ -73,6 +75,11 @@ class LoadAccountData extends AbstractFixture implements FixtureInterface, Conta
         if (isset($this->accounts[$ref])) throw new Exception("account already exists");
 
         $this->accounts[$ref] = $accoount;
+    }
+
+    public function getOrder()
+    {
+        return 10;
     }
 
 }

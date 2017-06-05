@@ -67,7 +67,8 @@ class ProfileController extends Controller
 
             $profileService = $this->get('profile.service');
 
-            $profile = $profileService->createProfileFromRequest($request, $this->getUser());
+            $json_request = json_decode($request->getContent(), true);
+            $profile = $profileService->createProfileFromArray($json_request, $this->getUser());
             $profileService->saveProfile($profile);
 
             $r = $profile->jsonSerialize();
@@ -140,6 +141,9 @@ class ProfileController extends Controller
     public function updateAction(Profile $profile)
     {
 
+        return new JsonResponse([
+            'entity' => $profile->jsonSerialize()
+        ]);
     }
 
     /**
