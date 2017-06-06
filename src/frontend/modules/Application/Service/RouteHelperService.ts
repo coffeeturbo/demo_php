@@ -11,9 +11,10 @@ import {
 } from "@angular/router";
 import {Observable} from "rxjs/Observable";
 import {Subscription} from "rxjs/Subscription";
+import {LoadingBarService} from "@angular-addons/loading-bar";
 
 import {TranslationService} from "../../Common/Translate/Service/TranslationService";
-import {LoadingBarService} from "../../Common/LoadingBar/Service/LoadingBarService";
+// import {LoadingBarService} from "../../Common/LoadingBar/Service/LoadingBarService";
 
 @Injectable()
 export class RouteHelperService {
