@@ -2,7 +2,7 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
   .field
     i.fa.fa-user.fa-lg.fa-fw
     .input-box
-      input(type="text", formControlName="username", placeholder="{{'Username or email' | translate }}", auto-focus)
+      input(type="text", formControlName="username", placeholder="{{'Username or email' | translate }}", ng-auto-focus)
       hr
   .field
     i.fa.fa-lock.fa-lg.fa-fw

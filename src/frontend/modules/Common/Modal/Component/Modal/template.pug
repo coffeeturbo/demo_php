@@ -1,6 +1,0 @@
-.modal
-  .modal-box([ngStyle]="{width: width, height: height}")
-    a.close((click)="close()", *ngIf="canClose")
-      i.fa.fa-times
-    ng-content
-  .backdrop(*ngIf="backdrop", (click)="canClose && close()")

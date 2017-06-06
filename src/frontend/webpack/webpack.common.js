@@ -13,7 +13,8 @@ module.exports = {
       publicPath: '/dist/'
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    modules: [ helpers.root("node_modules") ]
   },
   watchOptions: {
     ignored: /node_modules/
@@ -49,6 +50,11 @@ module.exports = {
       { 
           test: /\.ico.png$/, 
           use: [ "url-loader?mimetype=image/png" ] 
+      },
+      {
+        test: /\.css$/,
+        use: ['to-string-loader', 'css-loader'],
+        exclude: helpers.root('assets')
       },
       {
           test: /\.scss$/,

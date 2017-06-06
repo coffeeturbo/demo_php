@@ -1,7 +1,16 @@
 import {Injectable} from "@angular/core";
-
-import {ModalService} from "../../Common/Modal/Service/ModalService";
+import {Modal} from "@angular-addons/modal";
 
 @Injectable()
-export class SettingsModalService extends ModalService {
+export class SettingsModalService implements Modal 
+{
+    public isVisible: boolean = false;
+
+    public show(): void {
+        this.isVisible = true;
+    }
+
+    public hide(): void {
+        this.isVisible = false;
+    }
 }
