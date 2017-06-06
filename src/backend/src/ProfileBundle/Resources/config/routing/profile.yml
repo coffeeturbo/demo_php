@@ -1,7 +1,14 @@
 profile_get_by_id:
-  path: '{id}/get'
-  defaults: { _controller: ProfileBundle:Profile:getProfile }
+  path: '{id}/get-by-id'
+  defaults: { _controller: ProfileBundle:Profile:getProfileById }
   requirements:
     id: '\d+'
+  methods: [ GET ]
+
+profile_get_by_alias:
+  path: '{id}/get-by-alias'
+  defaults: { _controller: ProfileBundle:Profile:getProfileByAlias }
+  requirements:
+    id: '\w+'
   methods: [ GET ]
 

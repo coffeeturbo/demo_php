@@ -6,6 +6,7 @@ use AuthBundle\Entity\Account;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use ProfileBundle\Entity\Profile;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -15,7 +16,7 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
     /** @var  ContainerInterface */
     private $container;
 
-    protected $profileData = [
+    static protected $profileData = [
         'success-profile' =>
             [
                 "first_name" => "Имя",
@@ -28,18 +29,24 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
             ]
     ];
 
+    static protected $profile = ['success-profile'];
+
     public function load(ObjectManager $manager)
     {
-
-        $profileData = $this->profileData['success-profile'];
+        $profileData = self::$profileData['success-profile'];
 
         $account = $manager->getRepository(Account::class)
             ->findOneBy(['email' => LoadAccountData::getAccountDataByReference('success-account')['email']]);
 
         $profileService = $this->container->get('profile.service');
-        $profile = $profileService->createProfileFromArray($profileData, $account);
-        $profileService->saveProfile($profile);
+        $profile = $profileService->createProfileFromArray($profileData, $account, true);
 
+        self::$profile['success-profile'] = $profile;
+    }
+
+    static public function getProfileByReference($ref): Profile
+    {
+        return self::$profile[$ref] ?? self::$profile[$ref];
     }
 
     public function getOrder()

@@ -56,7 +56,8 @@ abstract class BaseTestSetup extends WebTestCase
 
     public function recursiveEquals(array $expects, array $actual){
         foreach($expects as $index => $value){
-            $this->assertEquals($value, $actual[$index], "index not equals:  ".$index);
+
+            if(isset($actual[$index])) $this->assertEquals($value, $actual[$index], "index not equals:  ".$index);
         }
     }
 }

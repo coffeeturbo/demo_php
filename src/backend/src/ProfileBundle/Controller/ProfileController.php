@@ -3,6 +3,7 @@ namespace ProfileBundle\Controller;
 
 use AppBundle\Http\ErrorResponse;
 use ProfileBundle\Entity\Profile;
+use ProfileBundle\Exception\ProfileNotFoundException;
 use ProfileBundle\Exception\ProfilesLimitException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -99,11 +100,48 @@ class ProfileController extends Controller
      * @param Profile $profile
      * @return JsonResponse
      */
-    public function getProfileAction(Profile $profile)
+    public function getProfileByIdAction(int $id)
     {
-        return new JsonResponse([
-            'entity' => $profile->jsonSerialize()
-        ]);
+        try {
+            $profile = $this->get('profile.repository')->getProfileById($id);
+
+            return new JsonResponse([
+                'entity' => $profile->jsonSerialize()
+            ]);
+
+        } catch(ProfileNotFoundException $e){
+            return new ErrorResponse($e->getMessage(), 404);
+        }
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Profile",
+     *     description= "Получаем профиль по alias",
+     *     requirements={
+     *          {
+     *              "name" = "alias",
+     *              "dataType" = "string",
+     *              "description" = "alias профиля"
+     *          }
+     *     }
+     * )
+     *
+     * @param Profile $profile
+     * @return JsonResponse
+     */
+    public function getProfileByAliasAction(string $alias)
+    {
+        try {
+            $profile = $this->get('profile.repository')->getProfileByAlias($alias);
+
+            return new JsonResponse([
+                'entity' => $profile->jsonSerialize()
+            ]);
+
+        } catch(ProfileNotFoundException $e){
+            return new ErrorResponse($e->getMessage(), 404);
+        }
     }
 
     /**
