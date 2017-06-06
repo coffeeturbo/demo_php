@@ -6,9 +6,9 @@ profile_get_by_id:
   methods: [ GET ]
 
 profile_get_by_alias:
-  path: '{id}/get-by-alias'
+  path: '{alias}/get-by-alias'
   defaults: { _controller: ProfileBundle:Profile:getProfileByAlias }
   requirements:
-    id: '\w+'
+    alias: '\w+'
   methods: [ GET ]
 
