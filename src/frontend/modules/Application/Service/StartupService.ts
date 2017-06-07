@@ -1,4 +1,4 @@
-import {Injectable, Injector} from "@angular/core";
+import {EventEmitter, Injectable, Injector} from "@angular/core";
 
 import {AuthService} from "../../Auth/Service/AuthService";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";
@@ -13,8 +13,12 @@ export class StartupService {
     init(): Promise<any> {
         let authService: AuthService = this.injector.get(AuthService);
 
-        if (TokenRepository.isTokenExist() && TokenRepository.getTokenExpTime() < 0) // If token expired wait before get a new
-            this.promises.push(authService.onRefreshToken.toPromise());
+        if (TokenRepository.isTokenExist() && TokenRepository.getTokenExpTime() < 0) { // If token expired wait before get a new
+            let onAuth = new EventEmitter<void>(); // Отдельный event, т.к. вызываем complete, завершающий его. а нам не нужно что бы основной event завершался
+            authService.onAuth.subscribe(() => onAuth.complete());
+            
+            this.promises.push(onAuth.toPromise());
+        }
 
         authService.addTokenExpirationSchedule();
 

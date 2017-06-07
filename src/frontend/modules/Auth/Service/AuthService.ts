@@ -10,7 +10,6 @@ import {TokenResponse} from "../Http/Response/TokenResponse";
 import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 import {Token} from "../Entity/Token";
 import {Roles} from "../Entity/Role";
-import {AuthEvents} from "../Event/AuthEvents";
 import {TokenRepository} from "../Repository/TokenRepository";
 import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 
@@ -30,7 +29,7 @@ export interface AuthServiceInterface {
 @Injectable()
 export class AuthService implements AuthServiceInterface 
 {
-    public onRefreshToken = new EventEmitter<void>();
+    public onAuth = new EventEmitter<TokenResponse>();
 
     private tokenExpirationSchedule: Subscription = new Subscription();
     private returlUrl: string = "/";
@@ -38,17 +37,17 @@ export class AuthService implements AuthServiceInterface
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private rest: AuthRESTService,
-        private authEvents: AuthEvents
+        private rest: AuthRESTService
     ) {
-        this.authEvents.onSuccess.subscribe((tokenResponse: TokenResponse) => {
-            TokenRepository.saveToken(tokenResponse.token);
-            TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
-            this.addTokenExpirationSchedule();
-            this.router.navigateByUrl(this.returlUrl);
-        });
-
-        this.authEvents.onFail.subscribe(() => this.signOut());
+        this.onAuth.subscribe(
+            (tokenResponse: TokenResponse) => {
+                TokenRepository.saveToken(tokenResponse.token);
+                TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
+                this.addTokenExpirationSchedule();
+                this.router.navigateByUrl(this.returlUrl);
+            },
+            () => this.signOut()
+        );
     }
 
     public isSignedIn(): boolean 
@@ -82,11 +81,7 @@ export class AuthService implements AuthServiceInterface
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse> 
     {
-        let observableTokenResponse = this.handleTokenResponse(this.rest.refreshToken(body)).share();
-        observableTokenResponse
-            .finally(() => this.onRefreshToken.complete())
-            .subscribe(() => this.onRefreshToken.emit());
-        return observableTokenResponse;
+        return this.handleTokenResponse(this.rest.refreshToken(body));
     }
 
     public connectVK(): Observable<TokenResponse> 
@@ -149,13 +144,10 @@ export class AuthService implements AuthServiceInterface
     {
         observableTokenResponse = observableTokenResponse.share();
 
-        observableTokenResponse
-            .finally(() => this.authEvents.onSuccess.complete())
-            .subscribe(
-                (tokenResponse: TokenResponse) => this.authEvents.onSuccess.emit(tokenResponse),
-                (tokenResponseFailure: ResponseFailure) => this.authEvents.onFail.emit(tokenResponseFailure)
-            )
-        ;
+        observableTokenResponse.subscribe(
+            (tokenResponse: TokenResponse) => this.onAuth.emit(tokenResponse),
+            (tokenResponseFailure: ResponseFailure) => this.onAuth.error(tokenResponseFailure)
+        );
 
         return observableTokenResponse;
     }

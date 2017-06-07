@@ -14,7 +14,6 @@ import {SignUpRoute} from "./Route/SignUpRoute/index";
 import {AuthRESTService} from "./Service/AuthRESTService";
 import {AuthService} from "./Service/AuthService";
 import {CanActivateService} from "./Service/CanActivateService";
-import {AuthEvents} from "./Event/AuthEvents";
 
 @NgModule({
     imports: [
@@ -33,7 +32,6 @@ import {AuthEvents} from "./Event/AuthEvents";
     providers: [
         AuthRESTService,
         AuthService,
-        AuthEvents,
         CanActivateService
     ]
 })
