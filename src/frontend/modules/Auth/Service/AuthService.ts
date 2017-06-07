@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Observer, Scheduler, Subscription} from "rxjs";
-import {tokenNotExpired} from "angular2-jwt";
+import { tokenNotExpired} from "angular2-jwt";
 
 import {AuthRESTService} from "./AuthRESTService";
 import {SignInRequest} from "../Http/Request/SignInRequest";
@@ -12,6 +12,7 @@ import {Token} from "../Entity/Token";
 import {Roles} from "../Entity/Role";
 import {TokenRepository} from "../Repository/TokenRepository";
 import {ResponseFailure} from "../../Application/Http/ResponseFailure";
+import {OAuthService} from "./OAuthService";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -35,7 +36,8 @@ export class AuthService implements AuthServiceInterface
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private rest: AuthRESTService
+        private rest: AuthRESTService,
+        private oAuth: OAuthService
     ) {
         this.onAuth.subscribe(
             (tokenResponse: TokenResponse) => {
@@ -78,12 +80,14 @@ export class AuthService implements AuthServiceInterface
 
     public connectVK(): Observable<TokenResponse> 
     {
-        return this.connectSocial(`/api/oAuth/connect/vk`);
+        this.returlUrl = this.route.data["returnUrl"] || "/";
+        return this.handleTokenResponse(this.oAuth.connectVK());
     }
 
     public connectFacebook(): Observable<TokenResponse> 
     {
-        return this.connectSocial(`/api/oAuth/connect/facebook`);
+        this.returlUrl = this.route.data["returnUrl"] || "/";
+        return this.handleTokenResponse(this.oAuth.connectFacebook());
     }
 
     public signOut(): void 
@@ -104,32 +108,6 @@ export class AuthService implements AuthServiceInterface
                 this.refreshToken({"refresh_token": TokenRepository.getRefreshToken()});
             }, delay);
         }
-    }
-
-    private connectSocial(url: string): Observable<TokenResponse>
-    {
-        let connectWindow: Window = window.open(url, null, "menubar=no,toolbar=no,location=no");
-        this.returlUrl = this.route.data["returnUrl"] || "/";
-
-        return this.handleTokenResponse(
-            new Observable((observer: Observer<TokenResponse>) => {
-
-                let connectWindowSubscription = Observable
-                    .interval(100)
-                    .subscribe(() => {
-                        if (connectWindow && connectWindow.closed) {
-                            connectWindowSubscription.unsubscribe();
-                            observer.error({"code": 410, "message": "Authorization aborted"});
-                        }
-                    });
-
-                connectWindow.opener.onmessage = (event: MessageEvent) => {
-                    connectWindow.close();
-                    connectWindowSubscription.unsubscribe();
-                    observer.next(event.data);
-                }
-            })
-        );
     }
 
     private handleTokenResponse(observableTokenResponse: Observable<TokenResponse>): Observable<TokenResponse> 

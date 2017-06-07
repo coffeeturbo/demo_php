@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable} from "@angular/core";
+import {Observable} from "rxjs";
 
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
-import {Observable} from "rxjs/Observable";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 import {Token} from "../../Auth/Entity/Token";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";

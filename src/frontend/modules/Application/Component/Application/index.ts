@@ -1,12 +1,11 @@
 import {Component, HostBinding} from "@angular/core";
+import {LoaderBar, LoaderBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {RouteHelperService} from "../../Service/RouteHelperService";
 import {Device} from "../../Service/DeviceService";
-import {LoaderBar, LoaderBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
-import {TokenRepository} from "../../../Auth/Repository/TokenRepository";
 
 @Component({
     selector: "application",

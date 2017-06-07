@@ -1,4 +1,5 @@
 import {Roles} from "./Role";
+
 export interface Token {
     exp: number,
     iat: number,
