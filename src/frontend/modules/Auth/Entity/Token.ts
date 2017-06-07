@@ -1,6 +1,6 @@
 import {Roles} from "./Role";
 export interface Token {
-    exp: string,
+    exp: number,
     iat: number,
     roles: Roles,
     profile_id: number,

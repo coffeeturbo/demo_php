@@ -5,6 +5,8 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 import {RouteHelperService} from "../../Service/RouteHelperService";
 import {Device} from "../../Service/DeviceService";
 import {LoaderBar, LoaderBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
+import {ProfileService} from "../../../Profile/Service/ProfileService";
+import {TokenRepository} from "../../../Auth/Repository/TokenRepository";
 
 @Component({
     selector: "application",
@@ -18,6 +20,7 @@ export class ApplicationComponent {
     constructor(
         public sidebar: SidebarService,
         public auth: AuthService,
+        public profile: ProfileService,
         private routeHelper: RouteHelperService,
         private loadingBarEvents: LoadingBarEvents
     ) {

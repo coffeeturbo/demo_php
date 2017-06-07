@@ -4,6 +4,8 @@ import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
 import {Observable} from "rxjs/Observable";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
+import {Token} from "../../Auth/Entity/Token";
+import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 
 @Injectable()
 export class ProfileService {
@@ -40,13 +42,15 @@ export class ProfileService {
         ;
     }
 
-    /**
-     * @TODO: Implement method
-     *
-     */
-    getOwn(): Observable<Profile>
+    public getOwnProfilePath(): string
     {
-        return this.get("killers");
+        let tokenData: Token = TokenRepository.decodeToken();
+        return tokenData.profile_alias || tokenData.profile_id.toString();
+    }
+
+    public getOwnProfile(): Observable<Profile>
+    {
+        return this.get(this.getOwnProfilePath());
     }
 
     private getFromCache(path: number | string): Observable<Profile> {
@@ -71,12 +75,10 @@ export class ProfileService {
         } else throw new Error(`${index} not found in cache file`);
     }
 
-
     private getPathType(path: string): PathType
     {
-        return !isNaN(parseFloat(path)) ? "id" : "alias";
+        return /^\d+$/.test(path) ? "id" : "alias";
     }
 }
-
 
 type PathType = "id" | "alias";

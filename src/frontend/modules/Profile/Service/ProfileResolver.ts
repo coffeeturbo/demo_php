@@ -13,7 +13,7 @@ export class ProfileResolver implements Resolve<Profile> {
     resolve(route: ActivatedRouteSnapshot): Observable<Profile> {
         return route.params.hasOwnProperty("path") ?
             this.profileService.get(route.params.path) :
-            this.profileService.getOwn()
+            this.profileService.getOwnProfile()
         ;
     }
 }

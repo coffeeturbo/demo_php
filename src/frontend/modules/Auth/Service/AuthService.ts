@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Observer, Scheduler, Subscription} from "rxjs";
-import {JwtHelper, tokenNotExpired} from "angular2-jwt";
+import {tokenNotExpired} from "angular2-jwt";
 
 import {AuthRESTService} from "./AuthRESTService";
 import {SignInRequest} from "../Http/Request/SignInRequest";
@@ -12,8 +12,6 @@ import {Token} from "../Entity/Token";
 import {Roles} from "../Entity/Role";
 import {TokenRepository} from "../Repository/TokenRepository";
 import {ResponseFailure} from "../../Application/Http/ResponseFailure";
-
-const jwtHelper: JwtHelper = new JwtHelper();
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -57,14 +55,8 @@ export class AuthService implements AuthServiceInterface
 
     public getRoles(): Roles 
     {
-        let tokenData: Token = jwtHelper.decodeToken(TokenRepository.getToken());
+        let tokenData: Token = TokenRepository.decodeToken();
         return tokenData.roles;
-    }
-
-    public getProfilePath(): string | number
-    {
-        let tokenData: Token = jwtHelper.decodeToken(TokenRepository.getToken());
-        return tokenData.profile_alias || tokenData.profile_id;
     }
 
     public signIn(body: SignInRequest): Observable<TokenResponse> 

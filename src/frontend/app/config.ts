@@ -6,6 +6,10 @@ export const Config = {
         "websocket": "/ws",
         "api": "/api"
     },
+    "auth" : {
+        "token_key" : "token",
+        "refresh_token_key" : "refresh_token"
+    },
     "account": {
         "constraints": {
             "username": {
