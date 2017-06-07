@@ -6,6 +6,7 @@ use ProfileBundle\Entity\Profile;
 use ProfileBundle\Exception\ProfileNotFoundException;
 use ProfileBundle\Exception\ProfilesLimitException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -63,25 +64,22 @@ class ProfileController extends Controller
      */
     public function createAction(Request $request)
     {
-        $r = [];
         try {
-
             $profileService = $this->get('profile.service');
 
             $json_request = json_decode($request->getContent(), true);
             $profile = $profileService->createProfileFromArray($json_request, $this->getUser(), true);
 
-            $r = $profile->jsonSerialize();
-
+            return new JsonResponse([
+                'entity' => $profile->jsonSerialize()
+            ]);
         } catch(ProfilesLimitException $exception) {
             return new ErrorResponse($exception, Response::HTTP_FORBIDDEN);
         } catch(\Exception $e){
             return new ErrorResponse($e->getMessage());
         }
 
-        return new JsonResponse([
-            'entity' => $r
-        ]);
+
     }
 
     /**
@@ -150,19 +148,36 @@ class ProfileController extends Controller
      *     description= "Редактировать профиль",
      *     authentication=true,
      *     requirements={
-     *          {
-     *              "name" = "id",
-     *          },
      *
      *          {
-     *              "name" = "name",
+     *              "name" = "first_name",
+     *              "dataType" = "string",
+     *              "description" = "Имя профиля"
+     *          },
+     *          {
+     *              "name" = "last_name",
+     *              "dataType" = "string",
+     *              "description" = "Имя профиля"
+     *          },
+     *          {
+     *              "name" = "patronymic",
+     *              "dataType" = "string",
+     *              "description" = "Имя профиля"
+     *          },
+     *          {
+     *              "name" = "alias",
+     *              "dataType" = "string",
+     *              "description" = "Имя профиля"
+     *          },
+     *          {
+     *              "name" = "nickname",
      *              "dataType" = "string",
      *              "description" = "Имя профиля"
      *          },
      *          {
      *              "name" = "gender",
-     *              "dataType" = "integer",
-     *              "description" = "выберитье пол 0- нет пола 1- мужской  2-Женский"
+     *              "dataType" = "string",
+     *              "description" = "выберитье пол none- нет пола male- мужской  female-Женский"
      *          },
      *          {
      *              "name" = "birthDate",
@@ -175,17 +190,23 @@ class ProfileController extends Controller
      * @param Profile $profile
      * @return JsonResponse
      */
-    public function updateAction(Profile $profile,Request $request)
+    public function updateAction(int $id, Request $request)
     {
+        try {
+            $profileService = $this->get('profile.service');
 
-        $profileService = $this->get('profile.service');
-        $json_request = json_decode($request->getContent(), true);
+            $profile = $profileService->getProfileById($id);
 
-        $profileService->updateProfileFromArray($profile, $json_request, true);
+            $json_request = json_decode($request->getContent(), true);
 
-        return new JsonResponse([
-            'entity' => $profile->jsonSerialize()
-        ]);
+            $profileService->updateProfileFromArray($profile, $this->getUser(), true, $json_request);
+
+            return new JsonResponse([
+                'entity' => $profile->jsonSerialize()
+            ]);
+        } catch(AccessDeniedException $e){
+            return new ErrorResponse($e->getMessage(), 403);
+        }
     }
 
     /**

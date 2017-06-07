@@ -6,6 +6,7 @@ use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Exception\ProfilesLimitException;
 use ProfileBundle\Repository\ProfileRepository;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -37,8 +38,18 @@ class ProfileService
         return $profile;
     }
 
-    public function updateProfileFromArray(Profile $profile, array $updateData, bool $persist = false): Profile
+    public function updateProfileFromArray(Profile $profile, Account $account, bool $persist = false, array $updateData): Profile
     {
+
+        // todo проверяем принадлежит ли профиль этому аккаунту либо является ли профиль админом
+        if(($profile->getAccount()->getId() !== $account->getId()) ){
+            throw new AccessDeniedException(sprintf("account %s has no access to modify profile %s",
+                $profile->getAccount()->getId(),
+                $profile->getId()
+            ));
+        }
+
+
         $profile
             ->setFirstName($updateData['first_name' ?? $profile->getFirstName()])
             ->setLastName($updateData['last_name'] ?? $profile->getLastName())
@@ -59,7 +70,6 @@ class ProfileService
         if($persist) $this->saveProfile($profile);
 
         return $profile;
-
     }
 
 
