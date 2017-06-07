@@ -2,13 +2,13 @@
 
 namespace AuthBundle\Controller;
 
-use AppBundle\Http\ErrorResponse;
+use AppBundle\Exception\BadRestRequestHttpException;
+use AppBundle\Http\ErrorJsonResponse;
 use AuthBundle\Form\RefreshTokenType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class RefreshTokenController extends Controller
 {
@@ -33,8 +33,8 @@ class RefreshTokenController extends Controller
         try {
             $request->headers->add(["Content-Type"=>"application/json"]);
             $this->get('app.validate_request')->validate($request, RefreshTokenType::class);
-        } catch (BadRequestHttpException $e) {
-            return new ErrorResponse($e->getMessage(), $e->getStatusCode());
+        } catch (BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }
 
         return $this->forward('gesdinet.jwtrefreshtoken:refresh');

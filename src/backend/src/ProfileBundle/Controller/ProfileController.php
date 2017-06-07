@@ -1,7 +1,7 @@
 <?php
 namespace ProfileBundle\Controller;
 
-use AppBundle\Http\ErrorResponse;
+use AppBundle\Http\ErrorJsonResponse;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Exception\ProfileNotFoundException;
 use ProfileBundle\Exception\ProfilesLimitException;
@@ -74,9 +74,9 @@ class ProfileController extends Controller
                 'entity' => $profile->jsonSerialize()
             ]);
         } catch(ProfilesLimitException $exception) {
-            return new ErrorResponse($exception, Response::HTTP_FORBIDDEN);
+            return new ErrorJsonResponse($exception, Response::HTTP_FORBIDDEN);
         } catch(\Exception $e){
-            return new ErrorResponse($e->getMessage());
+            return new ErrorJsonResponse($e->getMessage());
         }
 
 
@@ -108,7 +108,7 @@ class ProfileController extends Controller
             ]);
 
         } catch(ProfileNotFoundException $e){
-            return new ErrorResponse($e->getMessage(), 404);
+            return new ErrorJsonResponse($e->getMessage(), [], 404);
         }
     }
 
@@ -138,7 +138,7 @@ class ProfileController extends Controller
             ]);
 
         } catch(ProfileNotFoundException $e){
-            return new ErrorResponse($e->getMessage(), 404);
+            return new ErrorJsonResponse($e->getMessage(), [], 404);
         }
     }
 
@@ -205,7 +205,7 @@ class ProfileController extends Controller
                 'entity' => $profile->jsonSerialize()
             ]);
         } catch(AccessDeniedException $e){
-            return new ErrorResponse($e->getMessage(), 403);
+            return new ErrorJsonResponse($e->getMessage(), [], 403);
         }
     }
 

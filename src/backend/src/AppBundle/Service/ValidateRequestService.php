@@ -2,9 +2,9 @@
 
 namespace AppBundle\Service;
 
+use AppBundle\Exception\BadRestRequestHttpException;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ValidateRequestService
 {
@@ -21,9 +21,16 @@ class ValidateRequestService
         $form = $this->formFactory->create($type);
         $form->submit($body);
 
-        if (!$form->isValid())
-            // TODO тут пиздец полный если пароль будет недолстаточно сильный выкинет ошибку не понятно что за ошибка
-            throw new BadRequestHttpException("Bad parameters");
+        if (!$form->isValid()) {
+            $errors = [];
+            foreach ($form->all() as $input) {
+                foreach ($input->getErrors() as $error) {
+                    $errors[$input->getName()] = $error->getMessage();
+                }
+            }
+            
+            throw new BadRestRequestHttpException("Bad request", $errors);
+        }
 
         return $form->getData();
     }

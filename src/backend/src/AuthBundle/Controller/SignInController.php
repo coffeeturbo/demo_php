@@ -2,14 +2,14 @@
 
 namespace AuthBundle\Controller;
 
-use AppBundle\Http\ErrorResponse;
+use AppBundle\Exception\BadRestRequestHttpException;
+use AppBundle\Http\ErrorJsonResponse;
 use AuthBundle\Entity\Account;
 use AuthBundle\Form\SignInType;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -46,8 +46,10 @@ class SignInController extends Controller
         try {
             $body = $this->get('app.validate_request')->validate($request, SignInType::class);
             $account = $this->validateCredentials($body["username"], $body["password"]);
-        } catch (BadRequestHttpException | UnauthorizedHttpException $e) {
-            return new ErrorResponse($e->getMessage(), $e->getStatusCode());
+        } catch (BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch (UnauthorizedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
         $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);

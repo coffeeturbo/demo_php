@@ -2,16 +2,16 @@
 
 namespace AuthBundle\Controller;
 
-use AppBundle\Http\ErrorResponse;
+use AppBundle\Exception\BadRestRequestHttpException;
+use AppBundle\Http\ErrorJsonResponse;
 use AuthBundle\Entity\Account;
 use AuthBundle\Form\SignUpType;
-use AuthBundle\Response\SuccessAuthResponse;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManager;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class SignUpController extends Controller
@@ -26,6 +26,13 @@ class SignUpController extends Controller
      *  statusCodes = {
      *      200 = "Успешная авторизация",
      *      400 = "Неправильный запрос",
+     *  },
+     *  headers = {
+     *      {
+     *          "name" = "Accept",
+     *          "default" = "application/json",
+     *          "description" = "Если не указан будет сгенерировано всплывающее окно"
+     *      }
      *  }
      * )
      *
@@ -36,8 +43,8 @@ class SignUpController extends Controller
     {
         try {
             $body = $this->get('app.validate_request')->validate($request, SignUpType::class);
-        } catch (BadRequestHttpException $e) {
-            return new ErrorResponse($e->getMessage(), $e->getStatusCode());
+        } catch (BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }
 
         /** @var UserManager $userManager */
@@ -55,17 +62,15 @@ class SignUpController extends Controller
         try {
             $userManager->updateUser($account);
         } catch (UniqueConstraintViolationException $e) {
-            return new ErrorResponse("User already exists", Response::HTTP_CONFLICT);
+            return new ErrorJsonResponse("User already exists", [], Response::HTTP_CONFLICT);
         }
 
-        $jwtData = [
-            'username' => $account->getUsername(),
-            'roles' => $account->getRoles(),
-            'exp' => time() + $this->getParameter('lexik_jwt_authentication.token_ttl')
-        ];
+        $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);
 
-        return new SuccessAuthResponse(
-            $this->get('lexik_jwt_authentication.encoder')->encode($jwtData)
-        );
+        $event = new AuthenticationSuccessEvent(['token' => $token], $account, new Response());
+
+        $this->get('gesdinet.jwtrefreshtoken.send_token')->attachRefreshToken($event);
+
+        return $this->forward('AuthBundle:RenderToken:render', $event->getData());
     }
 }
