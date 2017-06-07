@@ -7,7 +7,7 @@
         application-logo
 
     nav.menu
-      a(*ngIf="auth.isSignedIn()", [routerLink]="['profile', 'killers']", routerLinkActive="active")
+      a(*ngIf="auth.isSignedIn()", [routerLink]="['profile', auth.getProfilePath()]", routerLinkActive="active")
         i.fa.fa-2x.fa-user-circle
         span {{"Profile" | translate}}  
       a(*ngIf="!auth.isSignedIn()" routerLink="/login")

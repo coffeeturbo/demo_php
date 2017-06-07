@@ -27,7 +27,7 @@ class JWTCreatedListener
          */
         $profiles = $this->profileService->getAccountProfiles($account->getId());
 
-        if(!!$profiles) {
+        if(count($profiles) == 0) {
             return;
         }
 
@@ -35,7 +35,8 @@ class JWTCreatedListener
 
         $event->setData(array_merge(
             $event->getData(), [
-                'profile_id' => $profile->getId()
+                'profile_id' => $profile->getId(),
+                'profile_alias' => $profile->getAlias()
             ]
         ));
     }

@@ -62,6 +62,12 @@ export class AuthService implements AuthServiceInterface
         return tokenData.roles;
     }
 
+    public getProfilePath(): string | number
+    {
+        let tokenData: Token = jwtHelper.decodeToken(TokenRepository.getToken());
+        return tokenData.profile_alias || tokenData.profile_id;
+    }
+
     public signIn(body: SignInRequest): Observable<TokenResponse> 
     {
         this.returlUrl = this.route.data["returnUrl"] || "/";

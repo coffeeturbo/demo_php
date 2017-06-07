@@ -4,7 +4,6 @@ import {Observable} from "rxjs/Observable";
 import {RESTService} from "../../Application/Service/RESTService";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
-import {Gender} from "../Entity/Gender";
 
 @Injectable()
 export class ProfileRESTService {
@@ -13,7 +12,7 @@ export class ProfileRESTService {
 
     public getById(profileId: number): Observable<ProfileGetResponse> 
     {
-        let url = `/profile/${profileId}/get`;
+        let url = `/profile/${profileId}/get-by-id`;
 
         return this.rest
             .get(url)
@@ -22,20 +21,11 @@ export class ProfileRESTService {
 
     public getByAlias(profileAlias: string): Observable<ProfileGetResponse> 
     {
-        return Observable.of({
-            "entity": {
-                "id": 1,
-                "gender": Gender.Male,
-                "nickname": "hck",
-                "first_name": "Артём",
-                "last_name": "Байдин",
-                "patronymic": "Георгиевич",
-                "alias": "killers",
-                "birth_date": "17-08-1991",
-                "verified": false,
-                "created": "2017-06-01T09:09:41+00:00"
-            }
-        }).delay(1000);
+        let url = `/profile/${profileAlias}/get-by-alias`;
+
+        return this.rest
+            .get(url)
+            .map(res => res.json())
     }
 
     public create(profileCreateRequest: ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
