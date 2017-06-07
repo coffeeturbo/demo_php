@@ -9,12 +9,10 @@ import {
     NavigationStart,
     Router
 } from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import {Subscription} from "rxjs/Subscription";
-import {LoadingBarService} from "@angular-addons/loading-bar";
+import {Observable, Subscription} from "rxjs";
+import {LoadingBarService, LoaderBarState} from "@angular-addons/loading-bar";
 
 import {TranslationService} from "../../Common/Translate/Service/TranslationService";
-// import {LoadingBarService} from "../../Common/LoadingBar/Service/LoadingBarService";
 
 @Injectable()
 export class RouteHelperService {
@@ -34,7 +32,7 @@ export class RouteHelperService {
 
             switch (event.constructor) {
                 case NavigationStart:
-                    this.showProgressBarSubscription = Observable.of([]).delay(100).subscribe(() => {
+                    this.showProgressBarSubscription = Observable.of().delay(100).subscribe(() => {
                         this.loadingBar.setProgress(30);
                         this.loadingBar.startProgress();
                     });
@@ -43,7 +41,7 @@ export class RouteHelperService {
                 case NavigationCancel:
                 case NavigationError:
                     this.showProgressBarSubscription.unsubscribe();
-                    if (this.loadingBar.getLoaderBar.progress > 0) {
+                    if (this.loadingBar.getLoaderBar.state == LoaderBarState.Active) {
                         this.loadingBar.completeProgress();
                     }
                     break;
