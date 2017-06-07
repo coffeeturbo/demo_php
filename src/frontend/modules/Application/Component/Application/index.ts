@@ -1,5 +1,5 @@
 import {Component, HostBinding} from "@angular/core";
-import {LoaderBar, LoaderBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
+import {LoadingBar, LoadingBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
 import {AuthService} from "../../../Auth/Service/AuthService";
@@ -24,8 +24,8 @@ export class ApplicationComponent {
         private loadingBarEvents: LoadingBarEvents
     ) {
         loadingBarEvents.onChangeState
-            .map((loaderBar: LoaderBar) => loaderBar.state)
-            .map((state: LoaderBarState) => state ? "progress" : "")
+            .map((loadingBar: LoadingBar) => loadingBar.state)
+            .map((state: LoadingBarState) => state ? "progress" : "")
             .subscribe((className: string) => this.className = className);
 
         this.routeHelper.titleWatcher();
