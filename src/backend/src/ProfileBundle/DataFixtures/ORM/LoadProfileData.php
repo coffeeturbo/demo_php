@@ -26,10 +26,21 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
                 "nickname" => "nickName",
                 "gender" => "male",
                 "birth_date" => "20-02-2000",
-            ]
+            ],
+        'success-profile-2' =>
+            [
+                "first_name" => "Имя",
+                "last_name" => "Фамилия",
+                "patronymic" => "Отчество",
+                "alias" => "alias2",
+                "nickname" => "nickName",
+                "gender" => "male",
+                "birth_date" => "20-02-2000",
+            ],
+
     ];
 
-    static protected $profile = ['success-profile'];
+    static protected $profile;
 
     public function load(ObjectManager $manager)
     {
@@ -42,6 +53,18 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
         $profile = $profileService->createProfileFromArray($profileData, $account, true);
 
         self::$profile['success-profile'] = $profile;
+
+        // создаём 2ой профиль
+
+        $profileData2 = self::$profileData['success-profile-2'];
+
+        $account2 = $manager->getRepository(Account::class)
+            ->findOneBy(['email' => LoadAccountData::getAccountDataByReference('success-account-2')['email']]);
+
+        $profileService = $this->container->get('profile.service');
+        $profile2 = $profileService->createProfileFromArray($profileData2, $account2, true);
+
+        self::$profile['success-profile-2'] = $profile2;
     }
 
     static public function getProfileByReference($ref): Profile

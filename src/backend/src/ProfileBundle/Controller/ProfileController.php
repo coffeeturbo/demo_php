@@ -74,12 +74,10 @@ class ProfileController extends Controller
                 'entity' => $profile->jsonSerialize()
             ]);
         } catch(ProfilesLimitException $exception) {
-            return new ErrorJsonResponse($exception, Response::HTTP_FORBIDDEN);
+            return new ErrorJsonResponse($exception->getMessage(),[], Response::HTTP_FORBIDDEN);
         } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
         }
-
-
     }
 
     /**
@@ -206,6 +204,8 @@ class ProfileController extends Controller
             ]);
         } catch(AccessDeniedException $e){
             return new ErrorJsonResponse($e->getMessage(), [], 403);
+        } catch(ProfileNotFoundException $e){
+            return new ErrorJsonResponse($e->getMessage(), [], 404);
         }
     }
 

@@ -9,7 +9,7 @@ profile_update:
   defaults: { _controller: ProfileBundle:Profile:update }
   methods: [ POST ]
   requirements:
-    id: '/d+'
+    id: '\d+'
 
 profile_delete:
   path: '{id}/delete'

@@ -23,6 +23,13 @@ class LoadAccountData extends AbstractFixture
             "roles" => [],
             'reference' => 'success-account'
         ],
+
+        'success-account-2' => [
+            "email" => "testuser2@domain.com",
+            "password" => "4zFBLC32",
+            "roles" => [],
+            'reference' => 'success-account-2'
+        ]
     ];
 
     protected $accounts;

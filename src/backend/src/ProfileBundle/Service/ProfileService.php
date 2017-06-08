@@ -33,8 +33,19 @@ class ProfileService
             ->setGender(Gender::createFromStringCode($request['gender']))
             ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $request['birth_date']));
         ;
-        if($persist) $this->saveProfile($profile);
 
+        if($persist) $this->createProfile($profile);
+
+        return $profile;
+    }
+
+    public function createProfile(Profile $profile): Profile
+    {
+        // проверяем есть ли у акккаунта уже профайл
+        $profiles = $this->getAccountProfiles($profile->getAccount()->getId());
+
+        if(count($profiles) >= self::PROFILES_LIMIT) throw new ProfilesLimitException("The limit of account profiles has been Exceeded");
+        $this->saveProfile($profile);
         return $profile;
     }
 
@@ -49,9 +60,8 @@ class ProfileService
             ));
         }
 
-
         $profile
-            ->setFirstName($updateData['first_name' ?? $profile->getFirstName()])
+            ->setFirstName($updateData['first_name'] ?? $profile->getFirstName())
             ->setLastName($updateData['last_name'] ?? $profile->getLastName())
             ->setPatronymic($updateData['patronymic'] ?? $profile->getPatronymic())
             ->setAlias($updateData['alias'] ?? $profile->getAlias())
@@ -75,10 +85,7 @@ class ProfileService
 
     public function saveProfile(Profile $profile): Profile
     {
-        // проверяем есть ли у акккаунта уже профайл
-        $profiles = $this->getAccountProfiles($profile->getAccount()->getId());
 
-        if(count($profiles) >= self::PROFILES_LIMIT) throw new ProfilesLimitException("The limit of account profiles has been Exceeded");
 
         return $this->profileRepository->saveProfile($profile);
     }
