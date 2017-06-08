@@ -7,7 +7,7 @@ import {LoadingBarModule} from "@angular-addons/loading-bar";
 import {TooltipModule} from "./Tooltip/TooltipModule";
 import {NotImplementedModule} from "./NotImplemented/NotImplementedModule";
 import {LoadingBoxModule} from "./LoadingBox/LoadingBoxModule";
-import {TranslateModule} from "./Translate/TranslateModule";
+import {TranslationModule} from "./Translation/TranslationModule";
 
 
 @NgModule({
@@ -18,7 +18,7 @@ import {TranslateModule} from "./Translate/TranslateModule";
         FocusModule,
         ModalModule,
         TooltipModule,
-        TranslateModule,
+        TranslationModule,
         NotImplementedModule
     ]
 })

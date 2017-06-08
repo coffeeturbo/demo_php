@@ -1,21 +1,21 @@
 import {NgModule} from "@angular/core";
 
-import {TranslatePipe} from "./Pipe/TranslationPipe";
+import {TranslationPipe} from "./Pipe/TranslationPipe";
 import {TranslationService} from "./Service/TranslationService";
 import {LocaleService} from "./Service/LocaleService";
 
 @NgModule({
     declarations: [
-        TranslatePipe,
+        TranslationPipe,
     ],
     providers: [
         TranslationService,
         LocaleService,
     ],
     exports: [
-        TranslatePipe
+        TranslationPipe
     ]
 })
-export class TranslateModule {
+export class TranslationModule {
 
 } 

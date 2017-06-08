@@ -1,4 +1,4 @@
-import {Dictionaries, DictionariesNavigatorAliases} from "../modules/Common/Translate/Entity/Definitions";
+import {Dictionaries, DictionariesNavigatorAliases} from "../modules/Common/Translation/Entity/Definitions";
 
 export const dictionaries: Dictionaries = {
     "RU": Object.assign(

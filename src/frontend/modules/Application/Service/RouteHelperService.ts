@@ -12,7 +12,7 @@ import {
 import {Observable, Subscription} from "rxjs";
 import {LoadingBarService, LoadingBarState} from "@angular-addons/loading-bar";
 
-import {TranslationService} from "../../Common/Translate/Service/TranslationService";
+import {TranslationService} from "../../Common/Translation/Service/TranslationService";
 
 @Injectable()
 export class RouteHelperService {
