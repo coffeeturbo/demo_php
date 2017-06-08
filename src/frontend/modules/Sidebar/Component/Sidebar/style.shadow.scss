@@ -114,10 +114,10 @@
       padding: 15px;
       color: material-color($secondary_material, '50');
       &:hover {
-        background: material-color($primary_material, '600');
+        background: material-color($secondary_material, '900');
 
         .counter {
-          border-color: material-color($primary_material, '600');
+          border-color: material-color($secondary_material, '900');
         }
       }
       

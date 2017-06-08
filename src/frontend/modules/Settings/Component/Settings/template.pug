@@ -9,6 +9,10 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
     .input-box
       input(type="checkbox", formControlName="show_porno")
       .checkbox {{"Show 18+ content" | translate }} 
+  label.field(*ngIf="!device.isMobile()")
+    .input-box
+      input(type="checkbox", formControlName="show_pad")
+      .checkbox {{"Show pad" | translate }} 
 
   .controls
     button.btn.primary(type="submit", [disabled]="!form.valid") {{"Save" | translate}}

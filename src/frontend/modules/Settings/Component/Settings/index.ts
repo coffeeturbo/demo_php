@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
 
 import {LocaleService} from "../../../Common/Translate/Service/LocaleService";
+import {Device} from "../../../Application/Service/DeviceService";
 
 @Component({
     selector: "settings",
@@ -11,11 +12,13 @@ import {LocaleService} from "../../../Common/Translate/Service/LocaleService";
 export class SettingsComponent {
     protected disabled: boolean = false;
     public fail: boolean = false;
+    public device = Device;
     
 
     public form: FormGroup = new FormGroup({
         locale: new FormControl(this.localeService.getLocale()),
-        show_porno: new FormControl(false)
+        show_porno: new FormControl(false),
+        show_pad: new FormControl(false)
     });
 
     constructor(public localeService: LocaleService) {}
