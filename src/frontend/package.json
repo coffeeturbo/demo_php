@@ -12,6 +12,7 @@
     "@angular-addons/loading-bar": "0.0.3",
     "@angular-addons/modal": "0.0.12",
     "@angular-addons/rest": "0.0.1",
+    "@angular-addons/translate": "0.0.1",
     "@angular/animations": "~4.1.0",
     "@angular/common": "~4.1.0",
     "@angular/compiler": "~4.1.0",

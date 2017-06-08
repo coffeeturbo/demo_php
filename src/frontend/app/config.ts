@@ -1,7 +1,17 @@
 export const Config = {
     "product_name": "Socilite",
     "short_product_name": "SoL",
-    "locale": "EN",
+    "locale": {
+        "default": "EN",
+        "aliases": {
+            'RU': [
+                'ru', 'ru-RU',  // Russian 
+                'be', 'be-BE',  // Belarusian
+                'uk', 'uk-UA'   // Ukraine
+            ],
+            'EN': ['en', 'en-US']
+        } 
+    },
     "uri": {
         "websocket": "/ws",
         "api": "/api"

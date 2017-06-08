@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
+import {TranslationService} from "@angular-addons/translate";
 
-import {LocaleService} from "../../../Common/Translation/Service/LocaleService";
 import {Device} from "../../../Application/Service/DeviceService";
 
 @Component({
@@ -16,15 +16,15 @@ export class SettingsComponent {
     
 
     public form: FormGroup = new FormGroup({
-        locale: new FormControl(this.localeService.getLocale()),
+        locale: new FormControl(this.translationService.getLocale()),
         show_porno: new FormControl(false),
         show_pad: new FormControl(false)
     });
 
-    constructor(public localeService: LocaleService) {}
+    constructor(public translationService: TranslationService) {}
 
     public submit(): void {
         let formData = this.form.value;
-        this.localeService.setLocale(formData["locale"]);
+        this.translationService.setLocale(formData["locale"]);
     }
 }
