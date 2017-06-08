@@ -17,9 +17,9 @@
         i.fa.fa-2x.fa-sign-out
         span {{"Sign out" | translate}}
 
-  sidebar([ngClass]="sidebar.state", (swipeleft)="device.isMobile() && sidebar.hide()")
+  sidebar([ngClass]="sidebar.state", (panleft)="device.isMobile() && sidebar.hide()")
 
-main([ngClass]="'sidebar-' + sidebar.state")
+main([ngClass]="'sidebar-' + sidebar.state", (panleft)="device.isMobile() && sidebar.hide()", (panright)="device.isMobile() && sidebar.show()")
   router-outlet
   
 application-loading-bar

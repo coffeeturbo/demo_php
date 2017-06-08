@@ -25,6 +25,10 @@ export class SidebarService {
         this.visibility = "hidden";
     }
 
+    public show(): void {
+        this.visibility = "visible";
+    }
+
     public get state(): SidebarState {
         return this.visibility;
     }
