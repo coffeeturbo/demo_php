@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 
-import {RESTService} from "../../Application/Service/RESTService";
+import {RESTService} from "../../Common/REST/Service/RESTService";
 
 @Injectable()
 export class PostRESTService

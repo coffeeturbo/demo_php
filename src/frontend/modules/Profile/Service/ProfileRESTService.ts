@@ -1,14 +1,15 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs/Observable";
+import {AuthHttp} from "angular2-jwt";
 
-import {RESTService} from "../../Application/Service/RESTService";
+import {RESTService} from "../../Common/REST/Service/RESTService";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 
 @Injectable()
 export class ProfileRESTService {
 
-    constructor(private rest: RESTService) {}
+    constructor(private rest: RESTService, private authHttp: AuthHttp) {}
 
     public getById(profileId: number): Observable<ProfileGetResponse> 
     {
@@ -32,7 +33,7 @@ export class ProfileRESTService {
     {
         let url = "/protected/profile/create";
 
-        return this.rest.authHttp
+        return this.authHttp
             .put(url, JSON.stringify(profileCreateRequest))
             .map(res => res.json())
     }
@@ -41,7 +42,7 @@ export class ProfileRESTService {
     {
         let url = `/protected/profile/${profileId}/update`;
 
-        return this.rest.authHttp
+        return this.authHttp
             .post(url, JSON.stringify(profileUpdateRequest))
             .map(res => res.json())
     }

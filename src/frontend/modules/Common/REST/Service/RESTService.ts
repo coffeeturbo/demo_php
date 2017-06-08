@@ -1,17 +1,16 @@
-import {Injectable} from "@angular/core";
+import {Injectable, Optional} from "@angular/core";
 import {Observable} from "rxjs/Observable";
 import {Http, Request, RequestOptions, RequestOptionsArgs, Response, XHRBackend} from "@angular/http";
-import {AuthHttp} from "angular2-jwt/angular2-jwt";
-
-import {Config} from "../../../app/config";
+import {RESTServiceConfig} from "./RESTServiceConfig";
 
 @Injectable()
 export class RESTService extends Http
 {
-    private path: string = Config.uri.api;
+    private path: string = "";
 
-    constructor(backend: XHRBackend, options: RequestOptions, public authHttp: AuthHttp) {
+    constructor(backend: XHRBackend, options: RequestOptions, @Optional() config: RESTServiceConfig) {
         super(backend, options);
+        this.path = config.path;
     }
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response>
