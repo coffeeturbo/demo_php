@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
+import {RESTService} from "@angular-addons/rest";
+import {Observable} from "rxjs";
 
 import {SignInRequest} from "../Http/Request/SignInRequest";
-import {RESTService} from "../../Common/REST/Service/RESTService";
 import {SignUpRequest} from "../Http/Request/SignUpRequest";
 import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 import {TokenResponse} from "../Http/Response/TokenResponse";

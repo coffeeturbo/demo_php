@@ -2,6 +2,7 @@ import {APP_INITIALIZER, NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
 import {Http, HttpModule, RequestOptions} from "@angular/http";
+import {RESTModule} from "@angular-addons/rest";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 
 import "hammerjs";
@@ -25,7 +26,6 @@ import {ApplicationLogoComponent} from "./Component/ApplicationLogo/index";
 import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/index";
 import {AttachmentModel} from "../Attachment/AttachmentModel";
 import {PostModule} from "../Post/PostModule";
-import {RESTModule} from "../Common/REST/RESTModule";
 import {Config} from "../../app/config";
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {

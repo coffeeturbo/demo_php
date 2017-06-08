@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
+import {RESTService} from "@angular-addons/rest";
+import {Observable} from "rxjs";
 import {AuthHttp} from "angular2-jwt";
 
-import {RESTService} from "../../Common/REST/Service/RESTService";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 

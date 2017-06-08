@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
-
-import {RESTService} from "../../Common/REST/Service/RESTService";
+import {RESTService} from "@angular-addons/rest";
 
 @Injectable()
 export class AttachmentRESTService 
