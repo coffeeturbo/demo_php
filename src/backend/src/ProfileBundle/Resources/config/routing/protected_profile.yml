@@ -11,6 +11,13 @@ profile_update:
   requirements:
     id: '\d+'
 
+profile_avatar_upload:
+  path: '{id}/avatar/upload'
+  defaults: { _controller: ProfileBundle:Profile:avatarUpload }
+  methods: [ POST ]
+  requirements:
+    id: '\d+'
+
 profile_delete:
   path: '{id}/delete'
   defaults: { _controller: ProfileBundle:Profile:delete }

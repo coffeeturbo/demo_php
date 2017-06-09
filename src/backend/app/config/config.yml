@@ -95,7 +95,7 @@ nelmio_api_doc:
         body_format:
             formats:
                 - json
-                - json
+                - form
         request_format:
             method: accept_header
 hwi_oauth:

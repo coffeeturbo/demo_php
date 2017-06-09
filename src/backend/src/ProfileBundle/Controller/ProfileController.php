@@ -212,6 +212,27 @@ class ProfileController extends Controller
     /**
      * @ApiDoc(
      *     section="Profile",
+     *     description= "Загрузить аватар к профилю",
+     *     authentication=true,
+     *
+     *     input = {"class" = "ProfileBundle\Form\AvatarUploadType", "name"  = ""},
+     *
+     * )
+     *
+     * @param Profile $profile
+     * @return JsonResponse
+     */
+    public function avatarUploadAction(int $id, Request $request)
+    {
+        dump($request);
+        return new JsonResponse([
+            'success' => true
+        ]);
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Profile",
      *     description= "Получаем профиль по id",
      *     authentication=true,
      *     requirements={
