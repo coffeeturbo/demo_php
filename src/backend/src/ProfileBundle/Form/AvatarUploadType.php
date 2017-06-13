@@ -26,10 +26,7 @@ class AvatarUploadType extends AbstractType
             ->add('image', FileType::class, [
 //                'required' => true
             ])
-
         ;
-
-
     }
 
 }

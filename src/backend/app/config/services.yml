@@ -1,7 +1,5 @@
 imports:
    App:
       resource: '@AppBundle/Resources/config/services.yml'
-   Auth:
-      resource: '@AuthBundle/Resources/config/services.yml'
    OAuth:
       resource: '@OAuthBundle/Resources/config/services.yml'

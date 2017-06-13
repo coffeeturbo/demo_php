@@ -7,4 +7,11 @@ services:
 
   profile.service:
     class: ProfileBundle\Service\ProfileService
-    arguments: ['@profile.repository']
+    arguments: ['@profile.repository', '@auth.account.repository', '@event_dispatcher']
+
+  profile.event_listener.add_account_role_registered_listener:
+    class: ProfileBundle\EventListener\AddAccountRoleRegisteredListener
+    arguments: ['@auth.account.repository']
+    tags:
+      - { name: kernel.event_subscriber }
+

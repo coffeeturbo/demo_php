@@ -2,10 +2,15 @@
 namespace ProfileBundle\Service;
 
 use AuthBundle\Entity\Account;
+use AuthBundle\Repository\AccountRepository;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender;
+use ProfileBundle\Event\ProfileEvent;
+use ProfileBundle\Event\ProfileEvents;
 use ProfileBundle\Exception\ProfilesLimitException;
 use ProfileBundle\Repository\ProfileRepository;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -15,10 +20,17 @@ class ProfileService
     const PROFILES_LIMIT = 1;
 
     private $profileRepository;
+    private $accountRepository;
+    private $eventDispatcher;
 
-    public function __construct(ProfileRepository $profileRepository)
-    {
+    public function __construct(
+        ProfileRepository $profileRepository,
+        AccountRepository $accountRepository,
+        EventDispatcherInterface $eventDispatcher
+    ){
         $this->profileRepository = $profileRepository;
+        $this->accountRepository = $accountRepository;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function createProfileFromArray(array $request, Account $account, bool $persist = false): Profile
@@ -45,7 +57,14 @@ class ProfileService
         $profiles = $this->getAccountProfiles($profile->getAccount()->getId());
 
         if(count($profiles) >= self::PROFILES_LIMIT) throw new ProfilesLimitException("The limit of account profiles has been Exceeded");
+
         $this->saveProfile($profile);
+
+        $this->eventDispatcher->dispatch(
+            ProfileEvents::PROFILE_CREATED,
+            new ProfileEvent($profile)
+        );
+
         return $profile;
     }
 
@@ -85,11 +104,8 @@ class ProfileService
 
     public function saveProfile(Profile $profile): Profile
     {
-
-
         return $this->profileRepository->saveProfile($profile);
     }
-
 
     public function getAccountProfiles(int $accountId){
         return $this->profileRepository->getAccountProfiles($accountId);

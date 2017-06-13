@@ -5,8 +5,10 @@ use AppBundle\Http\ErrorJsonResponse;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Exception\ProfileNotFoundException;
 use ProfileBundle\Exception\ProfilesLimitException;
+use ProfileBundle\Form\AvatarUploadType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -20,44 +22,7 @@ class ProfileController extends Controller
      *     section="Profile",
      *     description= "Создаем профиль",
      *     authentication=true,
-     *     requirements={
-     *          {
-     *              "name" = "first_name",
-     *              "dataType" = "string",
-     *              "description" = "Имя"
-     *          },
-     *          {
-     *              "name" = "last_name",
-     *              "dataType" = "string",
-     *              "description" = "Фамилия"
-     *          },
-     *          {
-     *              "name" = "patronymic",
-     *              "dataType" = "string",
-     *              "description" = "Отчество"
-     *          },
-     *          {
-     *              "name" = "alias",
-     *              "dataType" = "string",
-     *              "description" = "alias"
-     *          },
-     *          {
-     *              "name" = "nickname",
-     *              "dataType" = "string",
-     *              "description" = "alias"
-     *          },
-     *          {
-     *              "name" = "gender",
-     *              "dataType" = "integer",
-     *              "description" = "выберитье пол none- нет пола male- мужской  female-Женский"
-     *          },
-     *          {
-     *              "name" = "birth_date",
-     *              "dataType" = "datetime",
-     *              "description" = "27-05-2017"
-     *          }
-     *
-     *     }
+     *     input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
      * )
      *
      * @param Request $request
@@ -145,44 +110,9 @@ class ProfileController extends Controller
      *     section="Profile",
      *     description= "Редактировать профиль",
      *     authentication=true,
-     *     requirements={
      *
-     *          {
-     *              "name" = "first_name",
-     *              "dataType" = "string",
-     *              "description" = "Имя профиля"
-     *          },
-     *          {
-     *              "name" = "last_name",
-     *              "dataType" = "string",
-     *              "description" = "Имя профиля"
-     *          },
-     *          {
-     *              "name" = "patronymic",
-     *              "dataType" = "string",
-     *              "description" = "Имя профиля"
-     *          },
-     *          {
-     *              "name" = "alias",
-     *              "dataType" = "string",
-     *              "description" = "Имя профиля"
-     *          },
-     *          {
-     *              "name" = "nickname",
-     *              "dataType" = "string",
-     *              "description" = "Имя профиля"
-     *          },
-     *          {
-     *              "name" = "gender",
-     *              "dataType" = "string",
-     *              "description" = "выберитье пол none- нет пола male- мужской  female-Женский"
-     *          },
-     *          {
-     *              "name" = "birthDate",
-     *              "dataType" = "datetime",
-     *              "description" = "27-05-2017"
-     *          }
-     *     }
+     *     input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
+     *
      * )
      *
      * @param Profile $profile
@@ -224,7 +154,14 @@ class ProfileController extends Controller
      */
     public function avatarUploadAction(int $id, Request $request)
     {
-        dump($request);
+
+        $form = $this->createForm(AvatarUploadType::class);
+
+        $form->handleRequest($request);
+
+        $data = $form->getData();
+
+        dump($data);
         return new JsonResponse([
             'success' => true
         ]);
