@@ -9,6 +9,7 @@ use AuthBundle\Form\SignUpType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use ProfileBundle\Entity\Profile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,6 +66,13 @@ class SignUpController extends Controller
             return new ErrorJsonResponse("User already exists", [], Response::HTTP_CONFLICT);
         }
 
+        $profileService = $this->get("profile.service");
+        $profileService->createProfileFromArray(
+            ["name" => $body["name"]],
+            $account,
+            true
+        );
+        
         $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);
 
         $event = new AuthenticationSuccessEvent(['token' => $token], $account, new Response());

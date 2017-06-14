@@ -13,17 +13,17 @@ ProfileBundle\Entity\Profile:
     name:
       column: name
       type: string
-      nullable: true
+      nullable: false
     alias:
       type: string
-      nullable: false
+      nullable: true
     gender:
       type: smallint
       nullable: false
     birthDate:
       type: datetime
       column: birth_date
-      nullable: false
+      nullable: true
     verified:
       type: boolean
       nullable: false

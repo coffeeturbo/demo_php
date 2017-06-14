@@ -14,6 +14,7 @@ class Profile implements \JsonSerializable
 {
 
     const ADULT_AGE = 18;
+    const MIN_AGE = 7;
     const MAX_AGE = 150;
 
     const BIRTH_DATE_FORMAT = 'd-m-Y';
@@ -68,24 +69,23 @@ class Profile implements \JsonSerializable
         return $this->created;
     }
 
-    public function getBirthDate(): \DateTime
+    public function getBirthDate(): ?\DateTime
     {
         return $this->birthDate;
     }
 
-    public function setBirthDate(\DateTime $birthday): self
+    public function setBirthDate(?\DateTime $birthday): self
     {
-        $now = new \DateTime();
+        if ($birthday instanceof \DateTime) {
+            $age = $birthday->diff(new \DateTime())->y;
 
-        if($now < $birthday) {
-            throw new InvalidBirthDateException(sprintf("UnAccetable age you cannot be younger %s", $now));
-        }
+            if ($age > self::MIN_AGE) {
+                throw new InvalidBirthDateException(sprintf("Unacceptable age '%s': yonger then ", $age, self::MIN_AGE));
+            }
 
-        $diff = $birthday->diff(new \DateTime());
-        $years = $diff->y;
-
-        if($years > self::MAX_AGE) {
-            throw new InvalidBirthDateException(sprintf("sorry age %s unreachable", $years));
+            if ($age > self::MAX_AGE) {
+                throw new InvalidBirthDateException(sprintf("Unacceptable age '%s': older then %s", $age, self::MAX_AGE));
+            }
         }
 
         $this->birthDate = $birthday;
@@ -149,7 +149,7 @@ class Profile implements \JsonSerializable
         return $this;
     }
 
-    public function getAlias(): string
+    public function getAlias(): ?string
     {
         return $this->alias;
     }
@@ -163,7 +163,7 @@ class Profile implements \JsonSerializable
     }
 
 
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }

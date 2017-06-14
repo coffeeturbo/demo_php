@@ -5,6 +5,7 @@ use AuthBundle\Entity\Account;
 use AuthBundle\Repository\AccountRepository;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender;
+use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileEvent;
 use ProfileBundle\Event\ProfileEvents;
 use ProfileBundle\Exception\ProfilesLimitException;
@@ -38,11 +39,13 @@ class ProfileService
         $profile->setAccount($account)
             ->setName($request['name'] ?? null)
             ->setAlias($request['alias'] ?? null)
-            ->setGender(Gender::createFromStringCode($request['gender']))
-            ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $request['birth_date']));
+            ->setGender(Gender::createFromStringCode($request['gender'] ?? NoneGender::STRING_CODE))
+            ->setBirthDate(isset($request['birth_date']) ? \DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $request['birth_date']) : null);
         ;
 
-        if($persist) $this->createProfile($profile);
+        if($persist) {
+            $this->createProfile($profile);
+        }
 
         return $profile;
     }

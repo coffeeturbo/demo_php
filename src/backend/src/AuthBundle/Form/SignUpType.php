@@ -15,6 +15,11 @@ class SignUpType extends AbstractType
     {
         $builder
             ->add(
+                'name', TextType::class, ["constraints" => [
+                    new NotBlank()
+                ]]
+            )
+            ->add(
                 'email', TextType::class, ["constraints" => [
                     new NotBlank(),
                     new Email()
