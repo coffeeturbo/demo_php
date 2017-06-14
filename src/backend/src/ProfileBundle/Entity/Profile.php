@@ -21,14 +21,11 @@ class Profile implements \JsonSerializable
     private $id;
     private $created;
 
+    private $name;
     private $birthDate;
     private $verified;
     private $privacyOpts;
     private $gender;
-    private $nickName;
-    private $firstName;
-    private $lastName;
-    private $patronymic;
     private $alias;
     private $account;
 
@@ -45,10 +42,7 @@ class Profile implements \JsonSerializable
         return [
             'id' => $this->id,
             'gender' => $this->getGender()->getStringCode(),
-            'nickname' => $this->nickName,
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'patronymic' => $this->patronymic,
+            'name' => $this->name,
             'alias' => $this->alias,
             'birth_date' => $this->getBirthDate()->format(self::BIRTH_DATE_FORMAT),
             'verified' => $this->verified,
@@ -147,53 +141,6 @@ class Profile implements \JsonSerializable
         return $this->account;
     }
 
-    public function setNickName(string $nickName): self
-    {
-        $this->nickName = $nickName;
-
-        return $this;
-    }
-
-    public function getNickName(): string
-    {
-        return $this->nickName;
-    }
-
-    public function setFirstName(string $firstName): self
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getFirstName(): string
-    {
-        return $this->firstName;
-    }
-
-    public function setLastName(string $lastName): self
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    public function getLastName(): string
-    {
-        return $this->lastName;
-    }
-
-    public function setPatronymic(string $patronymic): self
-    {
-        $this->patronymic = $patronymic;
-
-        return $this;
-    }
-
-    public function getPatronymic(): string
-    {
-        return $this->patronymic;
-    }
 
     public function setAlias(string $alias = null): self
     {
@@ -205,5 +152,19 @@ class Profile implements \JsonSerializable
     public function getAlias(): string
     {
         return $this->alias;
+    }
+
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+
+    public function getName()
+    {
+        return $this->name;
     }
 }

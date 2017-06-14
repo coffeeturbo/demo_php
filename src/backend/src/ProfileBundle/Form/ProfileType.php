@@ -14,19 +14,10 @@ class ProfileType extends AbstractType
             ->add('id', TextType::class, [
                 'label' => 'Имя профиля'
             ])
-            ->add('first_name', TextType::class, [
+            ->add('name', TextType::class, [
                 'label' => 'Имя профиля'
             ])
-            ->add('last_name', TextType::class, [
-                'label' => 'Фамилия '
-            ])
-            ->add('patronymic', TextType::class, [
-                'label' => 'Отчество'
-            ])
             ->add('alias', TextType::class)
-            ->add('nickname', TextType::class, [
-                'label' => 'Прозвище'
-            ])
             ->add('gender', TextType::class, [
                 'label'  => 'выберитье пол none- нет пола male- мужской  female-Женский',
             ])

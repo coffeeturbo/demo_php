@@ -19,21 +19,15 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
     static protected $profileData = [
         'success-profile' =>
             [
-                "first_name" => "Имя",
-                "last_name" => "Фамилия",
-                "patronymic" => "Отчество",
+                "name" => "Имя",
                 "alias" => "alias",
-                "nickname" => "nickName",
                 "gender" => "male",
                 "birth_date" => "20-02-2000",
             ],
         'success-profile-2' =>
             [
-                "first_name" => "Имя",
-                "last_name" => "Фамилия",
-                "patronymic" => "Отчество",
+                "name" => "Имя",
                 "alias" => "alias2",
-                "nickname" => "nickName",
                 "gender" => "male",
                 "birth_date" => "20-02-2000",
             ],

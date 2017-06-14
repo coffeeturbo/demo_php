@@ -12,11 +12,8 @@ class ProfileUpdateActionTest extends ProfileController
     protected $fixtures;
 
     static protected $newProfileData = [
-        "first_name" => "Нимя",
-        "last_name" => "Намилия",
-        "patronymic" => "Нотчество",
+        "name" => "Нимя",
         "alias" => "nalias",
-        "nickname" => "nnickName",
         "gender" => "female",
         "birth_date" => "20-02-2002",
     ];

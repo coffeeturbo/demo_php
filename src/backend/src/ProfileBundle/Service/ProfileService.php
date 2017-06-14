@@ -9,7 +9,6 @@ use ProfileBundle\Event\ProfileEvent;
 use ProfileBundle\Event\ProfileEvents;
 use ProfileBundle\Exception\ProfilesLimitException;
 use ProfileBundle\Repository\ProfileRepository;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,11 +36,8 @@ class ProfileService
     {
         $profile = new Profile();
         $profile->setAccount($account)
-            ->setFirstName($request['first_name'] ?? null)
-            ->setLastName($request['last_name'] ?? null)
-            ->setPatronymic($request['patronymic'] ?? null)
+            ->setName($request['name'] ?? null)
             ->setAlias($request['alias'] ?? null)
-            ->setNickName($request['nickname'] ?? null)
             ->setGender(Gender::createFromStringCode($request['gender']))
             ->setBirthDate(\DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $request['birth_date']));
         ;
@@ -80,11 +76,8 @@ class ProfileService
         }
 
         $profile
-            ->setFirstName($updateData['first_name'] ?? $profile->getFirstName())
-            ->setLastName($updateData['last_name'] ?? $profile->getLastName())
-            ->setPatronymic($updateData['patronymic'] ?? $profile->getPatronymic())
+            ->setName($updateData['name'] ?? $profile->getName())
             ->setAlias($updateData['alias'] ?? $profile->getAlias())
-            ->setNickName($updateData['nickname'] ?? $profile->getNickName())
             ->setGender(
                 isset($updateData['gender']) ?
                 Gender::createFromStringCode($updateData['gender']) : $profile->getGender()

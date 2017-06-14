@@ -10,19 +10,8 @@ ProfileBundle\Entity\Profile:
     created:
       type: datetime
       nullable: false
-    nickName:
-      column: nick_name
-      type: string
-      nullable: true
-    firstName:
-      column: first_name
-      type: string
-      nullable: true
-    lastName:
-      column: last_name
-      type: string
-      nullable: true
-    patronymic:
+    name:
+      column: name
       type: string
       nullable: true
     alias:
