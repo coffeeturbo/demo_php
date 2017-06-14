@@ -21,6 +21,7 @@ export class SignUpFormComponent {
     public fail: boolean = false;
 
     public form: FormGroup = new FormGroup({
+        name: new FormControl("", Validators.required),
         email: new FormControl("", Validators.email),
         password: new FormControl("", Validators.pattern(new RegExp(this.config.account.constraints.password.match))),
         password_confirm: new FormControl("", Validators.required)
@@ -45,6 +46,7 @@ export class SignUpFormComponent {
 
         this.authService
             .signUp({
+                name: formData.name,
                 email: formData.email,
                 password: formData.password,
             })

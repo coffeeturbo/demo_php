@@ -1,5 +1,10 @@
 form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
   .field
+    i.fa.fa-lg.fa-fw.fa-address-card-o
+    .input-box
+      input(type="text", formControlName="name", placeholder="{{'Enter your name' | translate }}", ng-auto-focus)
+      hr
+  .field
     i.fa.fa-at.fa-lg.fa-fw
     .input-box
       input(type="text", formControlName="email", placeholder="{{'Enter your email' | translate }}", ng-auto-focus)
