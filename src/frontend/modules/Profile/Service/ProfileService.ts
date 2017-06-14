@@ -52,8 +52,15 @@ export class ProfileService {
     {
         return this.get(this.getOwnProfilePath());
     }
+    
+    public isOwnProfileExist(): boolean
+    {
+        let tokenData: Token = TokenRepository.decodeToken();
+        return !!tokenData.profile_alias || !!tokenData.profile_id;
+    }
 
-    private getFromCache(path: number | string): Observable<Profile> {
+    private getFromCache(path: number | string): Observable<Profile> 
+    {
         let profile: Profile = this.profiles.filter((profile) => profile.id == path || profile.alias == path).shift();
         if (!profile) {
             throw new Error(`Profile with path "${path}" is not cached`);

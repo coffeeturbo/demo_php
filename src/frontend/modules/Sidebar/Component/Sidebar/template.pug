@@ -15,7 +15,7 @@ aside
     i.fa.fa-fw.fa-lg.fa-newspaper-o
     span {{ "New" | translate }} 
 
-ng-container(*ngIf="auth.isSignedIn()")
+ng-container(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
   hr
   aside
     h4 {{"Profile" | translate }}
