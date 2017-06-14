@@ -41,7 +41,7 @@
     fill: material-color($primary_material, '700');
   }
 
-  .text {
+  #statusText {
     color: material-color($primary_material, '200');
     font: {
       size: 18px;
