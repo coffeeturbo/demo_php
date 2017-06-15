@@ -1,6 +1,6 @@
-AuthBundle\Entity\Account:
+AccountBundle\Entity\Account:
   type: entity
-  repositoryClass: AuthBundle\Repository\AccountRepository
+  repositoryClass: AccountBundle\Repository\AccountRepository
   id:
     id:
       type: integer

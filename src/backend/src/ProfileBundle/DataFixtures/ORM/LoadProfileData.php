@@ -1,8 +1,8 @@
 <?php
 namespace ProfileBundle\DataFixtures\ORM;
 
-use AuthBundle\DataFixtures\ORM\LoadAccountData;
-use AuthBundle\Entity\Account;
+use AccountBundle\DataFixtures\ORM\LoadAccountData;
+use AccountBundle\Entity\Account;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;

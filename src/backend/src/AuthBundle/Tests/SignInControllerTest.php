@@ -3,7 +3,7 @@
 namespace AuthBundle\Tests;
 
 use AppBundle\Tests\BaseTestSetup;
-use AuthBundle\DataFixtures\ORM\LoadAccountData;
+use AccountBundle\DataFixtures\ORM\LoadAccountData;
 
 class SignInControllerTest extends BaseTestSetup
 {

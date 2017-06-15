@@ -1,7 +1,7 @@
 <?php
 namespace ProfileBundle\EventListener;
 
-use AuthBundle\Repository\AccountRepository;
+use AccountBundle\Repository\AccountRepository;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Event\ProfileEvent;
 use ProfileBundle\Event\ProfileEvents;
@@ -34,5 +34,4 @@ class AddAccountRoleRegisteredListener implements EventSubscriberInterface
         $account->addRole($account::ROLE_REGISTERED);
         $this->accountRepository->save($account);
     }
-
 }

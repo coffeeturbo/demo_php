@@ -2,7 +2,7 @@
 
 namespace AuthBundle\EventListener;
 
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Service\ProfileService;

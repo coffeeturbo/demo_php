@@ -33,7 +33,7 @@ ProfileBundle\Entity\Profile:
       nullable: true
   manyToOne:
     account:
-      targetEntity: AuthBundle\Entity\Account
+      targetEntity: AccountBundle\Entity\Account
       joinColumn:
         name: account_id
         referencedColumnName: id

@@ -1,8 +1,7 @@
 <?php
 
-namespace AuthBundle\Entity;
+namespace AccountBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User;
 
 class Account extends User implements \JsonSerializable
@@ -14,11 +13,8 @@ class Account extends User implements \JsonSerializable
     const ROLE_VERIFED = "ROLE_VERIFED";
     
     protected $id;
-
     protected $vkId;
-
     protected $facebookId;
-    
     protected $googleId;
 
     public function getId(): int
@@ -63,5 +59,4 @@ class Account extends User implements \JsonSerializable
             'roles' => $this->getRoles()
         ];
     }
-
 }

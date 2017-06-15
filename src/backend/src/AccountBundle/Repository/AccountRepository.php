@@ -1,8 +1,8 @@
 <?php
 
-namespace AuthBundle\Repository;
+namespace AccountBundle\Repository;
 
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use Doctrine\ORM\EntityRepository;
 
 class AccountRepository extends EntityRepository

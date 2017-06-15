@@ -2,7 +2,7 @@
 
 namespace OAuthBundle\Security\Core\Account;
 
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use FOS\UserBundle\Model\User;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\Exception\AccountNotLinkedException;

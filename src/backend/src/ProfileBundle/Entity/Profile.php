@@ -2,7 +2,7 @@
 
 namespace ProfileBundle\Entity;
 
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Exception\InvalidBirthDateException;

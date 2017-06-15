@@ -4,12 +4,11 @@ namespace AuthBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use AuthBundle\Form\SignUpType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use FOS\UserBundle\Model\UserManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
-use ProfileBundle\Entity\Profile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -1,0 +1,6 @@
+services:
+    auth.account.repository:
+        class: AccountBundle\Repository\AccountRepository
+        factory: ['@doctrine.orm.entity_manager', 'getRepository']
+        arguments:
+          - AccountBundle\Entity\Account

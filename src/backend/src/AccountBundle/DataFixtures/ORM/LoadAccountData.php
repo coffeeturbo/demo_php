@@ -1,8 +1,8 @@
 <?php
 
-namespace AuthBundle\DataFixtures\ORM;
+namespace AccountBundle\DataFixtures\ORM;
 
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
@@ -88,6 +88,4 @@ class LoadAccountData extends AbstractFixture
     {
         return 10;
     }
-
 }
-

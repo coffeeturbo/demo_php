@@ -1,8 +1,8 @@
 <?php
 namespace ProfileBundle\Service;
 
-use AuthBundle\Entity\Account;
-use AuthBundle\Repository\AccountRepository;
+use AccountBundle\Entity\Account;
+use AccountBundle\Repository\AccountRepository;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;

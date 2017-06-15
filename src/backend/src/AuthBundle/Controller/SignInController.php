@@ -4,7 +4,7 @@ namespace AuthBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use AuthBundle\Form\SignInType;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -67,7 +67,7 @@ class SignInController extends Controller
     {
         /** @var Account $account */
         $account = $this->getDoctrine()
-            ->getRepository('AuthBundle:Account')
+            ->getRepository('AccountBundle:Account')
             ->findOneBy(['username' => $username]);
 
         if (!$account instanceof Account)

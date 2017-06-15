@@ -1,7 +1,7 @@
 <?php
 namespace ProfileBundle\Tests\Path;
 
-use AuthBundle\Entity\Account;
+use AccountBundle\Entity\Account;
 use ProfileBundle\Tests\ProfileController;
 use Symfony\Component\HttpFoundation\Response;
 

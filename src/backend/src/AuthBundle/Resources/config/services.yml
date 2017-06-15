@@ -1,10 +1,4 @@
 services:
-    auth.account.repository:
-        class: AuthBundle\Repository\AccountRepository
-        factory: ['@doctrine.orm.entity_manager', 'getRepository']
-        arguments:
-          - AuthBundle\Entity\Account
-
     auth.event.jwt_created_listener:
         class: AuthBundle\EventListener\JWTCreatedListener
         arguments: [ '@profile.service' ]

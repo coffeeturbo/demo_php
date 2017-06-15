@@ -2,7 +2,7 @@
 namespace ProfileBundle\Tests;
 
 use AppBundle\Tests\BaseTestSetup;
-use AuthBundle\DataFixtures\ORM\LoadAccountData;
+use AccountBundle\DataFixtures\ORM\LoadAccountData;
 
 class ProfileController extends BaseTestSetup
 {

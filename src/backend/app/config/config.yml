@@ -78,7 +78,7 @@ lexik_jwt_authentication:
 fos_user:
     db_driver: orm
     firewall_name: protected_api
-    user_class: AuthBundle\Entity\Account
+    user_class: AccountBundle\Entity\Account
     from_email:
         address: "noreply@yourcompany.com"
         sender_name: "No Reply"
