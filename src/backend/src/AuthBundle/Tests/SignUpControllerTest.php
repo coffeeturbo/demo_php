@@ -29,10 +29,10 @@ class SignUpControllerTest extends BaseTestSetup
 
     public function test200()
     {
-
         $client = static::createSignUpClient( [
             'HTTP_ACCEPT' => 'application/json'
         ], json_encode([
+            "name" => 'Adam Jons',
             "email" => 'newtestaccount@domain.ru',
             "password" => 'successPasswd12',
         ]));
@@ -51,6 +51,7 @@ class SignUpControllerTest extends BaseTestSetup
         $client = static::createSignUpClient( [
             'HTTP_ACCEPT' => 'application/json'
         ], json_encode([
+            "name" => 'Adam Jons',
             "email" => "21".$accountData['email'],
             "password" => '26261Jj',
         ]));
@@ -65,6 +66,7 @@ class SignUpControllerTest extends BaseTestSetup
         $client = static::createSignUpClient( [
             'HTTP_ACCEPT' => 'application/json'
         ], json_encode([
+            "name" => 'Adam Jons',
             "email" => $accountData['email'],
             "password" => $accountData['password'],
         ]));

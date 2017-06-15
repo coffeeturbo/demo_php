@@ -79,7 +79,7 @@ class Profile implements \JsonSerializable
         if ($birthday instanceof \DateTime) {
             $age = $birthday->diff(new \DateTime())->y;
 
-            if ($age > self::MIN_AGE) {
+            if ($age < self::MIN_AGE) {
                 throw new InvalidBirthDateException(sprintf("Unacceptable age '%s': yonger then ", $age, self::MIN_AGE));
             }
 
