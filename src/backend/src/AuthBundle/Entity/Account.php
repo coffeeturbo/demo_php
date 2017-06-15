@@ -5,7 +5,7 @@ namespace AuthBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User;
 
-class Account extends User
+class Account extends User implements \JsonSerializable
 {
     const ROLE_CREATED = "ROLE_CREATED";
     const ROLE_REGISTERED = "ROLE_REGISTERED";
@@ -54,6 +54,14 @@ class Account extends User
     public function setGoogleId($googleId)
     {
         $this->googleId = $googleId;
+    }
+
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'roles' => $this->getRoles()
+        ];
     }
 
 }
