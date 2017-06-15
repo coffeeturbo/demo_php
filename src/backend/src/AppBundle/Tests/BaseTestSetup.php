@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Tests;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Client;
@@ -10,6 +11,8 @@ abstract class BaseTestSetup extends WebTestCase
     /** @var  Client */
     protected $client;
     protected $container;
+
+    /** @var  EntityManagerInterface */
     protected $em;
 
     public function setUp()
