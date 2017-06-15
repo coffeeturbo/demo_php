@@ -23,7 +23,6 @@ class OAuthSuccessHandler extends LexikAuthenticationSuccessHandler
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         $response = parent::onAuthenticationSuccess($request, $token);
-        $response = new RedirectResponse($this->router->generate('get_token', json_decode($response->getContent(), true)));
-        return $response;
+        return new RedirectResponse($this->router->generate('get_token', json_decode($response->getContent(), true)));
     }
 }
