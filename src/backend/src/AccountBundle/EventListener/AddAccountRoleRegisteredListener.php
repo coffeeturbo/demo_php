@@ -1,5 +1,5 @@
 <?php
-namespace ProfileBundle\EventListener;
+namespace AccountBundle\EventListener;
 
 use AccountBundle\Repository\AccountRepository;
 use ProfileBundle\Entity\Profile;

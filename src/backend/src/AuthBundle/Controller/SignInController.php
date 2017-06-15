@@ -4,7 +4,6 @@ namespace AuthBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use AccountBundle\Entity\Account;
 use AuthBundle\Form\SignInType;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -45,7 +44,7 @@ class SignInController extends Controller
     {
         try {
             $body = $this->get('app.validate_request')->validate($request, SignInType::class);
-            $account = $this->validateCredentials($body["username"], $body["password"]);
+            $account = $this->get('account.service')->validateCredentials($body["username"], $body["password"]);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch (UnauthorizedHttpException $e) {
@@ -61,21 +60,5 @@ class SignInController extends Controller
         }
 
         return $this->forward('AuthBundle:RenderToken:render', $event->getData());
-    }
-
-    private function validateCredentials($username, $password): Account
-    {
-        /** @var Account $account */
-        $account = $this->getDoctrine()
-            ->getRepository('AccountBundle:Account')
-            ->findOneBy(['username' => $username]);
-
-        if (!$account instanceof Account)
-            throw new UnauthorizedHttpException(null, "User not found");
-
-        if (!$this->get('security.password_encoder')->isPasswordValid($account, $password))
-            throw new UnauthorizedHttpException(null, "Wrong password");
-
-        return $account;
     }
 }

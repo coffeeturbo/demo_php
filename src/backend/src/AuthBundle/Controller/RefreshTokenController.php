@@ -5,10 +5,10 @@ namespace AuthBundle\Controller;
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use AuthBundle\Form\RefreshTokenType;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class RefreshTokenController extends Controller
 {
@@ -31,7 +31,7 @@ class RefreshTokenController extends Controller
     public function refreshAction(Request $request)
     {
         try {
-            $request->headers->add(["Content-Type"=>"application/json"]);
+            $request->headers->add(["Content-Type" => "application/json"]);
             $this->get('app.validate_request')->validate($request, RefreshTokenType::class);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());

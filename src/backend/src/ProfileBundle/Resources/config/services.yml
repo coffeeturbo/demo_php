@@ -13,9 +13,3 @@ services:
       - '%profile.limit%'
       - '%profile.min_age%'
       - '%profile.max_age%'
-
-  profile.event_listener.add_account_role_registered_listener:
-    class: ProfileBundle\EventListener\AddAccountRoleRegisteredListener
-    arguments: ['@auth.account.repository']
-    tags:
-      - { name: kernel.event_subscriber }
