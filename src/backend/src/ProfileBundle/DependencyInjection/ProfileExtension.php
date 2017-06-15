@@ -15,5 +15,9 @@ class ProfileExtension extends Extension
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter('profile.limit', $config['limit']);
+        $container->setParameter('profile.min_age', $config['min_age']);
+        $container->setParameter('profile.max_age', $config['max_age']);
     }
 }

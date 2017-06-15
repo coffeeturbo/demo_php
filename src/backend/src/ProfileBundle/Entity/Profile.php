@@ -12,11 +12,6 @@ use ProfileBundle\Exception\InvalidBirthDateException;
  */
 class Profile implements \JsonSerializable
 {
-
-    const ADULT_AGE = 18;
-    const MIN_AGE = 7;
-    const MAX_AGE = 150;
-
     const BIRTH_DATE_FORMAT = 'd-m-Y';
 
     private $id;
@@ -77,18 +72,6 @@ class Profile implements \JsonSerializable
 
     public function setBirthDate(?\DateTime $birthday): self
     {
-        if ($birthday instanceof \DateTime) {
-            $age = $birthday->diff(new \DateTime())->y;
-
-            if ($age < self::MIN_AGE) {
-                throw new InvalidBirthDateException(sprintf("Unacceptable age '%s': yonger then ", $age, self::MIN_AGE));
-            }
-
-            if ($age > self::MAX_AGE) {
-                throw new InvalidBirthDateException(sprintf("Unacceptable age '%s': older then %s", $age, self::MAX_AGE));
-            }
-        }
-
         $this->birthDate = $birthday;
 
         return $this;

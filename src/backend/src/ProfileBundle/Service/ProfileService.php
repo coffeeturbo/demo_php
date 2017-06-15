@@ -2,12 +2,12 @@
 namespace ProfileBundle\Service;
 
 use AccountBundle\Entity\Account;
-use AccountBundle\Repository\AccountRepository;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileEvent;
 use ProfileBundle\Event\ProfileEvents;
+use ProfileBundle\Exception\InvalidBirthDateException;
 use ProfileBundle\Exception\ProfilesLimitException;
 use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -17,20 +17,24 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileService
 {
-    const PROFILES_LIMIT = 1;
-
     private $profileRepository;
-    private $accountRepository;
     private $eventDispatcher;
+    private $profilesLimit;
+    private $minAge;
+    private $maxAge;
 
     public function __construct(
-        ProfileRepository $profileRepository,
-        AccountRepository $accountRepository,
-        EventDispatcherInterface $eventDispatcher
-    ){
+        ProfileRepository $profileRepository, 
+        EventDispatcherInterface $eventDispatcher, 
+        int $profilesLimit,
+        int $minAge,
+        int $maxAge
+    ) {
         $this->profileRepository = $profileRepository;
-        $this->accountRepository = $accountRepository;
         $this->eventDispatcher = $eventDispatcher;
+        $this->profilesLimit = $profilesLimit;
+        $this->minAge = $minAge;
+        $this->maxAge = $maxAge;
     }
 
     public function createProfileFromArray(array $request, Account $account, bool $persist = false): Profile
@@ -55,8 +59,13 @@ class ProfileService
         // проверяем есть ли у акккаунта уже профайл
         $profiles = $this->getAccountProfiles($profile->getAccount()->getId());
 
-        if(count($profiles) >= self::PROFILES_LIMIT) throw new ProfilesLimitException("The limit of account profiles has been Exceeded");
+        if(count($profiles) >= $this->profilesLimit) throw new ProfilesLimitException("The limit of account profiles has been Exceeded");
 
+        // проверяем валидность даты рождения
+        if($profile->getBirthDate() instanceof \DateTime) {
+            $this->validateBirthDate($profile->getBirthDate());
+        }
+        
         $this->saveProfile($profile);
 
         $this->eventDispatcher->dispatch(
@@ -124,5 +133,19 @@ class ProfileService
     public function deleteProfile(Profile $profile)
     {
         return $this->profileRepository->deleteProfile($profile);
+    }
+    
+    public function validateBirthDate(\DateTime $birthday) {
+        if ($birthday instanceof \DateTime) {
+            $age = $birthday->diff(new \DateTime())->y;
+
+            if ($age < $this->minAge) {
+                throw new InvalidBirthDateException(sprintf("Unacceptable age '%s': yonger then ", $age, $this->minAge));
+            }
+
+            if ($age > $this->maxAge) {
+                throw new InvalidBirthDateException(sprintf("Unacceptable age '%s': older then %s", $age, $this->maxAge));
+            }
+        }
     }
 }

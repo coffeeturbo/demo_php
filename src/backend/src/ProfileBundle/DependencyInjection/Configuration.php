@@ -4,18 +4,26 @@ namespace ProfileBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class Configuration  implements ConfigurationInterface
+class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('profile');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->integerNode('limit')
+                    ->defaultValue(1)
+                ->end()
+                ->integerNode('min_age')
+                    ->defaultValue(0)
+                ->end()
+                ->integerNode('max_age')
+                    ->defaultValue(150)
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }
-
 }

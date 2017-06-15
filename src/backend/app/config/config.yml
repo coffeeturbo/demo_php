@@ -99,6 +99,7 @@ nelmio_api_doc:
             default_format: "json"
         request_format:
             method: accept_header
+
 hwi_oauth:
     firewall_names: [login_protected_api]
     resource_owners:
@@ -115,3 +116,8 @@ hwi_oauth:
 gesdinet_jwt_refresh_token:
     ttl: 2592000           
     user_provider: fos_user.user_provider.username_email
+
+profile:
+    limit: 1
+    min_age: 4
+    max_age: 150
