@@ -7,10 +7,7 @@ use AccountBundle\Entity\Account;
 use AccountBundle\Event\AccountCreatedEvent;
 use AccountBundle\Repository\AccountRepository;
 use FOS\UserBundle\Model\UserManager;
-use ProfileBundle\Service\ProfileService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class AccountService
 {

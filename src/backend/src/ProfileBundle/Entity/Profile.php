@@ -5,7 +5,6 @@ namespace ProfileBundle\Entity;
 use AccountBundle\Entity\Account;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
-use ProfileBundle\Exception\InvalidBirthDateException;
 
 /**
  * Profile
@@ -48,12 +47,12 @@ class Profile implements \JsonSerializable
         ];
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setCreated(\DateTime $created)
+    public function setCreated(\DateTime $created): self
     {
         $this->created = $created;
 
@@ -84,7 +83,7 @@ class Profile implements \JsonSerializable
         return $this;
     }
 
-    public function getVerified(): bool
+    public function isVerified(): bool
     {
         return $this->verified;
     }
@@ -126,7 +125,7 @@ class Profile implements \JsonSerializable
     }
 
 
-    public function setAlias(string $alias = null): self
+    public function setAlias(?string $alias = null): self
     {
         $this->alias = $alias;
 

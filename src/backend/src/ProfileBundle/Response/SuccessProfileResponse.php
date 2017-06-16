@@ -1,0 +1,49 @@
+<?php
+
+namespace ProfileBundle\Response;
+
+use AccountBundle\Entity\Account;
+use ProfileBundle\Entity\Profile;
+use ProfileBundle\Entity\Profile\Gender\NoneGender;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
+{
+    private $entity;
+
+    function __construct(Profile $entity = null)
+    {
+        $this->entity = $entity;
+        parent::__construct(self::jsonSerialize());
+    }
+
+    public function jsonSerialize()
+    {
+        $profile = $this->entity ?? $this->createMockProfile();
+        return [
+            "entity" => [
+                'id' => $profile->getId(),
+                'account_id' => $profile->getAccount()->getId(),
+                'gender' => $profile->getGender()->getStringCode(),
+                'name' => $profile->getName(),
+                'alias' => $profile->getAlias(),
+                'birth_date' => $profile->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT),
+                'verified' => $profile->isVerified(),
+                'created' => $profile->getCreated()->format(\DateTime::W3C)
+            ]
+        ];
+    }
+    
+    private function createMockProfile()
+    {
+        return (new Profile())
+            ->setAccount(new Account())
+            ->setGender(new NoneGender())
+            ->setName("Foo Bar")
+            ->setAlias("baz")
+            ->setBirthDate(new \DateTime())
+            ->setVerified(false)
+            ->setCreated(new \DateTime())
+        ;
+    }
+}

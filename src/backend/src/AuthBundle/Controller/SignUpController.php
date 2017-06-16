@@ -4,10 +4,8 @@ namespace AuthBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use AccountBundle\Entity\Account;
 use AuthBundle\Form\SignUpType;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use FOS\UserBundle\Model\UserManager;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +49,7 @@ class SignUpController extends Controller
         }
 
         $this->get("profile.service")
-            ->createProfileFromArray($body, $account, true);
+            ->createFromArray($body, $account, true);
         
         $token = $this->get('lexik_jwt_authentication.jwt_manager')
             ->create($account);

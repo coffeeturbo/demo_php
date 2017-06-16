@@ -39,24 +39,27 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $profileData = self::$profileData['success-profile'];
+        $profileData['birth_date'] = \DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $profileData['birth_date']);
+        $profileData['gender'] = Profile\Gender::createFromStringCode($profileData['gender']);
 
         $account = $manager->getRepository(Account::class)
             ->findOneBy(['email' => LoadAccountData::getAccountDataByReference('success-account')['email']]);
 
         $profileService = $this->container->get('profile.service');
-        $profile = $profileService->createProfileFromArray($profileData, $account, true);
+        $profile = $profileService->createFromArray($profileData, $account, true);
 
         self::$profile['success-profile'] = $profile;
 
         // создаём 2ой профиль
-
         $profileData2 = self::$profileData['success-profile-2'];
+        $profileData2['birth_date'] = \DateTime::createFromFormat(Profile::BIRTH_DATE_FORMAT, $profileData2['birth_date']);
+        $profileData2['gender'] = Profile\Gender::createFromStringCode($profileData2['gender']);
 
         $account2 = $manager->getRepository(Account::class)
             ->findOneBy(['email' => LoadAccountData::getAccountDataByReference('success-account-2')['email']]);
 
         $profileService = $this->container->get('profile.service');
-        $profile2 = $profileService->createProfileFromArray($profileData2, $account2, true);
+        $profile2 = $profileService->createFromArray($profileData2, $account2, true);
 
         self::$profile['success-profile-2'] = $profile2;
     }

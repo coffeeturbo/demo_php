@@ -37,14 +37,18 @@ class ProfileUpdateActionTest extends ProfileController
 
     public function getSuccessProfile(): Profile
     {
+        /** @var LoadProfileData $fixturesProfile */
+        $fixturesProfile = $this->fixtures['profile'];
 
-        return $this->fixtures['profile']->getProfileByReference('success-profile');
+        return $fixturesProfile->getProfileByReference('success-profile');
     }
 
     public function getSuccessProfile2(): Profile
     {
+        /** @var LoadProfileData $fixturesProfile */
+        $fixturesProfile = $this->fixtures['profile'];
 
-        return $this->fixtures['profile']->getProfileByReference('success-profile-2');
+        return $fixturesProfile->getProfileByReference('success-profile-2');
     }
 
     public function test200()

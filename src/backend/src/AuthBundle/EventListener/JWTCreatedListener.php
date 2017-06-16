@@ -25,7 +25,7 @@ class JWTCreatedListener
          * @DOTO Use getCurrentProfile instead getAccountProfiles, when implemented
          * @var Profile[] $profiles 
          */
-        $profiles = $this->profileService->getAccountProfiles($account->getId());
+        $profiles = $this->profileService->getByAccountId($account->getId());
 
         if(count($profiles) == 0) {
             return;

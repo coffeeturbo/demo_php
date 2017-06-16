@@ -20,8 +20,10 @@ class ProfileGetByIdActionTest extends ProfileController
 
     public function getSuccessProfile(): Profile
     {
+        /** @var LoadProfileData $fixtureProfile */
+        $fixtureProfile = $this->fixtures['profile'];
 
-        return $this->fixtures['profile']->getProfileByReference('success-profile');
+        return $fixtureProfile->getProfileByReference('success-profile');
     }
 
     public function getPathRequestClient($id)

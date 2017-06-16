@@ -4,14 +4,14 @@ namespace ProfileBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use ProfileBundle\Entity\Profile;
-use ProfileBundle\Exception\ProfileNotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @DOTO: Добавить метод восстановления профиля. Если дата удаления более 7 дней выбрасывать ошибку.
  */
 class ProfileRepository extends EntityRepository
 {
-    public function saveProfile(Profile $profile)
+    public function save(Profile $profile)
     {
         $em = $this->getEntityManager();
 
@@ -26,7 +26,7 @@ class ProfileRepository extends EntityRepository
      * @param Profile $profile
      * @return Profile
      */
-    public function deleteProfile(Profile $profile)
+    public function delete(Profile $profile)
     {
         $em = $this->getEntityManager();
 
@@ -36,31 +36,30 @@ class ProfileRepository extends EntityRepository
         return $profile;
     }
 
-    public function getProfileById(int $id)
+    public function getById(int $id)
     {
         $profile = $this->findOneBy(['id' => $id]);
 
-        if (is_null($profile)) {
-            throw new ProfileNotFoundException(sprintf("Profile with id: %s not found", $id));
+        if (!$profile instanceof Profile) {
+            throw new NotFoundHttpException(sprintf('Profile with id `%s` not found', $id));
         }
 
         return $profile;
     }
 
-    public function getProfileByAlias(string $alias)
+    public function getByAlias(string $alias)
     {
         $profile = $this->findOneBy(['alias' => $alias]);
 
-        if (is_null($profile)) {
-            throw new ProfileNotFoundException(sprintf("Profile with alias: %s not found", $alias));
+        if (!$profile instanceof Profile) {
+            throw new NotFoundHttpException(sprintf('Profile with alias `%s` not found', $alias));
         }
 
         return $profile;
     }
 
-    public function getAccountProfiles(int $accountId): ?array
+    public function getByAccountId(int $accountId): ?array
     {
-        return $this->findBy(['account' => $accountId], null);
+        return $this->findBy(['account' => $accountId]);
     }
-
 }

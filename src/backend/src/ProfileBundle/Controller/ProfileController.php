@@ -1,185 +1,160 @@
 <?php
+
 namespace ProfileBundle\Controller;
 
+use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use ProfileBundle\Entity\Profile;
-use ProfileBundle\Exception\ProfileNotFoundException;
-use ProfileBundle\Exception\ProfilesLimitException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ProfileBundle\Form\AvatarUploadType;
+use ProfileBundle\Form\ProfileCreateType;
+use ProfileBundle\Form\ProfileUpdateType;
+use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileController extends Controller
 {
     /**
      * @ApiDoc(
-     *     section="Profile",
-     *     description= "Создаем профиль",
-     *     authentication=true,
-     *     input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
+     *  section="Profile",
+     *  description= "Создаем профиль",
+     *  authentication=true,
+     *  input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
+     *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
      * )
      *
      * @param Request $request
+     * @return JsonResponse
      */
     public function createAction(Request $request)
     {
         try {
-            $profileService = $this->get('profile.service');
-
-            $json_request = json_decode($request->getContent(), true);
-            $profile = $profileService->createProfileFromArray($json_request, $this->getUser(), true);
-
-            return new JsonResponse([
-                'entity' => $profile->jsonSerialize()
-            ]);
-        } catch(ProfilesLimitException $exception) {
-            return new ErrorJsonResponse($exception->getMessage(),[], Response::HTTP_FORBIDDEN);
-        } catch(\Exception $e){
-            return new ErrorJsonResponse($e->getMessage());
+            $body = $this->get('app.validate_request')->validate($request, ProfileCreateType::class);
+            $profile = $this->get('profile.service')->createFromArray($body, $this->getUser(), true);
+        } catch (BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch (AccessDeniedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
+
+        return new SuccessProfileResponse($profile);
     }
 
     /**
      * @ApiDoc(
-     *     section="Profile",
-     *     description= "Получаем профиль по id",
-     *     requirements={
-     *          {
-     *              "name" = "id",
-     *              "dataType" = "integer",
-     *              "description" = "id профиля"
-     *          }
-     *     }
+     *  section="Profile",
+     *  description= "Получаем профиль по id",
+     *  requirements={
+     *      {
+     *          "name" = "id",
+     *          "dataType" = "integer",
+     *          "description" = "id профиля"
+     *      }
+     *  }
      * )
      *
-     * @param Profile $profile
+     * @param int $id
      * @return JsonResponse
      */
     public function getProfileByIdAction(int $id)
     {
         try {
-            $profile = $this->get('profile.repository')->getProfileById($id);
-
-            return new JsonResponse([
-                'entity' => $profile->jsonSerialize()
-            ]);
-
-        } catch(ProfileNotFoundException $e){
-            return new ErrorJsonResponse($e->getMessage(), [], 404);
+            $profile = $this->get('profile.service')->getById($id);
+        } catch (NotFoundHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
+
+        return new SuccessProfileResponse($profile);
     }
 
     /**
      * @ApiDoc(
-     *     section="Profile",
-     *     description= "Получаем профиль по alias",
-     *     requirements={
-     *          {
-     *              "name" = "alias",
-     *              "dataType" = "string",
-     *              "description" = "alias профиля"
-     *          }
-     *     }
+     *  section="Profile",
+     *  description= "Получаем профиль по alias",
+     *  requirements={
+     *      {
+     *          "name" = "alias",
+     *          "dataType" = "string",
+     *          "description" = "alias профиля"
+     *      }
+     *  }
      * )
      *
-     * @param Profile $profile
+     * @param string $alias
      * @return JsonResponse
      */
     public function getProfileByAliasAction(string $alias)
     {
         try {
-            $profile = $this->get('profile.repository')->getProfileByAlias($alias);
-
-            return new JsonResponse([
-                'entity' => $profile->jsonSerialize()
-            ]);
-
-        } catch(ProfileNotFoundException $e){
-            return new ErrorJsonResponse($e->getMessage(), [], 404);
+            $profile = $this->get('profile.service')->getByAlias($alias);
+        } catch (NotFoundHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
+
+        return new SuccessProfileResponse($profile);
     }
 
     /**
      * @ApiDoc(
-     *     section="Profile",
-     *     description= "Редактировать профиль",
-     *     authentication=true,
-     *
-     *     input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
-     *
+     *  section="Profile",
+     *  description= "Редактировать профиль",
+     *  authentication=true,
+     *  input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
+     *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
      * )
      *
-     * @param Profile $profile
+     * @param int $id
+     * @param Request $request
      * @return JsonResponse
      */
     public function updateAction(int $id, Request $request)
     {
         try {
+            $body = $this->get('app.validate_request')->validate($request, ProfileUpdateType::class);
             $profileService = $this->get('profile.service');
 
-            $profile = $profileService->getProfileById($id);
+            $profile = $profileService->update($id, $body);
 
-            $json_request = json_decode($request->getContent(), true);
-
-            $profileService->updateProfileFromArray($profile, $this->getUser(), true, $json_request);
-
-            return new JsonResponse([
-                'entity' => $profile->jsonSerialize()
-            ]);
-        } catch(AccessDeniedException $e){
-            return new ErrorJsonResponse($e->getMessage(), [], 403);
-        } catch(ProfileNotFoundException $e){
-            return new ErrorJsonResponse($e->getMessage(), [], 404);
+        } catch (BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch (AccessDeniedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
+
+        return new SuccessProfileResponse($profile);
     }
 
     /**
      * @ApiDoc(
-     *     section="Profile",
-     *     description= "Загрузить аватар к профилю",
-     *     authentication=true,
-     *
-     *     input = {"class" = "ProfileBundle\Form\AvatarUploadType", "name"  = ""},
-     *
+     *  section="Profile",
+     *  description= "Загрузить аватар к профилю",
+     *  authentication=true,
+     *  input = {"class" = "ProfileBundle\Form\AvatarUploadType", "name"  = ""},
      * )
      *
-     * @param Profile $profile
+     * @param int $id
+     * @param Request $request
      * @return JsonResponse
      */
     public function avatarUploadAction(int $id, Request $request)
     {
-
-        $form = $this->createForm(AvatarUploadType::class);
-
-        $form->handleRequest($request);
-
-        $data = $form->getData();
-
-        dump($data);
-        return new JsonResponse([
-            'success' => true
-        ]);
+        $body = $this->get('app.validate_request')->validate($request, AvatarUploadType::class);
+        dump($id);
+        dump($body);
+        return new JsonResponse(['success' => true]);
     }
 
     /**
      * @ApiDoc(
-     *     section="Profile",
-     *     description= "Получаем профиль по id",
-     *     authentication=true,
-     *     requirements={
-     *          {
-     *              "name" = "id",
-     *          }
-     *     }
+     *  section="Profile",
+     *  description= "Получаем профиль по id",
+     *  authentication=true,
      * )
      *
-     * @param Profile $profile
+     * @param $id
      * @return JsonResponse
      */
     public function deleteAction($id)
@@ -187,11 +162,11 @@ class ProfileController extends Controller
         try {
             $profileService = $this->get('profile.service');
 
-            $profile = $profileService->getProfileById($id);
+            $profile = $profileService->getById($id);
 
             $profileService->deleteProfile($profile);
 
-        } catch(NotFoundHttpException $e){
+        } catch (NotFoundHttpException $e) {
 
             return new JsonResponse([
                 'error' => $e->getMessage()
