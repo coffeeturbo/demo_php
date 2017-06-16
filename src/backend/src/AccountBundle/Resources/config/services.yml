@@ -14,8 +14,8 @@ services:
           - '@event_dispatcher'
           - '@security.password_encoder'
           
-    account.event_listener.add_account_role_registered_listener:
-      class: AccountBundle\EventListener\AddAccountRoleRegisteredListener
+    account.listener.role:
+      class: AccountBundle\EventListener\RoleListener
       arguments: ['@auth.account.repository']
       tags:
-        - { name: kernel.event_subscriber }          
+        - { name: kernel.event_subscriber }

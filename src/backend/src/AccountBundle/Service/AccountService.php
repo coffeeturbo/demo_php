@@ -4,6 +4,7 @@ namespace AccountBundle\Service;
 
 
 use AccountBundle\Entity\Account;
+use AccountBundle\Event\AccountCreatedEvent;
 use AccountBundle\Repository\AccountRepository;
 use FOS\UserBundle\Model\UserManager;
 use ProfileBundle\Service\ProfileService;
@@ -47,7 +48,7 @@ class AccountService
             ->setPlainPassword($data['password'])
             ->setUsername($data['email'])
             ->setEmail($data['email'])
-            ->setRoles([Account::ROLE_CREATED]);
+        ;
 
         return $this->create($account);
     }
@@ -55,6 +56,12 @@ class AccountService
     public function create(Account $account) : Account
     {
         $this->userManager->updateUser($account);
+
+        $this->eventDispatcher->dispatch(
+            AccountCreatedEvent::NAME, 
+            new AccountCreatedEvent($account)
+        );
+        
         return $account;
     }
     

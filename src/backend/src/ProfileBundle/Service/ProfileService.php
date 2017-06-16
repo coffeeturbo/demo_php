@@ -5,8 +5,7 @@ use AccountBundle\Entity\Account;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
-use ProfileBundle\Event\ProfileEvent;
-use ProfileBundle\Event\ProfileEvents;
+use ProfileBundle\Event\ProfileCreatedEvent;
 use ProfileBundle\Exception\InvalidBirthDateException;
 use ProfileBundle\Exception\ProfilesLimitException;
 use ProfileBundle\Repository\ProfileRepository;
@@ -69,8 +68,8 @@ class ProfileService
         $this->saveProfile($profile);
 
         $this->eventDispatcher->dispatch(
-            ProfileEvents::PROFILE_CREATED,
-            new ProfileEvent($profile)
+            ProfileCreatedEvent::NAME,
+            new ProfileCreatedEvent($profile)
         );
 
         return $profile;

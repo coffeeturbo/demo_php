@@ -4,8 +4,10 @@ namespace ProfileBundle\Event;
 use ProfileBundle\Entity\Profile;
 use Symfony\Component\EventDispatcher\Event;
 
-class ProfileEvent extends Event
+class ProfileCreatedEvent extends Event
 {
+    const NAME = 'profile.created';
+    
     private $profile;
 
     function __construct(Profile $profile)
