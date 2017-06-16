@@ -1,6 +1,13 @@
 services:
+    auth.service:
+      class: AuthBundle\Service\AuthService
+      arguments: 
+        - '@auth.account.repository'
+        - '@security.password_encoder'
+        - '@security.token_storage'
+
     auth.event.jwt_created_listener:
         class: AuthBundle\EventListener\JWTCreatedListener
-        arguments: [ '@profile.service' ]
+        arguments: ['@profile.service']
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }

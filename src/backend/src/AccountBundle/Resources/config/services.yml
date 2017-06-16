@@ -8,11 +8,8 @@ services:
     account.service:
         class: AccountBundle\Service\AccountService
         arguments:
-          - '@auth.account.repository'
           - '@fos_user.user_manager'
-          - '@profile.service'
           - '@event_dispatcher'
-          - '@security.password_encoder'
           
     account.listener.role:
       class: AccountBundle\EventListener\RoleListener

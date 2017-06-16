@@ -17,24 +17,15 @@ class AccountService
     /**
      * @var AccountRepository
      */
-    private $accountRepository;
     private $userManager;
-    private $profileService;
     private $eventDispatcher;
-    private $passwordEncoder;
 
     function __construct(
-        AccountRepository $accountRepository, 
         UserManager $userManager, 
-        ProfileService $profileService, 
-        EventDispatcherInterface $eventDispatcher,
-        UserPasswordEncoder $passwordEncoder
+        EventDispatcherInterface $eventDispatcher
     ) {
-        $this->accountRepository = $accountRepository;
         $this->userManager = $userManager;
-        $this->profileService = $profileService;
         $this->eventDispatcher = $eventDispatcher;
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function createFromArray($data) : Account
@@ -62,21 +53,6 @@ class AccountService
             new AccountCreatedEvent($account)
         );
         
-        return $account;
-    }
-    
-    public function validateCredentials($username, $password): Account
-    {
-        /** @var Account $account */
-        $account = $this->accountRepository
-            ->findOneBy(['username' => $username]);
-
-        if (!$account instanceof Account)
-            throw new UnauthorizedHttpException(null, "User not found");
-
-        if (!$this->passwordEncoder->isPasswordValid($account, $password))
-            throw new UnauthorizedHttpException(null, "Wrong password");
-
         return $account;
     }
 }
