@@ -29,7 +29,7 @@ class ValidateRequestService
                 }
             }
             
-            throw new BadRestRequestHttpException("Bad request", $errors);
+            throw new BadRestRequestHttpException($errors);
         }
 
         return $form->getData();

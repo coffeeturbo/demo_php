@@ -9,10 +9,10 @@ use Throwable;
 class BadRestRequestHttpException extends HttpException
 {
     private $errors;
-    public function __construct($message = "", $errors = [], $code = 0, Throwable $previous = null)
+    public function __construct($errors = [], $code = 0, Throwable $previous = null)
     {
         $this->errors = $errors;
-        parent::__construct(400, $message, $previous, array(), $code);
+        parent::__construct(400, "Bad request", $previous, array(), $code);
     }
 
     public function getErrors(): array
