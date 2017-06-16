@@ -15,7 +15,7 @@ class RenderTokenController extends Controller
      *
      * @ApiDoc(
      *  section = "Auth",
-     *  output = {"class" = "AuthBundle\Http\TokenResponse"},
+     *  output = {"class" = "AuthBundle\Response\SuccessAuthResponse"},
      *  headers = {
      *      {
      *          "name" = "Accept",

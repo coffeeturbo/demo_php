@@ -20,7 +20,7 @@ class SignInController extends Controller
      * @ApiDoc(
      *  section = "Auth",
      *  input = {"class" = "AuthBundle\Form\SignInType", "name"  = ""},
-     *  output = {"class" = "AuthBundle\Http\TokenResponse"},
+     *  output = {"class" = "AuthBundle\Response\SuccessAuthResponse"},
      *  statusCodes = {
      *      200 = "Успешная авторизация",
      *      400 = "Неправильный запрос",

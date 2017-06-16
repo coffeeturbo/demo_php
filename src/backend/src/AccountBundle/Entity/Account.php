@@ -17,7 +17,7 @@ class Account extends User implements \JsonSerializable
     protected $facebookId;
     protected $googleId;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
