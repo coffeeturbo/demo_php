@@ -1,0 +1,27 @@
+profile_create:
+  path: create
+  defaults: { _controller: ProfileBundle:Create:create }
+  methods: [ PUT ]
+
+
+profile_update:
+  path: '{id}/update'
+  defaults: { _controller: ProfileBundle:Update:update }
+  methods: [ PUT, PATCH ]
+  requirements:
+    id: '\d+'
+
+profile_delete:
+  path: '{id}/delete'
+  defaults: { _controller: ProfileBundle:Delete:delete }
+  methods: [ DELETE ]
+  requirements:
+    id: '\d+'
+    
+profile_avatar_upload:
+  path: '{id}/avatar/upload'
+  defaults: { _controller: ProfileBundle:Avatar:upload }
+  methods: [ POST ]
+  requirements:
+    id: '\d+'
+    

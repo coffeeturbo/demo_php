@@ -22,7 +22,7 @@ class JWTCreatedListener
         $account = $event->getUser();
 
         /**
-         * @DOTO Use getCurrentProfile instead getAccountProfiles, when implemented
+         * @TODO Use getCurrentProfile instead getAccountProfiles, when implemented
          * @var Profile[] $profiles 
          */
         $profiles = $this->profileService->getByAccountId($account->getId());

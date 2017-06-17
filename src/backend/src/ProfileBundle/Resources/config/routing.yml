@@ -1,7 +1,14 @@
-protected_profile:
-  resource: '@ProfileBundle/Resources/config/routing/protected_profile.yml'
-  prefix: /protected/profile
+profile_get_by_id:
+  path: '{id}/get-by-id'
+  defaults: { _controller: ProfileBundle:Read:getById }
+  requirements:
+    id: '\d+'
+  methods: [ GET ]
 
-profile:
-  resource: '@ProfileBundle/Resources/config/routing/profile.yml'
-  prefix: /profile
+profile_get_by_alias:
+  path: '{alias}/get-by-alias'
+  defaults: { _controller: ProfileBundle:Read:getByAlias }
+  requirements:
+    alias: '\w+'
+  methods: [ GET ]
+

@@ -1,4 +1,4 @@
-NelmioApiDocBundle:
+doc:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
   prefix:   /doc
   
@@ -12,4 +12,9 @@ oAuth:
 
 profile:
   resource: '@ProfileBundle/Resources/config/routing.yml'
-  prefix: /
+  prefix: /profile
+
+protected_profile:
+  resource: '@ProfileBundle/Resources/config/routing_protected.yml'
+  prefix: /protected/profile
+

@@ -7,7 +7,7 @@ use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * @DOTO: Добавить метод восстановления профиля. Если дата удаления более 7 дней выбрасывать ошибку.
+ * @TODO: Добавить метод восстановления профиля. Если дата удаления более 7 дней выбрасывать ошибку.
  */
 class ProfileRepository extends EntityRepository
 {
@@ -22,7 +22,7 @@ class ProfileRepository extends EntityRepository
     }
 
     /**
-     * @DOTO: Сделать фейковое удаление! (Также добавить метод восстановления в течение 7 дней.)
+     * @TODO: Сделать фейковое удаление! (Также добавить метод восстановления в течение 7 дней.)
      * @param Profile $profile
      * @return Profile
      */
