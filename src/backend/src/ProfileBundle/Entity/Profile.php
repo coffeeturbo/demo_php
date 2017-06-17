@@ -69,9 +69,9 @@ class Profile implements \JsonSerializable
         return $this->birthDate;
     }
 
-    public function setBirthDate(?\DateTime $birthday): self
+    public function setBirthDate(?\DateTime $birthDate): self
     {
-        $this->birthDate = $birthday;
+        $this->birthDate = $birthDate;
 
         return $this;
     }
@@ -138,7 +138,7 @@ class Profile implements \JsonSerializable
     }
 
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
