@@ -26,10 +26,6 @@ ProfileBundle\Entity\Profile:
     verified:
       type: boolean
       nullable: false
-    privacyOpts:
-      type: json_array
-      column: privacy_opts
-      nullable: true
   manyToOne:
     account:
       targetEntity: AccountBundle\Entity\Account

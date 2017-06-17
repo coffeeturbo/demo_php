@@ -1,4 +1,5 @@
 <?php
+
 namespace ProfileBundle\Entity\Profile;
 
 use ProfileBundle\Entity\Profile\Gender\FemaleGender;
@@ -9,11 +10,11 @@ use ProfileBundle\Exception\UnknownGenderException;
 abstract class Gender
 {
     abstract public function getIntCode(): int;
-    abstract public function getStringCode(): string ;
+    abstract public function getStringCode(): string;
 
     static public function createFromStringCode(string $code): Gender
     {
-        switch(strtolower($code)) {
+        switch (strtolower($code)) {
             default:
                 throw new UnknownGenderException(sprintf('Gender with string code `%s` is unknown', $code));
 
@@ -23,9 +24,9 @@ abstract class Gender
         }
     }
 
-    static public  function createFromIntCode(int $code): Gender
+    static public function createFromIntCode(int $code): Gender
     {
-        switch($code) {
+        switch ($code) {
             default:
                 throw new UnknownGenderException(sprintf('Gender with int code `%d` is unknown', $code));
 

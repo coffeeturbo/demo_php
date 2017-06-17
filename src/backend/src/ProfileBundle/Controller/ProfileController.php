@@ -171,8 +171,6 @@ class ProfileController extends Controller
             ], 404);
         }
 
-        return new JsonResponse([
-            'success' => $profile->jsonSerialize()
-        ]);
+        return new JsonResponse(['success' => true]);
     }
 }

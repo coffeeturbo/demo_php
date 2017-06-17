@@ -9,7 +9,7 @@ use ProfileBundle\Entity\Profile\Gender\NoneGender;
 /**
  * Profile
  */
-class Profile implements \JsonSerializable
+class Profile
 {
     const BIRTH_DATE_FORMAT = 'd-m-Y';
 
@@ -19,7 +19,6 @@ class Profile implements \JsonSerializable
     private $name;
     private $birthDate;
     private $verified;
-    private $privacyOpts;
     private $gender;
     private $alias;
     private $account;
@@ -30,21 +29,6 @@ class Profile implements \JsonSerializable
         $this->gender = (new NoneGender())->getIntCode();
         $this->created = new \DateTime();
         $this->verified = false;
-    }
-
-    function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'account_id' => $this->getAccount()->getId(),
-            'gender' => $this->getGender()->getStringCode(),
-            'name' => $this->name,
-            'alias' => $this->alias,
-            'birth_date' => $this->getBirthDate()->format(self::BIRTH_DATE_FORMAT),
-            'verified' => $this->verified,
-            'privacy_opts' => $this->privacyOpts,
-            'created' => $this->created->format(\DateTime::W3C)
-        ];
     }
 
     public function getId(): ?int
@@ -86,18 +70,6 @@ class Profile implements \JsonSerializable
     public function isVerified(): bool
     {
         return $this->verified;
-    }
-
-    public function setPrivacyOpts($privacyOpts): self
-    {
-        $this->privacyOpts = $privacyOpts;
-
-        return $this;
-    }
-
-    public function getPrivacyOpts()
-    {
-        return $this->privacyOpts;
     }
 
     public function setGender(Gender $gender): self
