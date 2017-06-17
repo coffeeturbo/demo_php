@@ -1,19 +1,27 @@
+loader(*ngIf="disabled")
 form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  label {{ 'Name' | translate }}
   .field
     .input-box
-      input(type="text", formControlName="last_name", placeholder="{{'Name' | translate }}")
+      input(type="text", formControlName="name", placeholder="{{'Name' | translate }}")
       hr
+
+  label {{ 'Alias' | translate }}
   .field
     .input-box
-      input(type="text", formControlName="first_name", placeholder="{{'Name' | translate }}")
+      input(type="text", formControlName="alias", placeholder="{{'Alias' | translate }}")
       hr
+  
+  label {{ 'Gender' | translate }}
   .field
     .input-box
-      input(type="text", formControlName="patronymic", placeholder="{{'Name' | translate }}")
+      input(type="text", formControlName="gender", placeholder="{{'Gender' | translate }}")
       hr
+  
+  label {{ 'Birth date' | translate }}
   .field
     .input-box
-      input(type="text", formControlName="nickname", placeholder="{{'Name' | translate }}")
+      input(type="date", formControlName="birth_date", placeholder="{{'Birthdate' | translate }}")
       hr
 
 

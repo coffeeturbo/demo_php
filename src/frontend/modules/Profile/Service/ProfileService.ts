@@ -6,6 +6,7 @@ import {ProfileRESTService} from "./ProfileRESTService";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 import {Token} from "../../Auth/Entity/Token";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";
+import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 
 @Injectable()
 export class ProfileService {
@@ -39,6 +40,14 @@ export class ProfileService {
 
         return profileObservable
             .do(profile => this.onProfileResolve.emit(profile))
+        ;
+    }
+    
+    public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile)
+    {
+        return this.rest.update(profile.id, request)
+            .map(profileGetResponse => profileGetResponse.entity)
+            .do(profile => this.replaceInCache(oldProfile, profile))
         ;
     }
 
