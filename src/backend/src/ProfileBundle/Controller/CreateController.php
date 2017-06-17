@@ -22,6 +22,14 @@ class CreateController extends Controller
      *  authentication=true,
      *  input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
+     *  statusCodes = {
+     *      201 = "Успешное создание профиля",
+     *      400 = "Неправильный запрос",
+     *      401 = "Не авторизован",
+     *      403 = "На текущем аккаунте превышено количество профилей",
+     *      404 = "Профиль не найден"
+     *  }
+     *  
      * )
      *
      * @param Request $request

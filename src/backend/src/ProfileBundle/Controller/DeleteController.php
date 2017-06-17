@@ -17,6 +17,12 @@ class DeleteController extends Controller
      *  description= "Получаем профиль по id",
      *  authentication=true,
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
+     *  statusCodes = {
+     *      200 = "Успешное удаление профиля",
+     *      401 = "Не авторизован",
+     *      403 = "Доступ для текущего аккаунта запрещен",
+     *      404 = "Профиль не найден"
+     *  }
      * )
      *
      * @param $id

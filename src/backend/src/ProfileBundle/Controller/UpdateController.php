@@ -22,6 +22,13 @@ class UpdateController extends Controller
      *  authentication=true,
      *  input = {"class" = "ProfileBundle\Form\ProfileType", "name"  = ""},
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
+     *  statusCodes = {
+     *      200 = "Успешное изменение профиля",
+     *      400 = "Неправильный запрос",
+     *      401 = "Не авторизован",
+     *      403 = "Доступ для текущего аккаунта запрещен",
+     *      404 = "Профиль не найден"
+     *  }
      * )
      *
      * @param int $id

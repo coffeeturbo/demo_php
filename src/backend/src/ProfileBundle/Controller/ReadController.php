@@ -15,6 +15,10 @@ class ReadController extends Controller
      * @ApiDoc(
      *  section="Profile",
      *  description= "Получить профиль по id",
+     *  statusCodes = {
+     *      200 = "Успешное получение профиля",
+     *      404 = "Профиль не найден"
+     *  }
      * )
      *
      * @param int $id
@@ -35,6 +39,10 @@ class ReadController extends Controller
      * @ApiDoc(
      *  section="Profile",
      *  description= "Получить профиль по alias",
+     *  statusCodes = {
+     *      200 = "Успешное получение профиля",
+     *      404 = "Профиль не найден"
+     *  }
      * )
      *
      * @param string $alias
