@@ -11,7 +11,6 @@ ProfileBundle\Entity\Profile:
       type: datetime
       nullable: false
     name:
-      column: name
       type: string
       nullable: false
     alias:
@@ -21,7 +20,7 @@ ProfileBundle\Entity\Profile:
       type: smallint
       nullable: false
     birthDate:
-      type: datetime
+      type: date
       column: birth_date
       nullable: true
     verified:
