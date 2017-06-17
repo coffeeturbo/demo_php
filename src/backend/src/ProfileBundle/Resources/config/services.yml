@@ -14,18 +14,8 @@ services:
       - '%profile.limit%'
       
   profile.form.type:
-    class: ProfileBundle\Form\AbsctractProfileType
-    abstract: true
+    class: ProfileBundle\Form\ProfileType
     arguments:
       - '%profile.min_age%'
       - '%profile.max_age%'
-
-  profile.create.form.type:
-    class: ProfileBundle\Form\ProfileCreateType
-    parent: profile.form.type 
-    tags: [{name: form.type}]
-
-  profile.update.form.type:
-    class: ProfileBundle\Form\ProfileUpdateType
-    parent: profile.form.type 
     tags: [{name: form.type}]

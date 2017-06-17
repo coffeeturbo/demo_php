@@ -15,11 +15,12 @@ class ValidateRequestService
         $this->formFactory = $formFactory;
     }
 
-    public function validate(Request $request, $type)
+    public function validate(Request $request, $type, $data = null)
     {
         $body = json_decode($request->getContent(), true);
-        $form = $this->formFactory->create($type);
-        $form->submit($body);
+        $form = $this->formFactory->create($type, $data);
+        $clearMissing = $request->getMethod() != 'PATCH';
+        $form->submit($body, $clearMissing);
 
         if (!$form->isValid()) {
             $errors = [];

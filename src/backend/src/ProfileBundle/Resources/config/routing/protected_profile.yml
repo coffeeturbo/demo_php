@@ -7,7 +7,7 @@ profile_create:
 profile_update:
   path: '{id}/update'
   defaults: { _controller: ProfileBundle:Profile:update }
-  methods: [ POST ]
+  methods: [ PUT, PATCH ]
   requirements:
     id: '\d+'
 

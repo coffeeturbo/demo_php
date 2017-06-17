@@ -30,7 +30,7 @@ class ProfileCreateActionTest extends ProfileController
         $this->getPathRequestClient($this->profile);
         $response = $this->client->getResponse();
 
-        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
 
         $result = json_decode($response->getContent(), true);
 
@@ -42,7 +42,7 @@ class ProfileCreateActionTest extends ProfileController
         $this->getAuthClient();
         $this->getPathRequestClient($this->profile);
         $response = $this->client->getResponse();
-        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
 
         $result = json_decode($response->getContent(), true);
         $accountId = $result['entity']['account_id'];

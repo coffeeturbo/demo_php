@@ -6,8 +6,7 @@ use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ProfileBundle\Form\AvatarUploadType;
-use ProfileBundle\Form\ProfileCreateType;
-use ProfileBundle\Form\ProfileUpdateType;
+use ProfileBundle\Form\ProfileType;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,15 +31,15 @@ class ProfileController extends Controller
     public function createAction(Request $request)
     {
         try {
-            $body = $this->get('app.validate_request')->validate($request, ProfileCreateType::class);
+            $body = $this->get('app.validate_request')->validate($request, ProfileType::class);
             $profile = $this->get('profile.service')->createFromArray($body, $this->getUser(), true);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
-        } catch (AccessDeniedHttpException $e) {
+        } catch (AccessDeniedHttpException | NotFoundHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
-        return new SuccessProfileResponse($profile);
+        return new SuccessProfileResponse($profile, true);
     }
 
     /**
@@ -113,14 +112,13 @@ class ProfileController extends Controller
     public function updateAction(int $id, Request $request)
     {
         try {
-            $body = $this->get('app.validate_request')->validate($request, ProfileUpdateType::class);
             $profileService = $this->get('profile.service');
-
-            $profile = $profileService->update($id, $body);
-
+            $profile = $profileService->getById($id);
+            $this->get('app.validate_request')->validate($request, ProfileType::class, $profile);
+            $profileService->update($profile);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
-        } catch (AccessDeniedHttpException $e) {
+        } catch (AccessDeniedHttpException | NotFoundHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 

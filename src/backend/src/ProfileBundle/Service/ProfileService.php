@@ -78,20 +78,13 @@ class ProfileService
         return $profile;
     }
 
-    public function update($id, array $data) : Profile
+    public function update(Profile $profile) : Profile
     {
         $account = $this->authService->getAccount();
-        $profile = $this->getById($id);
 
         if($profile->getAccount()->getId() !== $account->getId()) {
             throw new AccessDeniedHttpException("Account has no access for profile changes");
         }
-
-        $profile
-            ->setName($data['name'] ?? $profile->getName())
-            ->setAlias($data['alias'] ?? $profile->getAlias())
-            ->setGender($data['gender'] ?? $profile->getGender())
-            ->setBirthDate($data['birth_date'] ?? $profile->getBirthDate());
 
         $this->profileRepository->save($profile);
 

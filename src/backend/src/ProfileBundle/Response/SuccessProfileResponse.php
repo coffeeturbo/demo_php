@@ -6,15 +6,16 @@ use AccountBundle\Entity\Account;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
 {
     private $entity;
 
-    function __construct(Profile $entity = null)
+    function __construct(Profile $entity = null, bool $isCreated = false)
     {
         $this->entity = $entity;
-        parent::__construct(self::jsonSerialize());
+        parent::__construct(self::jsonSerialize(), $isCreated ? Response::HTTP_CREATED : Response::HTTP_OK);
     }
 
     public function jsonSerialize()
@@ -27,7 +28,7 @@ class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
                 'gender' => $profile->getGender()->getStringCode(),
                 'name' => $profile->getName(),
                 'alias' => $profile->getAlias(),
-                'birth_date' => $profile->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT),
+                'birth_date' => $profile->getBirthDate() ? $profile->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT) : null,
                 'verified' => $profile->isVerified(),
                 'created' => $profile->getCreated()->format(\DateTime::W3C)
             ]

@@ -11,9 +11,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-abstract class AbsctractProfileType extends AbstractType
+class ProfileType extends AbstractType
 {
     private $minAge;
     private $maxAge;
@@ -27,7 +28,11 @@ abstract class AbsctractProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("name", TextType::class)
+            ->add("name", TextType::class, [
+                "constraints" => [
+                    new NotBlank()
+                ]
+            ])
             ->add("alias", TextType::class, [
                 "required" => false
             ])
@@ -61,7 +66,6 @@ abstract class AbsctractProfileType extends AbstractType
                         }
                     })
                 ]
-                
             ])
         ;
     }

@@ -32,7 +32,7 @@ class ProfileUpdateActionTest extends ProfileController
     {
         $path = sprintf('/protected/profile/%s/update', $profileId);
 
-        return $this->client->request('POST', $path, [], [], [], json_encode($json));
+        return $this->client->request('PUT', $path, [], [], [], json_encode($json));
     }
 
     public function getSuccessProfile(): Profile
