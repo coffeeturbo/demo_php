@@ -18,9 +18,13 @@ class ValidateRequestService
     public function validate(Request $request, $type, $data = null)
     {
         $body = json_decode($request->getContent(), true);
-        $form = $this->formFactory->create($type, $data);
-        $clearMissing = $request->getMethod() != 'PATCH';
-        $form->submit($body, $clearMissing);
+        $form = $this->formFactory->createNamed(null, $type, $data);
+        $form->handleRequest($request);
+
+        if(!$form->isSubmitted()) {
+            $clearMissing = $request->getMethod() != 'PATCH';
+            $form->submit($body, $clearMissing);
+        }
 
         if (!$form->isValid()) {
             $errors = [];
