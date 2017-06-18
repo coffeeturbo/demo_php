@@ -4,8 +4,8 @@ namespace ProfileBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use ProfileBundle\Entity\Avatar;
 use ProfileBundle\Form\AvatarUploadType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -31,13 +31,26 @@ class AvatarController extends Controller
             $body = $this->get('app.validate_request')->validate($request, AvatarUploadType::class);
             /** @var UploadedFile $image */
             $image = $body['image'];
-//            imagecrop 
-//            $image->move(__DIR__, $image->getClientOriginalName());
-            var_dump($image);
+            
+            $imageRes = imagecrop(
+                imagecreatefromjpeg($image->getRealPath()),
+                [
+                   'x' => $body['x'],  
+                   'y' => $body['x'],  
+                   'width' => $body['width'],  
+                   'height' => $body['height'],  
+                ]
+            );
+
+            $path = $this->getParameter('profile.avatar.absolute_path');
+            $name = uniqid() .  "." . $image->getClientOriginalExtension();
+            imagejpeg($imageRes, $path . "/"  . $name);
+            
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }
-        dump($id);
-        return new JsonResponse(['success' => true]);
+        return new JsonResponse([
+            'path' => $this->getParameter("profile.avatar.web_path") . "/" . $name
+        ]);
     }
 }

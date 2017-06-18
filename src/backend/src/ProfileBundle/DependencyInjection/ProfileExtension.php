@@ -19,5 +19,7 @@ class ProfileExtension extends Extension
         $container->setParameter('profile.limit', $config['limit']);
         $container->setParameter('profile.min_age', $config['min_age']);
         $container->setParameter('profile.max_age', $config['max_age']);
+        $container->setParameter('profile.avatar.absolute_path', $config['avatar']['absolute_path']);
+        $container->setParameter('profile.avatar.web_path', $config['avatar']['web_path']);
     }
 }

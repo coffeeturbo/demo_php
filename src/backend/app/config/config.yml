@@ -121,3 +121,23 @@ profile:
     limit: 1
     min_age: 4
     max_age: 150
+    avatar:
+      absolute_path: '%kernel.root_dir%/../../web/uploads/avatar'
+      web_path: 'uploads/avatar'
+      
+#liip_imagine:
+#    loaders:
+#        default:
+#          filesystem:
+#              data_root: '%kernel.root_dir%/../../web/api/uploads/avatar'
+#    
+#    resolvers:
+#       default:
+#          web_path: 
+#              web_root: '%kernel.root_dir%/../../web/api'
+#              cache_prefix: "uploads/avatar/media/cache"
+#        
+#    filter_sets:
+#        cache: ~
+#        my_thumb:
+#            quality : 75

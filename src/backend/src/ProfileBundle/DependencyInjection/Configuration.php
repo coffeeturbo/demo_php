@@ -22,6 +22,13 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('max_age')
                     ->defaultValue(150)
                 ->end()
+                ->arrayNode("avatar")
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('absolute_path')->defaultValue('%kernel.root_dir%/../web/uploads/')->end()
+                        ->scalarNode('web_path')->defaultValue('uploads')->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
