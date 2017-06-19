@@ -26,7 +26,7 @@ class ProfileRepository extends EntityRepository
      * @param Profile $profile
      * @return Profile
      */
-    public function delete(Profile $profile)
+    public function delete(Profile $profile): Profile
     {
         $em = $this->getEntityManager();
 
@@ -36,7 +36,7 @@ class ProfileRepository extends EntityRepository
         return $profile;
     }
 
-    public function getById(int $id)
+    public function getById(int $id): Profile
     {
         $profile = $this->findOneBy(['id' => $id]);
 
@@ -47,7 +47,7 @@ class ProfileRepository extends EntityRepository
         return $profile;
     }
 
-    public function getByAlias(string $alias)
+    public function getByAlias(string $alias): Profile
     {
         $profile = $this->findOneBy(['alias' => $alias]);
 

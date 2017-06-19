@@ -43,7 +43,7 @@ export class ProfileRESTService {
         let url = `/protected/profile/${profileId}/update`;
 
         return this.authHttp
-            .post(url, JSON.stringify(profileUpdateRequest))
+            .patch(url, JSON.stringify(profileUpdateRequest))
             .map(res => res.json())
     }
 
