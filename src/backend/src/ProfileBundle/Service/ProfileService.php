@@ -8,15 +8,26 @@ use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
 use ProfileBundle\Repository\ProfileRepository;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class ProfileService
+class ProfileService implements ContainerAwareInterface
 {
     private $profileRepository;
     private $authService;
     private $eventDispatcher;
     private $profilesLimit;
+
+    /** @var  ContainerInterface */
+    private $container;
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
 
     public function __construct(
         ProfileRepository $profileRepository,
@@ -89,6 +100,24 @@ class ProfileService
         $this->profileRepository->save($profile);
 
         return $profile;
+    }
+
+    public function uploadAvatar(Profile $profile, UploadedFile $file, $body)
+    {
+        $imageRes = imagecrop(
+            imagecreatefromjpeg($file->getRealPath()),
+            [
+                'x' => $body['x'],
+                'y' => $body['x'],
+                'width' => $body['width'],
+                'height' => $body['height'],
+            ]
+        );
+
+        $path = $this->container->getParameter('profile.avatar.absolute_path');
+
+        $name = uniqid() .  "." . $file->getClientOriginalExtension();
+        imagejpeg($imageRes, $path . "/"  . $name);
     }
 
     public function delete(Profile $profile)
