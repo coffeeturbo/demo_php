@@ -7,6 +7,8 @@ services:
 
   profile.service:
     class: ProfileBundle\Service\ProfileService
+    calls:
+      - [ setContainer, ['@service_container'] ]
     arguments: 
       - '@profile.repository'
       - '@auth.service'

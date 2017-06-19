@@ -14,7 +14,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class ProfileService implements ContainerAwareInterface
+class ProfileService
+//    implements ContainerAwareInterface
 {
     private $profileRepository;
     private $authService;
@@ -23,7 +24,6 @@ class ProfileService implements ContainerAwareInterface
 
     /** @var  ContainerInterface */
     private $container;
-
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
@@ -104,20 +104,23 @@ class ProfileService implements ContainerAwareInterface
 
     public function uploadAvatar(Profile $profile, UploadedFile $file, $body)
     {
-        $imageRes = imagecrop(
-            imagecreatefromjpeg($file->getRealPath()),
-            [
-                'x' => $body['x'],
-                'y' => $body['x'],
-                'width' => $body['width'],
-                'height' => $body['height'],
-            ]
-        );
-
         $path = $this->container->getParameter('profile.avatar.absolute_path');
 
-        $name = uniqid() .  "." . $file->getClientOriginalExtension();
-        imagejpeg($imageRes, $path . "/"  . $name);
+        dump($path);
+//        $imageRes = imagecrop(
+//            imagecreatefromjpeg($file->getRealPath()),
+//            [
+//                'x' => $body['x'],
+//                'y' => $body['x'],
+//                'width' => $body['width'],
+//                'height' => $body['height'],
+//            ]
+//        );
+//
+//        $path = $this->container->getParameter('profile.avatar.absolute_path');
+//
+//        $name = uniqid() .  "." . $file->getClientOriginalExtension();
+//        imagejpeg($imageRes, $path . "/"  . $name);
     }
 
     public function delete(Profile $profile)
