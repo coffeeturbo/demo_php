@@ -2,9 +2,6 @@ doc:
   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
   prefix:   /doc
 
-liip_imagine:
-    resource: "@LiipImagineBundle/Resources/config/routing.xml"
-
 auth:
   resource: '@AuthBundle/Resources/config/routing.yml'
   prefix:   /auth
