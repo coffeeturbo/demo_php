@@ -28,7 +28,7 @@ import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/
 import {AttachmentModel} from "../Attachment/AttachmentModel";
 import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
-import {TranslationService} from "../../../../../@angular2-addons/translation/module/Service/TranslationService";
+import {TranslationService} from "@angular-addons/translate";
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {
     return new AuthHttp(new AuthConfig(), http, options);
