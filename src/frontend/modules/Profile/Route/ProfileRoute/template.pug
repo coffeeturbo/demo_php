@@ -1,3 +1,15 @@
 ng-container(*ngIf="profile")
-  h1 {{profile.name}}
-  pre {{ profile |  json }}
+  div(
+    [attr.data-profile-id]="profile.id",
+    [attr.data-account-id]="profile.account_id",
+    [attr.data-profile-alias]="profile.alias"
+  )
+    h1
+      //span.fa-stack(*ngIf="profile.verified")
+      span.fa-stack
+        i.fa.fa-certificate.fa-stack-1x
+        i.fa.fa-check.fa-stack-1x
+      | {{profile.name}}
+    p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
+    p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
+    p {{ "Created" | translate }}: {{ profile.created | date }}

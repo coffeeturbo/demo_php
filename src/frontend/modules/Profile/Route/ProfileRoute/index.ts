@@ -4,7 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Profile} from "../../Entity/Profile";
 
 @Component({
-    templateUrl: "./template.pug"
+    templateUrl: "./template.pug",
+    styleUrls: ["./style.shadow.scss"]
 })
 export class ProfileRoute implements OnInit {
 
