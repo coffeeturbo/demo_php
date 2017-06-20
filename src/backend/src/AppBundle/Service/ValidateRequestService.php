@@ -17,11 +17,11 @@ class ValidateRequestService
 
     public function validate(Request $request, $type, $data = null)
     {
-        $body = json_decode($request->getContent(), true);
         $form = $this->formFactory->createNamed(null, $type, $data);
         $form->handleRequest($request);
 
         if(!$form->isSubmitted()) {
+            $body = json_decode($request->getContent(), true);
             $clearMissing = $request->getMethod() != 'PATCH';
             $form->submit($body, $clearMissing);
         }
