@@ -48,7 +48,6 @@ class ProfileType extends AbstractType
             ])
             ->add("birth_date", BirthdayType::class, [
                 "widget" => "single_text",
-                "format" => "dd-MM-yyyy", // TODO: MAKE AS CONST!
                 "required" => false,
                 "constraints" => [
                     new Callback(function (?\DateTime $birthDate, ExecutionContextInterface $context)

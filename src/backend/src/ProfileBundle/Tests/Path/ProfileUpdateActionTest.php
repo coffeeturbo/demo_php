@@ -15,7 +15,7 @@ class ProfileUpdateActionTest extends ProfileController
         "name" => "Нимя",
         "alias" => "nalias",
         "gender" => "female",
-        "birth_date" => "20-02-2002",
+        "birth_date" => "2002-02-20",
     ];
 
     public function setUp()

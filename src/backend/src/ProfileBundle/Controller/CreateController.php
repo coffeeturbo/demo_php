@@ -5,6 +5,7 @@ namespace ProfileBundle\Controller;
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use ProfileBundle\Entity\Profile;
 use ProfileBundle\Form\ProfileType;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -38,8 +39,11 @@ class CreateController extends Controller
     public function createAction(Request $request)
     {
         try {
-            $body = $this->get('app.validate_request')->validate($request, ProfileType::class);
-            $profile = $this->get('profile.service')->createFromArray($body, $this->getUser(), true);
+            $profile = new Profile();
+            $account = $this->get('auth.service')->getAccount();
+            $profile->setAccount($account);
+            $this->get('app.validate_request')->validate($request, ProfileType::class, $profile);
+            $this->get('profile.service')->create($profile);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch (AccessDeniedHttpException | NotFoundHttpException $e) {

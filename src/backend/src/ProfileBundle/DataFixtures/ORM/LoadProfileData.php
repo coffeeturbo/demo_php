@@ -22,14 +22,14 @@ class LoadProfileData extends AbstractFixture implements OrderedFixtureInterface
                 "name" => "Имя",
                 "alias" => "alias",
                 "gender" => "male",
-                "birth_date" => "20-02-2000",
+                "birth_date" => "2000-02-20",
             ],
         'success-profile-2' =>
             [
                 "name" => "Имя",
                 "alias" => "alias2",
                 "gender" => "male",
-                "birth_date" => "20-02-2000",
+                "birth_date" => "2000-02-20",
             ],
 
     ];
