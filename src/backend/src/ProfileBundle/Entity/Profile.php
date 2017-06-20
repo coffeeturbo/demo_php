@@ -11,7 +11,7 @@ use ProfileBundle\Entity\Profile\Gender\NoneGender;
  */
 class Profile
 {
-    const BIRTH_DATE_FORMAT = 'd-m-Y';
+    const BIRTH_DATE_FORMAT = 'Y-m-d';
 
     private $id;
     private $created;
@@ -118,7 +118,7 @@ class Profile
     }
 
 
-    public function getName() : string
+    public function getName() : ?string
     {
         return $this->name;
     }

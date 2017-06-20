@@ -4,7 +4,6 @@ namespace ProfileBundle\Response;
 
 use AccountBundle\Entity\Account;
 use ProfileBundle\Entity\Profile;
-use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,12 +38,9 @@ class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
     {
         return (new Profile())
             ->setAccount(new Account())
-            ->setGender(new NoneGender())
             ->setName("Foo Bar")
             ->setAlias("baz")
             ->setBirthDate(new \DateTime())
-            ->setVerified(false)
-            ->setCreated(new \DateTime())
         ;
     }
 }

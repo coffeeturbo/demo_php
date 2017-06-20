@@ -5,6 +5,9 @@
     .logo
       a(routerLink="/")
         application-logo
+    .search
+        input.input(type="text", size="1")
+        .fa.fa-search
 
     nav.menu
       ng-container(*ngIf="auth.isSignedIn()")

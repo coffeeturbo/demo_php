@@ -13,7 +13,7 @@ class ProfileController extends BaseTestSetup
         "name" => "Имя",
         "alias" => "alias",
         "gender" => "male",
-        "birth_date" => "20-02-2000",
+        "birth_date" => "2000-02-20",
     ];
 
     public function setUp()

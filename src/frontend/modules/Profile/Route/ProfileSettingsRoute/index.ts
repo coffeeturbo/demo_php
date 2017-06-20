@@ -31,7 +31,7 @@ export class ProfileSettingsRoute implements OnInit {
 
     public submit(): void {
         this.disabled = true;
-        let profile = Object.assign(this.profile, this.form.value);
+        let profile = Object.assign(Object.create(this.profile), this.form.value);
         this.profileService.edit(profile, this.form.value, this.profile)
             .finally(() => this.disabled = false)
             .subscribe();

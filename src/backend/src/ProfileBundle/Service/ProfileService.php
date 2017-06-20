@@ -51,7 +51,7 @@ class ProfileService
         return $this->profileRepository->getByAlias($alias);
     }
 
-    public function getByAccountId(int $accountId)
+    public function getByAccountId(int $accountId): ?array
     {
         return $this->profileRepository->getByAccountId($accountId);
     }

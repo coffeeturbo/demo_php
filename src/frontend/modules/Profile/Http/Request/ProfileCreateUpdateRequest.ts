@@ -4,5 +4,5 @@ export interface ProfileCreateUpdateRequest {
     alias?: string;
     birth_date?: string;
     gender?: Gender;
-    name: string;
+    name?: string;
 }
