@@ -20,7 +20,7 @@ header {
   background: material-color($primary_material, '400');
   color: $font_color_light;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   position: relative;
   z-index: 1;
@@ -59,8 +59,6 @@ header {
   }
 
   .logo {
-    flex-grow: 1;
-
     a {
       display: inline-block;
       cursor: pointer;
@@ -71,6 +69,53 @@ header {
         padding: 13px 23px;
         font-size: 21px;
         width: 157px;
+      }
+    }
+  }
+  
+  .search {
+    flex-grow: 1;
+    padding: 10px;
+    position: relative;
+    @include mq($until: tablet) {
+      padding: 7px;
+    }
+
+    .fa-search {
+      top: 0;
+      left: 0;
+      padding: 27px;
+      position: absolute;
+      transition: all 150ms;
+
+      @include mq($until: tablet) {
+        padding: 22px;
+      }
+    }
+
+    .input {
+      border: none;
+      max-width: 500px;
+      height: 100%;
+      width: 100%;
+      transition: all 150ms;
+      background: material-color($primary_material, '300');
+      color: #fff;
+      border-radius: 4px;
+      font-size: 1.5em;
+      padding-left: 43px;
+
+      @include mq($until: tablet) {
+        padding-left: 38px;
+        font-size: 1.3em;
+      }
+
+      &:focus {
+        color: $font_color_dark;
+        background: material-color($primary_material, '50');
+        &+.fa-search{
+          color: $font_color_dark;
+        }
       }
     }
   }

@@ -10,7 +10,7 @@
 
 
 body {
-  background: #fff;
+  background: material-color($secondary_material, "200");
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-size: $font_size;
   -webkit-font-smoothing: antialiased;
