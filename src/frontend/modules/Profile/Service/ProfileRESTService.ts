@@ -5,6 +5,8 @@ import {AuthHttp} from "angular2-jwt";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
+import {JwtRESTService} from "../../Application/Service/AuthRESTService";
+import {Config} from "../../../app/config";
 
 @Injectable()
 export class ProfileRESTService {
@@ -31,7 +33,7 @@ export class ProfileRESTService {
 
     public create(profileCreateRequest: ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
     {
-        let url = "/protected/profile/create";
+        let url = `/protected/profile/create`;
 
         return this.authHttp
             .put(url, JSON.stringify(profileCreateRequest))
@@ -40,7 +42,7 @@ export class ProfileRESTService {
 
     public update(profileId: number, profileUpdateRequest: ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
     {
-        let url = `/protected/profile/${profileId}/update`;
+        let url = `${Config.uri.api}/protected/profile/${profileId}/update`;
 
         return this.authHttp
             .patch(url, JSON.stringify(profileUpdateRequest))
