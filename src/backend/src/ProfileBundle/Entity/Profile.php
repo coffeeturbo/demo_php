@@ -3,26 +3,28 @@
 namespace ProfileBundle\Entity;
 
 use AccountBundle\Entity\Account;
+use AvatarBundle\Image\ImageEntity;
+use AvatarBundle\Image\ImageEntityTrait;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 
 /**
  * Profile
  */
-class Profile
+class Profile implements ImageEntity
 {
     const BIRTH_DATE_FORMAT = 'Y-m-d';
 
+    use ImageEntityTrait;
+
     private $id;
     private $created;
-
     private $name;
     private $birthDate;
     private $verified;
     private $gender;
     private $alias;
     private $account;
-
 
     public function __construct()
     {

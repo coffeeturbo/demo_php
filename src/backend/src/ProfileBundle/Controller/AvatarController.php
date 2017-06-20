@@ -29,19 +29,25 @@ class AvatarController extends Controller
     public function uploadAction(int $id, Request $request)
     {
         try {
-
 //            $body = $this->get('app.validate_request')->validate($request, AvatarUploadType::class);
             /** @var UploadedFile $image */
             $image = $request->files->get('image');
 
-            dump($request);
-
             $profileService = $this->get('profile.service');
 
             $profile = $profileService->getById($id);
-            $profileService->uploadAvatar($profile, $image, []);
 
-            
+            $sizes  = [
+                'x' => $request->get('x'),
+                'y' => $request->get('y'),
+                'width' => $request->get('width'),
+                'height' => $request->get('height'),
+            ];
+
+            $profileService->uploadAvatar($profile, $image, $sizes);
+            $profileService->update($profile);
+
+
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }

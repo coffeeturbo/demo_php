@@ -4,6 +4,8 @@ namespace ProfileBundle\Service;
 
 use AccountBundle\Entity\Account;
 use AuthBundle\Service\AuthService;
+use AvatarBundle\Image\Image;
+use AvatarBundle\Image\ImageCollection;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
@@ -12,6 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ProfileService
@@ -102,25 +105,38 @@ class ProfileService
         return $profile;
     }
 
-    public function uploadAvatar(Profile $profile, UploadedFile $file, $body)
+    public function uploadAvatar(Profile $profile, UploadedFile $file, array $sizes)
     {
-        $path = $this->container->getParameter('profile.avatar.absolute_path');
+        $absolutePath = $this->container->getParameter('profile.avatar.absolute_path');
 
-        dump($path);
-//        $imageRes = imagecrop(
-//            imagecreatefromjpeg($file->getRealPath()),
-//            [
-//                'x' => $body['x'],
-//                'y' => $body['x'],
-//                'width' => $body['width'],
-//                'height' => $body['height'],
-//            ]
-//        );
-//
-//        $path = $this->container->getParameter('profile.avatar.absolute_path');
-//
-//        $name = uniqid() .  "." . $file->getClientOriginalExtension();
-//        imagejpeg($imageRes, $path . "/"  . $name);
+        $imageService = $this->container->get('avatar.service')->getImageManager();
+
+
+        $publicPath = sprintf('public:path');
+        $storagePath = sprintf("%s", $absolutePath);
+
+        $imageName = sprintf('%s.%s', uniqid(), $file->getClientOriginalExtension());
+
+        $storageFilePath = sprintf('%s/%s', $storagePath, $imageName);
+
+        $imageService
+            ->make($file->getRealPath())
+            ->resize(100, 100)
+            ->save($storageFilePath);
+
+        $file->move(
+            $absolutePath,
+            $imageName
+        );
+
+
+        $imageCollection = new ImageCollection();
+        $imageCollection->addImage(new Image(
+            $storageFilePath,
+            $publicPath
+        ));
+
+        $profile->setImages($imageCollection);
     }
 
     public function delete(Profile $profile)

@@ -26,6 +26,9 @@ ProfileBundle\Entity\Profile:
     verified:
       type: boolean
       nullable: false
+    image:
+      type: json_array
+      nullable: true
   manyToOne:
     account:
       targetEntity: AccountBundle\Entity\Account
