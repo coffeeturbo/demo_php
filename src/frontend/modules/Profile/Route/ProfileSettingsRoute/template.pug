@@ -11,7 +11,9 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
     .input-box
       input(type="text", formControlName="alias", placeholder="{{'Alias' | translate }}")
       hr
-  
+      tooltip(*ngIf="form.hasError('available') && form.controls['alias'].touched")
+        small {{"Alias unavailable" | translate }}
+
   label {{ 'Gender' | translate }}
   .field
     .input-box

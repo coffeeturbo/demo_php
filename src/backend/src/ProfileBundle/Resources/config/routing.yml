@@ -11,4 +11,11 @@ profile_get_by_alias:
   requirements:
     alias: '\w+'
   methods: [ GET ]
+  
+profile_check_alias:
+  path: '{alias}/check'
+  defaults: { _controller: ProfileBundle:Create:checkAlias }
+  requirements:
+    alias: '\w+'
+  methods: [ GET ]
 

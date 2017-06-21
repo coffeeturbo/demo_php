@@ -7,11 +7,13 @@ use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Form\ProfileType;
+use ProfileBundle\Response\CheckAliasResponse;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CreateController extends Controller
 {
@@ -57,13 +59,21 @@ class CreateController extends Controller
      * @ApiDoc(
      *  section="Profile",
      *  description= "Проверка свободел ли alias",
+     *  output = {"class" = "ProfileBundle\Response\CheckAliasResponse"},
      * )
      *
-     * @param Request $request
+     * @param string $alias
      * @return JsonResponse
      */
-    public function validateAction(Request $request)
+    public function checkAliasAction(string $alias)
     {
-        
+        try {
+            $this->get("profile.service")->getByAlias($alias);
+            return new CheckAliasResponse(false);
+        } catch (NotFoundHttpException $e) {
+            return new CheckAliasResponse(true);
+        } catch (HttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        }
     }
 }

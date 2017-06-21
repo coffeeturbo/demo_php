@@ -8,6 +8,8 @@ import {Token} from "../../Auth/Entity/Token";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {AuthService} from "../../Auth/Service/AuthService";
+import {AbstractControl, FormControl, ValidationErrors} from "@angular/forms";
+import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 
 @Injectable()
 export class ProfileService {
@@ -44,7 +46,7 @@ export class ProfileService {
         ;
     }
     
-    public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile)
+    public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile>
     {
         return this.rest.update(profile.id, request)
             .map(profileGetResponse => profileGetResponse.entity)
@@ -55,6 +57,11 @@ export class ProfileService {
                 }
             })
         ;
+    }
+
+    public checkAlias(alias: string): Observable<CheckAliasResponse>
+    {
+        return this.rest.checkAlias(alias);
     }
 
     public getOwnProfilePath(): string

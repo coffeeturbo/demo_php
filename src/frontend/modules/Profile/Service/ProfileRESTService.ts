@@ -6,6 +6,7 @@ import {AuthHttp} from "angular2-jwt";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 import {Config} from "../../../app/config";
+import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 
 @Injectable()
 export class ProfileRESTService {
@@ -54,6 +55,14 @@ export class ProfileRESTService {
 
         return this.rest
             .delete(url)
+            .map(res => res.json())
+    }
+    
+    public checkAlias(alias: string): Observable<CheckAliasResponse>
+    {
+        let url = `/profile/${alias}/check`;
+        return this.rest
+            .get(url)
             .map(res => res.json())
     }
 }
