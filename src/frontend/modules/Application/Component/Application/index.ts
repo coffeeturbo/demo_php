@@ -15,6 +15,15 @@ import {ProfileService} from "../../../Profile/Service/ProfileService";
 export class ApplicationComponent {
     @HostBinding("class") className: string;
     public device = Device;
+    public isSearchResultsVisible = false;
+    public searchResults = [
+        "РЫБАЛКА С БРАТЬЯМИ ТАЙМАСОВЫМИ",
+        "Рыбалка в ОАЭ, аренда яхт в Дубай",
+        "Рыбалка -Карлсон Дорогой",
+        "Рыбалка Fishing -Alex B",
+        "Клуб рыбаков. Рыбалка. Club fishermen. fishing",
+        "Рыбалка на видео"
+    ];
 
     constructor(
         public sidebar: SidebarService,

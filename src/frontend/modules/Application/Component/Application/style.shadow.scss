@@ -179,5 +179,22 @@ main {
 
 }
 
-
+.search-results{
+  max-width: 500px;
+  position: fixed;
+  top: 68px;
+  left: 290px;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 0 6px material-color($primary_material, '400');
+  z-index: 1;
+  
+  li{
+    padding: 15px;
+    
+    &:hover{
+      background: material-color($secondary_material, '100');
+    }
+  }
+}
 

@@ -5,7 +5,6 @@ import {AuthHttp} from "angular2-jwt";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
-import {JwtRESTService} from "../../Application/Service/AuthRESTService";
 import {Config} from "../../../app/config";
 
 @Injectable()
