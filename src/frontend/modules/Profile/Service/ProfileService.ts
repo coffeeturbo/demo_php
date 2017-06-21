@@ -7,13 +7,14 @@ import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 import {Token} from "../../Auth/Entity/Token";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
+import {AuthService} from "../../Auth/Service/AuthService";
 
 @Injectable()
 export class ProfileService {
     private profiles: Profile[] = [];
     public onProfileResolve = new EventEmitter<Profile>(true);
 
-    constructor(private rest: ProfileRESTService) {}
+    constructor(private rest: ProfileRESTService, private auth: AuthService) {}
 
     public get(path: string): Observable<Profile> 
     {
@@ -47,7 +48,12 @@ export class ProfileService {
     {
         return this.rest.update(profile.id, request)
             .map(profileGetResponse => profileGetResponse.entity)
-            .do(profile => this.replaceInCache(oldProfile, profile))
+            .do(profile => {
+                this.replaceInCache(oldProfile, profile);
+                if(oldProfile.alias != profile.alias) { 
+                    this.auth.refreshToken({"refresh_token": TokenRepository.getRefreshToken()});
+                }
+            })
         ;
     }
 

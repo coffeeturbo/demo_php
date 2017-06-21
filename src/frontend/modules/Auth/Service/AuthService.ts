@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable, Observer, Scheduler, Subscription} from "rxjs";
+import {Observable, Scheduler, Subscription} from "rxjs";
 import { tokenNotExpired} from "angular2-jwt";
 
 import {AuthRESTService} from "./AuthRESTService";
@@ -44,7 +44,9 @@ export class AuthService implements AuthServiceInterface
                 TokenRepository.saveToken(tokenResponse.token);
                 TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
                 this.addTokenExpirationSchedule();
-                this.router.navigateByUrl(this.returlUrl);
+                if(this.returlUrl) {
+                    this.router.navigateByUrl(this.returlUrl);
+                }
             },
             () => this.signOut()
         );
@@ -75,6 +77,7 @@ export class AuthService implements AuthServiceInterface
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse> 
     {
+        this.returlUrl = null;
         return this.handleTokenResponse(this.rest.refreshToken(body));
     }
 
