@@ -16,10 +16,10 @@ export class StartupService {
 
         if (TokenRepository.isTokenExist() && TokenRepository.getTokenExpTime() < 0) { // If token expired wait before get a new
             status.innerText = "Авторизация...";
-            let onAuth = new EventEmitter<void>(); // Отдельный event, т.к. вызываем complete, завершающий его. а нам не нужно что бы основной event завершался
-            authService.onAuth.subscribe(() => onAuth.complete());
+            let onAuthSuccess = new EventEmitter<void>(); // Отдельный event, т.к. вызываем complete, завершающий его. а нам не нужно что бы основной event завершался
+            authService.onAuthSuccess.subscribe(() => onAuthSuccess.complete());
             
-            this.promises.push(onAuth.toPromise());
+            this.promises.push(onAuthSuccess.toPromise());
         }
 
         authService.addTokenExpirationSchedule();

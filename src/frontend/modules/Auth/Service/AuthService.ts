@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Scheduler, Subscription} from "rxjs";
-import { tokenNotExpired} from "angular2-jwt";
+import {tokenNotExpired} from "angular2-jwt";
 
 import {AuthRESTService} from "./AuthRESTService";
 import {SignInRequest} from "../Http/Request/SignInRequest";
@@ -28,7 +28,8 @@ export interface AuthServiceInterface {
 @Injectable()
 export class AuthService implements AuthServiceInterface 
 {
-    public onAuth = new EventEmitter<TokenResponse>();
+    public onAuthSuccess = new EventEmitter<TokenResponse>();
+    public onAuthFailure = new EventEmitter<ResponseFailure>();
 
     private tokenExpirationSchedule: Subscription = new Subscription();
     private returlUrl: string = "/";
@@ -39,61 +40,61 @@ export class AuthService implements AuthServiceInterface
         private rest: AuthRESTService,
         private oAuth: OAuthService
     ) {
-        this.onAuth.subscribe(
+        this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
                 TokenRepository.saveToken(tokenResponse.token);
                 TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
                 this.addTokenExpirationSchedule();
-                if(this.returlUrl) {
+                if (this.returlUrl) {
                     this.router.navigateByUrl(this.returlUrl);
                 }
-            },
-            () => this.signOut()
+            }
         );
+        this.onAuthFailure.subscribe(() => this.signOut())
     }
 
-    public isSignedIn(): boolean 
+    public isSignedIn(): boolean
     {
         return tokenNotExpired();
     }
 
-    public getRoles(): Roles 
+    public getRoles(): Roles
     {
         let tokenData: Token = TokenRepository.decodeToken();
         return tokenData.roles;
     }
 
-    public signIn(body: SignInRequest): Observable<TokenResponse> 
+    public signIn(body: SignInRequest): Observable<TokenResponse>
     {
         this.returlUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.rest.signIn(body));
     }
 
-    public signUp(body: SignUpRequest): Observable<TokenResponse> 
+    public signUp(body: SignUpRequest): Observable<TokenResponse>
     {
         this.returlUrl = "/";
         return this.handleTokenResponse(this.rest.signUp(body));
     }
 
-    public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse> 
+    public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse>
     {
         this.returlUrl = null;
         return this.handleTokenResponse(this.rest.refreshToken(body));
     }
 
-    public connectVK(): Observable<TokenResponse> 
+    public connectVK(): Observable<TokenResponse>
     {
         this.returlUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.oAuth.connectVK());
     }
 
-    public connectFacebook(): Observable<TokenResponse> 
+    public connectFacebook(): Observable<TokenResponse>
     {
         this.returlUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.oAuth.connectFacebook());
     }
 
-    public signOut(): void 
+    public signOut(): void
     {
         TokenRepository.removeTokens();
         this.tokenExpirationSchedule.unsubscribe();
@@ -113,13 +114,13 @@ export class AuthService implements AuthServiceInterface
         }
     }
 
-    private handleTokenResponse(observableTokenResponse: Observable<TokenResponse>): Observable<TokenResponse> 
+    private handleTokenResponse(observableTokenResponse: Observable<TokenResponse>): Observable<TokenResponse>
     {
         observableTokenResponse = observableTokenResponse.share();
 
         observableTokenResponse.subscribe(
-            (tokenResponse: TokenResponse) => this.onAuth.emit(tokenResponse),
-            (tokenResponseFailure: ResponseFailure) => this.onAuth.error(tokenResponseFailure)
+            (tokenResponse: TokenResponse) => this.onAuthSuccess.emit(tokenResponse),
+            (tokenResponseFailure: ResponseFailure) => this.onAuthFailure.emit(tokenResponseFailure)
         );
 
         return observableTokenResponse;
