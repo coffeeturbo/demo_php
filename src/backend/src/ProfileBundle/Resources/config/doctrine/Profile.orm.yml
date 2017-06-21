@@ -16,6 +16,7 @@ ProfileBundle\Entity\Profile:
     alias:
       type: string
       nullable: true
+      unique: true
     gender:
       type: smallint
       nullable: false

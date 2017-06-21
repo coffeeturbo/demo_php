@@ -4,13 +4,10 @@ namespace ProfileBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use ProfileBundle\Form\AvatarUploadType;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class AvatarController extends Controller

@@ -6,16 +6,16 @@ use AccountBundle\Entity\Account;
 use AuthBundle\Service\AuthService;
 use AvatarBundle\Image\Image;
 use AvatarBundle\Image\ImageCollection;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
 use ProfileBundle\Repository\ProfileRepository;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class ProfileService
 //    implements ContainerAwareInterface
@@ -86,7 +86,7 @@ class ProfileService
             );
         }
 
-        $this->profileRepository->save($profile);
+        $this->save($profile);
         $this->eventDispatcher->dispatch(ProfileCreatedEvent::NAME, new ProfileCreatedEvent($profile));
 
         return $profile;
@@ -100,9 +100,17 @@ class ProfileService
             throw new AccessDeniedHttpException("Account has no access for profile changes");
         }
 
-        $this->profileRepository->save($profile);
+        $this->save($profile);
 
         return $profile;
+    }
+    
+    public function save(Profile $profile) {
+        try {
+            $this->profileRepository->save($profile);
+        } catch (UniqueConstraintViolationException $e) {
+            throw new ConflictHttpException("Can't save profile. Duplicate entry.");
+        }
     }
 
     public function uploadAvatar(Profile $profile, UploadedFile $file, array $sizes)

@@ -10,8 +10,7 @@ use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UpdateController extends Controller
 {
@@ -44,7 +43,7 @@ class UpdateController extends Controller
             $profileService->update($profile);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
-        } catch (AccessDeniedHttpException | NotFoundHttpException $e) {
+        } catch (HttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 

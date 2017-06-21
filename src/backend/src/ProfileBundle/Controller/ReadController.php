@@ -7,7 +7,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ReadController extends Controller
 {
@@ -28,7 +28,7 @@ class ReadController extends Controller
     {
         try {
             $profile = $this->get('profile.service')->getById($id);
-        } catch (NotFoundHttpException $e) {
+        } catch (HttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
@@ -52,7 +52,7 @@ class ReadController extends Controller
     {
         try {
             $profile = $this->get('profile.service')->getByAlias($alias);
-        } catch (NotFoundHttpException $e) {
+        } catch (HttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 

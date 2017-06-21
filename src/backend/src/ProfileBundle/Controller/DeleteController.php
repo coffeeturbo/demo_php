@@ -7,7 +7,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DeleteController extends Controller
 {
@@ -37,7 +37,7 @@ class DeleteController extends Controller
 
             $profileService->delete($profile);
 
-        } catch (NotFoundHttpException $e) {
+        } catch (HttpException $e) {
             return new ErrorJsonResponse($e->getMessage() [], $e->getStatusCode());
         }
 

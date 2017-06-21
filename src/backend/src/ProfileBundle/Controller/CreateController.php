@@ -11,8 +11,7 @@ use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CreateController extends Controller
 {
@@ -46,10 +45,25 @@ class CreateController extends Controller
             $this->get('profile.service')->create($profile);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
-        } catch (AccessDeniedHttpException | NotFoundHttpException $e) {
+        } catch (HttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
         return new SuccessProfileResponse($profile, true);
+    }
+
+
+    /**
+     * @ApiDoc(
+     *  section="Profile",
+     *  description= "Проверка свободел ли alias",
+     * )
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function validateAction(Request $request)
+    {
+        
     }
 }
