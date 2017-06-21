@@ -1,11 +1,43 @@
+@import "../../../../assets/styles/global";
+
 *{
   vertical-align: middle;
 }
-h1{
-  i.fa {
-    &.fa-check {
-      font-size: 0.5em;
-      color: #fff;
+
+.backdrop {
+  margin: -20px -20px 0;
+  background-color: material-color($primary_material, '600');
+  background-size: cover;
+  min-height: 100px;
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  
+
+  .avatar {
+    border: 3px solid #fff;
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    bottom: -64px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
+  }
+  .info {
+    position: absolute;
+    left: 174px;
+    top: 100%;
+    h1 {
+      i.fa {
+        &.fa-check {
+          font-size: 0.5em;
+          color: #fff;
+        }
+      }
+      span {
+        color: #ccc;
+        font-size: 1em
+      }
     }
   }
 }

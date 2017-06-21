@@ -1,15 +1,19 @@
 ng-container(*ngIf="profile")
-  div(
-    [attr.data-profile-id]="profile.id",
-    [attr.data-account-id]="profile.account_id",
-    [attr.data-profile-alias]="profile.alias"
-  )
-    h1
-      //span.fa-stack(*ngIf="profile.verified")
-      span.fa-stack
-        i.fa.fa-certificate.fa-stack-1x
-        i.fa.fa-check.fa-stack-1x
-      | {{profile.name}}
-    p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
-    p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
-    p {{ "Created" | translate }}: {{ profile.created | date }}
+  header
+    .backdrop(
+      [style.background-image]="'url(http://cdn.domaza.co/upload/paralax/15211/34db5d2fd7617390f73e99e6802e01a8.jpg)'",
+      [attr.data-profile-id] = "profile.id",
+      [attr.data-account-id]="profile.account_id",
+      [attr.data-profile-alias]="profile.alias"
+    )
+      img.avatar(src="https://pp.userapi.com/c7001/v7001108/313d0/Uf8Oer4ZR-w.jpg")
+      .info
+        h1
+          | {{profile.name}}
+          span.fa-stack
+            i.fa.fa-certificate.fa-stack-1x
+            i.fa.fa-check.fa-stack-1x
+        span @{{profile.alias}}
+  p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
+  p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
+  p {{ "Created" | translate }}: {{ profile.created | date }}
