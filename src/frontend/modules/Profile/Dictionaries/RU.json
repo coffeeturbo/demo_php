@@ -1,9 +1,11 @@
 {
-  "male": "муж.",
-  "female": "жен.",
+  "Male": "Мужской",
+  "Female": "Женский",
+  "None": "Нет",
   "Birth date": "Дата рождения",
   "Created": "Дата регистрации",
   "Profile link": "Адрес страницы",
   "Too short": "Слишком короткий",
-  "Alias unavailable": "Адрес занят"
+  "Alias unavailable": "Адрес занят",
+  "General settings": "Основные настройки"
 }

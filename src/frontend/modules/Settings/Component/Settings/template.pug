@@ -3,8 +3,8 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
     i.fa.fa-globe.fa-lg.fa-fw
     .input-box
       select(formControlName="locale")
-        option(value="RU") Русский
-        option(value="EN") Английский
+        option(value="RU") {{ 'Russian' | translate }}
+        option(value="EN") {{ 'English' | translate }}
   label.field
     .input-box
       input(type="checkbox", formControlName="show_porno")

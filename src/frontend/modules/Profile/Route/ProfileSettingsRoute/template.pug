@@ -1,6 +1,8 @@
 .profile-settings
   loader(*ngIf="disabled")
   form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+    h2 {{ 'General settings' | translate }}
+    br
     label {{ 'Name' | translate }}
     .field
       i.fa.fa-lg.fa-fw.fa-address-card-o
@@ -25,8 +27,10 @@
     .field
       i.fa.fa-lg.fa-fw.fa-venus-mars
       .input-box
-        input(type="text", formControlName="gender", placeholder="{{'Gender' | translate }}")
-        hr
+        select(formControlName="gender")
+          option(value="male") {{ "Male" | translate }}
+          option(value="female") {{ "Female" | translate }}
+          option(value="female") {{ "None" | translate }}
     
     label {{ 'Birth date' | translate }}
     .field
@@ -35,8 +39,9 @@
         input(type="date", formControlName="birth_date", placeholder="{{'Birthdate' | translate }}")
         hr
   
-  
-    .controls
+    h2 {{ 'Contacts' | translate }}
+    
+  .controls
       button.btn(*ngIf="changed()", type="button", (click)="reset()")
         .fa.fa-ban
         span {{"Cancel" | translate }}
