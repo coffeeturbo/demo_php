@@ -3,5 +3,7 @@
   "female": "жен.",
   "Birth date": "Дата рождения",
   "Created": "Дата регистрации",
-  "Profile link": "Адрес страницы"
+  "Profile link": "Адрес страницы",
+  "Too short": "Слишком короткий",
+  "Alias unavailable": "Адрес занят"
 }

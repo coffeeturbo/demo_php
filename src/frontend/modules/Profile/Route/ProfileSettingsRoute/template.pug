@@ -1,33 +1,45 @@
-loader(*ngIf="disabled")
-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
-  label {{ 'Name' | translate }}
-  .field
-    .input-box
-      input(type="text", formControlName="name", placeholder="{{'Name' | translate }}")
-      hr
-
-  label {{ 'Profile link' | translate }}
-  .field
-    .input-box
-      input(type="text", formControlName="alias", placeholder="{{'Alias' | translate }}")
-      hr
-      tooltip(*ngIf="form.hasError('available') && form.controls['alias'].touched")
-        small {{"Alias unavailable" | translate }}
-
-  label {{ 'Gender' | translate }}
-  .field
-    .input-box
-      input(type="text", formControlName="gender", placeholder="{{'Gender' | translate }}")
-      hr
+.profile-settings
+  loader(*ngIf="disabled")
+  form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+    label {{ 'Name' | translate }}
+    .field
+      i.fa.fa-lg.fa-fw.fa-address-card-o
+      .input-box
+        input(type="text", formControlName="name", placeholder="{{'Name' | translate }}")
+        hr
   
-  label {{ 'Birth date' | translate }}
-  .field
-    .input-box
-      input(type="date", formControlName="birth_date", placeholder="{{'Birthdate' | translate }}")
-      hr
-
-
-  .controls
-    button.btn.primary(type="submit", [disabled]="!form.valid")
-      .fa.fa-sign-in
-      span {{"Save" | translate }}
+    label {{ 'Profile link' | translate }}
+    .field
+      i.fa.fa-lg.fa-fw.fa-at
+      .input-box
+        input(type="text", formControlName="alias", placeholder="{{'Alias' | translate }}")
+        hr
+        .error(*ngIf="form.controls['alias'].hasError('alias_unavailable')")
+          i.fa.fa-exclamation-circle
+          span {{"Alias unavailable" | translate }} 
+        .error(*ngIf="form.controls['alias'].hasError('minlength')")  
+          i.fa.fa-exclamation-circle
+          span {{"Too short" | translate }}
+  
+    label {{ 'Gender' | translate }}
+    .field
+      i.fa.fa-lg.fa-fw.fa-venus-mars
+      .input-box
+        input(type="text", formControlName="gender", placeholder="{{'Gender' | translate }}")
+        hr
+    
+    label {{ 'Birth date' | translate }}
+    .field
+      i.fa.fa-lg.fa-fw.fa-birthday-cake
+      .input-box
+        input(type="date", formControlName="birth_date", placeholder="{{'Birthdate' | translate }}")
+        hr
+  
+  
+    .controls
+      button.btn(*ngIf="changed()", type="button", (click)="reset()")
+        .fa.fa-ban
+        span {{"Cancel" | translate }}
+      button.btn.primary(type="submit", [disabled]="form.invalid")
+        .fa.fa-sign-in
+        span {{"Save" | translate }}

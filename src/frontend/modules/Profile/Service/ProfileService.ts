@@ -8,7 +8,6 @@ import {Token} from "../../Auth/Entity/Token";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {AuthService} from "../../Auth/Service/AuthService";
-import {AbstractControl, FormControl, ValidationErrors} from "@angular/forms";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 
 @Injectable()
@@ -98,6 +97,8 @@ export class ProfileService {
 
     public replaceInCache(oldProfile: Profile, newProfile: Profile): void
     {
+        // oldProfile = JSON.parse(JSON.stringify(oldProfile));
+
         let index: number = this.profiles.indexOf(oldProfile);
         if (index != -1) {
             this.profiles[this.profiles.indexOf(oldProfile)] = newProfile;

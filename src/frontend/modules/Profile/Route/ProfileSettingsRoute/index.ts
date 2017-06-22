@@ -8,12 +8,16 @@ import {Observable} from "rxjs";
 
 @Component({
     templateUrl: "./template.pug",
-    styleUrls: ["../../../Auth/Component/SignInForm/style.shadow.scss"]
+    styleUrls: [
+        "../../../Auth/Component/SignInForm/style.shadow.scss",
+        "style.shadow.scss"
+    ]
 })
 export class ProfileSettingsRoute implements OnInit {
     public disabled: boolean = false;
     public profile: Profile;
     public form: FormGroup;
+    public defaultValues;
 
     constructor(
         private route: ActivatedRoute,
@@ -23,23 +27,43 @@ export class ProfileSettingsRoute implements OnInit {
     ngOnInit() {
         this.profile = this.route.snapshot.data["profile"];
         this.form = new FormGroup({
-            name: new FormControl(this.profile.name),
+            name: new FormControl(this.profile.name, Validators.required),
             alias: new FormControl(this.profile.alias, Validators.minLength(3), this.aliasValidator.bind(this)),
             gender: new FormControl(this.profile.gender),
             birth_date: new FormControl(this.profile.birth_date)
         });
+        this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
     }
     
-    aliasValidator(aliasControl: AbstractControl): Observable<ValidationErrors> {
-        if(this.profile.alias === aliasControl.value) return Observable.of([]);
-        return this.profileService.checkAlias(aliasControl.value).filter((checkAliasResponse) => !checkAliasResponse.available);
+    aliasValidator(aliasControl: AbstractControl): Promise<ValidationErrors> {
+        if(!aliasControl.value || this.profile.alias === aliasControl.value) {
+            return Observable.of([]).toPromise();
+        }
+
+        return this.profileService.checkAlias(aliasControl.value)
+            .filter((checkAliasResponse) => !checkAliasResponse.available)
+            .map(() => <ValidationErrors>{"alias_unavailable": true})
+            .toPromise()
+        ;
+    }
+
+    public reset(): void {
+        this.form.reset(this.defaultValues);
+    }
+    
+    public changed() : boolean {
+        return  JSON.stringify(this.defaultValues) !== JSON.stringify(this.form.value);
     }
 
     public submit(): void {
         this.disabled = true;
-        let profile = Object.assign(Object.create(this.profile), this.form.value);
+        let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value);
         this.profileService.edit(profile, this.form.value, this.profile)
             .finally(() => this.disabled = false)
-            .subscribe();
+            .subscribe(profile => {
+                this.defaultValues = JSON.parse(JSON.stringify(this.form.value))
+                this.profile = profile;
+            })
+        ;
     }
 }

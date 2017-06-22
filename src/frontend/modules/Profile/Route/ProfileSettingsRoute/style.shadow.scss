@@ -1,0 +1,27 @@
+@import "../../../../assets/styles/global";
+
+.profile-settings {
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.28);
+  max-width: 500px;
+  margin: -20px auto 0
+}
+
+.error {
+  position: absolute;
+  right: 0;
+  top: calc(50% - 1px);
+  margin-top: -0.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: material-color($secondary_material, "400");
+  font-size: 0.9em;
+  line-height: 1em;
+
+  span {
+    vertical-align: middle;
+  }
+  .fa {
+    padding-right: 0;
+  }
+}
