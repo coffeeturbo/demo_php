@@ -1,4 +1,4 @@
-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+form.form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
   .field
     i.fa.fa-user.fa-lg.fa-fw
     .input-box
@@ -16,7 +16,7 @@ form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventD
       input(type="checkbox", formControlName="dont_remember")
       .checkbox 
         | {{"Not my PC" | translate }} 
-        .fa.fa-question-circle(title="{{'Auto sign out after 10 minutes' | translate}}")
+        .fa.fa-question-circle(title="{{'Auto sign out after 1 hour' | translate}}")
 
           
   .controls(*ngIf="showControls")

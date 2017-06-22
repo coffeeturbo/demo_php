@@ -8,8 +8,7 @@ import {Config} from "../../../../app/config";
 @Component({
     selector: "sign-up-form",
     templateUrl: "./template.pug",
-    host: {"(window:keydown)": "onKeyDown($event)"},
-    styleUrls: ["../SignInForm/style.shadow.scss"]
+    host: {"(window:keydown)": "onKeyDown($event)"}
 })
 
 export class SignUpFormComponent {

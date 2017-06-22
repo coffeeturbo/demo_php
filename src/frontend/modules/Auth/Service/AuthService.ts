@@ -43,8 +43,12 @@ export class AuthService implements AuthServiceInterface
         this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
                 TokenRepository.saveToken(tokenResponse.token);
-                TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
-                this.addTokenExpirationSchedule();
+
+                if(tokenResponse.refresh_token) {
+                    TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
+                    this.addTokenExpirationSchedule();
+                }
+
                 if (this.returlUrl) {
                     this.router.navigateByUrl(this.returlUrl);
                 }

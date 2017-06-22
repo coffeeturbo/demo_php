@@ -26,7 +26,11 @@
           a(href="") {{ result }}
   sidebar([ngClass]="sidebar.state", (panleft)="device.isMobile() && sidebar.hide()")
 
-main([ngClass]="'sidebar-' + sidebar.state", (panleft)="device.isMobile() && sidebar.hide()", (panright)="device.isMobile() && sidebar.show()")
+// DOTO: Make it better
+main(*ngIf="device.isMobile()", [ngClass]="'sidebar-' + sidebar.state", (panleft)="sidebar.hide()", (panright)="sidebar.show()")
+  router-outlet
+
+main(*ngIf="!device.isMobile()", [ngClass]="'sidebar-' + sidebar.state")
   router-outlet
   
 application-loading-bar

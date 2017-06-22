@@ -8,10 +8,8 @@ import {Observable} from "rxjs";
 
 @Component({
     templateUrl: "./template.pug",
-    styleUrls: [
-        "../../../Auth/Component/SignInForm/style.shadow.scss",
-        "style.shadow.scss"
-    ]
+    styleUrls: ["style.shadow.scss"],
+    host: {"(window:keydown)": "onKeyDown($event)"}
 })
 export class ProfileSettingsRoute implements OnInit {
     public disabled: boolean = false;
@@ -34,8 +32,14 @@ export class ProfileSettingsRoute implements OnInit {
         });
         this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
     }
+
+    private onKeyDown($event: KeyboardEvent): void {
+        if ($event.key === "Enter" && this.form.valid && !this.disabled) {
+            this.submit()
+        }
+    }
     
-    aliasValidator(aliasControl: AbstractControl): Promise<ValidationErrors> {
+    private aliasValidator(aliasControl: AbstractControl): Promise<ValidationErrors> {
         if(!aliasControl.value || this.profile.alias === aliasControl.value) {
             return Observable.of([]).toPromise();
         }
@@ -57,11 +61,12 @@ export class ProfileSettingsRoute implements OnInit {
 
     public submit(): void {
         this.disabled = true;
-        let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value);
+        // let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value);
+        let profile = Object.assign(this.profile, this.form.value);
         this.profileService.edit(profile, this.form.value, this.profile)
             .finally(() => this.disabled = false)
             .subscribe(profile => {
-                this.defaultValues = JSON.parse(JSON.stringify(this.form.value))
+                this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
                 this.profile = profile;
             })
         ;

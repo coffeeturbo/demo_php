@@ -6,8 +6,7 @@ import {Device} from "../../../Application/Service/DeviceService";
 
 @Component({
     selector: "settings",
-    templateUrl: "./template.pug",
-    styleUrls: ["./style.shadow.scss"]
+    templateUrl: "./template.pug"
 })
 export class SettingsComponent {
     protected disabled: boolean = false;

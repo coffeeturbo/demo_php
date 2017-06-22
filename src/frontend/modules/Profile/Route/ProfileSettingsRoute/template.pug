@@ -1,6 +1,6 @@
 .profile-settings
   loader(*ngIf="disabled")
-  form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  form.form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
     h2 {{ 'General settings' | translate }}
     br
     label {{ 'Name' | translate }}
@@ -39,12 +39,10 @@
         input(type="date", formControlName="birth_date", placeholder="{{'Birthdate' | translate }}")
         hr
   
-    h2 {{ 'Contacts' | translate }}
-    
-  .controls
-      button.btn(*ngIf="changed()", type="button", (click)="reset()")
-        .fa.fa-ban
-        span {{"Cancel" | translate }}
-      button.btn.primary(type="submit", [disabled]="form.invalid")
-        .fa.fa-sign-in
-        span {{"Save" | translate }}
+    .controls
+        button.btn(*ngIf="changed()", type="button", (click)="reset()")
+          .fa.fa-ban
+          span {{"Cancel" | translate }}
+        button.btn.primary(type="submit", [disabled]="form.invalid")
+          .fa.fa-sign-in
+          span {{"Save" | translate }}

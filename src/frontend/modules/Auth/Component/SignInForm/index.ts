@@ -6,8 +6,7 @@ import {AuthService} from "../../Service/AuthService";
 @Component({
     selector: "sign-in-form",
     templateUrl: "./template.pug",
-    host: {"(window:keydown)": "onKeyDown($event)"},
-    styleUrls: ["./style.shadow.scss"]
+    host: {"(window:keydown)": "onKeyDown($event)"}
 })
 
 export class SignInFormComponent {
