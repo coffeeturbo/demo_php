@@ -142,7 +142,7 @@ header {
         }
       }
 
-      @include mq($until: tablet) {
+      @include mq($until: desktop) {
         span {
           display: none;
         }

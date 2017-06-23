@@ -1,43 +1,47 @@
 @import "../../../../assets/styles/global";
 
-*{
-  vertical-align: middle;
-}
-
 .backdrop {
-  margin: -20px -20px 0;
+  margin:-20px -20px 79px;
   background-color: material-color($primary_material, '600');
   background-size: cover;
-  min-height: 100px;
+  min-height: 150px;
   position: relative;
-  z-index: 1;
-  padding: 20px;
-  
 
-  .avatar {
-    border: 3px solid #fff;
+  figure {
     position: absolute;
-    width: 128px;
-    height: 128px;
-    border-radius: 50%;
-    bottom: -64px;
+    background: #fff;
+    top:100%;
+    width: 100%;
+    display: flex;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
-  }
-  .info {
-    position: absolute;
-    left: 174px;
-    top: 100%;
+    
+    img {
+      border: 4px solid #fff;
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      top: -77px;
+      left:20px;
+      box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+    }
+
+    figcaption {
+      padding: 10px 10px 10px calc(150px + 20px + 10px + 8px);
+    }
+    
     h1 {
-      i.fa {
-        &.fa-check {
+      .fa-stack{
+        height: 1em; 
+        line-height: 1em;
+      }
+      i.fa.fa-check {
           font-size: 0.5em;
           color: #fff;
-        }
       }
-      span {
-        color: #ccc;
-        font-size: 1em
-      }
+    }
+    span {
+      color: material-color($secondary_material, '600');
     }
   }
 }

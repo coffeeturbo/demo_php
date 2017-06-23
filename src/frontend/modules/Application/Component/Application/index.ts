@@ -1,4 +1,4 @@
-import {Component, HostBinding} from "@angular/core";
+import {Component, ElementRef, HostBinding, Renderer, ViewChild, HostListener} from "@angular/core";
 import {LoadingBar, LoadingBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
@@ -13,7 +13,7 @@ import {ProfileService} from "../../../Profile/Service/ProfileService";
     styleUrls: ["./style.shadow.scss"]
 })
 export class ApplicationComponent {
-    @HostBinding("class") className: string;
+    @HostBinding("class") className: string = "";
     public device = Device;
     public isSearchResultsVisible = false;
     public searchResults = [
@@ -30,7 +30,9 @@ export class ApplicationComponent {
         public auth: AuthService,
         public profile: ProfileService,
         private routeHelper: RouteHelperService,
-        private loadingBarEvents: LoadingBarEvents
+        private loadingBarEvents: LoadingBarEvents,
+        private elRef: ElementRef,
+        private renderer: Renderer
     ) {
         loadingBarEvents.onChangeState
             .map((loadingBar: LoadingBar) => loadingBar.state)
@@ -39,5 +41,10 @@ export class ApplicationComponent {
 
         this.routeHelper.titleWatcher();
         this.routeHelper.loadingIndicatorWatcher();
+
+        if(this.device.isMobile()) {
+            this.renderer.listen(this.elRef.nativeElement, 'panleft', () => this.sidebar.hide());
+            this.renderer.listen(this.elRef.nativeElement, 'panright', () => this.sidebar.show());
+        }
     }
 }

@@ -1,19 +1,20 @@
 ng-container(*ngIf="profile")
   header
     .backdrop(
-      [style.background-image]="'url(http://cdn.domaza.co/upload/paralax/15211/34db5d2fd7617390f73e99e6802e01a8.jpg)'",
+      [style.background-image]="'url(https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500)'",
       [attr.data-profile-id] = "profile.id",
       [attr.data-account-id]="profile.account_id",
       [attr.data-profile-alias]="profile.alias"
     )
-      img.avatar(src="https://pp.userapi.com/c7001/v7001108/313d0/Uf8Oer4ZR-w.jpg")
-      .info
-        h1
-          | {{profile.name}}
-          span.fa-stack
-            i.fa.fa-certificate.fa-stack-1x
-            i.fa.fa-check.fa-stack-1x
-        span @{{profile.alias}}
+      figure
+        img(src="https://pbs.twimg.com/profile_images/378800000796578930/bb2119f37f717b0bc551923f7fdf3d9f_400x400.jpeg")
+        figcaption
+          h1
+            | {{profile.name}}
+            span.fa-stack
+              i.fa.fa-certificate.fa-stack-1x
+              i.fa.fa-check.fa-stack-1x
+          span @{{profile.alias}}
   p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
   p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
   p {{ "Created" | translate }}: {{ profile.created | date }}

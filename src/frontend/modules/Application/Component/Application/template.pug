@@ -1,4 +1,4 @@
-.header-container((panleft)="device.isMobile() && sidebar.hide()")
+.header-container
   header
     button.sidebar((click)="sidebar.toggle()")
       i.fa.fa-2x.fa-bars
@@ -24,13 +24,9 @@
       ul
         li(*ngFor="let result of searchResults")
           a(href="") {{ result }}
-  sidebar([ngClass]="sidebar.state", (panleft)="device.isMobile() && sidebar.hide()")
+  sidebar([ngClass]="sidebar.state")
 
-// DOTO: Make it better
-main(*ngIf="device.isMobile()", [ngClass]="'sidebar-' + sidebar.state", (panleft)="sidebar.hide()", (panright)="sidebar.show()")
-  router-outlet
-
-main(*ngIf="!device.isMobile()", [ngClass]="'sidebar-' + sidebar.state")
+main([ngClass]="'sidebar-' + sidebar.state")
   router-outlet
   
 application-loading-bar
