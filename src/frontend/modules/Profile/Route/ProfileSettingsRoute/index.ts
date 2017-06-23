@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 import {ProfileService} from "../../Service/ProfileService";
 import {Profile} from "../../Entity/Profile";
@@ -19,6 +19,7 @@ export class ProfileSettingsRoute implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
+        private router: Router,
         private profileService: ProfileService
     ) {}
 
@@ -61,13 +62,14 @@ export class ProfileSettingsRoute implements OnInit {
 
     public submit(): void {
         this.disabled = true;
-        // let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value);
-        let profile = Object.assign(this.profile, this.form.value);
+        let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value);
+
         this.profileService.edit(profile, this.form.value, this.profile)
             .finally(() => this.disabled = false)
             .subscribe(profile => {
                 this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
                 this.profile = profile;
+                this.router.navigate(["profile", this.profileService.getOwnProfilePath()]);
             })
         ;
     }

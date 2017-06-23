@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {Observable} from "rxjs";
+import {Observable, Observer} from "rxjs";
 
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
@@ -45,14 +45,13 @@ export class ProfileService {
         ;
     }
     
-    public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile>
-    {
+    public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile> {
         return this.rest.update(profile.id, request)
             .map(profileGetResponse => profileGetResponse.entity)
-            .do(profile => {
-                this.replaceInCache(oldProfile, profile);
-                if(oldProfile.alias != profile.alias) { 
-                    this.auth.refreshToken({"refresh_token": TokenRepository.getRefreshToken()});
+            .do(profile => this.replaceInCache(oldProfile, profile))
+            .flatMap(profile => {
+                if (oldProfile.alias != profile.alias) {
+                    return this.auth.refreshToken({"refresh_token": TokenRepository.getRefreshToken()}).map(() => profile);
                 }
             })
         ;
