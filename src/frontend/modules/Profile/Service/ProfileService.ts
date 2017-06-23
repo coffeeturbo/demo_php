@@ -10,8 +10,17 @@ import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateReq
 import {AuthService} from "../../Auth/Service/AuthService";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 
+interface ProfileServiceInterface {
+    get(path: string): Observable<Profile>;
+    edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile>;
+    checkAlias(alias: string): Observable<CheckAliasResponse>;
+    getOwnProfilePath(): string;
+    getOwnProfile(): Observable<Profile>;
+    isOwnProfileExist(): boolean;
+}
+
 @Injectable()
-export class ProfileService {
+export class ProfileService implements ProfileServiceInterface{
     private profiles: Profile[] = [];
     public onProfileResolve = new EventEmitter<Profile>(true);
 
@@ -48,10 +57,14 @@ export class ProfileService {
     public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile> {
         return this.rest.update(profile.id, request)
             .map(profileGetResponse => profileGetResponse.entity)
-            .do(profile => this.replaceInCache(oldProfile, profile))
+            .do( profile => this.replaceInCache(oldProfile, profile))
             .flatMap(profile => {
                 if (oldProfile.alias != profile.alias) {
-                    return this.auth.refreshToken({"refresh_token": TokenRepository.getRefreshToken()}).map(() => profile);
+                    return this.auth.refreshToken({
+                        "refresh_token": TokenRepository.getRefreshToken()
+                    }).map(() => profile);
+                } else {
+                    return Observable.of(profile);
                 }
             })
         ;
@@ -89,15 +102,13 @@ export class ProfileService {
         return Observable.of(profile);
     }
 
-    public saveToCache(profile: Profile): void
+    private saveToCache(profile: Profile): void
     {
         this.profiles.push(profile);
     }
 
-    public replaceInCache(oldProfile: Profile, newProfile: Profile): void
+    private replaceInCache(oldProfile: Profile, newProfile: Profile): void
     {
-        // oldProfile = JSON.parse(JSON.stringify(oldProfile));
-
         let index: number = this.profiles.indexOf(oldProfile);
         if (index != -1) {
             this.profiles[this.profiles.indexOf(oldProfile)] = newProfile;
