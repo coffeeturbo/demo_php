@@ -45,7 +45,7 @@ export class ProfileRoute implements OnInit {
             reader.onloadend = (data: FileReaderEvent) => {
 
                 this.crop.nativeElement.src = data.target.result;
-
+                
                 if(this.cropper) {
                     this.cropper.replace(data.target.result);
                 } else {
@@ -56,9 +56,13 @@ export class ProfileRoute implements OnInit {
                         highlight: false,
                         background: false,
                         zoomOnWheel: false,
-                        aspectRatio: 1
+                        toggleDragModeOnDblclick: false,
+                        aspectRatio: 1,
+                        // minContainerWidth: 500,
+                        // minContainerHeight: 500,
                     });
                 }
+                this.avatarCropperModalService.show();
                 observer.next(this.crop.nativeElement);
             }
         });

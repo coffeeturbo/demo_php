@@ -25,11 +25,10 @@ ng-container(*ngIf="profile")
   p {{ "Created" | translate }}: {{ profile.created | date }}
   
 
-
-  //modal((on-close)="avatarCropperModalService.hide()", *ngIf="avatarCropperModalService.isVisible")
-  //  modal-header(title="Загрузка изображения")
-  //  modal-body
-  img(#crop)
+  modal(width="500px", height="500px", [ngClass]="{hidden: !avatarCropperModalService.isVisible}", (on-close)="avatarCropperModalService.hide()")
+    modal-header(title="Загрузка изображения")
+    modal-body
+      img(#crop)
   
   //span.result(*ngIf='data.image')
   //  img([src]='data.image', [width]='croppedWidth', [height]='croppedHeight')
