@@ -1,5 +1,6 @@
 @import '~sass-material-colors';
 @import '~sass-mq';
+@import '~cropperjs/dist/cropper.css';
 
 $primary_material:  "blue-grey";
 //$primary_material:  "teal";
@@ -14,3 +15,13 @@ $h2_size:   21px;
 $h3_size:   19px;
 $h4_size:   17px;
 $font_size: 14px;
+
+ // DOTO: Finish it
+  .cropper-crop-box {
+    .cropper-view-box {
+      outline: none;
+    }
+    .cropper-point {
+      background: #fff;
+    }
+  }

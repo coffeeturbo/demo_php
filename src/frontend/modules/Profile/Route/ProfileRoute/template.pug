@@ -1,3 +1,4 @@
+doctype html
 ng-container(*ngIf="profile")
   header
     .backdrop(
@@ -7,7 +8,9 @@ ng-container(*ngIf="profile")
       [attr.data-profile-alias]="profile.alias"
     )
       figure
-        img(src="https://pbs.twimg.com/profile_images/378800000796578930/bb2119f37f717b0bc551923f7fdf3d9f_400x400.jpeg")
+        form([formGroup]="form")
+          input(#fileInput, formControlName="image", type="file", accept="image/*", (change)="browseFileHandler($event.target.files[0])")
+        img(#avatar, src="{{avatarPath}}", (click)="browseFile($event)")
         figcaption
           h1
             | {{profile.name}}
@@ -15,6 +18,20 @@ ng-container(*ngIf="profile")
               i.fa.fa-certificate.fa-stack-1x
               i.fa.fa-check.fa-stack-1x
           span @{{profile.alias}}
+  
+  
   p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
   p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
   p {{ "Created" | translate }}: {{ profile.created | date }}
+  
+
+
+  //modal((on-close)="avatarCropperModalService.hide()", *ngIf="avatarCropperModalService.isVisible")
+  //  modal-header(title="Загрузка изображения")
+  //  modal-body
+  img(#crop)
+  
+  //span.result(*ngIf='data.image')
+  //  img([src]='data.image', [width]='croppedWidth', [height]='croppedHeight')
+  //  |         {{data1.image.length}}
+  

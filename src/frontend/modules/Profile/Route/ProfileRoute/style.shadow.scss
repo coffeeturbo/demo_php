@@ -14,6 +14,10 @@
     width: 100%;
     display: flex;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
+
+    input[type=file] {
+      display:none;
+    }
     
     img {
       border: 4px solid #fff;
@@ -24,6 +28,7 @@
       top: -77px;
       left:20px;
       box-shadow: 0 1px 1px rgba(136,153,166,0.15);
+      cursor: pointer;
     }
 
     figcaption {
