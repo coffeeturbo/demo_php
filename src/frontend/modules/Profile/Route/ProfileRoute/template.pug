@@ -8,9 +8,7 @@ ng-container(*ngIf="profile")
       [attr.data-profile-alias]="profile.alias"
     )
       figure
-        form([formGroup]="form")
-          input(#fileInput, formControlName="image", type="file", accept="image/*", (change)="browseFileHandler($event.target.files[0])")
-        img(#avatar, src="{{avatarPath}}", (click)="browseFile($event)")
+        img(src="{{avatarPath}}", (click)="cropperService.browseFile()")
         figcaption
           h1
             | {{profile.name}}
@@ -23,14 +21,14 @@ ng-container(*ngIf="profile")
   p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
   p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
   p {{ "Created" | translate }}: {{ profile.created | date }}
-  
 
-  modal(width="500px", height="500px", [ngClass]="{hidden: !avatarCropperModalService.isVisible}", (on-close)="avatarCropperModalService.hide()")
+  modal(width="500px", [hidden]="!cropperService.enabled", (on-close)="cropperService.destroy()", [backdrop]="false")
     modal-header(title="Загрузка изображения")
     modal-body
-      img(#crop)
-  
-  //span.result(*ngIf='data.image')
-  //  img([src]='data.image', [width]='croppedWidth', [height]='croppedHeight')
-  //  |         {{data1.image.length}}
-  
+      article
+        p Выбранная область будет показываться на Вашей странице.
+        p Если изображение ориентировано неправильно, фотографию можно повернуть.
+      .cropper-modal-box
+        img(#crop)
+    modal-footer
+      button.btn.primary Сохранить

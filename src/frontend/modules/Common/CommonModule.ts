@@ -10,6 +10,7 @@ import {NotImplementedModule} from "./NotImplemented/NotImplementedModule";
 import {LoadingBoxModule} from "./LoadingBox/LoadingBoxModule";
 import {Config} from "../../app/config";
 import {dictionaries} from "../../translations/dictionaries";
+import {CropperModule} from "./Cropper/CropperModule";
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import {dictionaries} from "../../translations/dictionaries";
         TranslationModule.setConfig(dictionaries, <Locale>Config.locale.default, Config.locale.aliases)
     ],
     exports: [
+        CropperModule,
         NgCommonModule,
         LoadingBoxModule,
         LoadingBarModule,

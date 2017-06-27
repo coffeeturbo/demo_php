@@ -15,10 +15,6 @@
     display: flex;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
 
-    input[type=file] {
-      display:none;
-    }
-    
     img {
       border: 4px solid #fff;
       position: absolute;
@@ -51,4 +47,8 @@
   }
 }
 
-.hidden{display:none}
+modal-footer{
+  display: flex;
+  justify-content: flex-end;
+}
+article{padding:20px}

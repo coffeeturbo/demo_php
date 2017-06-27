@@ -9,7 +9,6 @@ import {ProfileResolver} from "./Service/ProfileResolver";
 import {ProfileService} from "./Service/ProfileService";
 import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
 import {ImageCropperModule} from "ng2-img-cropper";
-import {AvatarCropperModalService} from "./Service/AvatarCropperModalService";
 
 @NgModule({
     imports: [
@@ -23,7 +22,6 @@ import {AvatarCropperModalService} from "./Service/AvatarCropperModalService";
         ProfileSettingsRoute
     ],
     providers: [
-        AvatarCropperModalService,
         ProfileRESTService,
         ProfileService,
         ProfileResolver,

@@ -25,3 +25,68 @@ $font_size: 14px;
       background: #fff;
     }
   }
+
+.cropper-modal-box {
+  //max-height: 470px;
+  //max-width: 470px;
+}
+
+.cropper-modal-box img {
+  max-width: 100%;
+}
+
+/* Override Cropper's styles */
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
+
+
+.cropper-point.point-n,
+.cropper-point.point-s,
+.cropper-point.point-w,
+.cropper-point.point-e{
+  display:none;
+}
+
+//.cropper-line
+.cropper-point{
+    width: 9px;
+    height: 9px;
+    opacity: .3;  
+}
+
+.cropper-point.point-nw {
+  bottom: -4px;
+  left: -4px;  
+}
+.cropper-point.point-nw {
+  top: -4px;
+  left: -4px;
+}
+.cropper-point.point-ne {
+  top: -4px;
+  right: -4px;
+}
+
+.cropper-line {
+  background-color: #fff;
+  opacity: .3;
+}
+
+.cropper-line.line-n{
+  top: 0;
+  height: 1px;
+}
+.cropper-line.line-s{
+  bottom: 0;
+  height: 1px;
+}
+.cropper-line.line-w{
+  left: 0;
+  width: 1px;
+}
+.cropper-line.line-e{
+  right: 0;
+  width: 1px;
+}
