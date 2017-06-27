@@ -5,15 +5,16 @@ class ImageCollection implements \JsonSerializable
 {
     private $images;
 
-    static public function createFromJson(array $json): self
+    static public function createFromJson(array $json = null ): self
     {
         $collection = new ImageCollection();
 
-        foreach($json as $item => $value)
-        {
-            $collection->addImage(new Image($value['storage_path'], $value['public_path'], $item ));
+        if(count($json)>1){
+            foreach($json as $item => $value)
+            {
+                $collection->addImage(new Image($value['storage_path'], $value['public_path'], $item ));
+            }
         }
-
         return $collection;
     }
 
@@ -26,10 +27,11 @@ class ImageCollection implements \JsonSerializable
 
     function jsonSerialize()
     {
-// DOTO: Сделать что б работало. Щас "Warning: array_map(): Argument #2 should be an array"
-//        return array_map(function(Image $image){
-//            return $image->jsonSerialize();
-//        }, $this->images);
+        if(is_null($this->images)) return [];
+
+        return array_map(function(Image $image){
+            return $image->jsonSerialize();
+        }, $this->images);
     }
 
 }

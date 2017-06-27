@@ -3,11 +3,9 @@ namespace AvatarBundle\Service;
 
 use AvatarBundle\Image\Image;
 use AvatarBundle\Image\ImageCollection;
-use Intervention\Image\Image as ImageLayer;
 use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use Intervention\Image\ImageManager;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AvatarService
 {
@@ -23,19 +21,12 @@ class AvatarService
         return $this->imageManager;
     }
 
-
     public function uploadImage(ProfileAvatarStrategy $strategy, UploadedImageParameter $imageParameter)
     {
-
-
-
         $imageCollection = $this->generateImagesFromFile($imageParameter, $strategy);
 
         $strategy->getEntity()->setImages($imageCollection);
     }
-
-
-
 
     public function generateImagesFromFile(UploadedImageParameter $imageParameter, ProfileAvatarStrategy $strategy): ImageCollection
     {
