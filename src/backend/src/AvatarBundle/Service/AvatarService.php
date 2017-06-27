@@ -39,91 +39,60 @@ class AvatarService
 
     public function generateImagesFromFile(UploadedImageParameter $imageParameter, ProfileAvatarStrategy $strategy): ImageCollection
     {
-
         // сохраняем оригинальное изображение
-
-        // кропаем изображение для аватара
-        // генерируем дополнительные изображения
         $imageCollection = new ImageCollection();
 
-        $originImage = $this->getOriginImage($imageParameter, $strategy);
+        $originImage = $this->generateImage(
+                            $imageParameter->getFile()->getRealPath(),
+                            'origin',
+                            $strategy
+        );
 
         $imageCollection->addImage($originImage);
 
-        $this->generateStrategyImages($strategy, $originImage, $imageCollection);
+        // кропаем изображение для аватара
+        $cropImage = $this->generateImage(
+            $imageParameter->getFile()->getRealPath(),
+            'cropped',
+            $strategy,
+            $imageParameter
+        );
+
+        $imageCollection->addImage($cropImage);
+
+        // генерируем дополнительные изображения
+        $this->generateStrategyImages($strategy, $cropImage, $imageCollection);
 
         return $imageCollection;
     }
-
-
 
     public function generateStrategyImages(ProfileAvatarStrategy $strategy, Image $image, ImageCollection $collection)
     {
         foreach($strategy->getSizes() as $size){
 
-            $image = $this->generateImageFromPath($image->getStoragePath(), $size, $strategy);
+            $resizedImage = $this->generateImage(
+                $image->getStoragePath(),
+                $size,
+                $strategy,
+                null,
+                true
+            );
 
-            $collection->addImage($image);
+            $collection->addImage($resizedImage);
         }
     }
 
-    public function generateImageFromPath($originFilePath, $name, ProfileAvatarStrategy $strategy): Image
+    public function generateImage(string $imagePath,
+                                  $name,
+                                  ProfileAvatarStrategy $strategy,
+                                  UploadedImageParameter $parameter = null,
+                                  bool $resize = false): Image
     {
-
-        $extension = 'jpg';
-        $absolutePath = $strategy->getStorageDirPath();
-        $webPath = $strategy->getPublicDirPath();
-
-
-        $storagePath = sprintf("%s", $absolutePath);
-
-        $imageName = sprintf('%s_%s.%s', $name, uniqid(), $extension);
-
-        $storagedirPath = sprintf('%s/%s', $storagePath, $name);
-
-        $storageFilePath = sprintf('%s/%s', $storagedirPath, $imageName);
-
-        $publicFilePath =  sprintf('%s/%s/%s', $webPath, $name, $imageName);
-
-        if(!file_exists($storagedirPath)) mkdir($storagedirPath);
-
-                $this->imageManager
-                    ->make($originFilePath)
-                    ->encode($extension, 75)
-                    ->resize($name, $name)
-                    ->save($storageFilePath);
-
-
-
-        $originImage = new Image(
-            $storageFilePath,
-            $publicFilePath,
-            $name
-        );
-
-        return $originImage;
-    }
-
-
-    public function resizeImage(): ImageLayer
-    {
-
-    }
-
-    public function cropImage(): ImageLayer
-    {
-
-    }
-
-    public function getOriginImage(UploadedImageParameter $parameter, ProfileAvatarStrategy $strategy): Image
-    {
-        $name = 'origin';
 
         $absolutePath = $strategy->getStorageDirPath();
         $webPath = $strategy->getPublicDirPath();
 
-        $imageName = sprintf('%s_%s.%s', $name, uniqid(), $parameter->getFile()->getClientOriginalExtension());
-
+        $imageName = sprintf('%s_%s.%s', $name, uniqid(), 'jpg');
 
         $storageFileDirPath = sprintf('%s/%s', $absolutePath, $name);
 
@@ -131,21 +100,28 @@ class AvatarService
 
         $publicFilePath =  sprintf('%s/%s/%s',  $webPath, $name, $imageName);
 
-
-//        $parameter->getFile()->move(
-//            $storageFileDirPath,
-//            $imageName
-//        );
-
-
         if(!file_exists($storageFileDirPath)) mkdir($storageFileDirPath);
 
-        $this->imageManager
-            ->make($parameter->getFile()->getRealPath())
+        $image = $this->imageManager
+            ->make($imagePath)
             ->encode($encode = 'jpg', 70)
-//            ->crop($parameter->getWidth(), $parameter->getHeight(), $parameter->getStartX(), $parameter->getStartY())
-            ->save($storageFilePath);
+           ;
 
+        if($parameter){
+            $image->crop(
+                $parameter->getWidth(),
+                $parameter->getHeight(),
+                $parameter->getStartX(),
+                $parameter->getStartY()
+            );
+        }
+
+        if($resize) {
+            $image->resize((int) $name, (int) $name);
+        }
+
+
+        $image->save($storageFilePath);
 
         $originImage = new Image(
             $storageFilePath,
@@ -155,6 +131,4 @@ class AvatarService
         return $originImage;
 
     }
-
-
 }
