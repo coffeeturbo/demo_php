@@ -2,8 +2,10 @@
 
 namespace ProfileBundle\Repository;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityRepository;
 use ProfileBundle\Entity\Profile;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -13,10 +15,14 @@ class ProfileRepository extends EntityRepository
 {
     public function save(Profile $profile)
     {
-        $em = $this->getEntityManager();
+        try {
+            $em = $this->getEntityManager();
+            $em->persist($profile);
+            $em->flush([$profile]);
 
-        $em->persist($profile);
-        $em->flush([$profile]);
+        } catch (UniqueConstraintViolationException $e) {
+            throw new ConflictHttpException("Can't save profile. Duplicate entry.");
+        }
 
         return $profile;
     }

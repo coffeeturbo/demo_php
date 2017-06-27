@@ -27,6 +27,7 @@ class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
                 'gender' => $profile->getGender()->getStringCode(),
                 'name' => $profile->getName(),
                 'alias' => $profile->getAlias(),
+                'image' => $profile->getImages()->jsonSerialize(),
                 'birth_date' => $profile->getBirthDate() ? $profile->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT) : null,
                 'verified' => $profile->isVerified(),
                 'created' => $profile->getCreated()->format(\DateTime::W3C)
