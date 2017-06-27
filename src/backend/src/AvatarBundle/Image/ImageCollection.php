@@ -26,9 +26,10 @@ class ImageCollection implements \JsonSerializable
 
     function jsonSerialize()
     {
-        return array_map(function(Image $image){
-            return $image->jsonSerialize();
-        }, $this->images);
+// DOTO: Сделать что б работало. Щас "Warning: array_map(): Argument #2 should be an array"
+//        return array_map(function(Image $image){
+//            return $image->jsonSerialize();
+//        }, $this->images);
     }
 
 }
