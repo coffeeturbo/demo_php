@@ -4,6 +4,7 @@ namespace ProfileBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
+use AvatarBundle\Parameter\UploadedImageParameter;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,19 +35,20 @@ class AvatarController extends Controller
 
             $profile = $profileService->getById($id);
 
-            $sizes  = [
-                'x' => $request->get('x'),
-                'y' => $request->get('y'),
-                'width' => $request->get('width'),
-                'height' => $request->get('height'),
-            ];
+            $params = new UploadedImageParameter(
+                $image,
+                $request->get('width'),
+                $request->get('height'),
+                $request->get('x'),
+                $request->get('y')
+            );
 
-            $profileService->uploadAvatar($profile, $image, $sizes);
-            $profileService->update($profile);
-
+            $profileService->uploadAvatar($profile, $params);
 
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage());
         }
 
         return new SuccessProfileResponse(

@@ -5,11 +5,25 @@ class Image implements \JsonSerializable
 {
     private $storagePath;
     private $publicPath;
+    private $name;
 
-    public function __construct(string $storagePath = null, string $publicPath = null)
+    public function __construct(string $storagePath = null, string $publicPath = null, string $name = null)
     {
         $this->storagePath = $storagePath;
         $this->publicPath = $publicPath;
+        $this->name = $name;
+    }
+
+
+    public function setName(string $name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function getStoragePath(): string

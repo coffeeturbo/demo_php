@@ -6,6 +6,8 @@ use AccountBundle\Entity\Account;
 use AuthBundle\Service\AuthService;
 use AvatarBundle\Image\Image;
 use AvatarBundle\Image\ImageCollection;
+use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
+use AvatarBundle\Parameter\UploadedImageParameter;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
@@ -80,7 +82,7 @@ class ProfileService
     {
         $profiles = $this->getByAccountId($profile->getAccount()->getId());
 
-        if (count($profiles) >= $this->profilesLimit) {
+        if(count($profiles) >= $this->profilesLimit) {
             throw new AccessDeniedHttpException(
                 sprintf("The maximum number of profiles allowed in your account is %s", $this->profilesLimit)
             );
@@ -92,7 +94,7 @@ class ProfileService
         return $profile;
     }
 
-    public function update(Profile $profile) : Profile
+    public function update(Profile $profile): Profile
     {
         $account = $this->authService->getAccount();
 
@@ -106,45 +108,19 @@ class ProfileService
     }
     
     public function save(Profile $profile) {
-        try {
-            $this->profileRepository->save($profile);
-        } catch (UniqueConstraintViolationException $e) {
-            throw new ConflictHttpException("Can't save profile. Duplicate entry.");
-        }
+        $this->profileRepository->save($profile);
     }
 
-    public function uploadAvatar(Profile $profile, UploadedFile $file, array $sizes)
+    public function uploadAvatar(Profile $profile, UploadedImageParameter $imageParameter)
     {
         $absolutePath = $this->container->getParameter('profile.avatar.absolute_path');
+        $webPath = $this->container->getParameter('profile.avatar.web_path');
 
-        $imageService = $this->container->get('avatar.service')->getImageManager();
+        $strategy = new ProfileAvatarStrategy($profile, $absolutePath, $webPath);
 
+        $this->container->get('avatar.service')->uploadImage($strategy, $imageParameter);
 
-        $publicPath = sprintf('public:path');
-        $storagePath = sprintf("%s", $absolutePath);
-
-        $imageName = sprintf('%s.%s', uniqid(), $file->getClientOriginalExtension());
-
-        $storageFilePath = sprintf('%s/%s', $storagePath, $imageName);
-
-        $imageService
-            ->make($file->getRealPath())
-            ->resize(100, 100)
-            ->save($storageFilePath);
-
-        $file->move(
-            $absolutePath,
-            $imageName
-        );
-
-
-        $imageCollection = new ImageCollection();
-        $imageCollection->addImage(new Image(
-            $storageFilePath,
-            $publicPath
-        ));
-
-        $profile->setImages($imageCollection);
+        $this->profileRepository->save($profile);
     }
 
     public function delete(Profile $profile)

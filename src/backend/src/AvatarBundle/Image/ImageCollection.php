@@ -11,7 +11,7 @@ class ImageCollection implements \JsonSerializable
 
         foreach($json as $item => $value)
         {
-            $collection->addImage(new Image($value['storage_path'], $value['public_path']));
+            $collection->addImage(new Image($value['storage_path'], $value['public_path'], $item ));
         }
 
         return $collection;
@@ -19,7 +19,9 @@ class ImageCollection implements \JsonSerializable
 
     public function addImage(Image $image)
     {
-        $this->images[] = $image;
+        $this->images[$image->getName() ?? null] = $image;
+
+        return $this;
     }
 
     function jsonSerialize()
