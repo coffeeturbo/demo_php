@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:500');
 @import "~font-awesome/css/font-awesome.css";
 @import '~reset.css';
+@import '~cropperjs/dist/cropper.css';
 @import "global";
 @import "loader";
 @import "form/input";
@@ -83,4 +84,60 @@ main a{
 
 .flex-space {
   flex-grow: 1;
+}
+
+
+
+
+
+// DOTO: Finish it
+.cropper-crop-box {
+  .cropper-view-box {
+    outline: none;
+  }
+  .cropper-point {
+    background: #fff;
+  }
+}
+
+.cropper-modal-box {
+  max-height: 270px;
+  //max-width: 470px;
+}
+
+.cropper-modal-box img {
+  max-width: 100%;
+}
+
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50%;
+}
+
+
+.cropper-crop-box {
+  .cropper-point.point-n,
+  .cropper-point.point-s,
+  .cropper-point.point-w,
+  .cropper-point.point-e{
+    display:none;
+  }
+
+  .cropper-point {
+    width: 9px;
+    height: 9px;
+    opacity: .3;
+  }
+  .cropper-point.point-nw {bottom: -4px; left: -4px;}
+  .cropper-point.point-nw {top: -4px; left: -4px;}
+  .cropper-point.point-ne {top: -4px; right: -4px;}
+  .cropper-line.line-n{top: 0;height: 1px;}
+  .cropper-line.line-s{bottom: 0;height: 1px;}
+  .cropper-line.line-w{left: 0;width: 1px;}
+  .cropper-line.line-e{right: 0;width: 1px;}
+  .cropper-line {
+    background-color: #fff;
+    opacity: .3;
+  }
+
 }
