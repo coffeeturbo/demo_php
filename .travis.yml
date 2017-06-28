@@ -30,6 +30,7 @@ before_install:
   - cp src/backend/app/config/parameters.yml.dist src/backend/app/config/parameters.yml
   - mkdir src/backend/var/jwt
   - mkdir src/backend/var/cache
+  - chmod 777 src/backend/var/cache
   - mkdir src/backend/var/logs
   - mkdir src/backend/var/session
   - openssl genrsa -out src/backend/var/jwt/private.pem -passout pass:secretpass -aes256 4096
