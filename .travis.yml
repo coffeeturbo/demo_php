@@ -14,7 +14,8 @@ before_install:
   - docker -v
   - cp test.env .env
   - docker-compose build
+  - docker-compose up -d
 
 script:
-  - docker-compose up -d
+
   - docker-compose ps
