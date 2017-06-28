@@ -11,6 +11,7 @@ import {LoadingBoxModule} from "./LoadingBox/LoadingBoxModule";
 import {Config} from "../../app/config";
 import {dictionaries} from "../../translations/dictionaries";
 import {CropperModule} from "./Cropper/CropperModule";
+import {PluralizeModule} from "./Pluralize/PluralizeModule";
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {CropperModule} from "./Cropper/CropperModule";
         ModalModule,
         TooltipModule,
         TranslationModule,
+        PluralizeModule,
         NotImplementedModule
     ]
 })
