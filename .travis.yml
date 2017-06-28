@@ -21,4 +21,4 @@ before_install:
 
 script:
   - docker-compose exec php php -v
-  - docker-compose exec php php /opt/jet/backend/vendor/bin/phpunit -v
+  - docker-compose exec php phpunit
