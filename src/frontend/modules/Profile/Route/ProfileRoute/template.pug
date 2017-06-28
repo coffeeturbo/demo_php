@@ -5,10 +5,11 @@ ng-container(*ngIf="profile")
       [style.background-image]="'url(https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500)'",
       [attr.data-profile-id] = "profile.id",
       [attr.data-account-id]="profile.account_id",
-      [attr.data-profile-alias]="profile.alias"
     )
       figure
-        img(src="{{avatarPath}}", (click)="cropperService.browseFile()")
+        .avatar
+          img(src="{{avatarPath}}")
+          button(*ngIf="profile", (click)="cropperService.browseFile()") {{ "Change" | translate }}
         figcaption
           h1
             | {{profile.name}}
@@ -22,13 +23,14 @@ ng-container(*ngIf="profile")
   p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
   p {{ "Created" | translate }}: {{ profile.created | date }}
 
-  modal(width="500px", [hidden]="!cropperService.enabled", (on-close)="cropperService.destroy()", [backdrop]="false")
+  modal(width="500px", [hidden]="!cropperService.enabled", (on-close)="cropperService.destroy()")
     modal-header(title="Загрузка изображения")
     modal-body
       article
-        p Выбранная область будет показываться на Вашей странице.
-        p Если изображение ориентировано неправильно, фотографию можно повернуть.
+        p Выбрите область для маленьких фотографий.
+        p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
       .cropper-modal-box
         img(#crop)
     modal-footer
-      button.btn.primary Сохранить
+      button.btn((click)="cropperService.destroy()") {{ "Cancel" | translate }}
+      button.btn.primary {{ "Save" | translate }}

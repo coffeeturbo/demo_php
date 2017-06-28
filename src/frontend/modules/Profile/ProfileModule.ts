@@ -8,14 +8,12 @@ import {ProfileRESTService} from "./Service/ProfileRESTService";
 import {ProfileResolver} from "./Service/ProfileResolver";
 import {ProfileService} from "./Service/ProfileService";
 import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
-import {ImageCropperModule} from "ng2-img-cropper";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule,
-        ImageCropperModule
+        ReactiveFormsModule
     ],
     declarations: [
         ProfileRoute,
