@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/proyoozer/jet.svg?token=yys6KUYUYyp7otrPkJzx&branch=master)](https://travis-ci.com/proyoozer/jet)
+
 # JET: Angular & Symfony application
 ## Deploy
 
