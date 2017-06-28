@@ -1,6 +1,17 @@
 sudo: required
 language: php
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+
 env:
   DOCKER_COMPOSE_VERSION: 1.11.2
 
@@ -16,10 +27,9 @@ before_install:
   - cp test.env .env
   - docker-compose build
   - docker-compose up -d
-  - docker-compose exec php composer install
+  - cd src/backend && composer install
 
 
 
 script:
-  - docker-compose exec php composer update
   - docker-compose exec php phpunit
