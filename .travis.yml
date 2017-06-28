@@ -5,8 +5,8 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-#php:
-#  - 7.1
+php:
+  - 7.1
 
 env:
   DOCKER_COMPOSE_VERSION: 1.11.2
