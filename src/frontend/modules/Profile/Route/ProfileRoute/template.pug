@@ -20,9 +20,15 @@ ng-container(*ngIf="profile")
   
   
   p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
-  p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
-  p {{ "Created" | translate }}: {{ profile.created | date }}
-
+  p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
+  p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year"}} {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}    
+  
+  p(title="{{ profile.created | date }}") {{ "Registered" | translate }} 
+    ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year"}} {{profile.created | datediff:"year"}} {{profile.created | datediff:"year" | pluralize:"год":"года":"лет"}} 
+    ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month"}} {{profile.created | datediff:"day" | pluralize:"месяц":"месяца":"месяцев"}} 
+    ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" }} {{profile.created | datediff:"day" | pluralize:"день":"дня":"дней"}} 
+    | назад
+    
   modal(width="500px", [hidden]="!cropperService.enabled", (on-close)="cropperService.destroy()")
     modal-header(title="Загрузка изображения")
     modal-body

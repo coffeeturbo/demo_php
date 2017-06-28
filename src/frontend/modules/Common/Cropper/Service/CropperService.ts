@@ -47,10 +47,12 @@ export class CropperService {
     }
     
     public destroy() {
-        this.enabled = false;
-        this.cropper.destroy();
-        this.element.src = "";
-        this.input.value = ""
+        if(this.enabled) {
+            this.enabled = false;
+            this.cropper.destroy();
+            this.element.src = "";
+            this.input.value = ""
+        }
     }
 
     public browseFile() {
