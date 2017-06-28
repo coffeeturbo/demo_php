@@ -10,11 +10,11 @@ php:
 
 env:
   DOCKER_COMPOSE_VERSION: 1.11.2
-  DB_ROOT_PASS= "1234"
-  DB_NAME="sf"
-  DB_TEST_NAME="dev_sf"
-  DB_USER="sf"
-  DB_PASS="sf"
+  DB_ROOT_PASS: "1234"
+  DB_NAME: "sf"
+  DB_TEST_NAME: "dev_sf"
+  DB_USER: "sf"
+  DB_PASS: "sf"
 
 services:
   - docker
