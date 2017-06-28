@@ -1,4 +1,5 @@
 sudo: required
+language: php
 
 env:
   DOCKER_COMPOSE_VERSION: 1.11.2
@@ -16,5 +17,7 @@ before_install:
   - docker-compose build
   - docker-compose up -d
 
+
+
 script:
-  - docker-compose ps
+  - docker-compose exec php php /opt/jet/backend/vendor/bin/phpunit
