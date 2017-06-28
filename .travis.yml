@@ -16,7 +16,7 @@ before_install:
   - cp test.env .env
   - docker-compose build
   - docker-compose up -d
-  - docker-compose exec php composer update
+  - docker-compose exec php composer install
 
 
 
