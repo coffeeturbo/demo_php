@@ -12,6 +12,7 @@ import {Config} from "../../app/config";
 import {dictionaries} from "../../translations/dictionaries";
 import {CropperModule} from "./Cropper/CropperModule";
 import {PluralizeModule} from "./Pluralize/PluralizeModule";
+import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {PluralizeModule} from "./Pluralize/PluralizeModule";
     ],
     exports: [
         CropperModule,
+        CapitalizeModule,
         NgCommonModule,
         LoadingBoxModule,
         LoadingBarModule,

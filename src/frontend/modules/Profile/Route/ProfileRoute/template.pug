@@ -18,18 +18,17 @@ ng-container(*ngIf="profile")
               i.fa.fa-check.fa-stack-1x
           span @{{profile.alias}}
   
-  
-  p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
+  p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
   p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
-  p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year"}} {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}    
-  
-  p(title="{{ profile.created | date }}") {{ "Registered" | translate }} 
-    ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year"}} {{profile.created | datediff:"year"}} {{profile.created | datediff:"year" | pluralize:"год":"года":"лет"}} 
-    ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month"}} {{profile.created | datediff:"day" | pluralize:"месяц":"месяца":"месяцев"}} 
-    ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" }} {{profile.created | datediff:"day" | pluralize:"день":"дня":"дней"}} 
-    | назад
+  p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}    
+  p(title="{{ profile.created | date }}") 
+    | {{ "Registered" | translate }} 
+    ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year" | pluralize:"год":"года":"лет"}} 
+    ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:"месяц":"месяца":"месяцев"}} 
+    ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:"день":"дня":"дней"}} 
+    | {{"Ago" | translate | lowercase}}
     
-  modal(width="500px", [hidden]="!cropperService.enabled", (on-close)="cropperService.destroy()")
+  modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()")
     modal-header(title="Загрузка изображения")
     modal-body
       article
