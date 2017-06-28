@@ -29,6 +29,9 @@ before_install:
   - docker-compose up -d
   - cp src/backend/app/config/parameters.yml.dist src/backend/app/config/parameters.yml
   - mkdir mkdir src/backend/var/jwt
+  - mkdir mkdir src/backend/var/cache
+  - mkdir mkdir src/backend/var/logs
+  - mkdir mkdir src/backend/var/session
   - openssl genrsa -out src/backend/var/jwt/private.pem -passout pass:secretpass -aes256 4096
   - openssl rsa -pubout -in src/backend/var/jwt/private.pem -passin pass:secretpass -out src/backend/var/jwt/public.pem
   - cd src/backend && composer install
