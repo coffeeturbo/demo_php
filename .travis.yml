@@ -10,6 +10,11 @@ php:
 
 env:
   DOCKER_COMPOSE_VERSION: 1.11.2
+  DB_ROOT_PASS= "1234"
+  DB_NAME="sf"
+  DB_TEST_NAME="dev_sf"
+  DB_USER="sf"
+  DB_PASS="sf"
 
 services:
   - docker
@@ -20,7 +25,6 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose -v
   - docker -v
-  - cp test.env .env
   - docker-compose build
   - docker-compose up -d
   - cp src/backend/app/config/parameters.yml.dist src/backend/app/config/parameters.yml
@@ -32,4 +36,4 @@ before_install:
 
 
 script:
-  - docker-compose exec php phpunit
+  - docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
