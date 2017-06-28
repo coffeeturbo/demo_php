@@ -33,12 +33,13 @@ before_install:
   - mkdir src/backend/var/logs
   - mkdir src/backend/var/session
   - chmod 777 src/backend/var/cache src/backend/var/logs src/backend/var/session
-  #- openssl genrsa -out src/backend/var/jwt/private.pem -passout pass:secretpass -aes256 4096
-  #- openssl rsa -pubout -in src/backend/var/jwt/private.pem -passin pass:secretpass -out src/backend/var/jwt/public.pem
-  #- cd src/backend && composer install
+  - openssl genrsa -out src/backend/var/jwt/private.pem -passout pass:secretpass -aes256 4096
+  - openssl rsa -pubout -in src/backend/var/jwt/private.pem -passin pass:secretpass -out src/backend/var/jwt/public.pem
+  - cd src/backend && composer install
   - docker-compose exec php php bin/symfony_requirements
+  - docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
 
 
 
 script:
-  - docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
+  #- docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
