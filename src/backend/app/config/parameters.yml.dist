@@ -24,7 +24,7 @@ parameters:
     jwt_key_pass_phrase:  'secretpass'
     jwt_token_ttl:        3600
 
-    hwi_oauth_vk_id: ''
-    hwi_oauth_vk_secret: ''
-    hwi_oauth_facebook_id: ''
-    hwi_oauth_facebook_secret: ''
+    hwi_oauth_vk_id: '123123'
+    hwi_oauth_vk_secret: 'secret'
+    hwi_oauth_facebook_id: '123123'
+    hwi_oauth_facebook_secret: 'secret'
