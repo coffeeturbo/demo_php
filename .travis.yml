@@ -12,6 +12,8 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose -v
   - docker -v
+  - cp test.env .env
+  - docker-compose build
 
 script:
   - docker-compose ps
