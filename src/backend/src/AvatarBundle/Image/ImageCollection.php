@@ -3,13 +3,13 @@ namespace AvatarBundle\Image;
 
 class ImageCollection implements \JsonSerializable
 {
-    private $images;
+    private $images = [];
 
     static public function createFromJson(array $json = null ): self
     {
         $collection = new ImageCollection();
 
-        if(count($json)>1){
+        if(count($json) > 0){
             foreach($json as $item => $value)
             {
                 $collection->addImage(new Image($value['storage_path'], $value['public_path'], $item ));
@@ -27,8 +27,6 @@ class ImageCollection implements \JsonSerializable
 
     function jsonSerialize()
     {
-        if(is_null($this->images)) return [];
-
         return array_map(function(Image $image){
             return $image->jsonSerialize();
         }, $this->images);
