@@ -15,7 +15,6 @@ before_install:
   - cp test.env .env
 #  - docker-compose build
 #  - docker-compose up -d
-  - /etc/init.d/mysqld status
 
 script:
 
