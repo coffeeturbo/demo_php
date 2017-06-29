@@ -9,6 +9,7 @@ import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {AuthService} from "../../Auth/Service/AuthService";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
+import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 
 interface ProfileServiceInterface {
     get(path: string): Observable<Profile>;
@@ -57,7 +58,7 @@ export class ProfileService implements ProfileServiceInterface{
     public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile> {
         return this.rest.update(profile.id, request)
             .map(profileGetResponse => profileGetResponse.entity)
-            .do( profile => this.replaceInCache(oldProfile, profile))
+            .do(profile => this.replaceInCache(oldProfile, profile))
             .flatMap(profile => {
                 if (oldProfile.alias != profile.alias) {
                     return this.auth.refreshToken({
@@ -67,12 +68,20 @@ export class ProfileService implements ProfileServiceInterface{
                     return Observable.of(profile);
                 }
             })
-        ;
+            ;
     }
 
     public checkAlias(alias: string): Observable<CheckAliasResponse>
     {
         return this.rest.checkAlias(alias);
+    }
+
+    public uploadAvatar(profile: Profile, avatarUploadRequest: AvatarUploadRequest): Observable<Profile>
+    {
+        let oldProfile = profile;
+        return this.rest.uploadAvatar(profile.id, avatarUploadRequest)
+            .map(profileGetResponse => profileGetResponse.entity)
+            .do(profile => this.replaceInCache(oldProfile, profile))
     }
 
     public getOwnProfilePath(): string

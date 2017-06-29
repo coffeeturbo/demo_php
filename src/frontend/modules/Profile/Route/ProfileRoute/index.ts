@@ -3,6 +3,8 @@ import {ActivatedRoute} from "@angular/router";
 
 import {Profile} from "../../Entity/Profile";
 import {CropperService} from "../../../Common/Cropper/Service/CropperService";
+import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
+import {ProfileService} from "../../Service/ProfileService";
 
 @Component({
     templateUrl: "./template.pug",
@@ -15,6 +17,7 @@ export class ProfileRoute implements OnInit {
 
     constructor(
         private route: ActivatedRoute, 
+        private profileService: ProfileService, 
         public cropperService: CropperService
     ) {}
 
@@ -26,6 +29,22 @@ export class ProfileRoute implements OnInit {
     
     ngAfterViewInit() {
         this.cropperService.init(this.cropImage.nativeElement);
+    }
+    
+    submit() {
+        let cropperData = this.cropperService.getData();
+        let cropperImage = this.cropperService.getImage();
+        let avatarUploadRequest = <AvatarUploadRequest>{
+            x: cropperData.x,
+            y: cropperData.y,
+            width: cropperData.width,
+            height: cropperData.height,
+            image: cropperImage
+        };
+        
+        this.profileService.uploadAvatar(this.profile, avatarUploadRequest).subscribe((profile)=>{
+            console.log(profile);
+        })
     }
 }
 

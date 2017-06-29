@@ -1,12 +1,14 @@
 import {Injectable} from "@angular/core";
 import {RESTService} from "@angular-addons/rest";
-import {Observable} from "rxjs";
+import {Observable, Observer} from "rxjs";
 import {AuthHttp} from "angular2-jwt";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
 import {Config} from "../../../app/config";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
+import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
+import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 
 @Injectable()
 export class ProfileRESTService {
@@ -64,5 +66,34 @@ export class ProfileRESTService {
         return this.rest
             .get(url)
             .map(res => res.json())
+    }
+
+    public uploadAvatar(profileId: number, avatarUploadRequest: AvatarUploadRequest): Observable<ProfileGetResponse>
+    {
+        let url = `/protected/profile/${profileId}/avatar/upload`;
+        let formData = new FormData();
+
+        for (let field in avatarUploadRequest) {
+            formData.append(field, avatarUploadRequest[field]);
+        }
+
+        let xhrRequest = new XMLHttpRequest();
+
+        xhrRequest.open("POST", Config.uri.api + url);
+        xhrRequest.setRequestHeader('Authorization', 'Bearer ' + TokenRepository.getToken());
+        xhrRequest.send(formData);
+
+        return Observable.create((observer: Observer<ProfileGetResponse>) => {
+            xhrRequest.onreadystatechange = () => {
+                if (xhrRequest.readyState === 4) {
+                    if (xhrRequest.status >= 200 && xhrRequest.status < 300) {
+                        observer.next(xhrRequest.response);
+                        observer.complete();
+                    } else {
+                        observer.error(xhrRequest.response);
+                    }
+                }
+            }
+        });
     }
 }

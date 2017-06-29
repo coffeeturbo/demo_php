@@ -1,7 +1,7 @@
 @import "../../../../assets/styles/global";
 
 .backdrop {
-  margin:-20px -20px 79px;
+  margin: -20px -20px 79px;
   background-color: material-color($primary_material, '600');
   background-size: cover;
   min-height: 150px;
@@ -10,46 +10,46 @@
   figure {
     position: absolute;
     background: #fff;
-    top:100%;
+    top: 100%;
     width: 100%;
     display: flex;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
 
-    .avatar{
+    .avatar {
       position: absolute;
       width: 150px;
       height: 150px;
       border-radius: 50%;
       top: -77px;
-      left:20px;
+      left: 20px;
       overflow: hidden;
       border: 4px solid #fff;
-      box-shadow: 0 1px 1px rgba(136,153,166,0.15);
-      
+      box-shadow: 0 1px 1px rgba(136, 153, 166, 0.15);
+
       img {
         width: 100%;
         height: 100%;
       }
-      
+
       button {
         cursor: pointer;
         position: absolute;
         left: 0;
-        background: rgba(0,0,0,0.4);
+        background: rgba(0, 0, 0, 0.4);
         width: 100%;
         padding: 10px;
         bottom: 0;
         transition: all 150ms;
         transform: translateY(100%);
-        color:material-color($secondary_material,"400");
-        
-        &:hover{
-          color:#fff;
-          background: rgba(0,0,0,0.5);
+        color: material-color($secondary_material, "400");
+
+        &:hover {
+          color: #fff;
+          background: rgba(0, 0, 0, 0.5);
         }
       }
-      
-      &:hover{
+
+      &:hover {
         button {
           transform: translateX(0);
         }
@@ -59,15 +59,15 @@
     figcaption {
       padding: 10px 10px 10px calc(150px + 20px + 10px + 8px);
     }
-    
+
     h1 {
-      .fa-stack{
-        height: 1em; 
+      .fa-stack {
+        height: 1em;
         line-height: 1em;
       }
       i.fa.fa-check {
-          font-size: 0.5em;
-          color: #fff;
+        font-size: 0.5em;
+        color: #fff;
       }
     }
     span {
@@ -76,8 +76,11 @@
   }
 }
 
-modal-footer{
+modal-footer {
   display: flex;
   justify-content: flex-end;
 }
-article{padding-bottom:20px}
+
+article {
+  padding-bottom: 20px
+}

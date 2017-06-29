@@ -38,4 +38,4 @@ ng-container(*ngIf="profile")
         img(#crop)
     modal-footer
       button.btn((click)="cropperService.destroy()") {{ "Cancel" | translate }}
-      button.btn.primary {{ "Save" | translate }}
+      button.btn.primary((click)="submit()") {{ "Save" | translate }}

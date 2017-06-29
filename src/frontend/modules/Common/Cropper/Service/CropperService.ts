@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import * as Cropper from 'cropperjs';
-import {CropperOptions} from "cropperjs";
+import {CropperOptions, Data as CropperData} from "cropperjs";
 
 @Injectable()
 export class CropperService {
@@ -9,6 +9,7 @@ export class CropperService {
     private cropper: Cropper;
     private element: HTMLImageElement;
     private input: HTMLInputElement;
+    private image: File;
     private options: CropperOptions = {
         viewMode: 1,
         center: false,
@@ -58,11 +59,20 @@ export class CropperService {
     public browseFile() {
         this.input.click();
     }
+
+    public getData(rounded: boolean = true): CropperData {
+        return this.cropper.getData(rounded);
+    }
     
-    public readFile(file: File) {
+    public getImage(): File {
+        return this.image;
+    }
+    
+    public readFile(image: File) {
+        this.image = image;
         let reader = new FileReader();
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(this.image);
 
         reader.onloadend = (data: FileReaderEvent) => {
             if (this.cropper) {
