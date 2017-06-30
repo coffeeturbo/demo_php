@@ -15,7 +15,6 @@ export class ProfileRoute implements OnInit, AfterViewInit {
 
     public profile: Profile;
     public disabled: boolean = false;
-    public avatarPath: string = 'https://pbs.twimg.com/profile_images/378800000796578930/bb2119f37f717b0bc551923f7fdf3d9f_400x400.jpeg';
     @ViewChild('crop') cropImage: ElementRef;
 
     constructor(

@@ -18,6 +18,9 @@ export class CropperService {
         background: false,
         zoomOnWheel: false,
         toggleDragModeOnDblclick: false,
+        preview: '.preview',
+        minCropBoxWidth: 100,
+        minCropBoxHeight: 100,
         aspectRatio: 1
     };
     constructor() {
@@ -61,11 +64,19 @@ export class CropperService {
     }
 
     public getData(rounded: boolean = true): CropperData {
-        return this.cropper.getData(rounded);
+        if(this.cropper) {
+            return this.cropper.getData(rounded);
+        }
     }
     
     public getImage(): File {
         return this.image;
+    }
+    
+    public getImageSrc(): string
+    {
+        if(this.element)
+            return this.element.src;
     }
     
     public readFile(image: File) {
