@@ -56,7 +56,7 @@ export function LocaleFactory(translationService: TranslationService) {
         SettingsModule,
         SidebarModule,
         CommonModule,
-        RESTModule.setPath(Config.uri.api)
+        RESTModule.init(Config.uri.api, Config.auth.token_key)
     ],
     declarations: [
         ApplicationComponent,

@@ -1,19 +1,16 @@
 import {Injectable} from "@angular/core";
 import {RESTService} from "@angular-addons/rest";
-import {Observable, Observer} from "rxjs";
-import {AuthHttp} from "angular2-jwt";
+import {Observable} from "rxjs";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
-import {Config} from "../../../app/config";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
-import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 
 @Injectable()
 export class ProfileRESTService {
 
-    constructor(private rest: RESTService, private authHttp: AuthHttp) {}
+    constructor(private rest: RESTService) {}
 
     public getById(profileId: number): Observable<ProfileGetResponse> 
     {
@@ -37,16 +34,18 @@ export class ProfileRESTService {
     {
         let url = `/protected/profile/create`;
 
-        return this.authHttp
+        return this.rest
+            .auth()
             .put(url, JSON.stringify(profileCreateRequest))
             .map(res => res.json())
     }
 
     public update(profileId: number, profileUpdateRequest: ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
     {
-        let url = `${Config.uri.api}/protected/profile/${profileId}/update`;
+        let url = `/protected/profile/${profileId}/update`;
 
-        return this.authHttp
+        return this.rest
+            .auth()
             .patch(url, JSON.stringify(profileUpdateRequest))
             .map(res => res.json())
     }
@@ -77,23 +76,9 @@ export class ProfileRESTService {
             formData.append(field, avatarUploadRequest[field]);
         }
 
-        let xhrRequest = new XMLHttpRequest();
-
-        xhrRequest.open("POST", Config.uri.api + url);
-        xhrRequest.setRequestHeader('Authorization', 'Bearer ' + TokenRepository.getToken());
-        xhrRequest.send(formData);
-
-        return Observable.create((observer: Observer<ProfileGetResponse>) => {
-            xhrRequest.onreadystatechange = () => {
-                if (xhrRequest.readyState === 4) {
-                    if (xhrRequest.status >= 200 && xhrRequest.status < 300) {
-                        observer.next(xhrRequest.response);
-                        observer.complete();
-                    } else {
-                        observer.error(xhrRequest.response);
-                    }
-                }
-            }
-        });
+        return this.rest.auth()
+            .post(url, formData)
+            .map(res => res.json())
+        ;
     }
 }
