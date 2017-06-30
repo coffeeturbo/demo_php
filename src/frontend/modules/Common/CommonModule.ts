@@ -13,6 +13,7 @@ import {dictionaries} from "../../translations/dictionaries";
 import {CropperModule} from "./Cropper/CropperModule";
 import {PluralizeModule} from "./Pluralize/PluralizeModule";
 import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
+import {PalleteModule} from "./Pallete/PalleteModule";
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
         TooltipModule,
         TranslationModule,
         PluralizeModule,
+        PalleteModule,
         NotImplementedModule
     ]
 })
