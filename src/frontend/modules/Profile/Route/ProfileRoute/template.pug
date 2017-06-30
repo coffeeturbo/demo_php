@@ -8,7 +8,9 @@ ng-container(*ngIf="profile")
     )
       figure
         .avatar
-          img(src="{{avatarPath}}")
+          img(*ngIf="profile.image" src="{{profile.image[150].public_path}}")
+          div(*ngIf="!profile.image", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
+
           button(*ngIf="profile", (click)="cropperService.browseFile()") {{ "Change" | translate }}
         figcaption
           h1
@@ -17,10 +19,10 @@ ng-container(*ngIf="profile")
               i.fa.fa-certificate.fa-stack-1x
               i.fa.fa-check.fa-stack-1x
           span @{{profile.alias}}
-  
   p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
   p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
   p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}    
+  
   p(title="{{ profile.created | date }}") 
     | {{ "Registered" | translate }} 
     ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year" | pluralize:"год":"года":"лет"}} 
