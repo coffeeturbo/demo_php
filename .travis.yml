@@ -5,8 +5,8 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-php:
-  - 7.1
+#php:
+#  - 7.1
 
 env:
   DOCKER_COMPOSE_VERSION: 1.11.2
@@ -27,19 +27,20 @@ before_install:
   - docker -v
   - docker-compose build
   - docker-compose up -d
-  - cp src/backend/app/config/parameters.yml.dist src/backend/app/config/parameters.yml
-  - mkdir src/backend/var/jwt
-  - mkdir src/backend/var/cache
-  - mkdir src/backend/var/logs
-  - mkdir src/backend/var/session
-  - chmod 777 src/backend/var/cache src/backend/var/logs src/backend/var/session
-  - openssl genrsa -out src/backend/var/jwt/private.pem -passout pass:secretpass -aes256 4096
-  - openssl rsa -pubout -in src/backend/var/jwt/private.pem -passin pass:secretpass -out src/backend/var/jwt/public.pem
-  - cd src/backend && composer install
-  #- docker-compose exec php php bin/symfony_requirements
-  - docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
+#  - cp src/backend/app/config/parameters.yml.dist src/backend/app/config/parameters.yml
+#  - mkdir src/backend/var/jwt
+#  - mkdir src/backend/var/cache
+#  - mkdir src/backend/var/logs
+#  - mkdir src/backend/var/session
+#  - chmod 777 src/backend/var/cache src/backend/var/logs src/backend/var/session
+#  - openssl genrsa -out src/backend/var/jwt/private.pem -passout pass:secretpass -aes256 4096
+#  - openssl rsa -pubout -in src/backend/var/jwt/private.pem -passin pass:secretpass -out src/backend/var/jwt/public.pem
+#  - cd src/backend && composer install
+#  - docker-compose exec php php bin/symfony_requirements
+#  - docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
 
 
 
 script:
+  - mysql --version
   #- docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
