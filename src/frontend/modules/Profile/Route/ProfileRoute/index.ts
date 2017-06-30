@@ -14,6 +14,7 @@ import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 export class ProfileRoute implements OnInit, AfterViewInit {
 
     public profile: Profile;
+    public disabled: boolean = false;
     public avatarPath: string = 'https://pbs.twimg.com/profile_images/378800000796578930/bb2119f37f717b0bc551923f7fdf3d9f_400x400.jpeg';
     @ViewChild('crop') cropImage: ElementRef;
 
@@ -46,6 +47,7 @@ export class ProfileRoute implements OnInit, AfterViewInit {
     }
     
     submit() {
+        this.disabled = true;
         let cropperData = this.cropperService.getData();
         let cropperImage = this.cropperService.getImage();
         let avatarUploadRequest = <AvatarUploadRequest>{
@@ -57,8 +59,11 @@ export class ProfileRoute implements OnInit, AfterViewInit {
         };
         
         this.profileService.uploadAvatar(this.profile, avatarUploadRequest)
-            .finally(() => this.cropperService.destroy())
-            .subscribe((profile) => this.profile = profile)
+            .finally(() => this.disabled = false)
+            .subscribe((profile) => {
+                this.profile = profile;
+                this.cropperService.destroy();
+            })
         ;
     }
 }
