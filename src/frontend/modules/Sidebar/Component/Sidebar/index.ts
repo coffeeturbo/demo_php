@@ -5,6 +5,7 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 import {SettingsModalService} from "../../../Settings/Service/SettingsModalService";
 import {Config} from "../../../../app/config";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
+import {Device} from "../../../Application/Service/DeviceService";
 
 @Component({
     selector: "sidebar",
@@ -13,6 +14,7 @@ import {ProfileService} from "../../../Profile/Service/ProfileService";
 })
 export class SidebarComponent {
     public product_name: string = Config.product_name;
+    public device = Device;
 
     constructor(
         public service: SidebarService,

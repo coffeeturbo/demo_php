@@ -24,7 +24,7 @@
       ul
         li(*ngFor="let result of searchResults")
           a(href="") {{ result }}
-  sidebar([ngClass]="sidebar.state")
+  sidebar
 
 main([ngClass]="'sidebar-' + sidebar.state")
   router-outlet

@@ -1,6 +1,6 @@
 @import '../../../../assets/styles/global';
 
-:host {
+aside {
   bottom: 0;
   width: 280px;
   height: calc(100vh - 100% - 10px);
@@ -17,7 +17,7 @@
   @include mq($until: tablet) {
     top: 0;
     height: 100vh;
-    z-index: 1;
+    z-index: 2;
     padding: 0;
   }
 
@@ -48,32 +48,32 @@
     flex-shrink: 0;
   }
 
-  aside {
-    header {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid material-color($secondary_material, '300');
-      background: material-color($secondary_material, '200');
-      cursor: pointer;
+  header {
+    padding: 15px 27px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid material-color($secondary_material, '300');
+    background: material-color($secondary_material, '200');
+    cursor: pointer;
 
-      @include mq($from: tablet) {
-        display: none;
-      }
-
-      .logo {
-        height: 1.9em;
-        margin-right: 10px;
-        vertical-align: middle;
-      }
-
-      h3 {
-        flex-grow: 1;
-      }
-      
+    @include mq($from: tablet) {
+      display: none;
     }
-    
+
+    .logo {
+      height: 1.9em;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    h3 {
+      flex-grow: 1;
+    }
+
+  }
+  section {
     h4 {
       color: material-color($secondary_material, '500');
     }
@@ -136,6 +136,32 @@
         font-weight: bold;
         border: 2px material-color($secondary_material, '800') solid;  
       }
+    }
+  }
+}
+
+@include mq($until: tablet) {
+  .backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    z-index: 1;
+
+    &.hidden {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
+      visibility 0s linear 250ms;
+    }
+
+    &.visible {
+      visibility: visible;
+      opacity: 0.7;
+      transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
+      visibility 0s linear 0s;
     }
   }
 }
