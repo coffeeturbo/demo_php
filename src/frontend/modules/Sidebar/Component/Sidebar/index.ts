@@ -48,12 +48,14 @@ export class SidebarComponent implements AfterViewInit {
 
     private panStart () {
         this.renderer.addClass(this.aside.nativeElement, "dragging");
-        this.renderer.addClass(this.backdrop.nativeElement, "dragging");
+        if(this.backdrop)
+            this.renderer.addClass(this.backdrop.nativeElement, "dragging");
     }
 
     private panEnd(e) {
         this.renderer.removeClass(this.aside.nativeElement, "dragging");
-        this.renderer.removeClass(this.backdrop.nativeElement, "dragging");
+        if(this.backdrop)
+            this.renderer.removeClass(this.backdrop.nativeElement, "dragging");
 
         this.translateX = 0;
         this.backdropOpatity = 0.7;

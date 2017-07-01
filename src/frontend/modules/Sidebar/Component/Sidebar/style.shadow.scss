@@ -147,35 +147,34 @@ aside {
   }
 }
 
-@include mq($until: tablet) {
-  .backdrop {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: #000;
-    z-index: 1;
+.backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #000;
+  z-index: 1;
 
-    &.hidden {
-      visibility: hidden;
-      opacity: 0!important;
-      transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
-      visibility 0s linear 250ms;
-    }
+  &.hidden {
+    visibility: hidden;
+    opacity: 0!important;
+    transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
+    visibility 0s linear 250ms;
+  }
 
-    &.visible {
-      visibility: visible;
-      opacity: 0.7;
-      transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
-      visibility 0s linear 0s;
-    }
+  &.visible {
+    visibility: visible;
+    opacity: 0.7;
+    transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
+    visibility 0s linear 0s;
+  }
 
-    &.dragging {
-      transition: none;
-    }
+  &.dragging {
+    transition: none;
   }
 }
+
 a {
-  -webkit-user-drag: none!important;
+  -webkit-user-drag: none;
 }
