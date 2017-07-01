@@ -14,7 +14,7 @@ export const Config = {
     },
     "uri": {
         "websocket": "/ws",
-        "api": "/api"
+        "api": process.env.ENV === "production" ?  "/api" : "/api/app_dev.php"
     },
     "auth" : {
         "token_key" : "token",
