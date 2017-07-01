@@ -13,12 +13,14 @@ aside {
   overflow-y: hidden;
   padding-top: 10px;
   font-weight: 500;
+  cursor: default;
 
   @include mq($until: tablet) {
     top: 0;
     height: 100vh;
     z-index: 2;
     padding: 0;
+    overflow-y: auto;
   }
 
   &:hover {
@@ -27,7 +29,7 @@ aside {
 
   &.hidden {
     visibility: hidden;
-    transform: translateX(-280px);
+    transform: translateX(-280px)!important;
     transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
     visibility 0s linear 250ms;
   }
@@ -38,6 +40,10 @@ aside {
     transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
     visibility 0s linear 0s;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
+  }
+  
+  &.dragging {
+    transition: none;
   }
 
   hr {
@@ -52,6 +58,7 @@ aside {
     padding: 15px 27px;
     margin-bottom: 10px;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid material-color($secondary_material, '300');
@@ -152,7 +159,7 @@ aside {
 
     &.hidden {
       visibility: hidden;
-      opacity: 0;
+      opacity: 0!important;
       transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
       visibility 0s linear 250ms;
     }
@@ -163,5 +170,12 @@ aside {
       transition: opacity 250ms cubic-bezier(0.4, 0.0, 0.2, 1),
       visibility 0s linear 0s;
     }
+
+    &.dragging {
+      transition: none;
+    }
   }
+}
+a {
+  -webkit-user-drag: none!important;
 }

@@ -1,12 +1,10 @@
 import {APP_INITIALIZER, LOCALE_ID, NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
+import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
 import {Http, HttpModule, RequestOptions} from "@angular/http";
 import {RESTModule} from "@angular-addons/rest";
 import {Locale} from "@angular-addons/translate";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
-
-import "hammerjs";
 
 import {appRoutes} from "../../app/routes";
 import "../../assets/styles/index.scss";
@@ -43,6 +41,15 @@ export function LocaleFactory(translationService: TranslationService) {
     return Config.locale.aliases[locale][0];
 }
 
+declare let Hammer: any;
+export class HammerConfig extends HammerGestureConfig  {
+    buildHammer(element: HTMLElement) {
+        return new Hammer(element, {
+            touchAction: "pan-y",
+        });
+    }
+}
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -77,6 +84,10 @@ export function LocaleFactory(translationService: TranslationService) {
             provide: AuthHttp,
             useFactory: AuthHttpServiceFactory,
             deps: [Http, RequestOptions]
+        },
+        { 
+            provide: HAMMER_GESTURE_CONFIG,
+            useClass: HammerConfig 
         },
         {
             provide: APP_INITIALIZER,
