@@ -3,19 +3,21 @@
 namespace ProfileBundle\Entity;
 
 use AccountBundle\Entity\Account;
-use AvatarBundle\Image\ImageEntity;
-use AvatarBundle\Image\ImageEntityTrait;
+use AvatarBundle\Image\AvatarEntity;
+use AvatarBundle\Image\AvatarEntityTrait;
+use AvatarBundle\Image\BackdropEntity;
+use AvatarBundle\Image\BackdropEntityTrait;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 
 /**
  * Profile
  */
-class Profile implements ImageEntity
+class Profile implements AvatarEntity, BackdropEntity
 {
     const BIRTH_DATE_FORMAT = 'Y-m-d';
 
-    use ImageEntityTrait;
+    use AvatarEntityTrait, BackdropEntityTrait;
 
     private $id;
     private $created;

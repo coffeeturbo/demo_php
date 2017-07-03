@@ -29,7 +29,8 @@ class AppKernel extends Kernel
             new AuthBundle\AuthBundle(),
             new OAuthBundle\OAuthBundle(),
             new ProfileBundle\ProfileBundle(),
-            new AvatarBundle\AvatarBundle()
+            new AvatarBundle\AvatarBundle(),
+            new ImageBundle\ImageBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
