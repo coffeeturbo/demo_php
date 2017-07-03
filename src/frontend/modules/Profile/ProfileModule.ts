@@ -9,16 +9,20 @@ import {ProfileResolver} from "./Service/ProfileResolver";
 import {ProfileService} from "./Service/ProfileService";
 import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
 import {ProfileDateCreatedPipe} from "./Pipe/ProfileDateCreatedPipe";
+import {ProfileAvatarRoute} from "./Route/ProfileAvatarRoute/index";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        RouterModule,
         ReactiveFormsModule
     ],
     declarations: [
         ProfileRoute,
         ProfileSettingsRoute,
+        ProfileAvatarRoute,
         ProfileDateCreatedPipe
     ],
     providers: [

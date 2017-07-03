@@ -1,16 +1,11 @@
 doctype html
 ng-container(*ngIf="profile")
   header
-    .backdrop(
-      [style.background-image]="'url(https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500)'",
-      [attr.data-profile-id] = "profile.id",
-      [attr.data-account-id]="profile.account_id",
-    )
+    .backdrop([style.background-image]="'url(' + backdropUrl + ')'")
       figure
         .avatar
-          img(*ngIf="profile.image" src="{{profile.image[150].public_path}}")
-          div(*ngIf="!profile.image", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
-
+          img(*ngIf="profileService.hasAvatar(profile)", src="{{profile.image.medium.public_path}}", (click)='router.navigate(["profile", profile.alias || profile.id, "avatar"])')
+          div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
           button(*ngIf="profile", (click)="cropperService.browseFile()") {{ "Change" | translate }}
         figcaption
           h1
@@ -21,7 +16,7 @@ ng-container(*ngIf="profile")
           span @{{profile.alias}}
   p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
   p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
-  p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}    
+  p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}
   
   p(title="{{ profile.created | date }}") 
     | {{ "Registered" | translate }} 
@@ -29,7 +24,9 @@ ng-container(*ngIf="profile")
     ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:"месяц":"месяца":"месяцев"}} 
     ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:"день":"дня":"дней"}} 
     | {{"Ago" | translate | lowercase}}
-    
+  
+  router-outlet
+  
   modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()")
     loader(*ngIf="disabled")
     modal-header(title="Загрузка изображения")

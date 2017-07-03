@@ -83,6 +83,11 @@ export class ProfileService implements ProfileServiceInterface{
             .map(profileGetResponse => profileGetResponse.entity)
             .do(profile => this.replaceInCache(oldProfile, profile))
     }
+    
+    public hasAvatar(profile: Profile) : boolean
+    {
+        return Object.keys(profile.image).length > 0;
+    }
 
     public getOwnProfilePath(): string
     {

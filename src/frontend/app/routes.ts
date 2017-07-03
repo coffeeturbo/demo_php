@@ -15,6 +15,7 @@ import {FeedHotRoute} from "../modules/Feed/Route/FeedHotRoute/index";
 import {FeedNewRoute} from "../modules/Feed/Route/FeedNewRoute/index";
 import {FeedBestRoute} from "../modules/Feed/Route/FeedBestRoute/index";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute/index";
+import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute/index";
 
 export const appRoutes: JetRoutes = [
     {
@@ -33,7 +34,7 @@ export const appRoutes: JetRoutes = [
         data: {title: 'Best'}
     },
     {
-        "path": 'post',
+        path: 'post',
         children: [
             { path: '', component: PageNotFoundRoute },
             {
@@ -66,9 +67,7 @@ export const appRoutes: JetRoutes = [
         path: 'settings',
         component: ProfileSettingsRoute,
         canActivate: [CanActivateService],
-        resolve: {
-            profile: ProfileResolver
-        },
+        resolve: { profile: ProfileResolver },
         data: { title: 'Settings', allow: ["ROLE_CREATED"] }
     },
     { // Страница профиля (редирект на новости если не указан id профиля)
@@ -77,11 +76,16 @@ export const appRoutes: JetRoutes = [
             { path: '', redirectTo: '/feed', pathMatch: 'full' },
             {
                 path: ':path',
-                component: ProfileRoute,
-                resolve: {
-                    profile: ProfileResolver,
-                    title: ProfileTitleResolver,
-                }
+                children: [
+                    { 
+                        path: '', 
+                        component: ProfileRoute,
+                        children: [
+                            { path: 'avatar', component: ProfileAvatarRoute}
+                        ]
+                    },
+                ],
+                resolve: { profile: ProfileResolver, title: ProfileTitleResolver }
             }
         ]
     },
@@ -89,6 +93,11 @@ export const appRoutes: JetRoutes = [
         path: 'forbidden',
         component: ForbiddenRoute,
         data: { title: '403 - Access denied' }
+    },
+    {
+        path: 'not-found',
+        component: PageNotFoundRoute,
+        data: { title: '404 - Now found' }
     },
     {
         path: '**',

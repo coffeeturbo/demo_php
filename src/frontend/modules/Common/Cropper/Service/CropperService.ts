@@ -47,7 +47,7 @@ export class CropperService {
         this.enabled = true;
          setTimeout(()=>{
             this.cropper.replace(src);
-         },0);
+         }, 100);
     }
     
     public destroy() {

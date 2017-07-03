@@ -1,0 +1,57 @@
+@import "../../../../assets/styles/global";
+
+modal {
+  img {
+    max-height: calc(100vh - 60px);
+    max-width: calc(100vw - 40px);
+    display: block;
+
+    @include mq($until: tablet) {
+      max-height: none;
+      max-width: calc(100vw);
+    }
+  }
+
+  .overview {
+    display: flex;
+    margin: -10px -10px 5px;
+    font-size: 0.9em;
+    font-family: Arial, sans-serif;
+    color: material-color($secondary_material, '500');
+
+    > * {
+      padding: 10px;
+
+      .fa + * {
+        margin-left: 10px;
+      }
+    }
+
+    a {
+      color: material-color($primary_material, '300');
+      transition: all 150ms;
+      
+      &:hover {
+        color: material-color($primary_material, '500');
+        background: material-color($primary_material, '50');
+      }
+      
+      b {
+        color: material-color($primary_material, '500');
+        margin-left: 5px;
+      }
+
+      &.active{
+        color: material-color("red", '500');
+        
+        &:hover {
+          background: material-color("red", '50');
+        }
+
+        b {
+          color: material-color("red", '500');
+        }
+      }
+    }
+  }
+}

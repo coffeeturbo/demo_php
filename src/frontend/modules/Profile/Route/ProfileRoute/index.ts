@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 import {Profile} from "../../Entity/Profile";
 import {CropperService} from "../../../Common/Cropper/Service/CropperService";
@@ -14,12 +14,15 @@ import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 export class ProfileRoute implements OnInit, AfterViewInit {
 
     public profile: Profile;
+    public backdropUrl: string = "https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500";
     public disabled: boolean = false;
+    public avatarVisible: boolean = false;
     @ViewChild('crop') cropImage: ElementRef;
 
     constructor(
         private route: ActivatedRoute, 
-        private profileService: ProfileService, 
+        private router: Router, 
+        public profileService: ProfileService, 
         public palleteService: PalleteService, 
         public cropperService: CropperService
     ) {}
@@ -60,6 +63,7 @@ export class ProfileRoute implements OnInit, AfterViewInit {
         this.profileService.uploadAvatar(this.profile, avatarUploadRequest)
             .finally(() => this.disabled = false)
             .subscribe((profile) => {
+                this.route.snapshot.data["profile"] = profile; // @TODO: Check it
                 this.profile = profile;
                 this.cropperService.destroy();
             })

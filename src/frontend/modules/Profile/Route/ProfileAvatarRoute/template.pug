@@ -1,0 +1,24 @@
+modal((on-close)='router.navigate(["profile", profile.alias || profile.id])', [animation]="false")
+  img(*ngIf="profile.image" src="{{profile.image.origin.public_path}}")
+  modal-footer
+    .overview
+      .comments
+        i.fa.fa-lg.fa-comments
+        i Comments 
+          b 14
+      .flex-space
+      a
+        i.fa.fa-lg.fa-share-alt
+        i Share
+          
+      a.likes((click)="toggleLike()", [ngClass]="{active:isActive}")
+        i.fa.fa-lg.fa-heart
+        i Like
+          b 3
+    .comments
+      .comment
+        | foo
+      .comment
+        | foo
+      .comment
+        | foo
