@@ -28,6 +28,11 @@ before_install:
   - docker-compose build
   - sudo /etc/init.d/mysql stop
   - sudo /etc/init.d/postgresql stop
+  - sudo apt-get remove --purge "^mysql.*"
+  - sudo apt-get autoremove
+  - sudo apt-get autoclean
+  - sudo rm -rf /var/lib/mysql
+  - sudo rm -rf /var/log/mysql
   - docker-compose up -d
   - cp src/backend/app/config/parameters.yml.dist src/backend/app/config/parameters.yml
   - mkdir src/backend/var/jwt
