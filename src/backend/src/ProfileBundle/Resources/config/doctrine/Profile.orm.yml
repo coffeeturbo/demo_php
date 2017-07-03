@@ -27,7 +27,10 @@ ProfileBundle\Entity\Profile:
     verified:
       type: boolean
       nullable: false
-    image:
+    avatar:
+      type: json_array
+      nullable: true
+    backdrop:
       type: json_array
       nullable: true
   manyToOne:

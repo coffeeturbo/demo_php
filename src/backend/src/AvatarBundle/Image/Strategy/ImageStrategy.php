@@ -1,13 +1,12 @@
 <?php
 namespace AvatarBundle\Image\Strategy;
 
-use AvatarBundle\Image\ImageEntity;
-
 abstract class ImageStrategy
 {
     protected $entity;
     protected $storageDirPath;
     protected $publicDirPath;
+    protected $sizes;
 
     public function getStorageDirPath()
     {
@@ -29,8 +28,9 @@ abstract class ImageStrategy
         $this->publicDirPath = $publicDirPath;
     }
 
+    abstract public function getSizes();
 
-    abstract public function getEntity(): ImageEntity ;
-    abstract public function setEntity(ImageEntity $entity);
+    abstract public function getEntity() ;
+    abstract public function setEntity($entity);
 
 }
