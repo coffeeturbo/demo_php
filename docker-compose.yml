@@ -11,8 +11,6 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
     volumes:
       - ./docker/mysql/data:/var/lib/mysql
-    networks:
-      - jet_develop_network
   nginx:
     build: ./docker/nginx
     ports: ["80:8080"]
@@ -20,16 +18,9 @@ services:
       - ./src:/opt/jet
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
     depends_on: [php]
-    networks:
-      - jet_develop_network
   php:
     build: ./docker/php
     stdin_open: true
     volumes: 
       - ./src:/opt/jet
     depends_on: [mysql]
-    networks:
-      - jet_develop_network
-  networks:
-    jet_develop_network:
-      driver: bridge
