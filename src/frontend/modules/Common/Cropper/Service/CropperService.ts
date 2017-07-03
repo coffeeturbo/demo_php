@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import * as Cropper from 'cropperjs';
-import {CropperOptions} from "cropperjs";
+import {CropperOptions, Data as CropperData} from "cropperjs";
 
 @Injectable()
 export class CropperService {
@@ -9,6 +9,7 @@ export class CropperService {
     private cropper: Cropper;
     private element: HTMLImageElement;
     private input: HTMLInputElement;
+    private image: File;
     private options: CropperOptions = {
         viewMode: 1,
         center: false,
@@ -17,6 +18,9 @@ export class CropperService {
         background: false,
         zoomOnWheel: false,
         toggleDragModeOnDblclick: false,
+        preview: '.preview',
+        minCropBoxWidth: 100,
+        minCropBoxHeight: 100,
         aspectRatio: 1
     };
     constructor() {
@@ -47,20 +51,39 @@ export class CropperService {
     }
     
     public destroy() {
-        this.enabled = false;
-        this.cropper.destroy();
-        this.element.src = "";
-        this.input.value = ""
+        if(this.enabled) {
+            this.enabled = false;
+            this.cropper.destroy();
+            this.element.src = "";
+            this.input.value = ""
+        }
     }
 
     public browseFile() {
         this.input.click();
     }
+
+    public getData(rounded: boolean = true): CropperData {
+        if(this.cropper) {
+            return this.cropper.getData(rounded);
+        }
+    }
     
-    public readFile(file: File) {
+    public getImage(): File {
+        return this.image;
+    }
+    
+    public getImageSrc(): string
+    {
+        if(this.element)
+            return this.element.src;
+    }
+    
+    public readFile(image: File) {
+        this.image = image;
         let reader = new FileReader();
 
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(this.image);
 
         reader.onloadend = (data: FileReaderEvent) => {
             if (this.cropper) {

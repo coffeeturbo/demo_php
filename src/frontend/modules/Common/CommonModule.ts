@@ -11,6 +11,9 @@ import {LoadingBoxModule} from "./LoadingBox/LoadingBoxModule";
 import {Config} from "../../app/config";
 import {dictionaries} from "../../translations/dictionaries";
 import {CropperModule} from "./Cropper/CropperModule";
+import {PluralizeModule} from "./Pluralize/PluralizeModule";
+import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
+import {PalleteModule} from "./Pallete/PalleteModule";
 
 
 @NgModule({
@@ -19,6 +22,7 @@ import {CropperModule} from "./Cropper/CropperModule";
     ],
     exports: [
         CropperModule,
+        CapitalizeModule,
         NgCommonModule,
         LoadingBoxModule,
         LoadingBarModule,
@@ -26,6 +30,8 @@ import {CropperModule} from "./Cropper/CropperModule";
         ModalModule,
         TooltipModule,
         TranslationModule,
+        PluralizeModule,
+        PalleteModule,
         NotImplementedModule
     ]
 })

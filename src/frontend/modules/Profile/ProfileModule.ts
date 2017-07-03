@@ -8,6 +8,7 @@ import {ProfileRESTService} from "./Service/ProfileRESTService";
 import {ProfileResolver} from "./Service/ProfileResolver";
 import {ProfileService} from "./Service/ProfileService";
 import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
+import {ProfileDateCreatedPipe} from "./Pipe/ProfileDateCreatedPipe";
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
     ],
     declarations: [
         ProfileRoute,
-        ProfileSettingsRoute
+        ProfileSettingsRoute,
+        ProfileDateCreatedPipe
     ],
     providers: [
         ProfileRESTService,

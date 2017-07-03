@@ -2,12 +2,6 @@
 
 :host(.progress) {
   cursor: progress;
-  
-  main {
-    animation: fade 300ms reverse both;
-    transition: transform 1s;
-    transform: translate(0, 50px);
-  }
 }
 
 .header-container {
@@ -24,7 +18,7 @@ header {
   justify-content: space-between;
   position: relative;
   z-index: 1;
-  box-shadow: 0 0 10px rgba(0,0,0,0.4);;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
 
   a, button.sidebar {
     transition: background 100ms ease-in-out;

@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Renderer, ViewChild, HostListener} from "@angular/core";
+import {Component, ElementRef, HostBinding, Renderer} from "@angular/core";
 import {LoadingBar, LoadingBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
@@ -43,7 +43,6 @@ export class ApplicationComponent {
         this.routeHelper.loadingIndicatorWatcher();
 
         if(this.device.isMobile()) {
-            this.renderer.listen(this.elRef.nativeElement, 'panleft', () => this.sidebar.hide());
             this.renderer.listen(this.elRef.nativeElement, 'panright', () => this.sidebar.show());
         }
     }

@@ -1,17 +1,16 @@
 import {Injectable} from "@angular/core";
 import {RESTService} from "@angular-addons/rest";
 import {Observable} from "rxjs";
-import {AuthHttp} from "angular2-jwt";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
-import {Config} from "../../../app/config";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
+import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 
 @Injectable()
 export class ProfileRESTService {
 
-    constructor(private rest: RESTService, private authHttp: AuthHttp) {}
+    constructor(private rest: RESTService) {}
 
     public getById(profileId: number): Observable<ProfileGetResponse> 
     {
@@ -35,16 +34,18 @@ export class ProfileRESTService {
     {
         let url = `/protected/profile/create`;
 
-        return this.authHttp
+        return this.rest
+            .auth()
             .put(url, JSON.stringify(profileCreateRequest))
             .map(res => res.json())
     }
 
     public update(profileId: number, profileUpdateRequest: ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
     {
-        let url = `${Config.uri.api}/protected/profile/${profileId}/update`;
+        let url = `/protected/profile/${profileId}/update`;
 
-        return this.authHttp
+        return this.rest
+            .auth()
             .patch(url, JSON.stringify(profileUpdateRequest))
             .map(res => res.json())
     }
@@ -64,5 +65,20 @@ export class ProfileRESTService {
         return this.rest
             .get(url)
             .map(res => res.json())
+    }
+
+    public uploadAvatar(profileId: number, avatarUploadRequest: AvatarUploadRequest): Observable<ProfileGetResponse>
+    {
+        let url = `/protected/profile/${profileId}/avatar/upload`;
+        let formData = new FormData();
+
+        for (let field in avatarUploadRequest) {
+            formData.append(field, avatarUploadRequest[field]);
+        }
+
+        return this.rest.auth()
+            .post(url, formData)
+            .map(res => res.json())
+        ;
     }
 }

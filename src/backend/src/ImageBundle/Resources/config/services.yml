@@ -1,0 +1,11 @@
+parameters:
+    image.handling.class: Intervention\Image\ImageManager
+
+services:
+    intervention.service:
+      class: Intervention\Image\ImageManager
+
+    image.service:
+        class:  ImageBundle\Service\ImageService
+        arguments:
+          - '@intervention.service'

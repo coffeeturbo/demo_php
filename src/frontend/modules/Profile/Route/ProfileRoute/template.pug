@@ -8,7 +8,9 @@ ng-container(*ngIf="profile")
     )
       figure
         .avatar
-          img(src="{{avatarPath}}")
+          img(*ngIf="profile.image" src="{{profile.image[150].public_path}}")
+          div(*ngIf="!profile.image", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
+
           button(*ngIf="profile", (click)="cropperService.browseFile()") {{ "Change" | translate }}
         figcaption
           h1
@@ -17,20 +19,30 @@ ng-container(*ngIf="profile")
               i.fa.fa-certificate.fa-stack-1x
               i.fa.fa-check.fa-stack-1x
           span @{{profile.alias}}
+  p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
+  p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
+  p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}    
   
-  
-  p {{ "Gender" | translate }}: {{ profile.gender | translate }}    
-  p {{ "Birth date" | translate }}: {{ profile.birth_date | date }}    
-  p {{ "Created" | translate }}: {{ profile.created | date }}
-
-  modal(width="500px", [hidden]="!cropperService.enabled", (on-close)="cropperService.destroy()")
+  p(title="{{ profile.created | date }}") 
+    | {{ "Registered" | translate }} 
+    ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year" | pluralize:"год":"года":"лет"}} 
+    ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:"месяц":"месяца":"месяцев"}} 
+    ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:"день":"дня":"дней"}} 
+    | {{"Ago" | translate | lowercase}}
+    
+  modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()")
+    loader(*ngIf="disabled")
     modal-header(title="Загрузка изображения")
     modal-body
       article
         p Выбрите область для маленьких фотографий.
         p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
-      .cropper-modal-box
-        img(#crop)
+      figure
+        .cropper-modal-box
+          img(#crop)
+        .preview-area
+          .preview.medium
+          .preview.small
     modal-footer
       button.btn((click)="cropperService.destroy()") {{ "Cancel" | translate }}
-      button.btn.primary {{ "Save" | translate }}
+      button.btn.primary((click)="submit()") {{ "Upload" | translate }}

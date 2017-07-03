@@ -1,29 +1,29 @@
 <?php
 namespace AvatarBundle\Image\Strategy;
 
-use AvatarBundle\Image\ImageEntity;
+use AvatarBundle\Image\AvatarEntity;
 
 class ProfileAvatarStrategy extends ImageStrategy
 {
 
     protected $sizes = [
-        150,
-        50
+        'medium' => 150,
+        'small' => 50
     ];
 
-    public function __construct(ImageEntity $entity, string $storageDirPath, string $publicDirPath)
+    public function __construct(AvatarEntity $entity, string $storageDirPath, string $publicDirPath)
     {
         $this->entity = $entity;
         $this->storageDirPath = $storageDirPath;
         $this->publicDirPath = $publicDirPath;
     }
 
-    public function getEntity(): ImageEntity
+    public function getEntity(): AvatarEntity
     {
         return $this->entity;
     }
 
-    public function setEntity(ImageEntity $entity)
+    public function setEntity($entity)
     {
         $this->entity = $entity;
         return $this;
