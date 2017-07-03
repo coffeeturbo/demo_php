@@ -44,6 +44,7 @@ before_install:
   - openssl rsa -pubout -in src/backend/var/jwt/private.pem -passin pass:secretpass -out src/backend/var/jwt/public.pem
   - cd src/backend && composer install
 #  - docker-compose exec php php bin/symfony_requirements
+  - docker-compose ps
   - docker-compose exec php /opt/jet/backend/vendor/bin/phpunit
 
 #script:
