@@ -7,8 +7,8 @@ class ProfileAvatarStrategy extends ImageStrategy
 {
 
     protected $sizes = [
-        150,
-        50
+        'medium' => 150,
+        'small' => 50
     ];
 
     public function __construct(ImageEntity $entity, string $storageDirPath, string $publicDirPath)

@@ -59,14 +59,14 @@ class AvatarService
 
     public function generateStrategyImages(ProfileAvatarStrategy $strategy, Image $image, ImageCollection $collection)
     {
-        foreach($strategy->getSizes() as $size){
+        foreach($strategy->getSizes() as $name => $size){
 
             $resizedImage = $this->generateImage(
                 $image->getStoragePath(),
-                $size,
+                $name,
                 $strategy,
                 null,
-                true
+                $size
             );
 
             $collection->addImage($resizedImage);
@@ -77,11 +77,13 @@ class AvatarService
                                   $name,
                                   ProfileAvatarStrategy $strategy,
                                   UploadedImageParameter $parameter = null,
-                                  bool $resize = false): Image
+                                  $resize = false): Image
     {
 
         $absolutePath = $strategy->getStorageDirPath();
         $webPath = $strategy->getPublicDirPath();
+
+        if(!is_dir($absolutePath)) mkdir($absolutePath);
 
         $imageName = sprintf('%s_%s.%s', $name, uniqid(), 'jpg');
 
@@ -108,7 +110,7 @@ class AvatarService
         }
 
         if($resize) {
-            $image->resize((int) $name, (int) $name);
+            $image->resize((int) $resize, (int) $resize);
         }
 
 
