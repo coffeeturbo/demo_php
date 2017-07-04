@@ -16,7 +16,6 @@ export class ProfileRoute implements OnInit, AfterViewInit {
     public profile: Profile;
     public backdropUrl: string = "https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500";
     public disabled: boolean = false;
-    public avatarVisible: boolean = false;
     @ViewChild('crop') cropImage: ElementRef;
 
     constructor(

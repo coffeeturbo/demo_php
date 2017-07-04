@@ -2,6 +2,13 @@ import {Injectable} from "@angular/core";
 import * as Cropper from 'cropperjs';
 import {CropperOptions, Data as CropperData} from "cropperjs";
 
+/**
+ * @TODO: Исправить:
+ * 1. Загружаем аву
+ * 2. Уходим со страницы профиля, 
+ * 3. Возвращаемся
+ * 4. Пробуем еще раз загрузить аву
+ */
 @Injectable()
 export class CropperService {
     public enabled: boolean = false;
@@ -54,6 +61,7 @@ export class CropperService {
         if(this.enabled) {
             this.enabled = false;
             this.cropper.destroy();
+            this.cropper = undefined;
             this.element.src = "";
             this.input.value = ""
         }

@@ -4,7 +4,8 @@ ng-container(*ngIf="profile")
     .backdrop([style.background-image]="'url(' + backdropUrl + ')'")
       figure
         .avatar
-          img(*ngIf="profileService.hasAvatar(profile)", src="{{profile.avatar.medium.public_path}}", (click)='router.navigate(["profile", profile.alias || profile.id, "avatar"])')
+          a(*ngIf="profileService.hasAvatar(profile)", routerLink="avatar")
+            img(src="{{profile.avatar.medium.public_path}}")
           div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
           button(*ngIf="profile", (click)="cropperService.browseFile()") {{ "Change" | translate }}
         figcaption
@@ -27,7 +28,7 @@ ng-container(*ngIf="profile")
   
   router-outlet
   
-  modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()")
+  modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()", [animation]="false")
     loader(*ngIf="disabled")
     modal-header(title="Загрузка изображения")
     modal-body
@@ -36,7 +37,7 @@ ng-container(*ngIf="profile")
         p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
       figure
         .cropper-modal-box
-          img(#crop)
+          img(src="", #crop)
         .preview-area
           .preview.medium
           .preview.small
