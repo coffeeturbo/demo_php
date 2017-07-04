@@ -1,24 +1,20 @@
 modal((on-close)='router.navigate(["profile", profile.alias || profile.id])', [animation]="false")
-  img(*ngIf="profile.image" src="{{profile.image.origin.public_path}}")
+  img(*ngIf="profile.avatar" src="{{profile.avatar.origin.public_path}}")
   modal-footer
     .overview
-      .comments
+      div
         i.fa.fa-lg.fa-comments
-        i Comments 
+        i {{ "Comments" | translate }} 
           b 14
       .flex-space
       a
         i.fa.fa-lg.fa-share-alt
-        i Share
+        i {{ "Share" | translate }}
           
       a.likes((click)="toggleLike()", [ngClass]="{active:isActive}")
         i.fa.fa-lg.fa-heart
-        i Like
+        i {{ "Like" | translate }}
           b 3
-    .comments
-      .comment
-        | foo
-      .comment
-        | foo
-      .comment
-        | foo
+    #comments
+      i.fa.fa-comments-o
+      p {{ "Not implemented" | translate }}

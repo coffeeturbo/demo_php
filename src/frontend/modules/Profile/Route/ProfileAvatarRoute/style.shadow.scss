@@ -55,3 +55,15 @@ modal {
     }
   }
 }
+
+#comments {
+  text-align: center;
+  padding: 100px 0;
+  color: material-color($secondary_material, '300');
+  .fa {
+    font-size: 10em;
+  }
+  p {
+    font-size: 2em;
+  }
+}

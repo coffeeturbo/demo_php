@@ -44,7 +44,7 @@ export class ProfileRoute implements OnInit, AfterViewInit {
             .split(" ")
             .slice(0,2)
             .map(item => item.charAt(0).toUpperCase())
-            .join(" ")
+            .join(" ")
         ;
     }
     

@@ -86,7 +86,7 @@ export class ProfileService implements ProfileServiceInterface{
     
     public hasAvatar(profile: Profile) : boolean
     {
-        return Object.keys(profile.image).length > 0;
+        return Object.keys(profile.avatar).length > 0;
     }
 
     public getOwnProfilePath(): string

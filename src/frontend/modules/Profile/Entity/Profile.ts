@@ -9,7 +9,7 @@ export interface Profile {
     gender: Gender;
     name: string;
     verified: boolean;
-    image: ProfileAvatar;
+    avatar: ProfileAvatar;
 }
 
 type ProfileAvatar = {

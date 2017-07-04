@@ -4,7 +4,7 @@ ng-container(*ngIf="profile")
     .backdrop([style.background-image]="'url(' + backdropUrl + ')'")
       figure
         .avatar
-          img(*ngIf="profileService.hasAvatar(profile)", src="{{profile.image.medium.public_path}}", (click)='router.navigate(["profile", profile.alias || profile.id, "avatar"])')
+          img(*ngIf="profileService.hasAvatar(profile)", src="{{profile.avatar.medium.public_path}}", (click)='router.navigate(["profile", profile.alias || profile.id, "avatar"])')
           div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
           button(*ngIf="profile", (click)="cropperService.browseFile()") {{ "Change" | translate }}
         figcaption
