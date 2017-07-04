@@ -32,6 +32,10 @@ svg {
   }
 }
 
+span {
+  font-weight: 500;
+}
+
 @include mq($until: tablet) {
   span {
     display: none;

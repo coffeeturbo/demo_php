@@ -5,11 +5,14 @@
     .logo
       a(routerLink="/")
         application-logo
-    .search
+    .search(*ngIf="!device.isMobile()")
         input.input(type="text", size="1", (focus)="isSearchResultsVisible = true", (blur)="isSearchResultsVisible = false")
         .fa.fa-search
-
+    .flex-space
     nav.menu
+      a(*ngIf="device.isMobile()", (click)="true")
+        i.fa.fa-2x.fa-search
+        i {{"Search" | translate}}  
       ng-container(*ngIf="auth.isSignedIn()")
         a(*ngIf="profile.isOwnProfileExist()", [routerLink]="['profile', profile.getOwnProfilePath()]", routerLinkActive="active")
           i.fa.fa-2x.fa-user-circle
