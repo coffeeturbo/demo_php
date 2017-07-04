@@ -28,10 +28,16 @@ export class ProfileRoute implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.profile = this.route.snapshot.data["profile"];
+
     }
     
     ngAfterViewInit() {
         this.cropperService.init(this.cropImage.nativeElement);
+
+        // Preload fullsize avatar
+        if(this.profileService.hasAvatar(this.profile)) { 
+            (new Image()).src = this.profile.avatar['origin'].public_path;
+        }
     }
 
     public getProfileColor() {
