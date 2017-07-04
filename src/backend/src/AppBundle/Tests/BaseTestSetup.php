@@ -5,11 +5,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Client;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class BaseTestSetup extends WebTestCase
 {
     /** @var  Client */
     protected $client;
+    /** @var  ContainerInterface */
     protected $container;
 
     /** @var  EntityManagerInterface */
@@ -18,9 +20,9 @@ abstract class BaseTestSetup extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
-        $this->container = static::createClient()->getContainer();
+        $container = $this->getContainer();
 
-        $this->em = $this->container->get('doctrine.orm.default_entity_manager');
+        $this->em = $container->get('doctrine.orm.default_entity_manager');
 
         $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
 
@@ -28,6 +30,16 @@ abstract class BaseTestSetup extends WebTestCase
         $schemaTool->dropDatabase();
         $schemaTool->createSchema($metadatas);
 
+    }
+
+    protected function getContainer(): ContainerInterface
+    {
+
+        if(is_null($this->container)){
+            $this->container = static::createClient()->getContainer();
+        }
+
+        return $this->container;
     }
 
     protected function createAuthenticatedClient($username = 'user', $password = 'password')

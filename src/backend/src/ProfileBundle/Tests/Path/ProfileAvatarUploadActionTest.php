@@ -1,6 +1,7 @@
 <?php
 namespace ProfileBundle\Tests\Path;
 
+use PHPUnit\Framework\Assert;
 use ProfileBundle\DataFixtures\ORM\LoadProfileData;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Tests\ProfileController;
@@ -21,6 +22,11 @@ class ProfileAvatarUploadActionTest extends ProfileController
         $this->fixtures['profile'] = $fixtureProfile = new LoadProfileData();
         $fixtureProfile->setContainer($this->container);
         $fixtureProfile->load($this->em);
+    }
+
+    public function tearDown()
+    {
+        // TODO тут нужно удалять профиль либо файлы тестового профиля
     }
 
     public function getSuccessProfile(): Profile
@@ -44,7 +50,6 @@ class ProfileAvatarUploadActionTest extends ProfileController
         $profile = $this->getSuccessProfile();
 
         $params = [
-
             'x' => 0,
             'y' => 0,
             'width' => 200,
@@ -54,7 +59,6 @@ class ProfileAvatarUploadActionTest extends ProfileController
 
         $file = new UploadedFile($this->filePath, 'grid-example');
 
-
         $this->getPathRequestClient($profile->getId(), $params, $file);
 
         $response = $this->client->getResponse();
@@ -62,6 +66,13 @@ class ProfileAvatarUploadActionTest extends ProfileController
         $body = json_decode($response->getContent(), true);
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+
+        Assert::assertFileExists($body['entity']['avatar']['origin']['storage_path']);
+        Assert::assertFileExists($body['entity']['avatar']['cropped']['storage_path']);
+        Assert::assertFileExists($body['entity']['avatar']['medium']['storage_path']);
+        Assert::assertFileExists($body['entity']['avatar']['small']['storage_path']);
+
+        // после удаления профиля нужно удалять все связанные файлы
 
     }
 
