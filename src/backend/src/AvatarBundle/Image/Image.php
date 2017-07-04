@@ -51,7 +51,8 @@ class Image implements \JsonSerializable
     function jsonSerialize()
     {
         return [
-            'public_path' => $this->publicPath
+            'public_path' => $this->publicPath,
+            'storage_path' => $this->storagePath
         ];
     }
 

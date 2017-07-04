@@ -19,6 +19,7 @@ class AvatarController extends Controller
      *  description= "Загрузить аватар к профилю",
      *  authentication=true,
      *  input = {"class" = "ProfileBundle\Form\AvatarUploadType", "name"  = ""},
+     *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
      * )
      *
      * @param int $id

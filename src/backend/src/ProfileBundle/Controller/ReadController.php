@@ -15,6 +15,7 @@ class ReadController extends Controller
      * @ApiDoc(
      *  section="Profile",
      *  description= "Получить профиль по id",
+     *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
      *  statusCodes = {
      *      200 = "Успешное получение профиля",
      *      404 = "Профиль не найден"
@@ -39,6 +40,7 @@ class ReadController extends Controller
      * @ApiDoc(
      *  section="Profile",
      *  description= "Получить профиль по alias",
+     *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
      *  statusCodes = {
      *      200 = "Успешное получение профиля",
      *      404 = "Профиль не найден"
