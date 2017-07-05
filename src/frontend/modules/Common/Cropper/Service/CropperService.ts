@@ -81,12 +81,6 @@ export class CropperService {
         return this.image;
     }
     
-    public getImageSrc(): string
-    {
-        if(this.element)
-            return this.element.src;
-    }
-    
     public readFile(image: File) {
         this.image = image;
         let reader = new FileReader();
