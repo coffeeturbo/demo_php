@@ -26,7 +26,8 @@ class ProfileAvatarUploadActionTest extends ProfileController
 
     public function tearDown()
     {
-        // TODO тут нужно удалять профиль либо файлы тестового профиля
+
+
     }
 
     public function getSuccessProfile(): Profile
@@ -50,6 +51,7 @@ class ProfileAvatarUploadActionTest extends ProfileController
         $profile = $this->getSuccessProfile();
 
         $params = [
+            'id'=> $profile->getId(),
             'x' => 0,
             'y' => 0,
             'width' => 200,
@@ -75,6 +77,30 @@ class ProfileAvatarUploadActionTest extends ProfileController
         // после удаления профиля нужно удалять все связанные файлы
 
     }
+    public function test404()
+    {
+        $this->getAuthClient();
+        $profile = $this->getSuccessProfile();
 
+        $params = [
+            'id'=> 99999,
+            'x' => 0,
+            'y' => 0,
+            'width' => 200,
+            'height' => 200,
+        ];
+
+
+        $file = new UploadedFile($this->filePath, 'grid-example');
+
+        $this->getPathRequestClient(99999, $params, $file);
+
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+
+        // после удаления профиля нужно удалять все связанные файлы
+
+    }
 
 }

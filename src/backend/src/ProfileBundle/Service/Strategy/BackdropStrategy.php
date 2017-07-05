@@ -1,10 +1,12 @@
 <?php
-namespace AvatarBundle\Image\Strategy;
+namespace ProfileBundle\Service\Strategy;
 
 use AvatarBundle\Image\BackdropEntity;
+use AvatarBundle\Image\Strategy\ImageStrategy;
 
-class ProfileBackdropStrategy extends ImageStrategy
+class BackdropStrategy extends ImageStrategy
 {
+
     public function __construct(BackdropEntity $entity, string $storageDirPath, string $publicDirPath)
     {
         $this->entity = $entity;
@@ -12,12 +14,13 @@ class ProfileBackdropStrategy extends ImageStrategy
         $this->publicDirPath = $publicDirPath;
     }
 
+
     public function getSizes()
     {
-        return $this->sizes;
+        // TODO: Implement getSizes() method.
     }
 
-    public function getEntity(): BackdropEntity
+    public function getEntity()
     {
         return $this->entity;
     }

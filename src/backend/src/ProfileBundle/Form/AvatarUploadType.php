@@ -30,6 +30,7 @@ class AvatarUploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id', IntegerType::class, ['required' => false , 'label' => 'profileId'])
             ->add('x', IntegerType::class, ["constraints" => [new NotBlank()]])
             ->add('y', IntegerType::class, ["constraints" => [new NotBlank()]])
             ->add('width', IntegerType::class, ["constraints" => [new NotBlank()]])

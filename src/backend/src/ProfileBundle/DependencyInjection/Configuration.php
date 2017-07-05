@@ -29,6 +29,13 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('web_path')->defaultValue('uploads')->end()
                     ->end()
                 ->end()
+                ->arrayNode("backdrop")
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('absolute_path')->defaultValue('%kernel.root_dir%/../web/uploads/')->end()
+                        ->scalarNode('web_path')->defaultValue('uploads')->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;

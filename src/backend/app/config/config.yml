@@ -124,3 +124,6 @@ profile:
     avatar:
       absolute_path: '%kernel.root_dir%/../../web/uploads/avatar'
       web_path: 'uploads/avatar'
+    backdrop:
+      absolute_path: '%kernel.root_dir%/../../web/uploads/backdrop'
+      web_path: 'uploads/backdrop'

@@ -7,6 +7,7 @@ use AuthBundle\Service\AuthService;
 use AvatarBundle\Image\Image;
 use AvatarBundle\Image\ImageCollection;
 use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
+use AvatarBundle\Image\Strategy\ProfileBackdropStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use ProfileBundle\Entity\Profile;
@@ -121,6 +122,34 @@ class ProfileService
         $this->container->get('avatar.service')->uploadImage($strategy, $imageParameter);
 
         $this->profileRepository->save($profile);
+    }
+
+    public function deleteAvatar(Profile $profile): Profile
+    {
+        foreach($profile->getAvatarCollection()->getImages() as $index => $image) {
+            /**  @var $image Image */
+            unlink($image->getStoragePath());
+        }
+
+        $profile->setAvatarCollection( new ImageCollection() );
+
+//        $this->container->get('profile.service')->save($profile);
+
+        return $profile;
+    }
+
+    public function uploadBackdrop(Profile $profile, UploadedImageParameter $parameter)
+    {
+        $absolutePath = $this->container->getParameter('profile.backdrop.absolute_path');
+        $webPath = $this->container->getParameter('profile.backdrop.web_path');
+
+        $backdropStrategy = new ProfileBackdropStrategy($profile, $absolutePath, $webPath);
+
+    }
+
+    public function markDelete(Profile $profile)
+    {
+        // todo is_deleted
     }
 
     public function delete(Profile $profile)

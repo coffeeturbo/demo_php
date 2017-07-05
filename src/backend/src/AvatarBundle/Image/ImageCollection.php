@@ -25,6 +25,11 @@ class ImageCollection implements \JsonSerializable
         return $this;
     }
 
+    public function getImages(): array
+    {
+        return $this->images;
+    }
+
     function jsonSerialize()
     {
         return array_map(function(Image $image){
