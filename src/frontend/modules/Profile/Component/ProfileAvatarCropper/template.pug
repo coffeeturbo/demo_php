@@ -1,7 +1,7 @@
 doctype html
 modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()", [animation]="false")
   loader(*ngIf="disabled")
-  modal-header(title="Загрузка изображения")
+  modal-header Загрузка изображения
   modal-body
     article
       p Выбрите область для маленьких фотографий.
