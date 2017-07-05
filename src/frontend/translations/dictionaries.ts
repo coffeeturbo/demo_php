@@ -7,5 +7,9 @@ export const dictionaries: Dictionaries = {
         require('../modules/Settings/Dictionaries/RU.json'),
         require('../modules/Profile/Dictionaries/RU.json')
     ),
-    "EN": {}
+    "EN": {
+        "days1":    "days",
+        "donths1":  "months",
+        "years1":   "years",
+    }
 };
