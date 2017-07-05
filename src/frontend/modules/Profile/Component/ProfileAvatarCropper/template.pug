@@ -1,0 +1,17 @@
+doctype html
+modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()", [animation]="false")
+  loader(*ngIf="disabled")
+  modal-header(title="Загрузка изображения")
+  modal-body
+    article
+      p Выбрите область для маленьких фотографий.
+      p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
+    figure
+      .cropper-modal-box
+        img(src="", #crop)
+      .preview-area
+        .preview.medium
+        .preview.small
+  modal-footer
+    button.btn((click)="cropperService.destroy()") {{ "Cancel" | translate }}
+    button.btn.primary((click)="submit()") {{ "Upload" | translate }}

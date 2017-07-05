@@ -1,5 +1,6 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {TranslationService} from "@angular-addons/translate";
 
 import {Profile} from "../../Entity/Profile";
 import {CropperService} from "../../../Common/Cropper/Service/CropperService";
@@ -11,16 +12,15 @@ import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
     templateUrl: "./template.pug",
     styleUrls: ["./style.shadow.scss"]
 })
-export class ProfileRoute implements OnInit, AfterViewInit {
+export class ProfileRoute implements OnInit {
 
     public profile: Profile;
     public backdropUrl: string = "https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500";
     public disabled: boolean = false;
-    @ViewChild('crop') cropImage: ElementRef;
 
     constructor(
         private route: ActivatedRoute, 
-        private router: Router, 
+        private translationService: TranslationService,
         public profileService: ProfileService, 
         public palleteService: PalleteService, 
         public cropperService: CropperService
@@ -28,18 +28,13 @@ export class ProfileRoute implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.profile = this.route.snapshot.data["profile"];
-
-    }
-    
-    ngAfterViewInit() {
-        this.cropperService.init(this.cropImage.nativeElement);
-
-        // Preload fullsize avatar
-        if(this.profileService.hasAvatar(this.profile)) { 
+        
+        if(this.profileService.hasAvatar(this.profile)) {
+            // Preload fullsize avatar
             (new Image()).src = this.profile.avatar['origin'].public_path;
         }
     }
-
+    
     public getProfileColor() {
         return this.palleteService.encode(this.profile.name);
     }
@@ -52,19 +47,13 @@ export class ProfileRoute implements OnInit, AfterViewInit {
             .join(" ")
         ;
     }
-    
-    submit() {
+
+    public translate(string: string) {
+        return this.translationService.translate(string);
+    }
+
+    public uploadAvatar(avatarUploadRequest: AvatarUploadRequest) {
         this.disabled = true;
-        let cropperData = this.cropperService.getData();
-        let cropperImage = this.cropperService.getImage();
-        let avatarUploadRequest = <AvatarUploadRequest>{
-            x: cropperData.x,
-            y: cropperData.y,
-            width: cropperData.width,
-            height: cropperData.height,
-            image: cropperImage
-        };
-        
         this.profileService.uploadAvatar(this.profile, avatarUploadRequest)
             .finally(() => this.disabled = false)
             .subscribe((profile) => {

@@ -1,4 +1,3 @@
-doctype html
 ng-container(*ngIf="profile")
   header
     .backdrop([style.background-image]="'url(' + backdropUrl + ')'")
@@ -15,32 +14,17 @@ ng-container(*ngIf="profile")
               i.fa.fa-certificate.fa-stack-1x
               i.fa.fa-check.fa-stack-1x
           span @{{profile.alias}}
-  p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
-  p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
-  p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:"год":"года":"лет"}}
-  
-  p(title="{{ profile.created | date }}") 
-    | {{ "Registered" | translate }} 
-    ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year" | pluralize:"год":"года":"лет"}} 
-    ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:"месяц":"месяца":"месяцев"}} 
-    ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:"день":"дня":"дней"}} 
-    | {{"Ago" | translate | lowercase}}
-  
-  router-outlet
-  
-  modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()", [animation]="false")
-    loader(*ngIf="disabled")
-    modal-header(title="Загрузка изображения")
-    modal-body
-      article
-        p Выбрите область для маленьких фотографий.
-        p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
-      figure
-        .cropper-modal-box
-          img(src="", #crop)
-        .preview-area
-          .preview.medium
-          .preview.small
-    modal-footer
-      button.btn((click)="cropperService.destroy()") {{ "Cancel" | translate }}
-      button.btn.primary((click)="submit()") {{ "Upload" | translate }}
+  section
+    p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
+    p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
+    p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:translate("year"):translate("years"):translate("years1")}}
+    
+    p(title="{{ profile.created | date }}") 
+      | {{ "Registered" | translate }} 
+      ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year" | pluralize:translate("year"):translate("years"):translate("years1")}} 
+      ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:translate("month"):translate("months"):translate("months1")}} 
+      ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:translate("day"):translate("days"):translate("days1")}} 
+      | {{"Ago" | translate | lowercase}}
+    
+profile-avatar-cropper((onCrop)="uploadAvatar($event)", [disabled]="disabled")
+router-outlet
