@@ -32,4 +32,8 @@ export class ProfileAvatarRoute implements OnInit {
     toggleLike() {
         this.isActive = !this.isActive;
     }
+    
+    public goProfilePage() {
+        this.router.navigate(["profile", this.profile.alias || this.profile.id])
+    }
 }

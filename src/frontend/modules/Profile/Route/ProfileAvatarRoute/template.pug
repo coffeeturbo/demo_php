@@ -1,20 +1,24 @@
-modal((on-close)='router.navigate(["profile", profile.alias || profile.id])', [animation]="false")
-  img(*ngIf="profile.avatar" src="{{profile.avatar.origin.public_path}}")
-  modal-footer
-    .overview
-      div
-        i.fa.fa-lg.fa-comments
-        i {{ "Comments" | translate }} 
-          b 14
-      .flex-space
-      a
-        i.fa.fa-lg.fa-share-alt
-        i {{ "Share" | translate }}
-          
-      a.likes((click)="toggleLike()", [ngClass]="{active:isActive}")
-        i.fa.fa-lg.fa-heart
-        i {{ "Like" | translate }}
-          b 3
-    #comments
-      i.fa.fa-comments-o
-      p {{ "Not implemented" | translate }}
+ng-container(*ngIf="profile.avatar.origin")
+  modal((on-close)='goProfilePage()', [animation]="false")
+    img(src="{{profile.avatar.origin.public_path}}")
+    modal-footer
+      .overview
+        div
+          i.fa.fa-lg.fa-comments
+          i {{ "Comments" | translate }} 
+          | 14
+        .flex-space
+        a
+          i.fa.fa-lg.fa-share-alt
+          i {{ "Share" | translate }}
+            
+        a.likes((click)="toggleLike()", [ngClass]="{active:isActive}")
+          i.fa.fa-lg.fa-heart
+          i {{ "Like" | translate }} 
+          | 3
+      #comments
+        i.fa.fa-comments-o
+        p {{ "Not implemented" | translate }}
+    a.close((click)="goProfilePage()")
+      i.fa.fa-times
+        
