@@ -11,6 +11,7 @@ import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
 import {ProfileDateCreatedPipe} from "./Pipe/ProfileDateCreatedPipe";
 import {ProfileAvatarRoute} from "./Route/ProfileAvatarRoute/index";
 import {RouterModule} from "@angular/router";
+import {ProfileAvatarCropperComponent} from "./Component/ProfileAvatarCropper/index";
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import {RouterModule} from "@angular/router";
         ReactiveFormsModule
     ],
     declarations: [
+        ProfileAvatarCropperComponent,
         ProfileRoute,
         ProfileSettingsRoute,
         ProfileAvatarRoute,
