@@ -51,7 +51,6 @@ class ProfileAvatarUploadActionTest extends ProfileController
         $profile = $this->getSuccessProfile();
 
         $params = [
-            'id'=> $profile->getId(),
             'x' => 0,
             'y' => 0,
             'width' => 200,
@@ -83,7 +82,6 @@ class ProfileAvatarUploadActionTest extends ProfileController
         $profile = $this->getSuccessProfile();
 
         $params = [
-            'id'=> 99999,
             'x' => 0,
             'y' => 0,
             'width' => 200,
