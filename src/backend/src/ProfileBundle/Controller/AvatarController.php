@@ -37,7 +37,7 @@ class AvatarController extends Controller
 
             $profileService = $this->get('profile.service');
 
-            $profile = $profileService->getById($body['id']);
+            $profile = $profileService->getById($id);
 
             $params = new UploadedImageParameter(
                 $image,
