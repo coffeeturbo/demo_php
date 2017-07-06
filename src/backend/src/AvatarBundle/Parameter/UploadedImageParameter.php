@@ -13,10 +13,10 @@ class UploadedImageParameter
 
     public function __construct(
         UploadedFile $file,
-        int $width,
-        int $height,
-        int $startX,
-        int $startY
+        int $width = null,
+        int $height = null,
+        int $startX = null,
+        int $startY = null
     ){
         $this->file = $file;
         $this->width = $width;

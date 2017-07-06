@@ -10,9 +10,7 @@ use AvatarBundle\Image\BackdropEntityTrait;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 
-/**
- * Profile
- */
+
 class Profile implements AvatarEntity, BackdropEntity
 {
     const BIRTH_DATE_FORMAT = 'Y-m-d';

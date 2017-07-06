@@ -1,6 +1,7 @@
 <?php
 namespace AvatarBundle\Service;
 
+use AvatarBundle\Image\AvatarEntity;
 use AvatarBundle\Image\Image;
 use AvatarBundle\Image\ImageCollection;
 use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
@@ -21,6 +22,18 @@ class AvatarService
         $imageCollection = $this->generateImagesFromFile($imageParameter, $strategy);
 
         $strategy->getEntity()->setAvatarCollection($imageCollection);
+    }
+
+    public function deleteImage(AvatarEntity $avatarEntity)
+    {
+        foreach($avatarEntity->getAvatarCollection()->getImages() as $index => $image) {
+            /**  @var $image Image */
+            if(file_exists($file = $image->getStoragePath())){
+                unlink($file);
+            }
+        }
+
+        return $avatarEntity->setAvatarCollection( new ImageCollection() );
     }
 
     public function generateImagesFromFile(UploadedImageParameter $imageParameter, ProfileAvatarStrategy $strategy): ImageCollection

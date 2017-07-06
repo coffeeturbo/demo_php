@@ -4,8 +4,6 @@ namespace ProfileBundle\Service;
 
 use AccountBundle\Entity\Account;
 use AuthBundle\Service\AuthService;
-use AvatarBundle\Image\Image;
-use AvatarBundle\Image\ImageCollection;
 use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
 use AvatarBundle\Image\Strategy\ProfileBackdropStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
@@ -18,7 +16,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class ProfileService
-//    implements ContainerAwareInterface
 {
     private $profileRepository;
     private $authService;
@@ -123,14 +120,7 @@ class ProfileService
 
     public function deleteAvatar(Profile $profile): Profile
     {
-        foreach($profile->getAvatarCollection()->getImages() as $index => $image) {
-            /**  @var $image Image */
-            if(file_exists($file = $image->getStoragePath())){
-                unlink($file);
-            }
-        }
-
-        $profile->setAvatarCollection( new ImageCollection() );
+        $this->container->get('avatar.service')->deleteImage($profile);
 
         $this->container->get('profile.service')->save($profile);
 
@@ -143,6 +133,7 @@ class ProfileService
         $webPath = $this->container->getParameter('profile.backdrop.web_path');
 
         $backdropStrategy = new ProfileBackdropStrategy($profile, $absolutePath, $webPath);
+
 
     }
 

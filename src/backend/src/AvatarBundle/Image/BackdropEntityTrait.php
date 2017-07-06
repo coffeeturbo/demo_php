@@ -6,14 +6,14 @@ trait BackdropEntityTrait
 {
     private $backdrop;
 
-    public function getBackdropCollection(): ImageCollection
+    public function getBackdrop()
     {
-        return ImageCollection::createFromJson($this->backdrop);
+        return $this->backdrop;
     }
 
-    public function setBackdropCollection(ImageCollection $collection)
+    public function setBackdrop($backdrop)
     {
-        $this->backdrop = $collection->jsonSerialize();
+        $this->backdrop = $backdrop;
         return $this;
     }
 }
