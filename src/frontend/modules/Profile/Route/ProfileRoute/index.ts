@@ -3,10 +3,10 @@ import {ActivatedRoute} from "@angular/router";
 import {TranslationService} from "@angular-addons/translate";
 
 import {Profile} from "../../Entity/Profile";
-import {CropperService} from "../../../Common/Cropper/Service/CropperService";
 import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
 import {ProfileService} from "../../Service/ProfileService";
 import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
+import {CropperService2} from "../../../Common/Cropper/Service/CropperService2";
 
 @Component({
     templateUrl: "./template.pug",
@@ -23,7 +23,7 @@ export class ProfileRoute implements OnInit {
         private translationService: TranslationService,
         public profileService: ProfileService, 
         public palleteService: PalleteService, 
-        public cropperService: CropperService
+        public cropperService: CropperService2, 
     ) {}
 
     ngOnInit() {

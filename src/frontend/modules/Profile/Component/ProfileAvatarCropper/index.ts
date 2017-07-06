@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CropperService} from "../../../Common/Cropper/Service/CropperService";
 import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
+import {CropperService2} from "../../../Common/Cropper/Service/CropperService2";
+import {Data} from "cropperjs";
 
 @Component({
     selector: 'profile-avatar-cropper',
@@ -9,22 +10,38 @@ import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
 })
 
 export class ProfileAvatarCropperComponent {
-
     @Input('disabled') disabled: boolean = false;
     @Output('onCrop') onCrop = new EventEmitter<AvatarUploadRequest>();
-
-    constructor(public cropperService: CropperService) {}
-
-    submit() {
-        let cropperData = this.cropperService.getData();
-        let cropperImage = this.cropperService.getImage();
-
+    public image: File;
+    public data: Data;
+    
+    public cropperOptions = {
+        viewMode: 1,
+        center: false,
+        guides: false,
+        highlight: false,
+        background: false,
+        zoomOnWheel: false,
+        toggleDragModeOnDblclick: false,
+        preview: '.preview',
+        minCropBoxWidth: 100,
+        minCropBoxHeight: 100,
+        aspectRatio: 1,
+    };
+    
+    constructor(public cropperService: CropperService2) {
+        this.cropperService.onSetImage.subscribe((image: File) => {
+            this.image = image;
+        });
+    }
+    
+    public submit() {
         this.onCrop.emit({
-            x: cropperData.x,
-            y: cropperData.y,
-            width: cropperData.width,
-            height: cropperData.height,
-            image: cropperImage
+            x: this.data.x,
+            y: this.data.y,
+            width: this.data.width,
+            height: this.data.height,
+            image: this.image
         });
     }    
 }

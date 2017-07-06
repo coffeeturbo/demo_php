@@ -1,13 +1,9 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import * as Cropper from 'cropperjs';
 import {CropperOptions, Data as CropperData} from "cropperjs";
 
 /**
- * @TODO: Исправить:
- * 1. Загружаем аву
- * 2. Уходим со страницы профиля, 
- * 3. Возвращаемся
- * 4. Пробуем еще раз загрузить аву
+ * @TODO: Удалить:
  */
 @Injectable()
 export class CropperService {
@@ -15,7 +11,6 @@ export class CropperService {
     
     private cropper: Cropper;
     private element: HTMLImageElement;
-    private input: HTMLInputElement;
     private image: File;
     private options: CropperOptions = {
         viewMode: 1,
@@ -30,15 +25,9 @@ export class CropperService {
         minCropBoxHeight: 100,
         aspectRatio: 1
     };
-    constructor() {
-        this.input = <HTMLInputElement>document.createElement("INPUT");
-        this.input.setAttribute("type", "file");
-        this.input.setAttribute("accept", "image/*");
-
-        this.input.onchange = (e: any) => {
-            this.readFile(e.target.files[0]);
-        }
-    }
+    
+    public onSelectImage = new EventEmitter<string>();
+    
     
     public init(element: HTMLImageElement) {
         this.element = element;
@@ -63,12 +52,7 @@ export class CropperService {
             this.cropper.destroy();
             this.cropper = undefined;
             this.element.src = "";
-            this.input.value = ""
         }
-    }
-
-    public browseFile() {
-        this.input.click();
     }
 
     public getData(rounded: boolean = true): CropperData {
@@ -88,11 +72,12 @@ export class CropperService {
         reader.readAsDataURL(this.image);
 
         reader.onloadend = (data: FileReaderEvent) => {
-            if (this.cropper) {
-                this.replace(data.target.result);
-            } else {
-                this.create(data.target.result);
-            }
+            this.onSelectImage.emit(data.target.result);
+            // if (this.cropper) {
+            //     this.replace(data.target.result);
+            // } else {
+            //     this.create(data.target.result);
+            // }
         }
     }
 }

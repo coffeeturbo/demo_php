@@ -1,5 +1,5 @@
 doctype html
-modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false", (on-close)="cropperService.destroy()", [animation]="false")
+modal(width="500px", *ngIf="cropperService.src", [backdrop-close]="false", (on-close)="cropperService.destroy()", [animation]="false")
   loader(*ngIf="disabled")
   modal-header Загрузка изображения
   modal-body
@@ -8,7 +8,13 @@ modal(width="500px", [hidden]="!cropperService.enabled", [backdrop-close]="false
       p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
     figure
       .cropper-modal-box
-        img(src="", cropper)
+        img(
+          cropper,
+          [src]="cropperService.src",
+          [options]="cropperOptions",
+          (onDataChange)="data = $event", 
+          (onImageChange)="setImage($event)", 
+        )
       .preview-area
         .preview.medium
         .preview.small

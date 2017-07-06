@@ -1,19 +1,22 @@
 import {NgModule} from "@angular/core";
-import {CropperService} from "./Service/CropperService";
-import {FocusDirective} from "./Directive/CropperDirective";
+import {CropperDirective} from "./Directive/CropperDirective";
+import {CropperButtonDirective} from "./Directive/CropperButtonDirective";
+import {CropperService2} from "./Service/CropperService2";
 
 @NgModule({
     imports:[
         
     ],
     declarations: [
-        FocusDirective
+        CropperDirective,
+        CropperButtonDirective
     ],
     providers: [
-        CropperService
+        CropperService2
     ],
     exports: [
-        FocusDirective
+        CropperDirective,
+        CropperButtonDirective
     ]
 })
 export class CropperModule {} 
