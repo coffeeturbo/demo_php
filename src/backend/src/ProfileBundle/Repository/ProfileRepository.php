@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ProfileRepository extends EntityRepository
 {
-    public function save(Profile $profile)
+    public function save(Profile $profile): Profile
     {
         try {
             $em = $this->getEntityManager();

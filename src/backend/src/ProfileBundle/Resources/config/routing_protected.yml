@@ -24,4 +24,10 @@ profile_avatar_upload:
   methods: [ POST ]
   requirements:
     id: '\d+'
-    
+
+profile_avatar_delete:
+  path: '{id}/avatar/delete'
+  defaults: { _controller: ProfileBundle:AvatarDelete:avatarDelete }
+  methods: [ DELETE ]
+  requirements:
+    id: '\d+'

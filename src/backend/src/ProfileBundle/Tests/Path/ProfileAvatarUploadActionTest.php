@@ -27,7 +27,6 @@ class ProfileAvatarUploadActionTest extends ProfileController
     public function tearDown()
     {
 
-
     }
 
     public function getSuccessProfile(): Profile
@@ -76,6 +75,7 @@ class ProfileAvatarUploadActionTest extends ProfileController
         // после удаления профиля нужно удалять все связанные файлы
 
     }
+
     public function test404()
     {
         $this->getAuthClient();

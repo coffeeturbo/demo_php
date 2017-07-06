@@ -9,16 +9,13 @@ use AvatarBundle\Image\ImageCollection;
 use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
 use AvatarBundle\Image\Strategy\ProfileBackdropStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
 use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class ProfileService
 //    implements ContainerAwareInterface
@@ -108,8 +105,8 @@ class ProfileService
         return $profile;
     }
     
-    public function save(Profile $profile) {
-        $this->profileRepository->save($profile);
+    public function save(Profile $profile): Profile {
+        return $this->profileRepository->save($profile);
     }
 
     public function uploadAvatar(Profile $profile, UploadedImageParameter $imageParameter)
@@ -128,12 +125,14 @@ class ProfileService
     {
         foreach($profile->getAvatarCollection()->getImages() as $index => $image) {
             /**  @var $image Image */
-            unlink($image->getStoragePath());
+            if(file_exists($file = $image->getStoragePath())){
+                unlink($file);
+            }
         }
 
         $profile->setAvatarCollection( new ImageCollection() );
 
-//        $this->container->get('profile.service')->save($profile);
+        $this->container->get('profile.service')->save($profile);
 
         return $profile;
     }
