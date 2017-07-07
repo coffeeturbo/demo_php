@@ -6,7 +6,7 @@ import {Profile} from "../../Entity/Profile";
 import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
 import {ProfileService} from "../../Service/ProfileService";
 import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
-import {CropperService2} from "../../../Common/Cropper/Service/CropperService2";
+import {ProfileAvatarCropperHelper} from "../../Component/ProfileAvatarCropper/helper";
 
 @Component({
     templateUrl: "./template.pug",
@@ -17,13 +17,14 @@ export class ProfileRoute implements OnInit {
     public profile: Profile;
     public backdropUrl: string = "https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500";
     public disabled: boolean = false;
+    public image: File;
 
     constructor(
         private route: ActivatedRoute, 
         private translationService: TranslationService,
         public profileService: ProfileService, 
         public palleteService: PalleteService, 
-        public cropperService: CropperService2, 
+        public helper: ProfileAvatarCropperHelper
     ) {}
 
     ngOnInit() {
@@ -51,6 +52,11 @@ export class ProfileRoute implements OnInit {
     public translate(string: string) {
         return this.translationService.translate(string);
     }
+    
+    onSelectAvatar(data: any) {
+        this.helper.image = data.image;
+        this.helper.src = data.src;
+    }
 
     public uploadAvatar(avatarUploadRequest: AvatarUploadRequest) {
         this.disabled = true;
@@ -59,7 +65,7 @@ export class ProfileRoute implements OnInit {
             .subscribe((profile) => {
                 this.route.snapshot.data["profile"] = profile; // @TODO: Check it
                 this.profile = profile;
-                this.cropperService.destroy();
+                this.helper.destroy();
             })
         ;
     }

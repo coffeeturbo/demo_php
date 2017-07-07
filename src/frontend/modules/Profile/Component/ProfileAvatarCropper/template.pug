@@ -1,5 +1,5 @@
 doctype html
-modal(width="500px", *ngIf="cropperService.src", [backdrop-close]="false", (on-close)="cropperService.destroy()", [animation]="false")
+modal(width="500px", *ngIf="helper.ready()", [backdrop-close]="false", (on-close)="helper.destroy()", [animation]="false")
   loader(*ngIf="disabled")
   modal-header Загрузка изображения
   modal-body
@@ -10,14 +10,13 @@ modal(width="500px", *ngIf="cropperService.src", [backdrop-close]="false", (on-c
       .cropper-modal-box
         img(
           cropper,
-          [src]="cropperService.src",
+          [src]="helper.src",
           [options]="cropperOptions",
-          (onDataChange)="data = $event", 
-          (onImageChange)="setImage($event)", 
+          (onChange)="data = $event", 
         )
       .preview-area
         .preview.medium
         .preview.small
   modal-footer
-    button.btn((click)="cropperService.destroy()") {{ "Cancel" | translate }}
+    button.btn((click)="helper.destroy()") {{ "Cancel" | translate }}
     button.btn.primary((click)="submit()") {{ "Upload" | translate }}

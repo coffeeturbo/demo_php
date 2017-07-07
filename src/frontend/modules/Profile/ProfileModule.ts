@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+import {RouterModule} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {CommonModule} from "../Common/CommonModule";
@@ -10,8 +11,8 @@ import {ProfileService} from "./Service/ProfileService";
 import {ProfileTitleResolver} from "./Service/ProfileTitleResolver";
 import {ProfileDateCreatedPipe} from "./Pipe/ProfileDateCreatedPipe";
 import {ProfileAvatarRoute} from "./Route/ProfileAvatarRoute/index";
-import {RouterModule} from "@angular/router";
 import {ProfileAvatarCropperComponent} from "./Component/ProfileAvatarCropper/index";
+import {ProfileAvatarCropperHelper} from "./Component/ProfileAvatarCropper/helper";
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import {ProfileAvatarCropperComponent} from "./Component/ProfileAvatarCropper/in
         ProfileRESTService,
         ProfileService,
         ProfileResolver,
-        ProfileTitleResolver
+        ProfileTitleResolver,
+        ProfileAvatarCropperHelper
     ]
 })
 export class ProfileModule {

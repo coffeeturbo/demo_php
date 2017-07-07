@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {Observable, Observer} from "rxjs";
+import {Observable} from "rxjs";
 
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";

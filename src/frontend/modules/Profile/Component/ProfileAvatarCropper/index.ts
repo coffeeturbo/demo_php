@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
-import {CropperService2} from "../../../Common/Cropper/Service/CropperService2";
 import {Data} from "cropperjs";
+
+import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
+import {ProfileAvatarCropperHelper} from "./helper";
 
 @Component({
     selector: 'profile-avatar-cropper',
@@ -12,9 +13,8 @@ import {Data} from "cropperjs";
 export class ProfileAvatarCropperComponent {
     @Input('disabled') disabled: boolean = false;
     @Output('onCrop') onCrop = new EventEmitter<AvatarUploadRequest>();
-    public image: File;
+
     public data: Data;
-    
     public cropperOptions = {
         viewMode: 1,
         center: false,
@@ -29,11 +29,7 @@ export class ProfileAvatarCropperComponent {
         aspectRatio: 1,
     };
     
-    constructor(public cropperService: CropperService2) {
-        this.cropperService.onSetImage.subscribe((image: File) => {
-            this.image = image;
-        });
-    }
+    constructor(public helper: ProfileAvatarCropperHelper) {}
     
     public submit() {
         this.onCrop.emit({
@@ -41,7 +37,7 @@ export class ProfileAvatarCropperComponent {
             y: this.data.y,
             width: this.data.width,
             height: this.data.height,
-            image: this.image
+            image: this.helper.image
         });
     }    
 }
