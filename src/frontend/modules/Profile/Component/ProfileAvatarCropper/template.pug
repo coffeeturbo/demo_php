@@ -1,6 +1,6 @@
 doctype html
 modal(width="500px", *ngIf="helper.ready()", [backdrop-close]="false", (on-close)="helper.destroy()", [animation]="false")
-  loader(*ngIf="disabled")
+  //loader(*ngIf="disabled")
   modal-header Загрузка изображения
   modal-body
     article
@@ -18,5 +18,7 @@ modal(width="500px", *ngIf="helper.ready()", [backdrop-close]="false", (on-close
         .preview.medium
         .preview.small
   modal-footer
-    button.btn((click)="helper.destroy()") {{ "Cancel" | translate }}
-    button.btn.primary((click)="submit()") {{ "Upload" | translate }}
+    button.btn(*ngIf="!disabled", (click)="helper.destroy()") {{ "Cancel" | translate }}
+    button.btn.primary((click)="submit()", [disabled]="disabled") 
+      span(*ngIf="!disabled") {{ "Upload" | translate }}
+      span(*ngIf="disabled") {{ "Loading" | translate }}
