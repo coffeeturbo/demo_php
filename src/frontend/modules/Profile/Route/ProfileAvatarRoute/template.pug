@@ -1,6 +1,7 @@
 ng-container(*ngIf="profile.avatar.origin")
   modal((on-close)='goProfilePage()', [animation]="false")
-    img(src="{{profile.avatar.origin.public_path}}")
+    .avatar
+      img(src="{{profile.avatar.origin.public_path}}")
     modal-footer
       .overview
         div

@@ -1,6 +1,66 @@
 @import "../../../../assets/styles/global";
 
 modal {
+  .avatar {
+    background: material-color($secondary_material, '900');
+
+    img {
+      margin: auto;
+      max-height: calc(100vh - 60px);
+      max-width: calc(100vw - 40px);
+      display: block;
+
+      @include mq($until: tablet) {
+        max-height: none;
+        max-width: calc(100vw);
+      }
+    }
+  }
+
+  modal-footer {
+    .overview {
+      display: flex;
+      margin: -15px -15px 5px;
+      padding: 4px;
+      font-size: 0.9em;
+      color: material-color($secondary_material, '400');
+      background: material-color($secondary_material, '900');
+
+      > * {
+        padding: 10px;
+
+        .fa + * {
+          margin-left: 10px;
+        }
+      }
+
+      a {
+        color: material-color($secondary_material, '500');
+        transition: all 150ms;
+
+        &:hover {
+          background: black;
+        }
+
+        &.active {
+          color: material-color($secondary_material, '300');
+        }
+      }
+    }
+
+    #comments {
+      text-align: center;
+      padding: 100px 0;
+      color: material-color($secondary_material, '300');
+      .fa {
+        font-size: 10em;
+      }
+      p {
+        font-size: 2em;
+      }
+    }    
+  }
+
   .close {
     position: absolute;
     padding: 9px 11px;
@@ -12,64 +72,12 @@ modal {
     font-size: 1.454em;
     transition: all 150ms;
   }
+
   &:hover .close {
     opacity: 1;
   }
-  
+
   *:hover~.close {
-      opacity: 0.5;
-  }
-
-  img {
-    max-height: calc(100vh - 60px);
-    max-width: calc(100vw - 40px);
-    display: block;
-
-    @include mq($until: tablet) {
-      max-height: none;
-      max-width: calc(100vw);
-    }
-  }
-
-  .overview {
-    display: flex;
-    margin: -15px -15px 5px;
-    padding: 4px;
-    font-size: 0.9em;
-    color: material-color($secondary_material, '400');
-    background: material-color($secondary_material, '900');
-
-    > * {
-      padding: 10px;
-
-      .fa + * {
-        margin-left: 10px;
-      }
-    }
-
-    a {
-      color: material-color($secondary_material, '500');
-      transition: all 150ms;
-      
-      &:hover {
-        background: black;
-      }
-      
-      &.active {
-        color: material-color($secondary_material, '300');
-      }
-    }
-  }
-}
-
-#comments {
-  text-align: center;
-  padding: 100px 0;
-  color: material-color($secondary_material, '300');
-  .fa {
-    font-size: 10em;
-  }
-  p {
-    font-size: 2em;
-  }
+    opacity: 0.5;
+  }  
 }
