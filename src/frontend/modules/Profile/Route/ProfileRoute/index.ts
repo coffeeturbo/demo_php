@@ -53,7 +53,7 @@ export class ProfileRoute implements OnInit {
         return this.translationService.translate(string);
     }
     
-    onSelectAvatar(data: any) {
+    selectAvatar(data: {image: File, src: string}) {
         this.helper.image = data.image;
         this.helper.src = data.src;
     }
