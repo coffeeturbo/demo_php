@@ -2,7 +2,7 @@ ng-container(*ngIf="profile.avatar.origin")
   modal((on-close)='goProfilePage()', [animation]="false")
     .avatar
       img(src="{{profile.avatar.origin.public_path}}")
-    modal-footer
+    modal-footer([padding]="0")
       .overview
         div
           i.fa.fa-lg.fa-comments
@@ -16,7 +16,7 @@ ng-container(*ngIf="profile.avatar.origin")
         a.likes((click)="toggleLike()", [ngClass]="{active:isActive}")
           i.fa.fa-lg.fa-heart
           i {{ "Like" | translate }} 
-          | 3
+          | {{ likeCount }}
       #comments
         i.fa.fa-comments-o
         p {{ "Not implemented" | translate }}

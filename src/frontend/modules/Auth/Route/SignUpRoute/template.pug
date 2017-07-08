@@ -1,4 +1,4 @@
-modal(width="330px", [can-close]="false", [ngClass]="{shake:signUpForm.fail}")
+modal([width]="'330px'", [close-mode]="0", [ngClass]="{shake:signUpForm.fail}")
   loader(*ngIf="signUpForm.disabled")
   modal-header {{'New user registration' | translate }}
   modal-body

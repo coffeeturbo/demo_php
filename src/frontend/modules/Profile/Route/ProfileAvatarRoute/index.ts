@@ -28,8 +28,10 @@ export class ProfileAvatarRoute implements OnInit {
     }
 
     public isActive: boolean = false;
+    public likeCount: number = 15;
 
     toggleLike() {
+         this.likeCount += (this.isActive ? -1 : 1);
         this.isActive = !this.isActive;
     }
     

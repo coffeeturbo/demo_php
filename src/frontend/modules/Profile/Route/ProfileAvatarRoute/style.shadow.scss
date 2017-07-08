@@ -20,7 +20,6 @@ modal {
   modal-footer {
     .overview {
       display: flex;
-      margin: -15px -15px 5px;
       padding: 4px;
       font-size: 0.9em;
       color: material-color($secondary_material, '400');
@@ -71,6 +70,16 @@ modal {
     opacity: 0;
     font-size: 1.454em;
     transition: all 150ms;
+
+    @include mq($until: tablet) {
+      top: 10px;
+      right: 10px;
+    }
+
+    @include mq($until: desktop) {
+      top: 30px;
+      right: 30px;
+    }
   }
 
   &:hover .close {

@@ -1,4 +1,4 @@
-modal(width="500px", *ngIf="helper.ready()", [backdrop-close]="false", (on-close)="helper.destroy()", [animation]="false")
+modal(width="500px", *ngIf="helper.ready()", [close-mode]="1", (on-close)="helper.destroy()", [animation]="false")
   modal-header Загрузка изображения
   modal-body
     article
