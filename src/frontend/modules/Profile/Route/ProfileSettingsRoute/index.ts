@@ -40,6 +40,7 @@ export class ProfileSettingsRoute implements OnInit {
         }
     }
     
+    // @TODO ignore non-latin letters
     private aliasValidator(aliasControl: AbstractControl): Promise<ValidationErrors> {
         if(!aliasControl.value || this.profile.alias === aliasControl.value) {
             return Observable.of([]).toPromise();

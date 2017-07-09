@@ -1,9 +1,11 @@
-modal(width="500px", *ngIf="helper.ready()", [close-mode]="1", (on-close)="helper.destroy()", [animation]="false")
+modal(width="500px", *ngIf="helper.ready() && form.valid", [close-mode]="1", (on-close)="helper.destroy()", [animation]="false")
   modal-header Загрузка изображения
   modal-body
     article
       p Выбрите область для маленьких фотографий.
       p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
+      p {{form.valid}}
+      p {{form.has | json}}
     figure
       .cropper-modal-box
         img(
@@ -17,6 +19,19 @@ modal(width="500px", *ngIf="helper.ready()", [close-mode]="1", (on-close)="helpe
         .preview.small
   modal-footer
     button.btn(*ngIf="!disabled", (click)="helper.destroy()") {{ "Cancel" | translate }}
-    button.btn.primary((click)="submit()", [disabled]="disabled") 
+    button.btn.primary((click)="submit()", [disabled]="disabled || !form.invalid") 
       span(*ngIf="!disabled") {{ "Upload" | translate }}
       span(*ngIf="disabled") {{ "Loading" | translate }}
+
+      
+modal(width="500px", *ngIf="helper.ready() && form.invalid", (on-close)="helper.destroy()", [animation]="false")
+  modal-header К сожалению, произошла ошибка.
+  modal-body
+    article(*ngIf="form.invalid")
+      p Фотография должна иметь размер не меньше 200 точек и не больше 7 000 точек по каждой из сторон.
+      p Кроме того, нельзя использовать фотографии, у которых одна из сторон в несколько раз превышает другую.
+
+  modal-footer
+    button.btn(*ngIf="!disabled", (click)="helper.destroy()") {{ "Cancel" | translate }}
+    button.btn.primary {{ "Choose other" | translate }}
+      

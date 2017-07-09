@@ -53,11 +53,6 @@ export class ProfileRoute implements OnInit {
         return this.translationService.translate(string);
     }
     
-    selectAvatar(data: {image: File, src: string}) {
-        this.helper.image = data.image;
-        this.helper.src = data.src;
-    }
-
     public uploadAvatar(avatarUploadRequest: AvatarUploadRequest) {
         this.disabled = true;
         this.profileService.uploadAvatar(this.profile, avatarUploadRequest)
