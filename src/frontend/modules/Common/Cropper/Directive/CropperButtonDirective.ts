@@ -16,6 +16,7 @@ export class CropperButtonDirective {
             .map((e: HTMLInputEvent) => e.target.files[0])
             .subscribe((image: File) => {
                 this.readImage(image)
+                    .do(() => this.input.value = "")
                     .map((e: FileReaderEvent) => e.target.result)
                     .subscribe(src => this.onChange.emit({image, src}))
                 ;
