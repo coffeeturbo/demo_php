@@ -57,9 +57,8 @@ export class ProfileRoute implements OnInit {
         this.disabled = true;
         this.profileService.uploadAvatar(this.profile, avatarUploadRequest)
             .finally(() => this.disabled = false)
-            .subscribe((profile) => {
-                this.route.snapshot.data["profile"] = profile; // @TODO: Check it
-                this.profile = profile;
+            .subscribe((profile: Profile) => {
+                this.profile = this.route.snapshot.data["profile"] = profile;
                 this.helper.destroy();
             })
         ;

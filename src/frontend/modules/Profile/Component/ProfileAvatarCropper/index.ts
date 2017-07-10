@@ -17,8 +17,11 @@ export class ProfileAvatarCropperComponent {
     @Input('disabled') disabled: boolean = false;
     @Output('onCrop') onCrop = new EventEmitter<AvatarUploadRequest>();
 
-    public form: FormGroup;
-    public data: Data;
+    public form: FormGroup = new FormGroup({
+        src: new FormControl(null, null, this.validate.bind(this)),
+        data: new FormControl(),
+    });
+
     public cropperOptions = {
         viewMode: 1,
         center: false,
@@ -33,32 +36,28 @@ export class ProfileAvatarCropperComponent {
         aspectRatio: 1,
     };
 
-    private constraints = Config.profile.constraints.avatar;
-
-    ngOnInit() {
-        this.form = new FormGroup({
-            avatar: new FormControl("", null, this.validate.bind(this)),
-            // @TODO: validate data too, remove redudant this.data
-        });
+    constructor(public helper: ProfileAvatarCropperHelper) {
+        helper.onChange.subscribe((data) => this.form.controls.src.setValue(data.src));
     }
-    
-    validate(avatarControl: FormControl): Observable<ValidationErrors> {
+
+    validate(srcControl: FormControl): Observable<ValidationErrors> {
         let avatar = new Image();
-        avatar.src = avatarControl.value;
+        avatar.src = srcControl.value;
 
         return Observable.fromEvent(avatar, "load").map(() => {
+            let constraints = Config.profile.constraints.avatar;
             let errors: ValidationErrors = {};
             let ratio = avatar.width / avatar.height;
             
-            if(avatar.width > this.constraints.maxWidth || avatar.width < this.constraints.minWidth) {
-                errors.invalidWidth = true;
+            if(avatar.width > constraints.maxWidth || avatar.height > constraints.maxHeight) {
+                errors.tooLarge = true;
             }
 
-            if(avatar.height > this.constraints.maxHeight || avatar.height < this.constraints.minHeight) {
-                errors.invalidHeight = true;
+            if(avatar.width < constraints.minWidth || avatar.height < constraints.minHeight) {
+                errors.tooSmall = true;
             }
 
-            if(ratio > this.constraints.maxAspectRatio || ratio < this.constraints.minAspectRatio) {
+            if(ratio > constraints.maxAspectRatio || ratio < constraints.minAspectRatio) {
                 errors.invalidAspectRatio = true;
             }
 
@@ -68,18 +67,12 @@ export class ProfileAvatarCropperComponent {
         });
     }
     
-    constructor(public helper: ProfileAvatarCropperHelper) {
-        helper.onChange.subscribe((data) => {
-            this.form.controls.avatar.setValue(data.src);
-        });
-    }
-    
-    public submit() {
+    public submit(data: Data) {
         this.onCrop.emit({
-            x: this.data.x,
-            y: this.data.y,
-            width: this.data.width,
-            height: this.data.height,
+            x: data.x,
+            y: data.y,
+            width: data.width,
+            height: data.height,
             image: this.helper.image
         });
     }    

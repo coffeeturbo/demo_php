@@ -1,37 +1,37 @@
-modal(width="500px", *ngIf="helper.ready() && form.valid", [close-mode]="1", (on-close)="helper.destroy()", [animation]="false")
-  modal-header Загрузка изображения
+modal([width]="'500px'", *ngIf="helper.ready() && form.valid", [close-mode]="1", (on-close)="helper.destroy()", [animation]="false")
+  modal-header {{"Image upload" | translate }}
   modal-body
     article
-      p Выбрите область для маленьких фотографий.
-      p Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях.
-      p {{form.valid}}
-      p {{form.has | json}}
+      p {{"Now select area for your profile miniature" | translate }}.
+      p {{"The miniature will appear next to your posts, private messages and comments" | translate }}.
     figure
       .cropper-modal-box
         img(
           cropper,
           [src]="helper.src",
           [options]="cropperOptions",
-          (onChange)="data = $event", 
+          (onChange)="form.controls['data'].setValue($event)", 
         )
       .preview-area
         .preview.medium
         .preview.small
   modal-footer
     button.btn(*ngIf="!disabled", (click)="helper.destroy()") {{ "Cancel" | translate }}
-    button.btn.primary((click)="submit()", [disabled]="disabled || !form.invalid") 
+    button.btn.primary((click)="submit(form.value.data)", [disabled]="disabled || form.invalid") 
       span(*ngIf="!disabled") {{ "Upload" | translate }}
       span(*ngIf="disabled") {{ "Loading" | translate }}
 
       
-modal(width="500px", *ngIf="helper.ready() && form.invalid", (on-close)="helper.destroy()", [animation]="false")
-  modal-header К сожалению, произошла ошибка.
+modal.errors([width]="'500px'", *ngIf="helper.ready() && form.invalid", (on-close)="helper.destroy()", [animation]="false")
+  modal-header {{ "Unfortunately, an error has occurred" | translate }}
   modal-body
-    article(*ngIf="form.invalid")
-      p Фотография должна иметь размер не меньше 200 точек и не больше 7 000 точек по каждой из сторон.
-      p Кроме того, нельзя использовать фотографии, у которых одна из сторон в несколько раз превышает другую.
+    article
+      i.fa.fa-exclamation-circle
+      ul
+        li(*ngIf="form.controls['src'].hasError('tooLarge')") {{ "Photo must be no less than 200 pixels tall and wide." | translate }}
+        li(*ngIf="form.controls['src'].hasError('tooSmall')") {{ "Photo must be no more than 7 000 pixels tall and wide." | translate }}
+        li(*ngIf="form.controls['src'].hasError('invalidAspectRatio')") {{ "Outrageously tall or wide photos won't work." | translate }}
 
   modal-footer
-    button.btn(*ngIf="!disabled", (click)="helper.destroy()") {{ "Cancel" | translate }}
-    button.btn.primary {{ "Choose other" | translate }}
-      
+    button.btn((click)="helper.destroy()") {{ "Cancel" | translate }}
+    button.btn.primary((onChange)="helper.setAvatar($event.image, $event.src)", cropper-browse) {{ "Choose other" | translate }}
