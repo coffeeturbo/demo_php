@@ -15,7 +15,6 @@ import {PluralizeModule} from "./Pluralize/PluralizeModule";
 import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
 import {PalleteModule} from "./Pallete/PalleteModule";
 
-
 @NgModule({
     imports: [
         TranslationModule.setConfig(dictionaries, <Locale>Config.locale.default, Config.locale.aliases)

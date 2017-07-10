@@ -13,6 +13,8 @@ import {ProfileDateCreatedPipe} from "./Pipe/ProfileDateCreatedPipe";
 import {ProfileAvatarRoute} from "./Route/ProfileAvatarRoute/index";
 import {ProfileAvatarCropperComponent} from "./Component/ProfileAvatarCropper/index";
 import {ProfileAvatarCropperHelper} from "./Component/ProfileAvatarCropper/helper";
+import {ProfileBirthdayPipe} from "./Pipe/ProfileBirthdayPipe";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
     imports: [
@@ -26,7 +28,8 @@ import {ProfileAvatarCropperHelper} from "./Component/ProfileAvatarCropper/helpe
         ProfileRoute,
         ProfileSettingsRoute,
         ProfileAvatarRoute,
-        ProfileDateCreatedPipe
+        ProfileDateCreatedPipe,
+        ProfileBirthdayPipe
     ],
     providers: [
         ProfileRESTService,

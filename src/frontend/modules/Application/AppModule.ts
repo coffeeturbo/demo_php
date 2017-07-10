@@ -3,7 +3,7 @@ import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig} from "@angula
 import {RouterModule} from "@angular/router";
 import {Http, HttpModule, RequestOptions} from "@angular/http";
 import {RESTModule} from "@angular-addons/rest";
-import {Locale} from "@angular-addons/translate";
+import {Locale, TranslationService} from "@angular-addons/translate";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 
 import {appRoutes} from "../../app/routes";
@@ -26,7 +26,7 @@ import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/
 import {AttachmentModel} from "../Attachment/AttachmentModel";
 import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
-import {TranslationService} from "@angular-addons/translate";
+
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {
     return new AuthHttp(new AuthConfig(), http, options);

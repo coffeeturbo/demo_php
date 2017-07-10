@@ -16,7 +16,7 @@ ng-container(*ngIf="profile")
           span @{{profile.alias}}
   section
     p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
-    p {{ "Birthday" | translate }}: {{ profile.birth_date | date:"d MMM" }}    
+    p {{ "Birthday" | translate }}: {{ profile.birth_date | birthday }}    
     p {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:translate("year"):translate("years"):translate("years1")}}
     
     p(title="{{ profile.created | date }}") 

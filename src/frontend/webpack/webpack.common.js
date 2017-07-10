@@ -95,6 +95,7 @@ module.exports = {
       template: 'app/template.pug'
     }),
 
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en|ru/), // load only this langs in momentjs
     new AppCachePlugin({
       cache: [
           "/assets/favicon/favicon-16x16.png",
