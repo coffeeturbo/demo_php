@@ -3,7 +3,7 @@ import {RESTService} from "@angular-addons/rest";
 import {Observable} from "rxjs";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
-import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
+import {ProfileResponse} from "../Http/Response/ProfileResponse";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 
@@ -12,7 +12,7 @@ export class ProfileRESTService {
 
     constructor(private rest: RESTService) {}
 
-    public getById(profileId: number): Observable<ProfileGetResponse> 
+    public getById(profileId: number): Observable<ProfileResponse> 
     {
         let url = `/profile/${profileId}/get-by-id`;
 
@@ -21,7 +21,7 @@ export class ProfileRESTService {
             .map(res => res.json())
     }
 
-    public getByAlias(profileAlias: string): Observable<ProfileGetResponse> 
+    public getByAlias(profileAlias: string): Observable<ProfileResponse> 
     {
         let url = `/profile/${profileAlias}/get-by-alias`;
 
@@ -30,7 +30,7 @@ export class ProfileRESTService {
             .map(res => res.json())
     }
 
-    public create(profileCreateRequest: ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
+    public create(profileCreateRequest: ProfileCreateUpdateRequest): Observable<ProfileResponse>
     {
         let url = `/protected/profile/create`;
 
@@ -40,7 +40,7 @@ export class ProfileRESTService {
             .map(res => res.json())
     }
 
-    public update(profileId: number, profileUpdateRequest: ProfileCreateUpdateRequest): Observable<ProfileGetResponse>
+    public update(profileId: number, profileUpdateRequest: ProfileCreateUpdateRequest): Observable<ProfileResponse>
     {
         let url = `/protected/profile/${profileId}/update`;
 
@@ -50,7 +50,7 @@ export class ProfileRESTService {
             .map(res => res.json())
     }
 
-    public delete(profileId: number): Observable<ProfileGetResponse>
+    public delete(profileId: number): Observable<ProfileResponse>
     {
         let url = `/profile/${profileId}/delete`;
 
@@ -67,7 +67,7 @@ export class ProfileRESTService {
             .map(res => res.json())
     }
 
-    public uploadAvatar(profileId: number, avatarUploadRequest: AvatarUploadRequest): Observable<ProfileGetResponse>
+    public uploadAvatar(profileId: number, avatarUploadRequest: AvatarUploadRequest): Observable<ProfileResponse>
     {
         let url = `/protected/profile/${profileId}/avatar/upload`;
         let formData = new FormData();

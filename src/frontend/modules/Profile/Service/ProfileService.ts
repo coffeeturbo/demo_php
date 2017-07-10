@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
-import {ProfileGetResponse} from "../Http/Response/ProfileGetResponse";
+import {ProfileResponse} from "../Http/Response/ProfileResponse";
 import {Token} from "../../Auth/Entity/Token";
 import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
@@ -33,19 +33,19 @@ export class ProfileService implements ProfileServiceInterface{
         try {
             profileObservable = this.getFromCache(path);
         } catch (e) {
-            let profileGetResponseObservable: Observable<ProfileGetResponse>;
+            let profileResponseObservable: Observable<ProfileResponse>;
 
             switch (this.getPathType(path)) {
                 case "id":
-                    profileGetResponseObservable = this.rest.getById(+path);
+                    profileResponseObservable = this.rest.getById(+path);
                     break;
                 case "alias":
-                    profileGetResponseObservable = this.rest.getByAlias(path);
+                    profileResponseObservable = this.rest.getByAlias(path);
                     break;
             }
 
-            profileObservable = profileGetResponseObservable
-                .map(profileGetResponse => profileGetResponse.entity)
+            profileObservable = profileResponseObservable
+                .map(profileResponse => profileResponse.entity)
                 .do(profile => this.saveToCache(profile))
             ;
         }
@@ -57,7 +57,7 @@ export class ProfileService implements ProfileServiceInterface{
     
     public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile> {
         return this.rest.update(profile.id, request)
-            .map(profileGetResponse => profileGetResponse.entity)
+            .map(profileResponse => profileResponse.entity)
             .do(profile => this.replaceInCache(oldProfile, profile))
             .flatMap(profile => {
                 if (oldProfile.alias != profile.alias) {
@@ -80,7 +80,7 @@ export class ProfileService implements ProfileServiceInterface{
     {
         let oldProfile = profile;
         return this.rest.uploadAvatar(profile.id, avatarUploadRequest)
-            .map(profileGetResponse => profileGetResponse.entity)
+            .map(profileResponse => profileResponse.entity)
             .do(profile => this.replaceInCache(oldProfile, profile))
     }
     
