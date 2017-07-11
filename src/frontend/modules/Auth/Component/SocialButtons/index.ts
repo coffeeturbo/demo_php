@@ -7,6 +7,7 @@ import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
 @Component({
     selector: "social-buttons",
     templateUrl: "./template.pug",
+    styleUrls: ["style.shadow.scss"]
 })
 
 export class SocialButtonsComponent {
