@@ -1,14 +1,14 @@
 <?php
 namespace ProfileBundle\Form;
 
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AvatarUploadType extends AbstractType
+class BackdropUploadType extends AbstractType
 {
     private $minWidth;
     private $maxWidth;
@@ -16,13 +16,13 @@ class AvatarUploadType extends AbstractType
     private $maxHeight;
     private $maxRatio;
     private $minRatio;
-    
-    function __construct($minWidth, $maxWidth, $minHeight, $maxHeight, $minRatio, $maxRatio)
+
+    function __construct($minWidth, $maxWidth, $minHeight, $minRatio, $maxRatio)
     {
         $this->minWidth = $minWidth;
         $this->maxWidth = $maxWidth;
         $this->minHeight = $minHeight;
-        $this->maxHeight = $maxHeight;
+        $this->maxHeight = $minHeight;
         $this->minRatio = $minRatio;
         $this->maxRatio = $maxRatio;
     }

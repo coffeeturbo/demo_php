@@ -137,6 +137,12 @@ class ProfileService
 
     }
 
+
+    public function deleteBackdrop(Profile $profile)
+    {
+
+    }
+
     public function markDelete(Profile $profile)
     {
         // todo is_deleted

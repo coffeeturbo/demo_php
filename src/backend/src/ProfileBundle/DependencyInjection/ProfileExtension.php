@@ -21,5 +21,11 @@ class ProfileExtension extends Extension
         $container->setParameter('profile.max_age', $config['max_age']);
         $container->setParameter('profile.avatar.absolute_path', $config['avatar']['absolute_path']);
         $container->setParameter('profile.avatar.web_path', $config['avatar']['web_path']);
+        $container->setParameter('profile.avatar.min_width', $config['avatar']['min_width']);
+        $container->setParameter('profile.avatar.max_width', $config['avatar']['max_width']);
+        $container->setParameter('profile.avatar.min_height', $config['avatar']['min_height']);
+        $container->setParameter('profile.avatar.max_height', $config['avatar']['max_height']);
+        $container->setParameter('profile.avatar.min_ratio', $config['avatar']['min_ratio']);
+        $container->setParameter('profile.avatar.max_ratio', $config['avatar']['max_ratio']);
     }
 }

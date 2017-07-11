@@ -15,7 +15,7 @@ class ValidateRequestService
         $this->formFactory = $formFactory;
     }
 
-    public function validate(Request $request, $type, $data = null)
+    public function validate(Request $request, string $type, $data = null)
     {
         $form = $this->formFactory->createNamed(null, $type, $data);
         $form->handleRequest($request);

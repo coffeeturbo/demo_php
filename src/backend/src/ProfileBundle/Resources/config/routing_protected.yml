@@ -31,3 +31,17 @@ profile_avatar_delete:
   methods: [ DELETE ]
   requirements:
     id: '\d+'
+
+profile_backdrop_upload:
+  path: '{id}/backdrop/upload'
+  defaults: { _controller: ProfileBundle:Backdrop:upload }
+  methods: [ POST ]
+  requirements:
+    id: '\d+'
+
+profile_backdrop_delete:
+  path: '{id}/backdrop/delete'
+  defaults: { _controller: ProfileBundle:Backdrop:delete }
+  methods: [ DELETE ]
+  requirements:
+    id: '\d+'
