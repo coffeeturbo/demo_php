@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
 @import "~font-awesome/css/font-awesome.css";
-@import '~reset.css';
+@import '~reset-css/reset.css';
 @import '~sass-material-colors/sass/sass-material-colors-classes';
 @import '~cropperjs/dist/cropper.css';
 @import 'cropperjs';
 @import "global";
 @import "loader";
-@import "form/input";
-@import "form/button";
-@import "form/form";
+@import "../../modules/Common/MaterialForm/Styles/text";
+@import "../../modules/Common/MaterialForm/Styles/checkbox";
+@import "../../modules/Common/MaterialForm/Styles/button";
+@import "../../modules/Common/MaterialForm/Styles/label";
+@import "../../modules/Common/MaterialForm/Styles/form";
 @import "animations";
 
 body {
@@ -24,44 +26,23 @@ a {
   text-decoration: none;
 }
 
-b {
-  font-weight: bold;
-}
+b { font-weight: bold; }
 
 button, input {
+  font-size: $font_size;
   background: none;
   border: none;
   outline: none;
 }
 
-h1 {
-  font-size: $h1_size;
-}
+h1 { font-size: $h1_size; }
+h2 { font-size: $h2_size; }
+h3 { font-size: $h3_size; }
+h4 { font-size: $h4_size; }
+small { font-size: $small_size; }
 
-h2 {
-  font-size: $h2_size;
-}
-
-h3 {
-  font-size: $h3_size;
-}
-
-h4 {
-  font-size: $h4_size;
-}
-
-small {
-  font-size: 0.9em;
-}
-
-main a {
-  color: $link_color;
-
-  &:hover {
-    color: $link_color_hover
-  }
-}
-
+// Use it for
+// ------- Tile with hr ---------
 .hr-box {
   position: relative;
   text-align: center;
@@ -85,6 +66,7 @@ main a {
   }
 }
 
+// Flex separator
 .flex-space {
   flex-grow: 1;
 }

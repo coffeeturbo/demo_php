@@ -1,22 +1,21 @@
 .profile-settings
   loader(*ngIf="disabled")
-  form.form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
     h2 {{ 'General settings' | translate }}
     br
-    label {{ 'Name' | translate }}
-    .field
+    .material-field
       i.fa.fa-lg.fa-fw.fa-address-card-o
       .input-box
-        input(type="text", formControlName="name", placeholder="{{'Name' | translate }}")
+        input#name(material-input, type="text", formControlName="name")
         hr
-        label {{ 'Name' | translate }}
+        label.material-label(for="name") {{ 'Name' | translate }}
 
-    label {{ 'Profile link' | translate }}
-    .field
+    .material-field
       i.fa.fa-lg.fa-fw.fa-at
       .input-box
-        input(type="text", formControlName="alias", placeholder="{{'Alias' | translate }}")
+        input#alias(material-input, type="text", formControlName="alias")
         hr
+        label.material-label(for="alias") {{ 'Profile link' | translate }}
         .error(*ngIf="form.controls['alias'].hasError('alias_unavailable')")
           i.fa.fa-exclamation-circle
           span {{"Alias unavailable" | translate }} 

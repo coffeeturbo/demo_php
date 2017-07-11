@@ -1,17 +1,17 @@
-@import '~sass-material-colors';
-@import '~sass-mq';
+@import '~sass-material-colors/sass/sass-material-colors';
+@import '~sass-mq/mq';
 
-$primary_material:  "blue-grey";
-//$primary_material:  "teal";
-$secondary_material:"grey";
-$font_color_light:  #FFFFFF;
-$font_color_dark:   #333333;
-$link_color:        material-color("red", "600");
-$link_color_hover:  material-color("red", "a700");
+$primary_material:    "blue-grey";
+$secondary_material:  "grey";
+$error_material:      "red";
 
-$h1_size:   30px;
-$h2_size:   21px;
-$h3_size:   19px;
-$h4_size:   17px;
+$font_color_light:    #FFFFFF;
+$font_color_dark:     #333333;
+
+$h1_size:   2.1428em; // 30px;
+$h2_size:   1.5em;    // 21px;
+$h3_size:   1.3571em; // 19px;
+$h4_size:   1.2142em; // 17px
 $font_size: 14px;
+$small_size: 0.9em;
 

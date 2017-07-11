@@ -1,5 +1,4 @@
 import {NgModule} from "@angular/core";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 
 import {CommonModule} from "../Common/CommonModule";
@@ -19,8 +18,6 @@ import {OAuthService} from "./Service/OAuthService";
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
         RouterModule
     ],
     declarations: [

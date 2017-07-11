@@ -7,8 +7,8 @@ import * as Cropper from 'cropperjs';
     selector: '[cropper]'
 })
 export class CropperDirective implements OnChanges {
-    @Input("src") src: string;
-    @Input("options") options: CropperOptions;
+    @Input() src: string;
+    @Input() options: CropperOptions;
     @Output("onChange") onChange = new EventEmitter<Data>();
 
     private cropper: Cropper;

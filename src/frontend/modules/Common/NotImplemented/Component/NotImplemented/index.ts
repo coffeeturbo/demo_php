@@ -7,5 +7,5 @@ import {Component, Input} from "@angular/core";
 })
 
 export class NotImplementedComponent {
-    @Input("title") title: string = "Work in progress";
+    @Input() title: string = "Work in progress";
 }

@@ -1,6 +1,8 @@
-@import "../global";
-.form {
-  .field {
+@import "../../../../assets/styles/global";
+
+.material-form {
+  .field,
+  .material-field {
     display: flex;
     align-items: center;
     position: relative;
@@ -13,19 +15,9 @@
       color: material-color($secondary_material, "400");
     }
 
-    .show-password {
-      position: absolute;
-      right: 0;
-      animation: fade 100ms ease-in-out 0s 1 normal both;
-
-      &:hover {
-        color: material-color($secondary_material, "600");
-      }
-    }
-
     .input-box {
-      label {position: absolute}
       flex-grow: 1;
+      position: relative;
     }
 
     tooltip {
@@ -35,6 +27,10 @@
     input:focus ~ tooltip {
       display: block;
     }
+  }
+
+  .material-field {
+    padding-top: 15px;
   }
 
   .controls {

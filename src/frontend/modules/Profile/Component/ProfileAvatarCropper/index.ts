@@ -14,7 +14,7 @@ import {Observable} from "rxjs/Observable";
 })
 
 export class ProfileAvatarCropperComponent {
-    @Input('disabled') disabled: boolean = false;
+    @Input() disabled: boolean = false;
     @Output('onCrop') onCrop = new EventEmitter<AvatarUploadRequest>();
 
     public form: FormGroup = new FormGroup({

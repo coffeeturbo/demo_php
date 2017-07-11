@@ -1,14 +1,16 @@
-form.form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
-  .field
+form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  .material-field
     i.fa.fa-user.fa-lg.fa-fw
     .input-box
-      input(type="text", formControlName="username", placeholder="{{'Username or email' | translate }}", ng-auto-focus)
+      input#signInUsername(material-input, type="text", formControlName="username")
       hr
-  .field
+      label.material-label(for="signInUsername") {{'Username or email' | translate }}
+  .material-field
     i.fa.fa-lock.fa-lg.fa-fw
     .input-box
-      input(type="{{isPasswordHidden?'password':'text'}}", formControlName="password", placeholder="{{'Password' | translate}}")
+      input#signInPassword(material-input, type="{{isPasswordHidden?'password':'text'}}", formControlName="password")
       hr
+      label.material-label(for="signInPassword") {{'Password' | translate}}
     i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
     
   label.field

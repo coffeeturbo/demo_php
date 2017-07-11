@@ -1,23 +1,5 @@
 @import "../../../../assets/styles/global";
 
-.field {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding-bottom: 15px;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  .fa {
-    vertical-align: middle;
-    padding-right: 10px;
-    color: material-color($secondary_material, "400");
-  }
-
-  .input-box {
-    flex-grow: 1;
-  }
-}
-
 .controls {
   display: flex;
   justify-content: flex-end;

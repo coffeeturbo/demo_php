@@ -1,16 +1,17 @@
-form.form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
-  .field
+//@DOTO finish material labels
+form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  .material-field
     i.fa.fa-lg.fa-fw.fa-address-card-o
     .input-box
       input(type="text", formControlName="name", placeholder="{{'Enter your name' | translate }}", ng-auto-focus)
       hr
-  .field
+  .material-field
     i.fa.fa-at.fa-lg.fa-fw
     .input-box
       input(type="text", formControlName="email", placeholder="{{'Enter your email' | translate }}", ng-auto-focus)
       hr
   
-  .field
+  .material-field
     i.fa.fa-lock.fa-lg.fa-fw
     .input-box
       input(type="{{isPasswordHidden?'password':'text'}}", formControlName="password", placeholder="{{'Enter password' | translate }}")
@@ -18,7 +19,7 @@ form.form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.pre
       tooltip(*ngIf="form.controls['password'].touched && form.controls['password'].invalid")
         small {{ config.account.constraints.password.invalid_message | translate }}
     i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
-  .field
+  .material-field
     i.fa.fa-lg.fa-fw
     .input-box
       input(type="password", formControlName="password_confirm", placeholder="{{'Confirm password' | translate}}")

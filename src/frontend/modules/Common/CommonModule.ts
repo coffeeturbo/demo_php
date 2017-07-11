@@ -14,6 +14,7 @@ import {CropperModule} from "./Cropper/CropperModule";
 import {PluralizeModule} from "./Pluralize/PluralizeModule";
 import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
 import {PalleteModule} from "./Pallete/PalleteModule";
+import {MaterialFormModule} from "./MaterialForm/MaterialFormModule";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {PalleteModule} from "./Pallete/PalleteModule";
         LoadingBarModule,
         FocusModule,
         ModalModule,
+        MaterialFormModule,
         TooltipModule,
         TranslationModule,
         PluralizeModule,

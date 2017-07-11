@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, HostListener, Input} from "@angular/core";
 import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 
 import {AuthService} from "../../Service/AuthService";
@@ -8,6 +8,7 @@ import {Config} from "../../../../app/config";
 @Component({
     selector: "sign-up-form",
     templateUrl: "./template.pug",
+    styleUrls: ['../SignInForm/style.shadow.scss'],
     host: {"(window:keydown)": "onKeyDown($event)"}
 })
 
@@ -18,7 +19,6 @@ export class SignUpFormComponent {
     protected isPasswordHidden: boolean = true;
     public disabled: boolean = false;
     public fail: boolean = false;
-
     public form: FormGroup = new FormGroup({
         name: new FormControl("", Validators.required),
         email: new FormControl("", Validators.email),
@@ -32,24 +32,21 @@ export class SignUpFormComponent {
 
     constructor(private authService: AuthService) {}
 
-    private onKeyDown($event: KeyboardEvent): void {
-        if ($event.key === "Enter" && this.form.valid && !this.disabled) {
-            this.submit()
-        }
-    }
-
+    @HostListener('document:keydown.enter')
     public submit(): void {
-        let formData = this.form.value;
-        this.disabled = true;
-        this.fail = false;
+        if (this.form.valid && !this.disabled) {
+            let formData = this.form.value;
+            this.disabled = true;
+            this.fail = false;
 
-        this.authService
-            .signUp({
-                name: formData.name,
-                email: formData.email,
-                password: formData.password,
-            })
-            .finally(() => this.disabled = false)
-            .subscribe(null, () => this.fail = true);
+            this.authService
+                .signUp({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                })
+                .finally(() => this.disabled = false)
+                .subscribe(null, () => this.fail = true);
+        }
     }
 }

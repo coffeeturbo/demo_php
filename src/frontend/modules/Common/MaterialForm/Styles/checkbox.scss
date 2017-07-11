@@ -1,0 +1,49 @@
+@import "../../../../assets/styles/global";
+
+.material-form input[type=checkbox] {
+  display: none;
+
+  & + .checkbox {
+    cursor: pointer;
+    color: material-color($secondary_material, "600");
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 24px;
+      height: 16px;
+      border-radius: 13px;
+      background: material-color($secondary_material, "300");
+      transition: background 200ms;
+      box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2);
+      margin-right: 15px;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #FFF;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+      transition: left 100ms;
+    }
+
+    &:hover {
+      color: material-color($secondary_material, "800");
+    }
+  }
+
+  &:checked + .checkbox {
+    &:before {
+      background: material-color($primary_material, "400");
+    }
+    &:after {
+      left: 10px;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+@import "../../../../assets/styles/global";
+
+.material-form {
+  input[type=text],
+  input[type=password],
+  input[type=date] {
+    width: 100%;
+    padding: 5px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid material-color($secondary_material, "400");
+    transition: border 300ms linear;
+
+    @include mq($until: tablet) {
+      line-height: 2em;
+    }
+
+    &:focus {
+      border-bottom: 1px solid material-color($primary_material, "400");
+
+      & + hr {
+        width: 100%;
+        background: material-color($primary_material, "400");
+      }
+    }
+
+    & + hr {
+      display: block;
+      margin: 0 auto;
+      border: none;
+      width: 0;
+      height: 2px;
+      background: material-color($primary_material, "400");
+      transition: width 300ms linear, background 300ms linear;
+    }
+
+    &.ng-dirty.ng-invalid.ng-touched {
+      border-color: material-color("red", "800");
+
+      & + hr {
+        background: material-color("red", "400");
+      }
+    }
+  }
+}

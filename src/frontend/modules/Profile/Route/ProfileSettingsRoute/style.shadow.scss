@@ -7,6 +7,12 @@
   max-width: 500px;
   margin: -20px auto 0;
   position: relative;
+
+  @include mq($until: tablet) {
+    max-width: none;
+    margin: -20px -20px 0;
+    box-shadow: none;
+  }
 }
 
 .error {
@@ -22,7 +28,16 @@
   span {
     vertical-align: middle;
   }
+
   .fa {
     padding-right: 0;
+  }
+}
+
+input.ng-dirty.ng-invalid.ng-touched ~ .error{
+  color: material-color("red", "800");
+
+  .fa{
+    color: material-color("red", "800");
   }
 }
