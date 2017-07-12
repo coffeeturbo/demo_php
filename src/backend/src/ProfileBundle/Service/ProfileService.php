@@ -135,6 +135,7 @@ class ProfileService
         $backdropStrategy = new ProfileBackdropStrategy($profile, $absolutePath, $webPath);
 
         $this->container->get('profile.backdrop.service')->uploadImage($parameter, $backdropStrategy);
+        $this->profileRepository->save($profile);
 
         return $profile;
     }

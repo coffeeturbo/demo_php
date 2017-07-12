@@ -31,7 +31,7 @@ ProfileBundle\Entity\Profile:
       type: json_array
       nullable: true
     backdrop:
-      type: string
+      type: json_array
       nullable: true
   manyToOne:
     account:
