@@ -107,11 +107,13 @@ hwi_oauth:
             type:                vkontakte
             client_id:           '%hwi_oauth_vk_id%'
             client_secret:       '%hwi_oauth_vk_secret%'
+            authorization_url:   "https://oauth.vk.com/authorize?display=mobile"
         facebook:
             type:                facebook
             client_id:           '%hwi_oauth_facebook_id%'
             client_secret:       '%hwi_oauth_facebook_secret%'
-            scope:               "email"
+            scope:               "email,public_profile,user_birthday"
+            authorization_url:   "https://www.facebook.com/v2.7/dialog/oauth?display=popup"
             
 gesdinet_jwt_refresh_token:
     ttl: 2592000           
@@ -119,7 +121,7 @@ gesdinet_jwt_refresh_token:
 
 profile:
     limit: 1
-    min_age: 4
+    min_age: 13
     max_age: 150
     avatar:
       absolute_path: '%kernel.root_dir%/../../web/uploads/avatar'
