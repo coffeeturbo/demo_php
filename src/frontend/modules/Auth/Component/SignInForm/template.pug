@@ -1,14 +1,14 @@
-form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()", chrome-autofill-fix)
   .material-field
     i.fa.fa-user.fa-lg.fa-fw
     .input-box
-      input#signInUsername(material-input, type="text", formControlName="username")
+      input#signInUsername(ng-detect-empty-input, type="text", formControlName="username")
       hr
       label.material-label(for="signInUsername") {{'Username or email' | translate }}
   .material-field
     i.fa.fa-lock.fa-lg.fa-fw
     .input-box
-      input#signInPassword(material-input, type="{{isPasswordHidden?'password':'text'}}", formControlName="password")
+      input#signInPassword(ng-detect-empty-input, type="{{isPasswordHidden?'password':'text'}}", formControlName="password")
       hr
       label.material-label(for="signInPassword") {{'Password' | translate}}
     i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")

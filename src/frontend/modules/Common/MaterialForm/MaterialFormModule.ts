@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {MaterialInputDirective} from "./Directive/MaterialInputDirective";
+import {EmptyInputDetectorDirective} from "./Directive/EmptyInputDetectorDirective";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
@@ -8,10 +8,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
         ReactiveFormsModule,
     ],
     declarations: [
-        MaterialInputDirective
+        EmptyInputDetectorDirective
     ],
     exports: [
-        MaterialInputDirective
+        EmptyInputDetectorDirective
     ]
 })
 export class MaterialFormModule {} 

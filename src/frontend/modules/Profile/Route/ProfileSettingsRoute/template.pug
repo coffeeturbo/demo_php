@@ -6,14 +6,14 @@
     .material-field
       i.fa.fa-lg.fa-fw.fa-address-card-o
       .input-box
-        input#name(material-input, type="text", formControlName="name")
+        input#name(ng-detect-empty-input, type="text", formControlName="name")
         hr
         label.material-label(for="name") {{ 'Name' | translate }}
 
     .material-field
       i.fa.fa-lg.fa-fw.fa-at
       .input-box
-        input#alias(material-input, type="text", formControlName="alias")
+        input#alias(ng-detect-empty-input, type="text", formControlName="alias")
         hr
         label.material-label(for="alias") {{ 'Profile link' | translate }}
         .error(*ngIf="form.controls['alias'].hasError('alias_unavailable')")

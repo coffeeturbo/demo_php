@@ -16,6 +16,7 @@ import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
 import {PalleteModule} from "./Pallete/PalleteModule";
 import {MaterialFormModule} from "./MaterialForm/MaterialFormModule";
 import {ReactiveFormsModule} from "@angular/forms";
+import {ChromeAutoFillModule} from "./ChromeAutoFill/ChromeAutoFillModule";
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     exports: [
         CropperModule,
         CapitalizeModule,
+        ChromeAutoFillModule,
         NgCommonModule,
         LoadingBoxModule,
         LoadingBarModule,
