@@ -15,6 +15,7 @@ import {PluralizeModule} from "./Pluralize/PluralizeModule";
 import {CapitalizeModule} from "./Capitalize/CapitalizeModule";
 import {PalleteModule} from "./Pallete/PalleteModule";
 import {MaterialFormModule} from "./MaterialForm/MaterialFormModule";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ import {MaterialFormModule} from "./MaterialForm/MaterialFormModule";
         NgCommonModule,
         LoadingBoxModule,
         LoadingBarModule,
+        ReactiveFormsModule,
         FocusModule,
         ModalModule,
         MaterialFormModule,
