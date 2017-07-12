@@ -14,22 +14,31 @@ services:
       - '@auth.service'
       - '@event_dispatcher'
       - '%profile.limit%'
+
+  profile.backdrop.service:
+    class: ProfileBundle\Service\BackdropService
+    arguments:
+      - '@image.service'
       
   profile.form.type:
-#    abstract: true
     class: ProfileBundle\Form\ProfileType
     arguments:
       - '%profile.min_age%'
       - '%profile.max_age%'
     tags: [{name: form.type}]
 
-#  profile.form.backdrop_upload_type:
-#    abstract: true
-#    arguments:
-#    tags: [{name: form.type}]
+  profile.form.backdrop_upload_type:
+    class: ProfileBundle\Form\BackdropUploadType
+    arguments:
+      - '%profile.backdrop.min_width%'
+      - '%profile.backdrop.max_width%'
+      - '%profile.backdrop.min_height%'
+      - '%profile.backdrop.max_height%'
+      - '%profile.backdrop.min_ratio%'
+      - '%profile.backdrop.max_ratio%'
+    tags: [{name: form.type}]
 
   profile.form.avatar_upload_type:
-#    abstract: true
     class: ProfileBundle\Form\AvatarUploadType
     arguments:
       - '%profile.avatar.min_width%'

@@ -6,13 +6,17 @@ trait BackdropEntityTrait
 {
     private $backdrop;
 
-    public function getBackdrop()
+    public function getBackdrop(): Image
     {
-        return $this->backdrop;
+        return  Image::createFromJson($this->backdrop);
     }
 
     public function setBackdrop($backdrop)
     {
+        if($backdrop instanceof Image) {
+            $this->backdrop = $backdrop->jsonSerialize();
+        }
+
         $this->backdrop = $backdrop;
         return $this;
     }

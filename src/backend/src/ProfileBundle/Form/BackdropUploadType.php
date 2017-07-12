@@ -17,12 +17,12 @@ class BackdropUploadType extends AbstractType
     private $maxRatio;
     private $minRatio;
 
-    function __construct($minWidth, $maxWidth, $minHeight, $minRatio, $maxRatio)
+    function __construct($minWidth, $maxWidth, $minHeight, $maxHeight, $minRatio, $maxRatio)
     {
         $this->minWidth = $minWidth;
         $this->maxWidth = $maxWidth;
         $this->minHeight = $minHeight;
-        $this->maxHeight = $minHeight;
+        $this->maxHeight = $maxHeight;
         $this->minRatio = $minRatio;
         $this->maxRatio = $maxRatio;
     }

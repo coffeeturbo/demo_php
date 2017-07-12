@@ -1,10 +1,16 @@
 <?php
-namespace AvatarBundle\Image\Strategy;
+namespace ProfileBundle\Service\Strategy;
 
 use AvatarBundle\Image\BackdropEntity;
+use AvatarBundle\Image\Strategy\ImageStrategy;
 
 class ProfileBackdropStrategy extends ImageStrategy
 {
+    protected $sizes = [
+        ''
+    ];
+
+
     public function __construct(BackdropEntity $entity, string $storageDirPath, string $publicDirPath)
     {
         $this->entity = $entity;

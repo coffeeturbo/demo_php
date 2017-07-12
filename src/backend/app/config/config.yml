@@ -130,12 +130,12 @@ profile:
       max_height: 7000
       min_ratio: 0.25
       max_ratio: 3
-#    backdrop:
-#      absolute_path: '%kernel.root_dir%/../../web/uploads/backdrop'
-#      web_path: 'uploads/backdrop'
-#      min_width: 1500
-#      min_height: 300
-#      max_width: 7000
-#      max_height: 7000
-#      min_ratio: 3
-#      max_ratio: 3
+    backdrop:
+      absolute_path: '%kernel.root_dir%/../../web/uploads/backdrop'
+      web_path: 'uploads/backdrop'
+      min_width: 1500
+      min_height: 300
+      max_width: 7000
+      max_height: 7000
+      min_ratio: 3
+      max_ratio: 3
