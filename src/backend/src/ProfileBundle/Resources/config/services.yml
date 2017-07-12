@@ -16,8 +16,27 @@ services:
       - '%profile.limit%'
       
   profile.form.type:
+#    abstract: true
     class: ProfileBundle\Form\ProfileType
     arguments:
       - '%profile.min_age%'
       - '%profile.max_age%'
     tags: [{name: form.type}]
+
+#  profile.form.backdrop_upload_type:
+#    abstract: true
+#    arguments:
+#    tags: [{name: form.type}]
+
+  profile.form.avatar_upload_type:
+#    abstract: true
+    class: ProfileBundle\Form\AvatarUploadType
+    arguments:
+      - '%profile.avatar.min_width%'
+      - '%profile.avatar.max_width%'
+      - '%profile.avatar.min_height%'
+      - '%profile.avatar.max_height%'
+      - '%profile.avatar.min_ratio%'
+      - '%profile.avatar.max_ratio%'
+    tags: [{name: form.type}]
+

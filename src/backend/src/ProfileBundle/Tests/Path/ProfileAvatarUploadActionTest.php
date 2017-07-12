@@ -73,7 +73,7 @@ class ProfileAvatarUploadActionTest extends ProfileController
         Assert::assertFileExists($body['entity']['avatar']['small']['storage_path']);
 
         // после удаления профиля нужно удалять все связанные файлы
-
+        $this->container->get('avatar.service')->deleteImage($profile);
     }
 
     public function test404()
@@ -88,7 +88,6 @@ class ProfileAvatarUploadActionTest extends ProfileController
             'height' => 200,
         ];
 
-
         $file = new UploadedFile($this->filePath, 'grid-example');
 
         $this->getPathRequestClient(99999, $params, $file);
@@ -98,7 +97,7 @@ class ProfileAvatarUploadActionTest extends ProfileController
         $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
 
         // после удаления профиля нужно удалять все связанные файлы
-
+        $this->container->get('avatar.service')->deleteImage($profile);
     }
 
 }
