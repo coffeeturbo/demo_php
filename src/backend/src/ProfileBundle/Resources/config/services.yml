@@ -14,6 +14,11 @@ services:
       - '@auth.service'
       - '@event_dispatcher'
       - '%profile.limit%'
+
+  profile.backdrop.service:
+    class: ProfileBundle\Service\BackdropService
+    arguments:
+      - '@image.service'
       
   profile.form.type:
     class: ProfileBundle\Form\ProfileType

@@ -48,6 +48,12 @@ class Image implements \JsonSerializable
         return $this;
     }
 
+    static public function createFromJson(array $json)
+    {
+        return new self($json['storage_path'], $json['public_path'], $json['name']);
+    }
+
+
     function jsonSerialize()
     {
         return [

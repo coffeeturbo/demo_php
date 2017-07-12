@@ -5,12 +5,12 @@ namespace ProfileBundle\Service;
 use AccountBundle\Entity\Account;
 use AuthBundle\Service\AuthService;
 use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
-use AvatarBundle\Image\Strategy\ProfileBackdropStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
 use ProfileBundle\Repository\ProfileRepository;
+use ProfileBundle\Service\Strategy\ProfileBackdropStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -127,14 +127,16 @@ class ProfileService
         return $profile;
     }
 
-    public function uploadBackdrop(Profile $profile, UploadedImageParameter $parameter)
+    public function uploadBackdrop(Profile $profile, UploadedImageParameter $parameter): Profile
     {
         $absolutePath = $this->container->getParameter('profile.backdrop.absolute_path');
         $webPath = $this->container->getParameter('profile.backdrop.web_path');
 
         $backdropStrategy = new ProfileBackdropStrategy($profile, $absolutePath, $webPath);
 
+        $this->container->get('profile.backdrop.service')->uploadImage($parameter, $backdropStrategy);
 
+        return $profile;
     }
 
 
