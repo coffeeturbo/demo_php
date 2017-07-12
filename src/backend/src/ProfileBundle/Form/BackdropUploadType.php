@@ -1,9 +1,9 @@
 <?php
 namespace ProfileBundle\Form;
 
-use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -29,12 +29,10 @@ class BackdropUploadType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('id', IntegerType::class, ['required' => false , 'label' => 'profileId'])
-            ->add('x', IntegerType::class, ["constraints" => [new NotBlank()]])
             ->add('y', IntegerType::class, ["constraints" => [new NotBlank()]])
-            ->add('width', IntegerType::class, ["constraints" => [new NotBlank()]])
-            ->add('height', IntegerType::class, ["constraints" => [new NotBlank()]])
             ->add('image', FileType::class, [
                 "constraints" => [
                     new NotBlank(),
@@ -50,4 +48,5 @@ class BackdropUploadType extends AbstractType
             ])
         ;
     }
+
 }

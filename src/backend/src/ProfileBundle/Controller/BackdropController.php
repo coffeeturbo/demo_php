@@ -38,10 +38,9 @@ class BackdropController extends Controller
         $profileService->uploadBackdrop($profile, $params);
 
         return new SuccessProfileResponse($profile);
-
     }
 
-    public function deleteAction(int $id)
+    /*public function deleteAction(int $id)
     {
         $profileService = $this->get('profile.service');
 
@@ -50,5 +49,5 @@ class BackdropController extends Controller
         $profileService->deleteBackdrop($profile);
 
         return new SuccessProfileResponse($profile);
-    }
+    }*/
 }
