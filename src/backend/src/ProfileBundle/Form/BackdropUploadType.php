@@ -29,22 +29,21 @@ class BackdropUploadType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('id', IntegerType::class, ['required' => false , 'label' => 'profileId'])
             ->add('y', IntegerType::class, ["constraints" => [new NotBlank()]])
             ->add('image', FileType::class, [
-                "constraints" => [
-                    new NotBlank(),
-                    new Image([
-                        'minWidth' => $this->minWidth,
-                        'maxWidth' => $this->maxWidth,
-                        'minHeight' => $this->minHeight,
-                        'maxHeight' => $this->maxHeight,
-                        'minRatio' => $this->minRatio,
-                        'maxRatio' => $this->maxRatio,
-                    ])
-                ],
+//                "constraints" => [
+//                    new NotBlank(),
+//                    new Image([
+//                        'minWidth' => $this->minWidth,
+//                        'maxWidth' => $this->maxWidth,
+//                        'minHeight' => $this->minHeight,
+//                        'maxHeight' => $this->maxHeight,
+//                        'minRatio' => $this->minRatio,
+//                        'maxRatio' => $this->maxRatio,
+//                    ])
+//                ],
             ])
         ;
     }

@@ -1,12 +1,15 @@
 <?php
 namespace ProfileBundle\Controller;
 
+use AppBundle\Exception\BadRestRequestHttpException;
+use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use ProfileBundle\Form\BackdropUploadType;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BackdropController extends Controller
 {
@@ -25,17 +28,24 @@ class BackdropController extends Controller
      */
     public function uploadAction(int $id, Request $request)
     {
+        try{
+            $profileService = $this->get('profile.service');
 
-        $profileService = $this->get('profile.service');
+            $profile = $profileService->getById($id);
 
-        $profile = $profileService->getById($id);
+            $body = $this->get('app.validate_request')->validate($request, BackdropUploadType::class);
 
-        $body = $this->get('app.validate_request')->validate($request, BackdropUploadType::class);
+            $params = new UploadedImageParameter($body['image']);
+            $params->setStartY($body['y']);
 
-        $params = new UploadedImageParameter($body['image']);
-        $params->setStartY($body['y']);
-
-        $profileService->uploadBackdrop($profile, $params);
+            $profileService->uploadBackdrop($profile, $params);
+        } catch(NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage());
+        } catch(BadRestRequestHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getCode());
+        } catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage());
+        }
 
         return new SuccessProfileResponse($profile);
     }
