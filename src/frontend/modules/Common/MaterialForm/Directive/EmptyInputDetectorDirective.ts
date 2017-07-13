@@ -9,7 +9,7 @@ export class EmptyInputDetectorDirective implements AfterViewInit {
 
     public ngAfterViewInit() {
         this.formControl.valueChanges
-            .startWith(null)
+            .startWith(this.formControl.value)
             .subscribe((value?: any) => {
                 if (value) {
                     this.renderer.removeClass(this.el.nativeElement, "ng-empty");
