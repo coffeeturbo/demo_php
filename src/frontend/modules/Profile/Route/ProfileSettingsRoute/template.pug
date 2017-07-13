@@ -16,13 +16,15 @@
         input#alias(ng-detect-empty-input, type="text", formControlName="alias")
         hr
         label.material-label(for="alias") {{ 'Profile link' | translate }}
-        .error(*ngIf="form.controls['alias'].hasError('alias_unavailable')")
-          i.fa.fa-exclamation-circle
-          span {{"Alias unavailable" | translate }} 
-        .error(*ngIf="form.controls['alias'].hasError('minlength')")  
-          i.fa.fa-exclamation-circle
-          span {{"Too short" | translate }}
-  
+        ng-container(*ngIf="form.controls['alias'].invalid")
+          .error
+            i.fa.fa-exclamation-circle
+            span(*ngIf="form.controls['alias'].hasError('alias_unavailable')") {{"Alias unavailable" | translate }} 
+            span(*ngIf="form.controls['alias'].hasError('minlength')") {{"Too short" | translate }}
+            span(*ngIf="form.controls['alias'].hasError('pattern')") {{"Invalid format" | translate }} 
+          tooltip(*ngIf="form.controls['alias'].hasError('pattern')")
+            small {{ "You can choose a profile link that is easier to memorize and looks better on business cards. Please use latin letters, numbers, or «_»" | translate }}.
+
     label {{ 'Gender' | translate }}
     .field
       i.fa.fa-lg.fa-fw.fa-venus-mars

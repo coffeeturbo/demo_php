@@ -1,21 +1,34 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, HostListener, OnInit} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {ProfileService} from "../../Service/ProfileService";
 import {Profile} from "../../Entity/Profile";
 import {Observable} from "rxjs";
+import {Config} from "../../../../app/config";
 
 @Component({
     templateUrl: "./template.pug",
-    styleUrls: ["style.shadow.scss"],
-    host: {"(window:keydown)": "onKeyDown($event)"}
+    styleUrls: ["style.shadow.scss"]
 })
-export class ProfileSettingsRoute implements OnInit {
+export class ProfileSettingsRoute {
     public disabled: boolean = false;
-    public profile: Profile;
-    public form: FormGroup;
-    public defaultValues;
+    public profile: Profile = this.route.snapshot.data["profile"];
+    public constraints = Config.profile.constraints;
+    public form: FormGroup = new FormGroup({
+        name: new FormControl(this.profile.name, Validators.required),
+        alias: new FormControl(
+            this.profile.alias,
+            [
+                Validators.minLength(this.constraints.alias.min_length),
+                Validators.pattern(this.constraints.alias.match)
+            ],
+            this.aliasValidator.bind(this)
+        ),
+        gender: new FormControl(this.profile.gender),
+        birth_date: new FormControl(this.profile.birth_date)
+    });
+    private defaultValues = JSON.parse(JSON.stringify(this.form.value));
 
     constructor(
         private route: ActivatedRoute,
@@ -23,24 +36,6 @@ export class ProfileSettingsRoute implements OnInit {
         private profileService: ProfileService
     ) {}
 
-    ngOnInit() {
-        this.profile = this.route.snapshot.data["profile"];
-        this.form = new FormGroup({
-            name: new FormControl(this.profile.name, Validators.required),
-            alias: new FormControl(this.profile.alias, Validators.minLength(3), this.aliasValidator.bind(this)),
-            gender: new FormControl(this.profile.gender),
-            birth_date: new FormControl(this.profile.birth_date)
-        });
-        this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
-    }
-
-    private onKeyDown($event: KeyboardEvent): void {
-        if ($event.key === "Enter" && this.form.valid && !this.disabled) {
-            this.submit()
-        }
-    }
-    
-    // @TODO ignore non-latin letters
     private aliasValidator(aliasControl: AbstractControl): Promise<ValidationErrors> {
         if(!aliasControl.value || this.profile.alias === aliasControl.value) {
             return Observable.of([]).toPromise();
@@ -61,17 +56,20 @@ export class ProfileSettingsRoute implements OnInit {
         return  JSON.stringify(this.defaultValues) !== JSON.stringify(this.form.value);
     }
 
+    @HostListener('document:keydown.enter')
     public submit(): void {
-        this.disabled = true;
-        let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value);
+        if (this.form.valid && !this.disabled) {
+            this.disabled = true;
+            let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value);
 
-        this.profileService.edit(profile, this.form.value, this.profile)
-            .finally(() => this.disabled = false)
-            .subscribe(profile => {
-                this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
-                this.profile = profile;
-                this.router.navigate(["profile", this.profileService.getOwnProfilePath()]);
-            })
-        ;
+            this.profileService.edit(profile, this.form.value, this.profile)
+                .finally(() => this.disabled = false)
+                .subscribe(profile => {
+                    this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
+                    this.profile = profile;
+                    this.router.navigate(["profile", this.profileService.getOwnProfilePath()]);
+                })
+            ;
+        }
     }
 }

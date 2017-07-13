@@ -34,4 +34,4 @@ modal.errors([width]="'500px'", *ngIf="helper.ready() && form.invalid", (on-clos
 
   modal-footer
     button.btn((click)="helper.destroy()") {{ "Cancel" | translate }}
-    button.btn.primary((onChange)="helper.setAvatar($event.image, $event.src)", cropper-browse) {{ "Choose other" | translate }}
+    button.btn.primary((onChange)="helper.setData($event.image, $event.src)", cropper-browse) {{ "Choose other" | translate }}

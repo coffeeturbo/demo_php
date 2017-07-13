@@ -6,7 +6,7 @@ ng-container(*ngIf="profile")
           a(*ngIf="profileService.hasAvatar(profile)", routerLink="avatar")
             img(src="{{profile.avatar.medium.public_path}}")
           div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
-          button((onChange)="helper.setAvatar($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
+          button((onChange)="helper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
           h1
             | {{profile.name}}

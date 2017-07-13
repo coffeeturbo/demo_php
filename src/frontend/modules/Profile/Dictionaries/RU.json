@@ -10,10 +10,12 @@
   "General settings": "Основные настройки",
   "Image upload": "Загрузка изображения",
   "Choose other": "Выбрать другую",
+  "Invalid format": "Неверный формат",
   "Now select area for your profile miniature": "Выбрите область для маленьких фотографий",
   "The miniature will appear next to your posts, private messages and comments": "Выбранная миниатюра будет использоваться в новостях, личных сообщениях и комментариях",
   "Unfortunately, an error has occurred": "К сожалению, произошла ошибка",
   "Photo must be no less than 200 pixels tall and wide." : "Фотография должна иметь размер не меньше 200 точек по каждой из сторон.",
   "Photo must be no more than 7 000 pixels tall and wide.": "Фотография должна иметь размер не больше 7 000 точек по каждой из сторон.",
-  "Outrageously tall or wide photos won't work.": "Нельзя использовать фотографии, у которых одна из сторон в несколько раз превышает другую."
+  "Outrageously tall or wide photos won't work.": "Нельзя использовать фотографии, у которых одна из сторон в несколько раз превышает другую.",
+  "You can choose a profile link that is easier to memorize and looks better on business cards. Please use latin letters, numbers, or «_»": "Вы можете изменить короткий адрес Вашей страницы на более удобный и запоминающийся. Для этого введите имя страницы, состоящее из латинских букв, цифр или знаков «_»"
 }

@@ -26,13 +26,17 @@ export const Config = {
                 "min_length": 4
             },
             "password": {
-                "match": "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[\\S]{8,}$",
+                "match": /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\S]{8,}$/,
                 "invalid_message": "The password must contain at least 8 characters, including numbers, upper and lower case letters"
             },
         }
     },
     "profile": {
         "constraints": {
+            "alias": {
+                "min_length": 3,
+                "match": /^[a-zA-Z0-9\._]+$/
+            },
             "avatar": {
                 minWidth: 200,
                 minHeight: 200,

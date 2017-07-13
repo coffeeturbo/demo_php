@@ -6,7 +6,7 @@ export class ProfileAvatarCropperHelper {
     public image: File;
     public onChange = new EventEmitter<{image: File, src: string}>();
     
-    public setAvatar(image: File, src: string) {
+    public setData(image: File, src: string) {
         this.image = image;
         this.src = src;
         this.onChange.emit({image, src});

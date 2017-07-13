@@ -27,6 +27,14 @@
 
   span {
     vertical-align: middle;
+    
+    & + span {
+      text-transform: lowercase;
+
+      &:before {
+        content: ', ';
+      }
+    }
   }
 
   .fa {
