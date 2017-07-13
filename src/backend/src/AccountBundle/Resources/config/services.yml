@@ -1,5 +1,5 @@
 services:
-    auth.account.repository:
+    account.repository:
         class: AccountBundle\Repository\AccountRepository
         factory: ['@doctrine.orm.entity_manager', 'getRepository']
         arguments:
@@ -11,8 +11,8 @@ services:
           - '@fos_user.user_manager'
           - '@event_dispatcher'
           
-    account.listener.role:
+    role.listener:
       class: AccountBundle\EventListener\RoleListener
-      arguments: ['@auth.account.repository']
+      arguments: ['@account.repository']
       tags:
         - { name: kernel.event_subscriber }

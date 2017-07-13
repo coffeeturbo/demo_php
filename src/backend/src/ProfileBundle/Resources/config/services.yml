@@ -49,3 +49,8 @@ services:
       - '%profile.avatar.max_ratio%'
     tags: [{name: form.type}]
 
+  oauth.registered.listener:
+    class: ProfileBundle\EventListener\OAuthRegisteredListner
+    arguments: ['@profile.service']
+    tags:
+      - { name: kernel.event_subscriber }

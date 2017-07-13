@@ -2,7 +2,7 @@ services:
     auth.service:
       class: AuthBundle\Service\AuthService
       arguments: 
-        - '@auth.account.repository'
+        - '@account.repository'
         - '@security.password_encoder'
         - '@security.token_storage'
 

@@ -25,7 +25,7 @@ class AccountService
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function createFromArray($data) : Account
+    public function createFromArray($data, bool $persist = true) : Account
     {
         $userManager = $this->userManager;
 
@@ -33,12 +33,21 @@ class AccountService
         $account = $userManager->createUser();
         $account
             ->setEnabled(true)
-            ->setPlainPassword($data['password'])
             ->setUsername($data['email'])
             ->setEmail($data['email'])
         ;
 
-        return $this->create($account);
+        if(isset($data['password'])) {
+            $account->setPlainPassword($data['password']);
+        } else {
+            $account->setPassword("");
+        }
+
+        if ($persist) {
+            $this->create($account);
+        }
+
+        return $account;        
     }
     
     public function create(Account $account) : Account

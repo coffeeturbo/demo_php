@@ -8,6 +8,7 @@ services:
     oauth.security.account_provider:
         class: OAuthBundle\Security\Core\Account\OAuthAccountProvider
         arguments:
-            - '@profile.service'
+            - '@event_dispatcher'
+            - '@account.service'
             - '@fos_user.user_manager'
-            - { vk: vkId, facebook: facebookId }        
+            - { vk: vkId, facebook: facebookId }
