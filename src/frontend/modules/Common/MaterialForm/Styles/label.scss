@@ -16,7 +16,7 @@ label.material-label {
   }  
 }
 
-input.material-input-empty ~ label.material-label {
+input.ng-empty ~ label.material-label {
   transform: translateY(0);
 }
 

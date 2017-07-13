@@ -8,14 +8,14 @@ AccountBundle\Entity\Account:
         strategy: AUTO
   fields:
     vkId:
-      type: integer
+      type: bigint
       column: vk_id
       nullable: true
     facebookId:
-      type: integer
+      type: bigint
       column: facebook_id
       nullable: true
     googleId:
-      type: integer
+      type: bigint
       column: google_id
       nullable: true
