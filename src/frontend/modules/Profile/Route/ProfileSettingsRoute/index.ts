@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from "@angular/core";
+import {Component, HostListener} from "@angular/core";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -36,15 +36,14 @@ export class ProfileSettingsRoute {
         private profileService: ProfileService
     ) {}
 
-    private aliasValidator(aliasControl: AbstractControl): Promise<ValidationErrors> {
+    private aliasValidator(aliasControl: AbstractControl): Observable<ValidationErrors> {
         if(!aliasControl.value || this.profile.alias === aliasControl.value) {
-            return Observable.of([]).toPromise();
+            return Observable.empty();
         }
 
         return this.profileService.checkAlias(aliasControl.value)
             .filter((checkAliasResponse) => !checkAliasResponse.available)
             .map(() => <ValidationErrors>{"alias_unavailable": true})
-            .toPromise()
         ;
     }
 
