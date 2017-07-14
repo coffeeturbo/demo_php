@@ -42,7 +42,7 @@ class BackdropController extends Controller
         } catch(NotFoundHttpException $e){
             return new ErrorJsonResponse($e->getMessage());
         } catch(BadRestRequestHttpException $e){
-            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getCode());
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
         }

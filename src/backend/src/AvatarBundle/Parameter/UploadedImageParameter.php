@@ -33,6 +33,7 @@ class UploadedImageParameter
     public function setFile($file)
     {
         $this->file = $file;
+        return $this;
     }
 
     public function getWidth()
@@ -43,6 +44,7 @@ class UploadedImageParameter
     public function setWidth($width)
     {
         $this->width = $width;
+        return $this;
     }
 
     public function getHeight()
@@ -53,6 +55,7 @@ class UploadedImageParameter
     public function setHeight($height)
     {
         $this->height = $height;
+        return $this;
     }
 
     public function getStartX()
@@ -63,6 +66,7 @@ class UploadedImageParameter
     public function setStartX($startX)
     {
         $this->startX = $startX;
+        return $this;
     }
 
     public function getStartY()
@@ -73,6 +77,7 @@ class UploadedImageParameter
     public function setStartY($startY)
     {
         $this->startY = $startY;
+        return $this;
     }
 
 }

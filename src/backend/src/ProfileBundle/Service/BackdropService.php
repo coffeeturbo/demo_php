@@ -19,7 +19,13 @@ class BackdropService
 
     public function uploadImage(UploadedImageParameter $imageParameter, ProfileBackdropStrategy $strategy)
     {
-        $image = $this->imageService->generateImage($imageParameter->getFile()->getRealPath(), null, $strategy);
+        $imageParameter->setWidth(1500)->setHeight(300);
+
+        $image = $this->imageService->generateImage($imageParameter->getFile()->getRealPath(),
+            null,
+            $strategy,
+            $imageParameter
+        );
 
         $strategy->getEntity()->setBackdrop($image);
     }
