@@ -7,6 +7,8 @@ import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
 import {ProfileService} from "../../Service/ProfileService";
 import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 import {ProfileAvatarCropperHelper} from "../../Component/ProfileAvatarCropper/helper";
+import {ProfileBackdropCropperHelper} from "../../Component/ProfileBackdropCropper/helper";
+import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
 
 @Component({
     templateUrl: "./template.pug",
@@ -15,16 +17,15 @@ import {ProfileAvatarCropperHelper} from "../../Component/ProfileAvatarCropper/h
 export class ProfileRoute implements OnInit {
 
     public profile: Profile;
-    public backdropUrl: string = "https://pbs.twimg.com/profile_banners/385368327/1385539533/1500x500";
     public disabled: boolean = false;
-    public image: File;
 
     constructor(
         private route: ActivatedRoute, 
         private translationService: TranslationService,
         public profileService: ProfileService, 
         public palleteService: PalleteService, 
-        public helper: ProfileAvatarCropperHelper
+        public avatarHelper: ProfileAvatarCropperHelper,
+        public backdropHelper: ProfileBackdropCropperHelper
     ) {}
 
     ngOnInit() {
@@ -59,7 +60,18 @@ export class ProfileRoute implements OnInit {
             .finally(() => this.disabled = false)
             .subscribe((profile: Profile) => {
                 this.profile = this.route.snapshot.data["profile"] = profile;
-                this.helper.destroy();
+                this.avatarHelper.destroy();
+            })
+        ;
+    }
+    
+    public uploadBackdrop(backdropUploadRequest: BackdropUploadRequest) {
+        this.disabled = true;
+        this.profileService.uploadBackdrop(this.profile, backdropUploadRequest)
+            .finally(() => this.disabled = false)
+            .subscribe((profile: Profile) => {
+                this.profile = this.route.snapshot.data["profile"] = profile;
+                this.backdropHelper.destroy();
             })
         ;
     }

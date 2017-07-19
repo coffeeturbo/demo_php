@@ -68,3 +68,15 @@
   }
 
 }
+
+.profile-backdrop-cropper {
+  .cropper-point, 
+  .cropper-line {
+    display: none;
+  }
+  
+  .cropper-view-box,
+  .cropper-face {
+    border-radius: 0;
+  }
+}

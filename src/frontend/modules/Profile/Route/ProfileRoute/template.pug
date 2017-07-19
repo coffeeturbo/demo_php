@@ -1,12 +1,16 @@
 ng-container(*ngIf="profile")
   header
-    .backdrop([style.background-image]="'url(' + backdropUrl + ')'")
+    .backdrop
+      profile-backdrop-cropper((onCrop)="uploadBackdrop($event)", [disabled]="disabled")
+      ng-container(*ngIf="backdropHelper.disabled()")
+        img(*ngIf="profileService.hasBackdrop(profile)", src="{{profile.backdrop.public_path}}")
+        button((onChange)="backdropHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
       figure
         .avatar
           a(*ngIf="profileService.hasAvatar(profile)", routerLink="avatar")
             img(src="{{profile.avatar.medium.public_path}}")
           div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
-          button((onChange)="helper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
+          button((onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
           h1
             | {{profile.name}}
@@ -19,7 +23,7 @@ ng-container(*ngIf="profile")
     p(*ngIf="profile.birth_date") {{ "Birthday" | translate }}: {{ profile.birth_date | birthday }}    
     p(*ngIf="profile.birth_date") {{ "Age" | translate }}: {{profile.birth_date | datediff:"year" | pluralize:translate("year"):translate("years"):translate("years1")}}
     
-    p(title="{{ profile.created | date }}") 
+    p(title="{{ profile.created | date }}")
       | {{ "Registered" | translate }} 
       ng-container(*ngIf='profile.created | datediff:"year"') {{profile.created | datediff:"year" | pluralize:translate("year"):translate("years"):translate("years1")}} 
       ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:translate("month"):translate("months"):translate("months1")}} 

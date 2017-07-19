@@ -49,6 +49,7 @@ modal {
 .errors {
   article {
     display: flex;
+    align-items: center;
     background: material-color("red", "50");
     border: 1px solid material-color("red", "200");
     padding: 5px;

@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
 
 @Injectable()
-export class ProfileAvatarCropperHelper {
+export class ProfileBackdropCropperHelper {
     public src: string;
     public image: File;
     public onChange = new EventEmitter<{ image: File, src: string }>();

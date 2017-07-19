@@ -10,6 +10,7 @@ import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateReq
 import {AuthService} from "../../Auth/Service/AuthService";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
+import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
 
 interface ProfileServiceInterface {
     get(path: string): Observable<Profile>;
@@ -84,9 +85,22 @@ export class ProfileService implements ProfileServiceInterface{
             .do(profile => this.replaceInCache(oldProfile, profile))
     }
     
+    public uploadBackdrop(profile: Profile, backdropUploadRequest: BackdropUploadRequest): Observable<Profile>
+    {
+        let oldProfile = profile;
+        return this.rest.uploadBackdrop(profile.id, backdropUploadRequest)
+            .map(profileResponse => profileResponse.entity)
+            .do(profile => this.replaceInCache(oldProfile, profile))
+    }
+    
     public hasAvatar(profile: Profile) : boolean
     {
         return Object.keys(profile.avatar).length > 0;
+    }
+
+    public hasBackdrop(profile: Profile) : boolean
+    {
+        return Object.keys(profile.backdrop).length > 0;
     }
 
     public getOwnProfilePath(): string

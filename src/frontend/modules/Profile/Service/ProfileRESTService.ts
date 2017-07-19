@@ -6,6 +6,7 @@ import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateReq
 import {ProfileResponse} from "../Http/Response/ProfileResponse";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
+import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
 
 @Injectable()
 export class ProfileRESTService {
@@ -74,6 +75,21 @@ export class ProfileRESTService {
 
         for (let field in avatarUploadRequest) {
             formData.append(field, avatarUploadRequest[field]);
+        }
+
+        return this.rest.auth()
+            .post(url, formData)
+            .map(res => res.json())
+        ;
+    }
+
+    public uploadBackdrop(profileId: number, backdropUploadRequest: BackdropUploadRequest): Observable<ProfileResponse>
+    {
+        let url = `/protected/profile/${profileId}/backdrop/upload`;
+        let formData = new FormData();
+
+        for (let field in backdropUploadRequest) {
+            formData.append(field, backdropUploadRequest[field]);
         }
 
         return this.rest.auth()

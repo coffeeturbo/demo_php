@@ -1,0 +1,64 @@
+@import "../../../../assets/styles/global";
+
+:host {
+  position: absolute;
+}
+
+:host,
+.profile-backdrop-cropper,
+.profile-backdrop-cropper figure,
+.profile-backdrop-cropper figure img{
+  width: 100%;
+  height: 100%;
+}
+
+.profile-backdrop-cropper {
+  position: relative;
+  z-index: 1;
+
+  figure {
+    overflow: hidden;
+
+    img {
+      object-fit: cover;
+    }
+  }
+  
+  figcaption {
+    padding: 14px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
+    
+    small {
+      display: block;
+      font-size: $font_size;
+    }
+  }
+}
+
+.errors {
+  article {
+    display: flex;
+    align-items: center;
+    background: material-color("red", "50");
+    border: 1px solid material-color("red", "200");
+    padding: 5px;
+    font-size: 0.9em;
+
+    >*{
+      padding: 5px;
+    }
+
+    .fa-exclamation-circle {
+      font-size: 3em;
+      color: material-color("red", "200");
+    }
+
+    ul li + li {
+      padding-top: 10px;
+    }
+  }
+}

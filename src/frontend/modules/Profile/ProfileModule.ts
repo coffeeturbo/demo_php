@@ -14,7 +14,8 @@ import {ProfileAvatarRoute} from "./Route/ProfileAvatarRoute/index";
 import {ProfileAvatarCropperComponent} from "./Component/ProfileAvatarCropper/index";
 import {ProfileAvatarCropperHelper} from "./Component/ProfileAvatarCropper/helper";
 import {ProfileBirthdayPipe} from "./Pipe/ProfileBirthdayPipe";
-import {DatePipe} from "@angular/common";
+import {ProfileBackdropCropperComponent} from "./Component/ProfileBackdropCropper/index";
+import {ProfileBackdropCropperHelper} from "./Component/ProfileBackdropCropper/helper";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {DatePipe} from "@angular/common";
     ],
     declarations: [
         ProfileAvatarCropperComponent,
+        ProfileBackdropCropperComponent,
         ProfileRoute,
         ProfileSettingsRoute,
         ProfileAvatarRoute,
@@ -36,7 +38,8 @@ import {DatePipe} from "@angular/common";
         ProfileService,
         ProfileResolver,
         ProfileTitleResolver,
-        ProfileAvatarCropperHelper
+        ProfileAvatarCropperHelper,
+        ProfileBackdropCropperHelper
     ]
 })
 export class ProfileModule {
