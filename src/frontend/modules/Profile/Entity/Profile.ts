@@ -10,6 +10,7 @@ export interface Profile {
     name: string;
     verified: boolean;
     avatar: ProfileAvatar;
+    backdrop: Image;
 }
 
 type ProfileAvatar = {

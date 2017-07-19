@@ -33,6 +33,10 @@ button, input {
   background: none;
   border: none;
   outline: none;
+  
+  &:-webkit-autofill {
+    animation: autofill both;
+  }
 }
 
 h1 { font-size: $h1_size; }
