@@ -100,7 +100,7 @@ export class ProfileService implements ProfileServiceInterface{
 
     public hasBackdrop(profile: Profile) : boolean
     {
-        return Object.keys(profile.backdrop).length > 0;
+        return !!profile.backdrop;
     }
 
     public getOwnProfilePath(): string
