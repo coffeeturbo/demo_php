@@ -26,14 +26,18 @@ class AvatarService
 
     public function deleteImage(AvatarEntity $avatarEntity)
     {
-        foreach($avatarEntity->getAvatarCollection()->getImages() as $index => $image) {
-            /**  @var $image Image */
-            if(file_exists($file = $image->getStoragePath())){
-                unlink($file);
+        if($images = $avatarEntity->getAvatarCollection()->getImages()){
+            foreach($images as $index => $image) {
+                /**  @var $image Image */
+                if(file_exists($file = $image->getStoragePath())){
+                    unlink($file);
+                }
             }
+
+            $avatarEntity->setAvatarCollection( new ImageCollection() );
         }
 
-        return $avatarEntity->setAvatarCollection( new ImageCollection() );
+        return $avatarEntity;
     }
 
     public function generateImagesFromFile(UploadedImageParameter $imageParameter, ProfileAvatarStrategy $strategy): ImageCollection
