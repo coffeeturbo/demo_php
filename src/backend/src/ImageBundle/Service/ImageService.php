@@ -21,7 +21,7 @@ class ImageService
     }
 
     public function generateImage(string $imagePath,
-                                  $name,
+                                  $name = 'default',
                                   ImageStrategy $strategy,
                                   UploadedImageParameter $parameter = null,
                                   $resize = false): Image
@@ -44,7 +44,7 @@ class ImageService
 
         $image = $this->imageManager
             ->make($imagePath)
-            ->encode($encode = 'jpg', 70)
+            ->encode($encode = 'jpg', 100)
         ;
 
         if($parameter){
@@ -60,7 +60,6 @@ class ImageService
             $image->resize((int) $resize, (int) $resize);
         }
 
-
         $image->save($storageFilePath);
 
         $originImage = new Image(
@@ -68,7 +67,7 @@ class ImageService
             $publicFilePath,
             $name
         );
-        return $originImage;
 
+        return $originImage;
     }
 }
