@@ -70,6 +70,10 @@ small { font-size: $small_size; }
   }
 }
 
+.relative {
+  position: relative;
+}
+
 // Flex separator
 .flex-space {
   flex-grow: 1;
