@@ -1,0 +1,22 @@
+//a(*ngIf="profile.isOwnProfileExist()", [routerLink]="['profile', profile.getOwnProfilePath()]", routerLinkActive="active")
+ng-container(*ngIf="profile")
+  figure
+    img(*ngIf="profileService.hasAvatar(profile)", src="{{profile.avatar.medium.public_path}}")
+    div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}
+    figcaption
+      h2 {{ profile.name }}
+      .rate Рейтинг: 
+        b 14 123
+      br
+      nav
+        button.btn.primary([routerLink]="['profile', profileService.getOwnProfilePath()]") Моя Страница
+        button.btn.secondary(routerLink="/settings", routerLinkActive="active")
+          i.fa.fa-fw.fa-sliders
+          span {{ "Edit" | translate }}
+
+  footer
+    button.btn((click)="auth.signOut()")
+      i.fa.fa-sign-out
+      span {{"Sign out" | translate}}
+
+.loading(*ngIf="!profile") {{ 'Loading' | translate }}

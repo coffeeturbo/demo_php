@@ -1,0 +1,112 @@
+@import "../../../../assets/styles/global";
+
+:host {
+  position: absolute;
+  right: 0;
+  background: white;
+  color: $font_color_dark;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  font-weight: normal;
+
+  @include mq($from: tablet) {
+    top: 100%;
+    margin: 10px;
+    border: 1px solid material-color($secondary_material, '400');
+    border-radius: 3px;
+
+    * {
+      white-space: nowrap;
+    }
+  }
+  @include mq($until: tablet) {
+    position: fixed;
+    width: 100%;
+    animation: slideDown 300ms cubic-bezier(0.4, 0.0, 0.2, 1) both;
+
+    @keyframes slideDown {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+  }
+}
+
+@include mq($from: tablet) {
+  :host:after, :host:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+  }
+
+  :host:after {
+    $arrow_size: 7;
+    top: -($arrow_size*2) + px;
+    border-width: $arrow_size + px;
+    border-bottom-color: white;
+    right: 50px;
+  }
+
+  :host:before {
+    $bg_arrow_size: 8;
+    top: -($bg_arrow_size*2) + px;
+    border-width: $bg_arrow_size + px;
+    border-bottom-color: material-color($secondary_material, '500');
+    right: 49px;
+  }
+}
+
+figure, .loading {
+  padding: 20px;
+}
+
+figure {
+  display: flex;
+
+  @include mq($until: tablet) {
+    height: 100%;
+  }
+
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+    & + * {
+      margin-left: 10px;
+    }
+  }
+
+  h2 {
+    white-space: nowrap;
+    margin-bottom: 10px;
+  }
+
+  .rate {
+    color: material-color($secondary_material, '700');
+  }
+}
+
+@include mq($until: tablet) {
+  .btn.secondary span {
+    display: none
+  }
+}
+
+footer {
+  padding: 10px 20px;
+  border-radius: 0 0 4px 4px;
+  display: flex;
+  justify-content: flex-end;
+  background: material-color($secondary_material, '100');
+  border-top: 1px material-color($secondary_material, '300') solid;
+
+}
+
+.fa + * {
+  margin-left: 8px;
+}

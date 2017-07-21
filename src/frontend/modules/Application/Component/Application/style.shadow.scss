@@ -33,7 +33,7 @@ header {
     }
 
     &:active {
-      background: material-color($primary_material, '700');
+      background: material-color($primary_material, '700')!important;
     }
   }
 
@@ -121,6 +121,7 @@ header {
     font-weight: 500;
 
     a {
+      position: relative;
       padding: 20px;
       @include mq($until: tablet) {
         padding: 15px;

@@ -16,6 +16,7 @@ export class ApplicationComponent {
     @HostBinding("class") className: string = "";
     public device = Device;
     public isSearchResultsVisible = false;
+    public isProfileTooltipVisible = false;
     public searchResults = [
         "РЫБАЛКА С БРАТЬЯМИ ТАЙМАСОВЫМИ",
         "Рыбалка в ОАЭ, аренда яхт в Дубай",

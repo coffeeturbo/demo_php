@@ -14,13 +14,15 @@
         i.fa.fa-2x.fa-search
         i {{"Search" | translate}}  
       ng-container(*ngIf="auth.isSignedIn()")
-        a(*ngIf="profile.isOwnProfileExist()", [routerLink]="['profile', profile.getOwnProfilePath()]", routerLinkActive="active")
-          i.fa.fa-2x.fa-user-circle
-          span {{"Profile" | translate}}  
-        a((click)="auth.signOut()")
-          i.fa.fa-2x.fa-sign-out
-          span {{"Sign out" | translate}}
-      a(*ngIf="!auth.isSignedIn()" routerLink="/login")
+        a(routerLink="/add-post")
+          i.fa.fa-2x.fa-plus-circle
+          span {{"Add post" | translate}}  
+        .relative
+          a((click)="isProfileTooltipVisible = !isProfileTooltipVisible", [ngClass]="{'active': isProfileTooltipVisible}")
+            i.fa.fa-2x.fa-user-circle
+            span {{"Profile" | translate}}
+          profile-tooltip(*ngIf="isProfileTooltipVisible", (onClose)="isProfileTooltipVisible = false")
+      a(*ngIf="!auth.isSignedIn()", routerLink="/login")
         i.fa.fa-2x.fa-sign-in
         span {{"Sign in" | translate}}  
   .search-results(*ngIf="isSearchResultsVisible")

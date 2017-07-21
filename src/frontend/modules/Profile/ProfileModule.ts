@@ -16,6 +16,7 @@ import {ProfileAvatarCropperHelper} from "./Component/ProfileAvatarCropper/helpe
 import {ProfileBirthdayPipe} from "./Pipe/ProfileBirthdayPipe";
 import {ProfileBackdropCropperComponent} from "./Component/ProfileBackdropCropper/index";
 import {ProfileBackdropCropperHelper} from "./Component/ProfileBackdropCropper/helper";
+import {ProfileTooltipComponent} from "./Component/ProfileTooltip/index";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {ProfileBackdropCropperHelper} from "./Component/ProfileBackdropCropper/h
     declarations: [
         ProfileAvatarCropperComponent,
         ProfileBackdropCropperComponent,
+        ProfileTooltipComponent,
         ProfileRoute,
         ProfileSettingsRoute,
         ProfileAvatarRoute,
@@ -40,6 +42,9 @@ import {ProfileBackdropCropperHelper} from "./Component/ProfileBackdropCropper/h
         ProfileTitleResolver,
         ProfileAvatarCropperHelper,
         ProfileBackdropCropperHelper
+    ],
+    exports: [
+        ProfileTooltipComponent
     ]
 })
 export class ProfileModule {
