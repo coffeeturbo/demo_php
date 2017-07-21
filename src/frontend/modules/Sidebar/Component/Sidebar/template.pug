@@ -17,16 +17,14 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
       i.fa.fa-fw.fa-lg.fa-newspaper-o
       span {{ "New" | translate }} 
   
+    a(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()", routerLink="/feed", routerLinkActive="active")
+      i.fa.fa-fw.fa-lg.fa-list-alt
+      span {{ "Feed" | translate }} 
+    
   ng-container(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
     hr
     section
-      h4 {{"Profile" | translate }}
-      a(routerLink="/feed", routerLinkActive="active")
-        i.fa.fa-fw.fa-lg.fa-list-alt
-        span {{ "Feed" | translate }} 
-      a(routerLink="/settings", routerLinkActive="active")
-        i.fa.fa-fw.fa-lg.fa-sliders
-        span {{ "Edit" | translate }}
+      h4 {{"Subscriptions" | translate }}
   
   .flex-space
 
