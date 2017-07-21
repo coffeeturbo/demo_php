@@ -36,14 +36,15 @@ export class ProfileSettingsRoute {
         private profileService: ProfileService
     ) {}
 
-    private aliasValidator(aliasControl: AbstractControl): Observable<ValidationErrors> {
+    private aliasValidator(aliasControl: AbstractControl): Promise<ValidationErrors> {
         if(!aliasControl.value || this.profile.alias === aliasControl.value) {
-            return Observable.empty();
+            return Observable.of(null).toPromise();
         }
 
         return this.profileService.checkAlias(aliasControl.value)
             .filter((checkAliasResponse) => !checkAliasResponse.available)
             .map(() => <ValidationErrors>{"alias_unavailable": true})
+            .toPromise() // Конвертируем в promise потому что без этого form.valid всегда false (wtf?)
         ;
     }
 
