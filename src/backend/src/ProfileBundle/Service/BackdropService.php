@@ -17,6 +17,11 @@ class BackdropService
         $this->imageService = $imageService;
     }
 
+    public function validate()
+    {
+
+    }
+
     public function uploadImage(UploadedImageParameter $imageParameter, ProfileBackdropStrategy $strategy)
     {
         $imageParameter->setWidth(1500)->setHeight(300);

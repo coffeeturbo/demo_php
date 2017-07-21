@@ -3,7 +3,7 @@ namespace AvatarBundle\Image;
 
 class ImageCollection implements \JsonSerializable
 {
-    private $images = [];
+    private $images;
 
     static public function createFromJson(array $json = null ): self
     {
@@ -25,16 +25,22 @@ class ImageCollection implements \JsonSerializable
         return $this;
     }
 
-    public function getImages(): array
+    public function getImages(): ?array
     {
         return $this->images;
     }
 
     function jsonSerialize()
     {
-        return array_map(function(Image $image){
-            return $image->jsonSerialize();
-        }, $this->images);
+        $result = null;
+
+        if($this->images){
+            $result =  array_map(function(Image $image){
+                return $image->jsonSerialize();
+            }, $this->images);
+        }
+
+        return $result;
     }
 
 }
