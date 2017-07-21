@@ -6,7 +6,6 @@ abstract class ImageStrategy
     protected $entity;
     protected $storageDirPath;
     protected $publicDirPath;
-    protected $sizes;
 
     public function getStorageDirPath()
     {

@@ -15,6 +15,14 @@ services:
       - '@event_dispatcher'
       - '%profile.limit%'
 
+  profile.service.strategy.avatar_strategy:
+    class: ProfileBundle\Service\Strategy\ProfileAvatarStrategy
+    calls:
+      - [ setImageService, ['@image.service']]
+    arguments:
+      - '%profile.avatar.absolute_path%'
+      - '%profile.avatar.web_path%'
+
   profile.backdrop.service:
     class: ProfileBundle\Service\BackdropService
     arguments:

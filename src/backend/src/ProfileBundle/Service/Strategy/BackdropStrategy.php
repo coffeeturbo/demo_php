@@ -3,6 +3,7 @@ namespace ProfileBundle\Service\Strategy;
 
 use AvatarBundle\Image\BackdropEntity;
 use AvatarBundle\Image\Strategy\ImageStrategy;
+use Intervention\Image\Image;
 
 class BackdropStrategy extends ImageStrategy
 {
@@ -29,6 +30,10 @@ class BackdropStrategy extends ImageStrategy
     {
         $this->entity = $entity;
         return $this;
+    }
+
+    public function resize(Image $image){
+
     }
 
 }
