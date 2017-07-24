@@ -1,12 +1,14 @@
 @import "../../../../assets/styles/global";
 
-:host {
+.tooltip, .loading {
   position: absolute;
   right: 0;
   background: white;
   color: $font_color_dark;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   font-weight: normal;
+  transform-origin: right;
+  
 
   @include mq($from: tablet) {
     top: 100%;
@@ -14,16 +16,25 @@
     border: 1px solid material-color($secondary_material, '400');
     border-radius: 3px;
 
+    &.loading {
+      animation: zoomIn 200ms cubic-bezier(0.4, 0.0, 0.2, 1) both;
+    }
+
+    &.tooltip {
+      animation: fade 300ms;
+    }
+
     * {
       white-space: nowrap;
     }
   }
+
   @include mq($until: tablet) {
     position: fixed;
     width: 100%;
-    animation: slideDown 300ms cubic-bezier(0.4, 0.0, 0.2, 1) both;
+    animation: slideRight 300ms cubic-bezier(0.4, 0.0, 0.2, 1) both;
 
-    @keyframes slideDown {
+    @keyframes slideRight {
       from {
         transform: translateX(100%);
       }
@@ -32,6 +43,10 @@
       }
     }
   }
+}
+
+a {
+  color: $font_color_dark;
 }
 
 @include mq($from: tablet) {
@@ -65,10 +80,17 @@ figure, .loading {
 }
 
 figure {
-  display: flex;
+  @include mq($from: tablet) {
+    display: flex;
+  }
 
   @include mq($until: tablet) {
     height: 100%;
+
+    img {
+      display: block;
+      margin: auto;
+    }
   }
 
   img {
@@ -77,7 +99,12 @@ figure {
     border-radius: 50%;
 
     & + * {
-      margin-left: 10px;
+      @include mq($until: tablet) {
+        margin-top: 20px;
+      }
+      @include mq($from: tablet) {
+        margin-left: 20px;
+      }
     }
   }
 
@@ -86,8 +113,12 @@ figure {
     margin-bottom: 10px;
   }
 
-  .rate {
-    color: material-color($secondary_material, '700');
+  ul li {
+    color: material-color($secondary_material, '600');
+    margin-bottom: 4px;
+    .fa {
+      color: material-color($secondary_material, '400');
+    }
   }
 }
 
@@ -108,5 +139,18 @@ footer {
 }
 
 .fa + * {
-  margin-left: 8px;
+  margin-left: 5px;
+}
+
+
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

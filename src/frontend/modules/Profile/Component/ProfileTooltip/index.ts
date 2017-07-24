@@ -13,7 +13,8 @@ import {NavigationEnd, Router} from "@angular/router";
 export class ProfileTooltipComponent implements OnInit {
     @Output() onClose = new EventEmitter<void>();
     public profile: Profile;
-
+    public rate = 6659.5;
+    public subscriptions = 12;
     constructor(
         public elRef: ElementRef,
         public auth: AuthService,

@@ -102,7 +102,7 @@ export class AuthService implements AuthServiceInterface
     {
         TokenRepository.removeTokens();
         this.tokenExpirationSchedule.unsubscribe();
-        this.router.navigate(["login"]);
+        // this.router.navigate(["login"]); @DOTO remove this line
     }
 
     public addTokenExpirationSchedule(): void
