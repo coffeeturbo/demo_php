@@ -83,31 +83,18 @@ class BackdropStrategy extends ImageStrategy
             ->encode($encode = 'jpg', 100)
         ;
 
+        $scale = 1500 / $image->getWidth();
 
+        $image->widen(1500);
 
-
-        if($image->getWidth() > 1500){
-
-
-        }
-
-        $image->widen( 1500, function ($constraint) {
-            $constraint->upsize();
-        });
-
-
-//        $diversion = (100 * 1500)/$image->getWidth();
-
-        if($parameter){
+        if($parameter) {
             $image->crop(
                 $parameter->getWidth(),
                 $parameter->getHeight(),
                 $parameter->getStartX(),
-                $parameter->getStartY()
+                (int) ($parameter->getStartY() * $scale)
             );
         }
-
-        $image->trim();
 
         $image->save($storageFilePath);
 
