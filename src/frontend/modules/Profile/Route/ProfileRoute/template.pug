@@ -30,5 +30,6 @@ ng-container(*ngIf="profile")
       ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:translate("day"):translate("days"):translate("days1")}} 
       | {{"Ago" | translate | lowercase}}
     
+    p([style.height.px]="1000") .
 profile-avatar-cropper((onCrop)="uploadAvatar($event)", [disabled]="disabled")
 router-outlet

@@ -1,21 +1,30 @@
-//a(*ngIf="profile.isOwnProfileExist()", [routerLink]="['profile', profile.getOwnProfilePath()]", routerLinkActive="active")
-ng-container(*ngIf="profile")
+.tooltip(*ngIf="profile")
   figure
     img(*ngIf="profileService.hasAvatar(profile)", src="{{profile.avatar.medium.public_path}}")
     div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}
     figcaption
       h2 {{ profile.name }}
-      .rate Рейтинг: 
-        b 14 123
+      ul
+        li
+          i.fa.fa-fw.fa-bar-chart
+          span {{ rate | number}} 
+        li
+          i.fa.fa-fw.fa-user
+          span {{ subscriptions | number}} 
+      br
       br
       nav
-        button.btn.primary([routerLink]="['profile', profileService.getOwnProfilePath()]") Моя Страница
-        button.btn.secondary(routerLink="/settings", routerLinkActive="active")
+        button.btn-material.primary([routerLink]="['profile', profileService.getOwnProfilePath()]") Моя Страница
+        button.btn-material.secondary(routerLink="/settings", routerLinkActive="active")
           i.fa.fa-fw.fa-sliders
           span {{ "Edit" | translate }}
 
   footer
-    button.btn((click)="auth.signOut()")
+    button.btn-material.secondary([disabled]) Сменить профиль
+    
+    .flex-space
+    
+    button.btn-material((click)="auth.signOut()")
       i.fa.fa-sign-out
       span {{"Sign out" | translate}}
 

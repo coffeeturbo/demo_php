@@ -32,6 +32,9 @@ RUN \
     useradd ${APP_USER} -g users -s /bin/bash && \
     chown -R ${APP_USER}:www-data ${APP_PATH} ${HOME_PATH} && \
     echo 'alias console="php ${BACKEND_PATH}/bin/console"' >> ${HOME_PATH}/.bashrc && \
-    echo 'alias phpunit="cd ${BACKEND_PATH} && vendor/bin/phpunit"' >> ${HOME_PATH}/.bashrc
+    echo 'alias phpunit="cd ${BACKEND_PATH} && vendor/bin/phpunit"' >> ${HOME_PATH}/.bashrc && \
+    echo 'alias migrate="console doctrine:schema:update --force"' >> ${HOME_PATH}/.bashrc
+
+RUN echo "upload_max_filesize = 20M\n" > /usr/local/etc/php/conf.d/jet.ini
 
 USER jet
