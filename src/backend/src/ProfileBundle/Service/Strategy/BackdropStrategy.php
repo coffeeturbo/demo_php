@@ -60,8 +60,7 @@ class BackdropStrategy extends ImageStrategy
 
     public function generate(string $imagePath,
                                   $name = 'default',
-                                  UploadedImageParameter $parameter = null,
-                                  $resize = false): Image
+                                  UploadedImageParameter $parameter = null): Image
     {
 
         $absolutePath = $this->getStorageDirPath();
@@ -84,11 +83,20 @@ class BackdropStrategy extends ImageStrategy
             ->encode($encode = 'jpg', 100)
         ;
 
+
+
+
         if($image->getWidth() > 1500){
-            $this->resize($image, 1500);
+
+
         }
 
+        $image->widen( 1500, function ($constraint) {
+            $constraint->upsize();
+        });
 
+
+//        $diversion = (100 * 1500)/$image->getWidth();
 
         if($parameter){
             $image->crop(
@@ -98,6 +106,8 @@ class BackdropStrategy extends ImageStrategy
                 $parameter->getStartY()
             );
         }
+
+        $image->trim();
 
         $image->save($storageFilePath);
 
