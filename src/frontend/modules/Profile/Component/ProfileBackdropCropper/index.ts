@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {ProfileBackdropCropperHelper} from "./helper";
 import {FormControl, FormGroup, ValidationErrors} from "@angular/forms";
 import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
@@ -12,7 +12,7 @@ import {Config} from "../../../../app/config";
     styleUrls: ['./style.shadow.scss']
 })
 
-export class ProfileBackdropCropperComponent {
+export class ProfileBackdropCropperComponent implements OnDestroy {
     @Input() disabled: boolean = false;
     @Output('onCrop') onCrop = new EventEmitter<BackdropUploadRequest>();
     public constraints = Config.profile.constraints.backdrop;
@@ -38,8 +38,12 @@ export class ProfileBackdropCropperComponent {
     constructor(public helper: ProfileBackdropCropperHelper) {
         helper.onChange.subscribe((data) => this.form.controls.src.setValue(data.src));
     }
+    
+    ngOnDestroy() {
+        this.helper.destroy()
+    }
 
-    validate(srcControl: FormControl): Observable<ValidationErrors> {
+    public validate(srcControl: FormControl): Observable<ValidationErrors> {
         let avatar = new Image();
         avatar.src = srcControl.value;
 
