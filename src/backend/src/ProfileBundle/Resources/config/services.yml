@@ -23,6 +23,14 @@ services:
       - '%profile.avatar.absolute_path%'
       - '%profile.avatar.web_path%'
 
+  profile.service.strategy.backdrop_strategy:
+    class: ProfileBundle\Service\Strategy\BackdropStrategy
+    calls:
+      - [ setImageService, ['@image.service']]
+    arguments:
+      - '%profile.backdrop.absolute_path%'
+      - '%profile.backdrop.web_path%'
+
   profile.backdrop.service:
     class: ProfileBundle\Service\BackdropService
     arguments:

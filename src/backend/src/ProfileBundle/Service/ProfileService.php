@@ -111,12 +111,10 @@ class ProfileService
 
         $strategy = $this->container->get('profile.service.strategy.avatar_strategy');
 
-        $strategy->setEntity($profile);
-
         $strategy->generateImage($profile, $imageParameter);
 
-
         $this->profileRepository->save($profile);
+        return $profile;
     }
 
     public function deleteAvatar(Profile $profile): Profile
@@ -130,12 +128,10 @@ class ProfileService
 
     public function uploadBackdrop(Profile $profile, UploadedImageParameter $parameter): Profile
     {
-        $absolutePath = $this->container->getParameter('profile.backdrop.absolute_path');
-        $webPath = $this->container->getParameter('profile.backdrop.web_path');
+        $backdropStrategy = $this->container->get('profile.service.strategy.backdrop_strategy');
 
-        $backdropStrategy = new ProfileBackdropStrategy($profile, $absolutePath, $webPath);
+        $backdropStrategy->generateImage($profile, $parameter);
 
-        $this->container->get('profile.backdrop.service')->uploadImage($parameter, $backdropStrategy);
         $this->profileRepository->save($profile);
 
         return $profile;
