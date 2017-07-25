@@ -22,7 +22,7 @@
     width:100%;
     height:100%;
     object-fit: cover; // IE not support! Fix it later.
-    object-position: 0 0;
+    object-position: top center;
   }
   
   > button {

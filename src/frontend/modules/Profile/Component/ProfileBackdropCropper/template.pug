@@ -1,12 +1,14 @@
 .profile-backdrop-cropper(*ngIf="helper.ready() && form.valid")
   figure
-    img(
-      cropper,
-      [src]="helper.src",
-      [options]="cropperOptions",
-      (onChange)="form.controls['data'].setValue($event)",
-    )
+    .backdrop
+      img(
+        cropper,
+        [src]="helper.src",
+        [options]="cropperOptions",
+        (onChange)="form.controls['data'].setValue($event)",
+      )
   figcaption
+    // @DOTO: translate!
     h2 Перемещение изображения
       small При увеличении разрешения экрана некоторые участки могут быть обрезаны
     .controls

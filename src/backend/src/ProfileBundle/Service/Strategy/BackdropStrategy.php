@@ -92,7 +92,7 @@ class BackdropStrategy extends ImageStrategy
                 $parameter->getWidth(),
                 $parameter->getHeight(),
                 $parameter->getStartX(),
-                (int) ($parameter->getStartY() * $scale)
+                floor ($parameter->getStartY() * $scale)
             );
         }
 
