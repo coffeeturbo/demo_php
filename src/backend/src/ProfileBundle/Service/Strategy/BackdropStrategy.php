@@ -1,7 +1,7 @@
 <?php
+
 namespace ProfileBundle\Service\Strategy;
 
-use AvatarBundle\Image\BackdropEntity;
 use AvatarBundle\Image\Image;
 use AvatarBundle\Image\Strategy\ImageStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
@@ -59,43 +59,48 @@ class BackdropStrategy extends ImageStrategy
 
 
     public function generate(string $imagePath,
-                                  $name = 'default',
-                                  UploadedImageParameter $parameter = null): Image
+                             $name = 'default',
+                             UploadedImageParameter $parameter = null): Image
     {
 
         $absolutePath = $this->getStorageDirPath();
         $webPath = $this->getPublicDirPath();
 
-        if(!is_dir($absolutePath)) mkdir($absolutePath);
+        if (!is_dir($absolutePath)) {
+            mkdir($absolutePath);
+        }
 
         $imageName = sprintf('%s_%s.%s', $name, uniqid(), 'jpg');
 
         $storageFileDirPath = sprintf('%s/%s', $absolutePath, $name);
 
-        $storageFilePath = sprintf('%s/%s', $storageFileDirPath,  $imageName);
+        $storageFilePath = sprintf('%s/%s', $storageFileDirPath, $imageName);
 
-        $publicFilePath =  sprintf('%s/%s/%s',  $webPath, $name, $imageName);
+        $publicFilePath = sprintf('%s/%s/%s', $webPath, $name, $imageName);
 
-        if(!file_exists($storageFileDirPath)) mkdir($storageFileDirPath);
+        if (!file_exists($storageFileDirPath)) {
+            mkdir($storageFileDirPath);
+        }
 
         $image = $this->imageService->getImageManager()
             ->make($imagePath)
-            ->encode($encode = 'jpg', 100)
-        ;
+            ->encode($encode = 'jpg', 100);
 
-        $scale = 1500 / $image->getWidth();
-
-        $image->widen(1500);
-
-        if($parameter) {
+        if ($parameter instanceof UploadedImageParameter) {
             $image->crop(
+                $image->getWidth(),
+                $image->getHeight(),
+                $parameter->getStartX(),
+                $parameter->getStartY()
+            );
+
+            $image->fit(
                 $parameter->getWidth(),
                 $parameter->getHeight(),
-                $parameter->getStartX(),
-                floor ($parameter->getStartY() * $scale)
+                null,
+                "top"
             );
         }
-
         $image->save($storageFilePath);
 
         $originImage = new Image(
@@ -113,5 +118,4 @@ class BackdropStrategy extends ImageStrategy
     {
         return $image->resize($width, $height, $calback);
     }
-
 }
