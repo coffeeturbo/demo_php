@@ -4,12 +4,12 @@ namespace ProfileBundle\Service;
 
 use AccountBundle\Entity\Account;
 use AuthBundle\Service\AuthService;
-use AvatarBundle\Image\Strategy\ProfileAvatarStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
 use ProfileBundle\Repository\ProfileRepository;
+use ProfileBundle\Service\Strategy\ProfileAvatarStrategy;
 use ProfileBundle\Service\Strategy\ProfileBackdropStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -108,14 +108,13 @@ class ProfileService
 
     public function uploadAvatar(Profile $profile, UploadedImageParameter $imageParameter)
     {
-        $absolutePath = $this->container->getParameter('profile.avatar.absolute_path');
-        $webPath = $this->container->getParameter('profile.avatar.web_path');
 
-        $strategy = new ProfileAvatarStrategy($profile, $absolutePath, $webPath);
+        $strategy = $this->container->get('profile.service.strategy.avatar_strategy');
 
-        $this->container->get('avatar.service')->uploadImage($strategy, $imageParameter);
+        $strategy->generateImage($profile, $imageParameter);
 
         $this->profileRepository->save($profile);
+        return $profile;
     }
 
     public function deleteAvatar(Profile $profile): Profile
@@ -129,12 +128,10 @@ class ProfileService
 
     public function uploadBackdrop(Profile $profile, UploadedImageParameter $parameter): Profile
     {
-        $absolutePath = $this->container->getParameter('profile.backdrop.absolute_path');
-        $webPath = $this->container->getParameter('profile.backdrop.web_path');
+        $backdropStrategy = $this->container->get('profile.service.strategy.backdrop_strategy');
 
-        $backdropStrategy = new ProfileBackdropStrategy($profile, $absolutePath, $webPath);
+        $backdropStrategy->generateImage($profile, $parameter);
 
-        $this->container->get('profile.backdrop.service')->uploadImage($parameter, $backdropStrategy);
         $this->profileRepository->save($profile);
 
         return $profile;

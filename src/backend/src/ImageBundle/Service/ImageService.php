@@ -5,6 +5,7 @@ use AvatarBundle\Image\Image;
 use AvatarBundle\Image\Strategy\ImageStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use Intervention\Image\ImageManager;
+use Intervention\Image\Image as ImageLayout;
 
 class ImageService
 {
@@ -57,7 +58,7 @@ class ImageService
         }
 
         if($resize) {
-            $image->resize((int) $resize, (int) $resize);
+            $this->resize($image, $resize, $resize);
         }
 
         $image->save($storageFilePath);
@@ -69,5 +70,10 @@ class ImageService
         );
 
         return $originImage;
+    }
+
+    public function resize(ImageLayout $image, int $width, int $height, callable $calback = null): ImageLayout
+    {
+        return $image->resize($width, $height, $calback);
     }
 }

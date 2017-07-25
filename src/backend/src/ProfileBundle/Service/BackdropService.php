@@ -17,10 +17,6 @@ class BackdropService
         $this->imageService = $imageService;
     }
 
-    public function validate()
-    {
-
-    }
 
     public function uploadImage(UploadedImageParameter $imageParameter, ProfileBackdropStrategy $strategy)
     {
