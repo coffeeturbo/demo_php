@@ -95,7 +95,8 @@ export class ProfileService implements ProfileServiceInterface{
     
     public hasAvatar(profile: Profile) : boolean
     {
-        return Object.keys(profile.avatar).length > 0;
+        // return Object.keys(profile.avatar).length > 0; @DOTO: remove this line
+        return !!profile.avatar;
     }
 
     public hasBackdrop(profile: Profile) : boolean
