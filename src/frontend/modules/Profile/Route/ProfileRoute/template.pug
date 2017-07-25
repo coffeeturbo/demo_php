@@ -9,7 +9,7 @@ ng-container(*ngIf="profile")
         .avatar
           a(*ngIf="profileService.hasAvatar(profile)", routerLink="avatar")
             img(src="{{profile.avatar.medium.public_path}}")
-          div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}	 
+          div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + palleteService.encode(profile.name) + '-300'") {{ profileService.getProfileFirstLetters(profile) }}	 
           button((onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
           h1

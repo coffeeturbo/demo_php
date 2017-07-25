@@ -37,19 +37,6 @@ export class ProfileRoute implements OnInit {
         }
     }
     
-    public getProfileColor() {
-        return this.palleteService.encode(this.profile.name);
-    }
-    
-    public getProfileFirstLetters() {
-        return this.profile.name
-            .split(" ")
-            .slice(0,2)
-            .map(item => item.charAt(0).toUpperCase())
-            .join(" ")
-        ;
-    }
-
     public translate(string: string) {
         return this.translationService.translate(string);
     }

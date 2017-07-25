@@ -1,7 +1,7 @@
 .tooltip(*ngIf="profile")
   figure
-    img(*ngIf="profileService.hasAvatar(profile)", src="{{profile.avatar.medium.public_path}}")
-    div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + getProfileColor() + '-300'") {{ getProfileFirstLetters() }}
+    img.avatar(*ngIf="profileService.hasAvatar(profile)", src="{{profile.avatar.medium.public_path}}")
+    div.avatar(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + palleteService.encode(profile.name) + '-300'") {{ profileService.getProfileFirstLetters(profile) }}
     figcaption
       h2 {{ profile.name }}
       ul

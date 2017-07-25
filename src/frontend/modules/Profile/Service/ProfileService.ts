@@ -121,6 +121,15 @@ export class ProfileService implements ProfileServiceInterface{
         return !!tokenData.profile_alias || !!tokenData.profile_id;
     }
 
+    public getProfileFirstLetters(profile: Profile) {
+        return profile.name
+            .split(" ")
+            .slice(0,2)
+            .map(item => item.charAt(0).toUpperCase())
+            .join(" ")
+        ;
+    }
+
     private getFromCache(path: number | string): Observable<Profile> 
     {
         let profile: Profile = this.profiles.filter((profile) => profile.id == path || profile.alias == path).shift();
