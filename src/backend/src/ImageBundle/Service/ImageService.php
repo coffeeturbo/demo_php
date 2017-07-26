@@ -1,9 +1,9 @@
 <?php
 namespace ImageBundle\Service;
 
-use AvatarBundle\Image\Image;
 use AvatarBundle\Image\Strategy\ImageStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
+use ImageBundle\Image\Image;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Image as ImageLayout;
 

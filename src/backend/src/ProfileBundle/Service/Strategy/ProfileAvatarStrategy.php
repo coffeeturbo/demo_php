@@ -2,10 +2,10 @@
 namespace ProfileBundle\Service\Strategy;
 
 use AvatarBundle\Image\AvatarEntity;
-use AvatarBundle\Image\Image;
-use AvatarBundle\Image\ImageCollection;
 use AvatarBundle\Image\Strategy\ImageStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
+use ImageBundle\Image\Image;
+use ImageBundle\Image\ImageCollection;
 use ImageBundle\Service\ImageService;
 
 class ProfileAvatarStrategy extends ImageStrategy

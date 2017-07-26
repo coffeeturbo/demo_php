@@ -1,6 +1,8 @@
 <?php
 namespace AvatarBundle\Image;
 
+use ImageBundle\Image\ImageCollection;
+
 trait AvatarEntityTrait
 {
     private $avatar;

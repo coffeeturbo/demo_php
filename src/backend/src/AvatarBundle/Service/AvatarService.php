@@ -2,9 +2,9 @@
 namespace AvatarBundle\Service;
 
 use AvatarBundle\Image\AvatarEntity;
-use AvatarBundle\Image\Image;
-use AvatarBundle\Image\ImageCollection;
 use AvatarBundle\Parameter\UploadedImageParameter;
+use ImageBundle\Image\Image;
+use ImageBundle\Image\ImageCollection;
 use ImageBundle\Service\ImageService;
 use ProfileBundle\Service\Strategy\ProfileAvatarStrategy;
 
