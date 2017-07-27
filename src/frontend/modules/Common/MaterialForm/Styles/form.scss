@@ -1,48 +1,48 @@
 @import "../../../../assets/styles/global";
 
-.material-form {
-  .field,
-  .material-field {
-    display: flex;
-    align-items: center;
+.field,
+.material-field {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-bottom: 15px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  .fa {
+    vertical-align: middle;
+    color: material-color($secondary_material, "400");
+    & + * {
+      margin-left: 10px;
+    }
+  }
+
+  .input-box {
+    flex-grow: 1;
     position: relative;
-    padding-bottom: 15px;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-    .fa {
-      vertical-align: middle;
-      padding-right: 10px;
-      color: material-color($secondary_material, "400");
-    }
-
-    .input-box {
-      flex-grow: 1;
-      position: relative;
-    }
-
-    tooltip {
-      display: none
-    }
-
-    input:focus ~ tooltip {
-      display: block;
-    }
   }
 
-  .material-field {
-    padding-top: 15px;
+  tooltip {
+    display: none
   }
 
-  .controls {
-    display: flex;
-    justify-content: flex-end;
-
-    &.center {
-      justify-content: center;
-    }
+  input:focus ~ tooltip {
+    display: block;
   }
+}
 
-  .fa + * {
-    margin-left: 5px;
+.material-field {
+  padding-top: 15px;
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+
+  &.center {
+    justify-content: center;
   }
+}
+
+.fa + * {
+  margin-left: 5px;
 }

@@ -23,7 +23,7 @@ import {ProfileModule} from "../Profile/ProfileModule";
 import {RouteHelperService} from "./Service/RouteHelperService";
 import {ApplicationLogoComponent} from "./Component/ApplicationLogo/index";
 import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/index";
-import {AttachmentModel} from "../Attachment/AttachmentModel";
+import {AttachmentModule} from "../Attachment/AttachmentModule";
 import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
 
@@ -55,7 +55,7 @@ export class HammerConfig extends HammerGestureConfig  {
         BrowserModule,
         RouterModule.forRoot(appRoutes),
         HttpModule,
-        AttachmentModel,
+        AttachmentModule,
         AuthModule,
         FeedModule,
         PostModule,

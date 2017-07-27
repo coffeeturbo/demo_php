@@ -1,0 +1,58 @@
+h2 Добавление поста
+br
+
+form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)")
+
+  .material-field
+    .input-box
+      input#addPostTitle(ng-detect-empty-input, type="text", formControlName="title")
+      hr
+      label.material-label(for="addPostTitle") {{'History title' | translate }}
+  .material-field
+    .input-box
+      input#addPostTags(ng-detect-empty-input, type="text", formControlName="tags")
+      hr
+      label.material-label(for="addPostTags") {{'Tags' | translate }}
+
+
+  div(
+    formArrayName="attachments",
+    [dragula]='"attachments"',
+    [dragulaModel]='attachments.controls', 
+    [dragulaOptions]="dragulaOptions",
+  )
+    .material-field(*ngFor="let attachment of attachments.controls; let i=index", [ngSwitch]="attachment.value.type")
+      .drag
+        i.fa.fa-bars
+      .input-box([formGroupName]="i")
+        attachment-input-text(*ngSwitchCase="'text'", id="addPostAttachment{{i}}", formControlName="value")
+      a.removeAttachment((click)="removeAttachment(i)")
+        i.fa.fa-trash-o()
+        
+  .controls.center.attachment-button-container
+    button.btn-material.secondary(type="button", (click)="addAttachment('text')")
+      i.fa.fa-file-text-o
+      span {{"Text" | translate }}
+    button.btn-material.secondary(type="button", (click)="addAttachment('video')")
+      i.fa.fa-video-camera
+      span {{"Video" | translate }}
+    button.btn-material.secondary(type="button", (click)="addAttachment('picture')")
+      i.fa.fa-picture-o
+      span {{"Image" | translate }}
+    button.btn-material.secondary(type="button", (click)="addAttachment('map')")
+      i.fa.fa-map-o
+      span {{"Map" | translate }}
+
+  br
+        
+  .controls
+    label.material-field.clickable
+      .input-box
+        input(type="checkbox", formControlName="author_is_me")
+        .checkbox Моё 
+
+    button.btn-material.primary(type="submit", [disabled]="form.invalid")
+      span {{"Submit" | translate }}
+
+br
+.debug {{form.value | json}}

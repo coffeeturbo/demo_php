@@ -15,10 +15,10 @@
 
 body {
   background: material-color($secondary_material, "200");
-  font-family: Roboto, Arial, Helvetica, sans-serif;
+  font-family: $font_family;
   font-size: $font_size;
-  -webkit-font-smoothing: antialiased;
   color: $font_color_dark;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
@@ -28,15 +28,20 @@ a {
 
 b { font-weight: bold; }
 
-button, input {
+button, input, textarea {
   font-size: $font_size;
   background: none;
   border: none;
   outline: none;
+  display: block;
   
   &:-webkit-autofill {
     animation: autofill both;
   }
+}
+
+textarea {
+  font-family: $font_family;
 }
 
 h1 { font-size: $h1_size; }
@@ -77,4 +82,21 @@ small { font-size: $small_size; }
 // Flex separator
 .flex-space {
   flex-grow: 1;
+}
+
+.material-field.gu-mirror {
+  padding-bottom: 0!important; // @DOTO: make it better
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.debug {
+  font: 12px "Courier New";
+  white-space: pre;
+  padding: 5px;
+  border: 1px #ccc solid;
+  background: #eee;
+  border-radius: 3px;
 }

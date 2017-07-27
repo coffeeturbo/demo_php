@@ -1,0 +1,8 @@
+textarea(
+  ng-detect-empty-input,
+  [id] = "id",
+  [value]="value",
+  (input)="onInput($event.target.value)"
+)
+hr
+label.material-label([for]="id") {{'Enter text' | translate }}

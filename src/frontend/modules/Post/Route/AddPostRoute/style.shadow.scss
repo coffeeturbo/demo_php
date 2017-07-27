@@ -1,0 +1,58 @@
+@import "../../../../assets/styles/global";
+@import "~dragula/dist/dragula.css";
+
+:host {
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.28);
+  max-width: 500px;
+  margin: -20px auto 0;
+  position: relative;
+  display: block;
+}
+
+.material-field {
+  
+  align-items: flex-start;
+  
+  .fa{
+    font-size: 1.2em;
+  }
+
+  .drag {
+    cursor: move;
+    padding: 5px 0;
+    margin-right: 10px;
+    &:hover .fa {
+      color: material-color($primary_material, '800');
+    }
+  }
+
+  .removeAttachment {
+    border-radius: 50%;
+    padding: 5px;
+    width: 1.2em;
+    text-align: center;
+  
+    &:hover {
+      background: material-color($error_material, '100');;
+      
+      .fa {
+        color: material-color($error_material, '800');
+      }
+    }
+  }
+}
+
+.attachment-button-container {
+  .fa {
+    color: material-color($primary_material, '800');
+  }
+  
+  span {
+    color: material-color($secondary_material, '500');
+  }
+}
+.controls .material-field + * {
+  margin-left: 1em;
+}

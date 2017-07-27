@@ -3,12 +3,14 @@
 .material-form {
   input[type=text],
   input[type=password],
-  input[type=date] {
+  input[type=date],
+  textarea {
     width: 100%;
     padding: 5px 0;
     box-sizing: border-box;
     border-bottom: 1px solid material-color($secondary_material, "400");
     transition: border 300ms linear;
+    resize: vertical;
 
     @include mq($until: tablet) {
       line-height: 2em;

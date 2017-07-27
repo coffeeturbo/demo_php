@@ -16,19 +16,19 @@ label.material-label {
   }  
 }
 
-input.ng-empty ~ label.material-label {
+.ng-empty ~ label.material-label {
   transform: translateY(0);
 }
 
 label.material-label,
-input:focus ~ label.material-label {
+*:focus ~ label.material-label {
   transform: translateY(-1.28125em) scale(.75) perspective(100px) translateZ(.001px);
 }
 
-input:focus ~ label.material-label {
+*:focus ~ label.material-label {
   color: material-color($primary_material, "800");
 }
 
-input.ng-dirty.ng-invalid.ng-touched ~ .material-label {
+.ng-dirty.ng-invalid.ng-touched ~ .material-label {
   color: material-color("red", "800");
 }
