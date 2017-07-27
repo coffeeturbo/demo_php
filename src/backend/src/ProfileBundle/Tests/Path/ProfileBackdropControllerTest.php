@@ -52,7 +52,6 @@ class ProfileBackdropControllerTest extends ProfileController
             'y' => 200,
         ];
 
-
         $file = new UploadedFile($this->filePath, 'grid-example');
 
         $this->getPathRequestClient($profile->getId(), $params, $file);
