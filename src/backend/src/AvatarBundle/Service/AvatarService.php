@@ -17,9 +17,9 @@ class AvatarService
         $this->imageService = $imageService;
     }
 
-    public function uploadImage(ProfileAvatarStrategy $strategy, UploadedImageParameter $imageParameter)
+    public function uploadImage(ProfileAvatarStrategy $strategy, UploadedImageParameter $imageParameter, AvatarEntity $avatarEntity)
     {
-        $strategy->generateImage($imageParameter );
+        $strategy->generateImage($avatarEntity, $imageParameter);
     }
 
     public function deleteImage(AvatarEntity $avatarEntity)

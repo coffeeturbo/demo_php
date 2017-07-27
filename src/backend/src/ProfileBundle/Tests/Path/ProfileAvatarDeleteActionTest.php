@@ -8,7 +8,7 @@ use ProfileBundle\Tests\ProfileController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProfileAvatarUploadActionTest extends ProfileController
+class ProfileAvatarDeleteActionTest extends ProfileController
 {
     protected $fixtures;
 
@@ -39,6 +39,13 @@ class ProfileAvatarUploadActionTest extends ProfileController
         return $this->client->request('POST', $path, $params, [ 'image' => $file ], []);
     }
 
+    public function requestPath(int $profileId)
+    {
+        $path = sprintf('/protected/profile/%s/avatar/delete', $profileId);
+
+        return $this->client->request('DELETE', $path);
+    }
+
     public function test200()
     {
         $this->getAuthClient();
@@ -60,40 +67,25 @@ class ProfileAvatarUploadActionTest extends ProfileController
 
         $body = json_decode($response->getContent(), true);
 
+
+        $avatarOrigin = $body['entity']['avatar']['origin']['storage_path'];
+        $avatarCropped = $body['entity']['avatar']['cropped']['storage_path'];
+        $avatarMedium = $body['entity']['avatar']['medium']['storage_path'];
+        $avatarSmall = $body['entity']['avatar']['small']['storage_path'];
+
+
+        // Тут удаляем и проверяем
+        $this->requestPath($profile->getId());
+
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-
-        Assert::assertFileExists($body['entity']['avatar']['origin']['storage_path']);
-        Assert::assertFileExists($body['entity']['avatar']['cropped']['storage_path']);
-        Assert::assertFileExists($body['entity']['avatar']['medium']['storage_path']);
-        Assert::assertFileExists($body['entity']['avatar']['small']['storage_path']);
-
-        // после удаления профиля нужно удалять все связанные файлы
-        $dbProfile = $this->container->get('profile.service')->getById($profile->getId());
-        $this->container->get('avatar.service')->deleteImage($dbProfile);
-    }
-
-    public function test404()
-    {
-        $this->getAuthClient();
-        $profile = $this->getSuccessProfile();
-
-        $params = [
-            'x' => 0,
-            'y' => 0,
-            'width' => 200,
-            'height' => 200,
-        ];
-
-        $file = new UploadedFile($this->filePath, 'grid-example');
-
-        $this->getPathRequestClient(99999, $params, $file);
 
         $response = $this->client->getResponse();
 
-        $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
-
-        // после удаления профиля нужно удалять все связанные файлы
-        $this->container->get('avatar.service')->deleteImage($profile);
+        $body = json_decode($response->getContent(), true);
+        Assert::assertNull($body['entity']['avatar']);
+        Assert::assertFileNotExists($avatarOrigin);
+        Assert::assertFileNotExists($avatarCropped);
+        Assert::assertFileNotExists($avatarMedium);
+        Assert::assertFileNotExists($avatarSmall);
     }
-
 }
