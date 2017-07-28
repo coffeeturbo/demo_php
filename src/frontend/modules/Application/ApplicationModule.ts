@@ -98,4 +98,4 @@ export class HammerConfig extends HammerGestureConfig  {
     ],
     bootstrap: [ApplicationComponent]
 })
-export class AppModule {}
+export class ApplicationModule {}
