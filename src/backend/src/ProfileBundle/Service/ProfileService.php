@@ -134,10 +134,13 @@ class ProfileService
         return $profile;
     }
 
-
     public function deleteBackdrop(Profile $profile)
     {
+        $this->container->get('profile.backdrop.service')->deleteImage($profile);
 
+        $this->profileRepository->save($profile);
+
+        return $profile;
     }
 
     public function markDelete(Profile $profile)

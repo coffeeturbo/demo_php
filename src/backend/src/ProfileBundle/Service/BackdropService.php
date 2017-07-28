@@ -1,8 +1,10 @@
 <?php
 namespace ProfileBundle\Service;
 
-use AvatarBundle\Image\BackdropEntity;
 use AvatarBundle\Parameter\UploadedImageParameter;
+use ImageBundle\Image\BackdropEntity;
+use ImageBundle\Image\Image;
+use ImageBundle\Image\ImageCollection;
 use ImageBundle\Service\ImageService;
 use ProfileBundle\Service\Strategy\BackdropStrategy;
 use ProfileBundle\Service\Strategy\ProfileBackdropStrategy;
@@ -33,10 +35,13 @@ class BackdropService
 
     public function deleteImage(BackdropEntity $backdropEntity)
     {
-        if(file_exists($file = $backdropEntity->getBackdrop())){
-            unlink($file);
-            $backdropEntity->setBackdrop(null);
+        if($file = $backdropEntity->getBackdrop())
+        {
+            if(file_exists($file->getStoragePath())){
+                unlink($file->getStoragePath());
+
+            }
         }
-        return $backdropEntity;
+        return $backdropEntity->setBackdrop(null);
     }
 }

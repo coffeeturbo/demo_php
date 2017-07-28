@@ -10,9 +10,9 @@ trait BackdropEntityTrait
         return  Image::createFromJson($this->backdrop);
     }
 
-    public function setBackdrop(Image $backdrop)
+    public function setBackdrop(?Image $backdrop)
     {
-        $this->backdrop = $backdrop->jsonSerialize();
+        $this->backdrop = $backdrop ? $backdrop->jsonSerialize() : $backdrop;
         return $this;
     }
 }
