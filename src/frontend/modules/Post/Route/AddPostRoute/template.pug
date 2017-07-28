@@ -10,9 +10,19 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       label.material-label(for="addPostTitle") {{'History title' | translate }}
   .material-field
     .input-box
-      input#addPostTags(ng-detect-empty-input, type="text", formControlName="tags")
-      hr
-      label.material-label(for="addPostTags") {{'Tags' | translate }}
+      tag-input(formControlName="tags", theme='bootstrap3-info', [placeholder]="")
+      //input#addPostTags(ng-detect-empty-input, type="text", formControlName="tags")
+      //hr
+      //label.material-label(for="addPostTags") {{'Tags' | translate }}
+  .material-field
+    .input-box
+      tag-input(formControlName="tags", theme='bootstrap', [placeholder]="")
+  .material-field
+    .input-box
+      tag-input(formControlName="tags", theme='dark', [placeholder]="")
+  .material-field
+    .input-box
+      tag-input(formControlName="tags", [placeholder]="")
 
 
   div(
