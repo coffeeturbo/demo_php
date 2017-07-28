@@ -5,8 +5,8 @@ namespace ProfileBundle\Entity;
 use AccountBundle\Entity\Account;
 use AvatarBundle\Image\AvatarEntity;
 use AvatarBundle\Image\AvatarEntityTrait;
-use AvatarBundle\Image\BackdropEntity;
-use AvatarBundle\Image\BackdropEntityTrait;
+use ImageBundle\Image\BackdropEntity;
+use ImageBundle\Image\BackdropEntityTrait;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 

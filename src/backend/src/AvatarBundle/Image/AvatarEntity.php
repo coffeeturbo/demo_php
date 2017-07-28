@@ -1,6 +1,8 @@
 <?php
 namespace AvatarBundle\Image;
 
+use ImageBundle\Image\ImageCollection;
+
 interface AvatarEntity
 {
     public function getAvatarCollection(): ImageCollection;

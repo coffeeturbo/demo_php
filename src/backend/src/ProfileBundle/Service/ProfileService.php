@@ -9,8 +9,6 @@ use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
 use ProfileBundle\Repository\ProfileRepository;
-use ProfileBundle\Service\Strategy\ProfileAvatarStrategy;
-use ProfileBundle\Service\Strategy\ProfileBackdropStrategy;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -108,7 +106,6 @@ class ProfileService
 
     public function uploadAvatar(Profile $profile, UploadedImageParameter $imageParameter)
     {
-
         $strategy = $this->container->get('profile.service.strategy.avatar_strategy');
 
         $strategy->generateImage($profile, $imageParameter);

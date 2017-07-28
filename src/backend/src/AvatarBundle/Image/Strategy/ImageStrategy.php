@@ -27,9 +27,8 @@ abstract class ImageStrategy
         $this->publicDirPath = $publicDirPath;
     }
 
-    abstract public function getSizes();
-
     abstract public function getEntity() ;
     abstract public function setEntity($entity);
+
 
 }

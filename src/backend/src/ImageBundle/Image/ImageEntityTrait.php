@@ -1,5 +1,5 @@
 <?php
-namespace AvatarBundle\Image;
+namespace ImageBundle\Image;
 
 trait ImageEntityTrait
 {

@@ -2,9 +2,9 @@
 namespace AvatarBundle\Service;
 
 use AvatarBundle\Image\AvatarEntity;
-use AvatarBundle\Image\Image;
-use AvatarBundle\Image\ImageCollection;
 use AvatarBundle\Parameter\UploadedImageParameter;
+use ImageBundle\Image\Image;
+use ImageBundle\Image\ImageCollection;
 use ImageBundle\Service\ImageService;
 use ProfileBundle\Service\Strategy\ProfileAvatarStrategy;
 
@@ -17,9 +17,9 @@ class AvatarService
         $this->imageService = $imageService;
     }
 
-    public function uploadImage(ProfileAvatarStrategy $strategy, UploadedImageParameter $imageParameter)
+    public function uploadImage(ProfileAvatarStrategy $strategy, UploadedImageParameter $imageParameter, AvatarEntity $avatarEntity)
     {
-        $strategy->generateImage($imageParameter );
+        $strategy->generateImage($avatarEntity, $imageParameter);
     }
 
     public function deleteImage(AvatarEntity $avatarEntity)

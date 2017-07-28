@@ -2,9 +2,10 @@
 
 namespace ProfileBundle\Service\Strategy;
 
-use AvatarBundle\Image\Image;
 use AvatarBundle\Image\Strategy\ImageStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
+use ImageBundle\Image\BackdropEntity;
+use ImageBundle\Image\Image;
 use ImageBundle\Service\ImageService;
 use ProfileBundle\Entity\Profile;
 use Intervention\Image\Image as ImageLayout;
@@ -43,14 +44,13 @@ class BackdropStrategy extends ImageStrategy
         return $this;
     }
 
-    public function generateImage(Profile $profile, UploadedImageParameter $imageParameter)
+    public function generateImage(BackdropEntity $profile, UploadedImageParameter $imageParameter)
     {
 
         $imageParameter->setWidth(1500)->setHeight(200);
 
         $image = $this->generate(
             $imageParameter->getFile()->getRealPath(),
-            null,
             $imageParameter
         );
 
@@ -59,8 +59,8 @@ class BackdropStrategy extends ImageStrategy
 
 
     public function generate(string $imagePath,
-                             $name = 'default',
-                             UploadedImageParameter $parameter = null): Image
+                             UploadedImageParameter $parameter = null,
+                    $name = 'default'): Image
     {
 
         $absolutePath = $this->getStorageDirPath();
@@ -82,9 +82,11 @@ class BackdropStrategy extends ImageStrategy
             mkdir($storageFileDirPath);
         }
 
+        $quality = 60;
+
         $image = $this->imageService->getImageManager()
             ->make($imagePath)
-            ->encode($encode = 'jpg', 100);
+            ->encode($encode = 'jpg', $quality);
 
         if ($parameter instanceof UploadedImageParameter) {
             $image->crop(
@@ -101,7 +103,8 @@ class BackdropStrategy extends ImageStrategy
                 "top"
             );
         }
-        $image->save($storageFilePath);
+
+        $image->save($storageFilePath, $quality);
 
         $originImage = new Image(
             $storageFilePath,
