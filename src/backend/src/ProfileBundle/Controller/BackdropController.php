@@ -50,14 +50,30 @@ class BackdropController extends Controller
         return new SuccessProfileResponse($profile);
     }
 
-    /*public function deleteAction(int $id)
+    /**
+     * @ApiDoc(
+     *  section="Profile",
+     *  description= "Загрузить аватар к профилю",
+     *  authentication=true,
+     *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
+     * )
+     *
+     * @param int $id
+     * @param Request $request
+     */
+    public function deleteAction(int $id)
     {
-        $profileService = $this->get('profile.service');
+        try{
+            $profileService = $this->get('profile.service');
 
-        $profile = $profileService->getById($id);
+            $profile = $profileService->getById($id);
 
-        $profileService->deleteBackdrop($profile);
+            $profileService->deleteBackdrop($profile);
+
+        }catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage());
+        }
 
         return new SuccessProfileResponse($profile);
-    }*/
+    }
 }

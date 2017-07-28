@@ -3,6 +3,6 @@ namespace ImageBundle\Image;
 
 interface BackdropEntity
 {
-    public function getBackdrop();
-    public function setBackdrop(Image $backdrop);
+    public function getBackdrop(): ?Image;
+    public function setBackdrop(?Image $backdrop);
 }
