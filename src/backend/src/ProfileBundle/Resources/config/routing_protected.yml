@@ -45,3 +45,17 @@ profile_backdrop_delete:
   methods: [ DELETE ]
   requirements:
     id: '\d+'
+
+
+profile_backdrop_presets:
+  path: '/backdrop/presets'
+  defaults: { _controller: ProfileBundle:Backdrop:getBackdropPresets }
+  methods: [ GET ]
+
+profile_backdrop_set:
+  path: '{id}/backdrop/preset/{presetId}/set'
+  defaults: { _controller: ProfileBundle:Backdrop:setBackdrop }
+  methods: [ POST ]
+  requirements:
+    id: '\d+'
+    presetId: '\d+'

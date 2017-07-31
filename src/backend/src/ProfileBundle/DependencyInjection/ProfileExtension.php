@@ -36,5 +36,7 @@ class ProfileExtension extends Extension
         $container->setParameter('profile.backdrop.max_height', $config['backdrop']['max_height']);
         $container->setParameter('profile.backdrop.min_ratio', $config['backdrop']['min_ratio']);
         $container->setParameter('profile.backdrop.max_ratio', $config['backdrop']['max_ratio']);
+
+        $container->setParameter('profile.backdrop.presets', $config['backdrop']['presets']);
     }
 }

@@ -3,11 +3,13 @@ namespace ProfileBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
+use ImageBundle\Image\Image;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use ProfileBundle\Form\BackdropUploadType;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -53,7 +55,7 @@ class BackdropController extends Controller
     /**
      * @ApiDoc(
      *  section="Profile",
-     *  description= "Загрузить аватар к профилю",
+     *  description= "Загрузить Бэкдроп к профилю",
      *  authentication=true,
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
      * )
@@ -69,6 +71,63 @@ class BackdropController extends Controller
             $profile = $profileService->getById($id);
 
             $profileService->deleteBackdrop($profile);
+
+        }catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage());
+        }
+
+        return new SuccessProfileResponse($profile);
+    }
+
+    /**
+     * @ApiDoc(
+     *  section="Profile",
+     *  description= "Получить профиль по id",
+     *  statusCodes = {
+     *      200 = "Успешное получение профиля",
+     *      404 = "Профиль не найден"
+     *  }
+     * )
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getBackdropPresetsAction()
+    {
+
+        $presets = $this->getParameter('profile.backdrop.presets');
+
+        array_walk($presets, function(&$preset, $id){
+            $preset = (new Image($preset['absolute_path'], $preset['web_path'], $id))->jsonSerialize();
+        });
+
+        return new JsonResponse($presets);
+    }
+
+
+    /**
+     * @ApiDoc(
+     *  section="Profile",
+     *  description= "Загрузить Бэкдроп к профилю",
+     *  authentication=true,
+     *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
+     * )
+     *
+     * @param int $id
+     * @param Request $request
+     */
+    public function setBackdropAction(int $id, int $presetId)
+    {
+        try{
+            $profileService = $this->get('profile.service');
+
+            $profile = $profileService->getById($id);
+            $presets = $this->getParameter('profile.backdrop.presets');
+
+            $preset =  new Image($presets[$presetId]['absolute_path'], $presets[$presetId]['web_path'], $presetId);
+
+            $profile->setBackdrop($preset);
+            $profileService->save($profile);
 
         }catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());

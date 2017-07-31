@@ -46,6 +46,15 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('max_height')->defaultValue(7000)->end()
                         ->scalarNode('min_ratio')->defaultValue(3)->end()
                         ->scalarNode('max_ratio')->defaultValue(3)->end()
+                        ->arrayNode('presets')
+                            ->prototype('array')
+                                ->children()
+                                    ->scalarNode('web_path')->end()
+                                    ->scalarNode('absolute_path')->end()
+                                ->end()
+                            ->end()
+
+                        ->end()
                     ->end()
                 ->end()
             ->end();

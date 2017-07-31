@@ -141,3 +141,25 @@ profile:
       max_height: 7000
       min_ratio: 3
       max_ratio: 3
+      presets:
+        1:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/1.jpg'
+          web_path: 'bundles/profile/backdrop/presets/1.jpg'
+        2:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/2.jpg'
+          web_path: 'bundles/profile/backdrop/presets/2.jpg'
+        3:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/3.jpg'
+          web_path: 'bundles/profile/backdrop/presets/3.jpg'
+        4:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/4.jpg'
+          web_path: 'bundles/profile/backdrop/presets/4.jpg'
+        5:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/5.jpg'
+          web_path: 'bundles/profile/backdrop/presets/5.jpg'
+        6:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/6.jpg'
+          web_path: 'bundles/profile/backdrop/presets/6.jpg'
+        7:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/7.jpg'
+          web_path: 'bundles/profile/backdrop/presets/7.jpg'

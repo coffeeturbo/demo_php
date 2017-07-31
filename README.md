@@ -29,3 +29,7 @@ npm run dev
 
 ## API Reference
 API docs are located at **/api/doc** route and provided via Swagger.
+
+## Some usefull commands
+
+console assets:install /opt/jet/web --symlink созлаёт симлинк на паблик файлы в профилях
