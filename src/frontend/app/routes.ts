@@ -81,14 +81,9 @@ export const appRoutes: JetRoutes = [
             { path: '', redirectTo: '/feed', pathMatch: 'full' },
             {
                 path: ':path',
+                component: ProfileRoute,
                 children: [
-                    { 
-                        path: '', 
-                        component: ProfileRoute,
-                        children: [
-                            { path: 'avatar', component: ProfileAvatarRoute}
-                        ]
-                    },
+                    { path: 'avatar', component: ProfileAvatarRoute}
                 ],
                 resolve: { profile: ProfileResolver, title: ProfileTitleResolver }
             }
