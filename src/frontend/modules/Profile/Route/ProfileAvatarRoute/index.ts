@@ -23,8 +23,6 @@ export class ProfileAvatarRoute implements OnInit {
         if(!this.profileService.hasAvatar(this.profile)) {
             this.router.navigate(["not-found"]);
         }
-        
-        this.profileService.getOwnProfile()
     }
 
     public isActive: boolean = false;
