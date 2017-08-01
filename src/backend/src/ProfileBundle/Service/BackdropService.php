@@ -4,19 +4,25 @@ namespace ProfileBundle\Service;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use ImageBundle\Image\BackdropEntity;
 use ImageBundle\Image\Image;
-use ImageBundle\Image\ImageCollection;
 use ImageBundle\Service\ImageService;
-use ProfileBundle\Service\Strategy\BackdropStrategy;
 use ProfileBundle\Service\Strategy\ProfileBackdropStrategy;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BackdropService
 {
 
     private $imageService;
+    private $backdropPresets;
 
-    public function __construct(ImageService $imageService)
+    public function __construct(ImageService $imageService, array $backdropPresets)
     {
         $this->imageService = $imageService;
+
+        array_walk($backdropPresets, function(&$preset, $id){
+            $preset = new Image($preset['absolute_path'], $preset['web_path'], $id);
+        });
+
+        $this->backdropPresets = $backdropPresets;
     }
 
 
@@ -33,7 +39,7 @@ class BackdropService
         $strategy->getEntity()->setBackdrop($image);
     }
 
-    public function deleteImage(BackdropEntity $backdropEntity)
+    private function deleteImage(BackdropEntity $backdropEntity)
     {
         if($file = $backdropEntity->getBackdrop())
         {
@@ -44,4 +50,45 @@ class BackdropService
         }
         return $backdropEntity->setBackdrop(null);
     }
+
+
+    public function getProfileBackdropPresets(): array
+    {
+        return $this->backdropPresets;
+    }
+
+    public function getProfileBackdropPreset(int $presetId): Image
+    {
+        if(!isset($this->backdropPresets[$presetId])) throw new NotFoundHttpException();
+
+        return $this->backdropPresets[$presetId];
+    }
+
+    private function isPreset(Image $image): bool
+    {
+        $r = false;
+
+        foreach($this->backdropPresets as $preset){
+          if($preset == $image) $r = true;
+        }
+
+        return $r;
+    }
+
+    public function setBackdrop(BackdropEntity $backdropEntity, Image $image)
+    {
+        $this->deleteBackdrop($backdropEntity);
+
+        $backdropEntity->setBackdrop($image);
+    }
+
+    public function deleteBackdrop(BackdropEntity $backdropEntity)
+    {
+        if($this->isPreset($backdropEntity->getBackdrop())){
+            $backdropEntity->setBackdrop(null);
+        } else {
+            $this->deleteImage($backdropEntity);
+        }
+    }
+
 }

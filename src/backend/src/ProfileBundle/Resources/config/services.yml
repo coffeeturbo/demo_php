@@ -35,6 +35,7 @@ services:
     class: ProfileBundle\Service\BackdropService
     arguments:
       - '@image.service'
+      - '%profile.backdrop.presets%'
       
   profile.form.type:
     class: ProfileBundle\Form\ProfileType
