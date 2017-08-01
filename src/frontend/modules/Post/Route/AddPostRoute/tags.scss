@@ -4,9 +4,9 @@
 $height: 28px;
 
 $material-tag-input-theme: (
-  container-border-bottom: 3px solid material-color($secondary_material, "400"),
-  container-border-bottom-focused: 3px solid material-color($primary_material, "400"),
-  container-border-bottom-invalid: 3px solid material-color("red", "800")
+  container-border-bottom: 2px solid material-color($secondary_material, "400"),
+  container-border-bottom-focused: 2px solid material-color($primary_material, "400"),
+  container-border-bottom-invalid: 2px solid material-color("red", "800")
 );
 
 $material-tag-theme: (

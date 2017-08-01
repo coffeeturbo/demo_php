@@ -1,11 +1,10 @@
-textarea(
+input(
   ng-detect-empty-input,
-  autosize,
+  type="text",
   [id] = "id",
   [value]="value",
   rows="1",
-  [style.max-height.px]="150",
   (input)="onInput($event.target.value)"
 )
 hr
-label.material-label([for]="id") {{'Enter text' | translate }}
+label.material-label([for]="id") {{'Enter video link. Support Youtube, Coub' | translate }}

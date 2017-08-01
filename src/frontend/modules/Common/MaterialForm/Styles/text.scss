@@ -1,6 +1,6 @@
 @import "../../../../assets/styles/global";
 
-.material-form {
+.material-field {
   input[type=text],
   input[type=password],
   input[type=date],
@@ -10,7 +10,7 @@
     box-sizing: border-box;
     border-bottom: 1px solid material-color($secondary_material, "400");
     transition: border 300ms linear;
-    resize: vertical;
+    resize: none;
 
     @include mq($until: tablet) {
       line-height: 2em;

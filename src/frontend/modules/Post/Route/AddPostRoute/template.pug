@@ -8,20 +8,6 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       input#addPostTitle(ng-detect-empty-input, type="text", formControlName="title")
       hr
       label.material-label(for="addPostTitle") {{'History title' | translate }}
-  .material-field
-    .input-box
-      tag-input(
-        formControlName="tags",
-        placeholder=" ", 
-        secondaryPlaceholder="{{'Tags' | translate}}",
-        maxItems="8",
-        theme='material',
-        inputId="addPostTags"
-      )
-      //input#addPostTags(ng-detect-empty-input, type="text", formControlName="tags")
-      //hr
-      //label.material-label(for="addPostTags") {{'Tags' | translate }}
-
 
   div(
     formArrayName="attachments",
@@ -34,27 +20,39 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         i.fa.fa-bars
       .input-box([formGroupName]="i")
         attachment-input-text(*ngSwitchCase="'text'", id="addPostAttachment{{i}}", formControlName="value")
+        attachment-input-video(*ngSwitchCase="'video'", id="addPostAttachment{{i}}", formControlName="value")
       a.removeAttachment((click)="removeAttachment(i)")
         i.fa.fa-trash-o()
-        
+
   .controls.center.attachment-button-container
     button.btn-material.secondary(type="button", (click)="addAttachment('text')")
-      i.fa.fa-plus.fa-hover.fa-fw
-      i.fa.fa-file-text-o.fa-fw
+      i.fa.fa-plus.fa-hover.fa-fw.fa-2x
+      i.fa.fa-file-text-o.fa-fw.fa-2x
       span {{"Text" | translate }}
     button.btn-material.secondary(type="button", (click)="addAttachment('video')")
-      i.fa.fa-plus.fa-hover.fa-fw
-      i.fa.fa-video-camera.fa-fw
+      i.fa.fa-plus.fa-hover.fa-fw.fa-2x
+      i.fa.fa-video-camera.fa-fw.fa-2x
       span {{"Video" | translate }}
     button.btn-material.secondary(type="button", (click)="addAttachment('picture')")
-      i.fa.fa-plus.fa-hover.fa-fw
-      i.fa.fa-picture-o.fa-fw
+      i.fa.fa-plus.fa-hover.fa-fw.fa-2x
+      i.fa.fa-picture-o.fa-fw.fa-2x
       span {{"Image" | translate }}
     button.btn-material.secondary(type="button", (click)="addAttachment('map')")
-      i.fa.fa-plus.fa-hover.fa-fw
-      i.fa.fa-map-o.fa-fw
+      i.fa.fa-plus.fa-hover.fa-fw.fa-2x
+      i.fa.fa-map-o.fa-fw.fa-2x
       span {{"Map" | translate }}
 
+  .material-field
+    .input-box
+      tag-input(
+      formControlName="tags",
+      placeholder=" ",
+      secondaryPlaceholder="{{'Tags' | translate}}",
+      maxItems="8",
+      theme='material',
+      inputId="addPostTags"
+      )
+      
   br
         
   .controls

@@ -40,7 +40,7 @@ export class AddPostRoute {
         console.log(this.form.value);
     }
 
-    handleEnterButton(e: KeyboardEvent) {
+    public handleEnterButton(e: KeyboardEvent) {
         let element = <HTMLElement>e.target;
 
         if(element instanceof HTMLTextAreaElement === false && element.id !== "addPostTags") {
