@@ -5,7 +5,8 @@ export const dictionaries: Dictionaries = {
         require('./RU.json'),
         require('../modules/Auth/Dictionaries/RU.json'),
         require('../modules/Settings/Dictionaries/RU.json'),
-        require('../modules/Profile/Dictionaries/RU.json')
+        require('../modules/Profile/Dictionaries/RU.json'),
+        require('../modules/Post/Dictionaries/RU.json')
     ),
     "EN": {
         "days1":    "days",

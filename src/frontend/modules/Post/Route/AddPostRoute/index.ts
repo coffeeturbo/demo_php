@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
-import {DragulaService} from "ng2-dragula";
 
 @Component({
     templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss']
+    styleUrls: ['./style.shadow.scss', './tags.scss']
 })
 
 export class AddPostRoute {
@@ -42,7 +41,9 @@ export class AddPostRoute {
     }
 
     handleEnterButton(e: KeyboardEvent) {
-        if(e.target instanceof HTMLTextAreaElement === false) {
+        let element = <HTMLElement>e.target;
+
+        if(element instanceof HTMLTextAreaElement === false && element.id !== "addPostTags") {
             e.preventDefault()
         }
     }

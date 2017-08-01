@@ -1,0 +1,44 @@
+@import "../../../../assets/styles/global";
+@import "~ngx-chips/dist/modules/core/styles/core/_core.scss";
+
+$height: 28px;
+
+$material-tag-input-theme: (
+  container-border-bottom: 3px solid material-color($secondary_material, "400"),
+  container-border-bottom-focused: 3px solid material-color($primary_material, "400"),
+  container-border-bottom-invalid: 3px solid material-color("red", "800")
+);
+
+$material-tag-theme: (
+  background: material-color($secondary_material, "600"),
+  background-hover: material-color($secondary_material, "700"),
+  background-focused: material-color($primary_material, "500"),
+  background-active: material-color($primary_material, "500"),
+  color: $font_color_light,
+  color-hover: $font_color_light,
+  border-radius: 2px,
+  font-family: $font_family,
+  padding: 0 0.45rem,
+  height: $height,
+  line-height: $height + 2px
+);
+
+$material-tag-input-form-theme: (
+  input-border: none!important,
+  input-height: $height + 4px
+);
+
+$material-icon-theme: (
+  fill: #fff,
+  fill-focus: #eee,
+  transition: all 0.35s,
+);
+
+/deep/ div.ng2-tag-input.material { @include tag-input-theme($material-tag-input-theme); }
+/deep/ div.ng2-tag-input.material tag { @include tag-theme($material-tag-theme); }
+/deep/ div.ng2-tag-input.material input { @include tag-input-form-theme($material-tag-input-form-theme); }
+/deep/ div.ng2-tag-input.material tag delete-icon {
+  @include icon-theme($material-icon-theme);
+  svg { height: $height + 2px; }
+  &:hover { transform: none; }
+}

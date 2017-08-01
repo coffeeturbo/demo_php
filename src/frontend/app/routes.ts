@@ -41,6 +41,8 @@ export const appRoutes: JetRoutes = [
             {
                 path: 'add',
                 component: AddPostRoute,
+                canActivate: [CanActivateService],
+                data: {title: 'Add post'}
             },
             {
                 path: ':path',

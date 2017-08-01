@@ -1,4 +1,4 @@
-h2 Добавление поста
+h2 {{ "Add post" | translate }}
 br
 
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)")
@@ -10,7 +10,14 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       label.material-label(for="addPostTitle") {{'History title' | translate }}
   .material-field
     .input-box
-      tag-input(formControlName="tags", [placeholder]="' '")
+      tag-input(
+        formControlName="tags",
+        placeholder=" ", 
+        secondaryPlaceholder="{{'Tags' | translate}}",
+        maxItems="8",
+        theme='material',
+        inputId="addPostTags"
+      )
       //input#addPostTags(ng-detect-empty-input, type="text", formControlName="tags")
       //hr
       //label.material-label(for="addPostTags") {{'Tags' | translate }}
