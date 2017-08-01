@@ -10,7 +10,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BackdropService
 {
-
     private $imageService;
     private $backdropPresets;
 
