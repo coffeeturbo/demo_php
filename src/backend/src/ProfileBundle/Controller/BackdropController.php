@@ -42,7 +42,7 @@ class BackdropController extends Controller
 
             $profileService->uploadBackdrop($profile, $params);
         } catch(NotFoundHttpException $e){
-            return new ErrorJsonResponse($e->getMessage());
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         } catch(BadRestRequestHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch(\Exception $e){
