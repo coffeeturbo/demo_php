@@ -94,7 +94,6 @@ class BackdropController extends Controller
      */
     public function getBackdropPresetsAction()
     {
-
         $presets = array_map(function(Image $image){
             return $image->jsonSerialize();
         }, $this->get('profile.backdrop.service')->getProfileBackdropPresets());
