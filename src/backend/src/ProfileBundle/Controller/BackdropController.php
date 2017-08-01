@@ -95,11 +95,9 @@ class BackdropController extends Controller
     public function getBackdropPresetsAction()
     {
 
-        $presets = $this->getParameter('profile.backdrop.presets');
-
-        array_walk($presets, function(&$preset, $id){
-            $preset = (new Image($preset['absolute_path'], $preset['web_path'], $id))->jsonSerialize();
-        });
+        $presets = array_map(function(Image $image){
+            return $image->jsonSerialize();
+        }, $this->get('profile.backdrop.service')->getProfileBackdropPresets());
 
         return new JsonResponse($presets);
     }
@@ -122,14 +120,18 @@ class BackdropController extends Controller
             $profileService = $this->get('profile.service');
 
             $profile = $profileService->getById($id);
-            $presets = $this->getParameter('profile.backdrop.presets');
 
-            $preset =  new Image($presets[$presetId]['absolute_path'], $presets[$presetId]['web_path'], $presetId);
+            $image = $this->get('profile.backdrop.service')->getProfileBackdropPreset($presetId);
 
-            $profile->setBackdrop($preset);
+            $this->get('profile.backdrop.service')->setBackdrop($profile, $image);
+
+//            $profile->setBackdrop($image);
+
             $profileService->save($profile);
 
-        }catch(\Exception $e){
+        }catch(NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage());
+        } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
         }
 

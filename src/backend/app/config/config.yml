@@ -163,3 +163,18 @@ profile:
         7:
           absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/7.jpg'
           web_path: 'bundles/profile/backdrop/presets/7.jpg'
+        8:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/8.jpg'
+          web_path: 'bundles/profile/backdrop/presets/8.jpg'
+        9:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/9.jpg'
+          web_path: 'bundles/profile/backdrop/presets/9.jpg'
+        10:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/10.jpg'
+          web_path: 'bundles/profile/backdrop/presets/10.jpg'
+        11:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/11.jpg'
+          web_path: 'bundles/profile/backdrop/presets/11.jpg'
+        12:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/12.jpg'
+          web_path: 'bundles/profile/backdrop/presets/12.jpg'

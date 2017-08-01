@@ -1,8 +1,8 @@
 <?php
 namespace ProfileBundle\Service\Strategy;
 
-use AvatarBundle\Image\BackdropEntity;
 use AvatarBundle\Image\Strategy\ImageStrategy;
+use ImageBundle\Image\BackdropEntity;
 
 class ProfileBackdropStrategy extends ImageStrategy
 {
