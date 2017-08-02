@@ -63,15 +63,9 @@ class BackdropService
         return $this->backdropPresets[$presetId];
     }
 
-    private function isPreset(Image $image): bool
+    private function isPreset(?Image $image): bool
     {
-        $r = false;
-
-        foreach($this->backdropPresets as $preset){
-          if($preset == $image) $r = true;
-        }
-
-        return $r;
+        return in_array($image, $this->backdropPresets);
     }
 
     public function setBackdrop(BackdropEntity $backdropEntity, Image $image)
