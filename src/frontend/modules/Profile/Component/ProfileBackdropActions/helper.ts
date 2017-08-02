@@ -3,7 +3,7 @@ import {Modal} from "@angular-addons/modal";
 
 @Injectable()
 export class ProfileBackdropActionsHelper implements Modal {
-    isVisible: boolean = !false;
+    isVisible: boolean = false;
     
     public show() {
         this.isVisible = true;
