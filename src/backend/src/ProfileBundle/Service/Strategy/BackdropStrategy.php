@@ -86,7 +86,7 @@ class BackdropStrategy extends ImageStrategy
 
         $image = $this->imageService->getImageManager()
             ->make($imagePath)
-            ->encode($encode = 'jpg', $quality);
+            ->encode($encode = 'jpg');
 
         if ($parameter instanceof UploadedImageParameter) {
 
