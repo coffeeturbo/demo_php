@@ -56,4 +56,23 @@ class ProfileBackdropDeleteActionTest extends ProfileController
         Assert::assertNull($body['entity']['backdrop']);
     }
 
+    public function test401()
+    {
+        $profile = $this->getSuccessProfile();
+        $this->getBackdropDeleteRequestClient($profile->getId());
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(Response::HTTP_UNAUTHORIZED, $response->getStatusCode());
+    }
+
+    public function test404()
+    {
+        $this->getAuthClient();
+
+        $this->getBackdropDeleteRequestClient(9999999);
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
+    }
+
 }

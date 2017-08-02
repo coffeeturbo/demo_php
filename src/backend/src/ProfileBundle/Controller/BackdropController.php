@@ -72,6 +72,8 @@ class BackdropController extends Controller
 
             $profileService->deleteBackdrop($profile);
 
+        }catch(NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
         }
