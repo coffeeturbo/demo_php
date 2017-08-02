@@ -139,8 +139,6 @@ profile:
       min_height: 200
       max_width: 7000
       max_height: 7000
-      min_ratio: 3
-      max_ratio: 7.5
       presets:
         1:
           absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/1.jpg'

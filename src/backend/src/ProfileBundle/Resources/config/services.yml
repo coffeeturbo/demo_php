@@ -53,8 +53,6 @@ services:
       - '%profile.backdrop.max_width%'
       - '%profile.backdrop.min_height%'
       - '%profile.backdrop.max_height%'
-      - '%profile.backdrop.min_ratio%'
-      - '%profile.backdrop.max_ratio%'
     tags: [{name: form.type}]
 
   profile.form.avatar_upload_type:

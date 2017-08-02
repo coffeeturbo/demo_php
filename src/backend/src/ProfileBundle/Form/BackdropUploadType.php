@@ -14,17 +14,13 @@ class BackdropUploadType extends AbstractType
     private $maxWidth;
     private $minHeight;
     private $maxHeight;
-    private $maxRatio;
-    private $minRatio;
 
-    function __construct($minWidth, $maxWidth, $minHeight, $maxHeight, $minRatio, $maxRatio)
+    function __construct($minWidth, $maxWidth, $minHeight, $maxHeight)
     {
         $this->minWidth = $minWidth;
         $this->maxWidth = $maxWidth;
         $this->minHeight = $minHeight;
         $this->maxHeight = $maxHeight;
-        $this->minRatio = $minRatio;
-        $this->maxRatio = $maxRatio;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -40,8 +36,6 @@ class BackdropUploadType extends AbstractType
                         'maxWidth' => $this->maxWidth,
                         'minHeight' => $this->minHeight,
                         'maxHeight' => $this->maxHeight,
-                        'minRatio' => $this->minRatio,
-                        'maxRatio' => $this->maxRatio,
                     ])
                 ],
             ])

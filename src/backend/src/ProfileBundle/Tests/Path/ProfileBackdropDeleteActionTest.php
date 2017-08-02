@@ -3,7 +3,6 @@ namespace ProfileBundle\Tests\Path;
 
 use PHPUnit\Framework\Assert;
 use ProfileBundle\DataFixtures\ORM\LoadProfileData;
-use ProfileBundle\Entity\Profile;
 use ProfileBundle\Tests\ProfileController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;

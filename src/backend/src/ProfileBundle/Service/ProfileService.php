@@ -87,16 +87,21 @@ class ProfileService
         return $profile;
     }
 
-    public function update(Profile $profile): Profile
+    private function checkAccessPermissions(Profile $profile)
     {
         $account = $this->authService->getAccount();
 
-        if($profile->getAccount()->getId() !== $account->getId()) {
+        if($profile->getAccount()->getId() !== $account->getId()
+//   TODO         || !in_array('ROLE_ADMIN', $profile->getAccount()->getRoles())
+        ) {
             throw new AccessDeniedHttpException("Account has no access for profile changes");
         }
+    }
 
+    public function update(Profile $profile): Profile
+    {
+        $this->checkAccessPermissions($profile);
         $this->save($profile);
-
         return $profile;
     }
     
@@ -106,6 +111,7 @@ class ProfileService
 
     public function uploadAvatar(Profile $profile, UploadedImageParameter $imageParameter)
     {
+        $this->checkAccessPermissions($profile);
         $strategy = $this->container->get('profile.service.strategy.avatar_strategy');
 
         $strategy->generateImage($profile, $imageParameter);

@@ -23,6 +23,11 @@ class BackdropController extends Controller
      *  authentication=true,
      *  input = {"class" = "ProfileBundle\Form\BackdropUploadType", "name"  = ""},
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
+     *  statusCodes = {
+     *      200 = "Успешно установлен бэкдроп",
+     *      400 = "Некорректное изображение либо аргументы",
+     *      404 = "Профиль не найден"
+     *  }
      * )
      *
      * @param int $id
@@ -30,7 +35,7 @@ class BackdropController extends Controller
      */
     public function uploadAction(int $id, Request $request)
     {
-        try{
+        try {
             $profileService = $this->get('profile.service');
 
             $profile = $profileService->getById($id);
@@ -55,9 +60,14 @@ class BackdropController extends Controller
     /**
      * @ApiDoc(
      *  section="Profile",
-     *  description= "Загрузить Бэкдроп к профилю",
+     *  description= "удалить бэкдроп",
      *  authentication=true,
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
+     *  statusCodes = {
+     *      200 = "Успешно удалён бэкдроп",
+     *      400 = "Некорректное изображение либо аргументы",
+     *      404 = "Профиль не найден"
+     *  }
      * )
      *
      * @param int $id
@@ -107,7 +117,7 @@ class BackdropController extends Controller
     /**
      * @ApiDoc(
      *  section="Profile",
-     *  description= "Загрузить Бэкдроп к профилю",
+     *  description= "Загрузить пресет Бэкдроп к профилю",
      *  authentication=true,
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
      * )
