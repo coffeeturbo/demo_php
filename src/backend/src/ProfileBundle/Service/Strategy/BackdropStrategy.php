@@ -90,8 +90,10 @@ class BackdropStrategy extends ImageStrategy
 
         if ($parameter instanceof UploadedImageParameter) {
 
-            if($image->getHeight() - $parameter->getStartY() > $this->minHeight)  throw new BadRestRequestHttpException(
-                ['cropped y is > then min height'], 400
+            if($image->getHeight() - $parameter->getStartY() < $this->minHeight)
+                throw new BadRestRequestHttpException(
+                [ sprintf('cropped StartY is (%s) < then min height (%s)',
+                    $parameter->getStartY(), $this->minHeight)], 400
             );
 
             $image->crop(

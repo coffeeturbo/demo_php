@@ -48,7 +48,7 @@ class ProfileBackdropControllerTest extends ProfileController
         $profile = $this->getSuccessProfile();
 
         $params = [
-            'y' => 200,
+            'y' => 0,
         ];
 
         $file = new UploadedFile($this->filePath1500x200, 'grid-example');
@@ -102,17 +102,16 @@ class ProfileBackdropControllerTest extends ProfileController
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 
-    // todo написать проверку в контроллере
     public function testBadYCoord400()
     {
         $this->getAuthClient();
         $profile = $this->getSuccessProfile();
 
         $params = [
-            'y' => 200,
+            'y' => 100,
         ];
 
-        $file = new UploadedFile($this->filePath1500x150, 'grid-example');
+        $file = new UploadedFile($this->filePath1500x200, 'grid-example');
 
         $this->getPathRequestClient($profile->getId(), $params, $file);
 
