@@ -3,8 +3,8 @@ ng-container(*ngIf="profile")
     .backdrop
       profile-backdrop-cropper((onCrop)="uploadBackdrop($event)", [disabled]="disabled")
       ng-container(*ngIf="backdropHelper.disabled()")
-        img(*ngIf="profileService.hasBackdrop(profile)", src="{{profile.backdrop.public_path}}")
-        button((onChange)="backdropHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
+        img(*ngIf="profileService.hasBackdrop(profile)", src="{{ profile.backdrop.public_path}}")
+        button((click)="backdropActionsHelper.show()") {{ "Change" | translate }}
       figure
         .avatar
           a(*ngIf="profileService.hasAvatar(profile)", routerLink="avatar")
@@ -32,4 +32,5 @@ ng-container(*ngIf="profile")
     
     p([style.height.px]="1000") .
 profile-avatar-cropper((onCrop)="uploadAvatar($event)", [disabled]="disabled")
+backdrop-actions(*ngIf="backdropActionsHelper.isVisible", (onChange)="profile = route.snapshot.data.profile")
 router-outlet

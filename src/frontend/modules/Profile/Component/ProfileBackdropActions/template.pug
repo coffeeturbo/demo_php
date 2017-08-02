@@ -1,0 +1,29 @@
+modal(
+  [width]="'500px'", 
+  (on-close)="helper.hide()", 
+  [animation]="false" 
+)
+  modal-body
+    svg(*ngIf="!profileService.getPresets()", xmlns="http://www.w3.org/2000/svg", viewBox="0 0 66 66")
+      circle(fill="none", stroke-width="6", stroke-linecap="round", cx="33", cy="33", r="30")
+  
+    ul
+      ng-container(*ngIf="profileService.getPresets()")
+        li(*ngFor="let preset of profileService.getPresets(true)")
+          img((click)="setPreset(preset)", [src]="preset.public_path")
+      li
+        button.other((onChange)="helper.hide(); cropperHelper.setData($event.image, $event.src)", cropper-browse)
+          i.fa.fa-upload
+          span {{ "Select file" | translate }}
+      
+  modal-footer(background="#f5f5f5")
+    .controls
+      button.btn-material.secondary.delete(
+        *ngIf="profileService.hasBackdrop(profile)",
+        [ngClass]="{confirm: deleteBackdropConfirmed}", 
+        (click)="deleteBackdrop();",
+        (blur)="deleteBackdropConfirmed = false"
+      )
+        i.fa.fa-trash-o
+        div {{ "Are you sure?" | translate }}
+      button.btn-material((click)="helper.hide();") {{ "Cancel" | translate }}

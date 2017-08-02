@@ -11,6 +11,8 @@ import {AuthService} from "../../Auth/Service/AuthService";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
+import {BackdropPreset, BackdropPresets} from "../Entity/BackdropPreset";
+import {BackdropPresetsResponse} from "../Http/Response/BackdropPresetsResponse";
 
 interface ProfileServiceInterface {
     get(path: string): Observable<Profile>;
@@ -24,6 +26,7 @@ interface ProfileServiceInterface {
 @Injectable()
 export class ProfileService implements ProfileServiceInterface{
     private profiles: Profile[] = [];
+    private presets: BackdropPresets;
     public onProfileResolve = new EventEmitter<Profile>(true);
 
     constructor(private rest: ProfileRESTService, private auth: AuthService) {}
@@ -93,6 +96,36 @@ export class ProfileService implements ProfileServiceInterface{
             .do(profile => this.replaceInCache(oldProfile, profile))
     }
     
+    public backdropPresets(): Observable<BackdropPresetsResponse> {
+        return this.rest.backdropPresets()
+            .do(presets => this.presets = presets);
+    }
+
+    public getPresets(asIterable?: boolean)
+    {
+        if(asIterable) {
+            return Object.keys(this.presets).map(k => this.presets[k])
+        } else {
+            return this.presets;
+        }
+    }
+
+    public setBackdropPreset(profile: Profile, preset: BackdropPreset): Observable<Profile>
+    {
+        let oldProfile = profile;
+        return this.rest.setBackdropPreset(profile.id, preset["name"])
+            .map(profileResponse => profileResponse.entity)
+            .do(profile => this.replaceInCache(oldProfile, profile))
+    }
+
+    public deleteBackdrop(profile: Profile): Observable<Profile>
+    {
+        let oldProfile = profile;
+        return this.rest.deleteBackdrop(profile.id)
+            .map(profileResponse => profileResponse.entity)
+            .do(profile => this.replaceInCache(oldProfile, profile))
+    }
+
     public hasAvatar(profile: Profile) : boolean
     {
         // return Object.keys(profile.avatar).length > 0; @DOTO: remove this line

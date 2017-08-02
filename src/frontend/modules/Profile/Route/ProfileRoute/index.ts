@@ -9,6 +9,7 @@ import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 import {ProfileAvatarCropperHelper} from "../../Component/ProfileAvatarCropper/helper";
 import {ProfileBackdropCropperHelper} from "../../Component/ProfileBackdropCropper/helper";
 import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
+import {ProfileBackdropActionsHelper} from "../../Component/ProfileBackdropActions/helper";
 
 @Component({
     templateUrl: "./template.pug",
@@ -25,16 +26,21 @@ export class ProfileRoute implements OnInit {
         public profileService: ProfileService, 
         public palleteService: PalleteService, 
         public avatarHelper: ProfileAvatarCropperHelper,
-        public backdropHelper: ProfileBackdropCropperHelper
+        public backdropHelper: ProfileBackdropCropperHelper,
+        public backdropActionsHelper: ProfileBackdropActionsHelper
     ) {}
 
     ngOnInit() {
-        this.profile = this.route.snapshot.data["profile"];
+        this.profile = this.route.snapshot.data.profile;
         
         if(this.profileService.hasAvatar(this.profile)) {
             // Preload fullsize avatar
             (new Image()).src = this.profile.avatar['origin'].public_path;
         }
+    }
+
+    public update() {
+        this.profile = this.route.snapshot.data["profile"];
     }
     
     public translate(string: string) {
@@ -61,5 +67,8 @@ export class ProfileRoute implements OnInit {
                 this.backdropHelper.destroy();
             })
         ;
+    }
+
+    test() {
     }
 }

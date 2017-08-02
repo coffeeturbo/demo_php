@@ -46,7 +46,7 @@ export const Config = {
                 maxAspectRatio: 3
             },
             "backdrop": {
-                minWidth: 800,
+                minWidth: 1500,
                 minHeight: 200,
                 maxHeight: 7000,
                 maxWidth: 7000,

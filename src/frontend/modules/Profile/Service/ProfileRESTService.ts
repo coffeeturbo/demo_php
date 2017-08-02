@@ -7,6 +7,7 @@ import {ProfileResponse} from "../Http/Response/ProfileResponse";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
+import {BackdropPresetsResponse} from "../Http/Response/BackdropPresetsResponse";
 
 @Injectable()
 export class ProfileRESTService {
@@ -96,5 +97,32 @@ export class ProfileRESTService {
             .post(url, formData)
             .map(res => res.json())
         ;
+    }
+    
+    public deleteBackdrop(profileId: number)
+    {
+        let url = `/protected/profile/${profileId}/backdrop/delete`;
+        return this.rest
+            .auth()
+            .delete(url)
+            .map(res => res.json())    
+    }
+    
+    public backdropPresets(): Observable<BackdropPresetsResponse> 
+    {
+        let url = `/protected/profile/backdrop/presets`;
+        return this.rest
+            .auth()
+            .get(url)
+            .map(res => res.json())
+    }
+    
+    public setBackdropPreset(profileId: number, presetName: string): Observable<ProfileResponse>
+    {
+        let url = `/protected/profile/${profileId}/backdrop/preset/${presetName}/set`;
+        return this.rest
+            .auth()
+            .post(url, null)
+            .map(res => res.json())
     }
 }
