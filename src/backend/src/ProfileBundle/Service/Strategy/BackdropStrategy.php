@@ -2,6 +2,7 @@
 
 namespace ProfileBundle\Service\Strategy;
 
+use AppBundle\Exception\BadRestRequestHttpException;
 use AvatarBundle\Image\Strategy\ImageStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use ImageBundle\Image\BackdropEntity;
@@ -16,21 +17,20 @@ class BackdropStrategy extends ImageStrategy
     /** @var  $imageService ImageService */
     private $imageService;
 
+    private $minWidth;
+    private $minHeight;
+
     public function setImageService(ImageService $imageService)
     {
         $this->imageService = $imageService;
     }
 
-    public function __construct(string $storageDirPath, string $publicDirPath)
+    public function __construct(string $storageDirPath, string $publicDirPath, int $minWidth, int $minHeight)
     {
         $this->storageDirPath = $storageDirPath;
         $this->publicDirPath = $publicDirPath;
-    }
-
-
-    public function getSizes()
-    {
-        // TODO: Implement getSizes() method.
+        $this->minWidth = $minWidth;
+        $this->minHeight = $minHeight;
     }
 
     public function getEntity()
@@ -47,7 +47,7 @@ class BackdropStrategy extends ImageStrategy
     public function generateImage(BackdropEntity $profile, UploadedImageParameter $imageParameter)
     {
 
-        $imageParameter->setWidth(1500)->setHeight(200);
+        $imageParameter->setWidth($this->minWidth)->setHeight($this->minHeight);
 
         $image = $this->generate(
             $imageParameter->getFile()->getRealPath(),
@@ -89,6 +89,11 @@ class BackdropStrategy extends ImageStrategy
             ->encode($encode = 'jpg', $quality);
 
         if ($parameter instanceof UploadedImageParameter) {
+
+            if($image->getHeight() - $parameter->getStartY() > $this->minHeight)  throw new BadRestRequestHttpException(
+                ['cropped y is > then min height'], 400
+            );
+
             $image->crop(
                 $image->getWidth(),
                 $image->getHeight(),

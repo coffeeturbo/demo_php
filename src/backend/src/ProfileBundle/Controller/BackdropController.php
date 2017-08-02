@@ -83,6 +83,7 @@ class BackdropController extends Controller
      * @ApiDoc(
      *  section="Profile",
      *  description= "Получить профиль по id",
+     *  authentication=true,
      *  statusCodes = {
      *      200 = "Успешное получение профиля",
      *      404 = "Профиль не найден"

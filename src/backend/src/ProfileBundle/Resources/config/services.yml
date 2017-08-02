@@ -30,6 +30,8 @@ services:
     arguments:
       - '%profile.backdrop.absolute_path%'
       - '%profile.backdrop.web_path%'
+      - '%profile.backdrop.min_width%'
+      - '%profile.backdrop.min_height%'
 
   profile.backdrop.service:
     class: ProfileBundle\Service\BackdropService
