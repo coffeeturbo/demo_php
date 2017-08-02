@@ -19,7 +19,7 @@ class BackdropController extends Controller
     /**
      * @ApiDoc(
      *  section="Profile",
-     *  description= "Загрузить аватар к профилю",
+     *  description= "Загрузить бэкдром к профилю",
      *  authentication=true,
      *  input = {"class" = "ProfileBundle\Form\BackdropUploadType", "name"  = ""},
      *  output = {"class" = "ProfileBundle\Response\SuccessProfileResponse"},
@@ -82,7 +82,7 @@ class BackdropController extends Controller
     /**
      * @ApiDoc(
      *  section="Profile",
-     *  description= "Получить профиль по id",
+     *  description= "Получить бэкдропы для профиля",
      *  authentication=true,
      *  statusCodes = {
      *      200 = "Успешное получение профиля",
@@ -101,7 +101,6 @@ class BackdropController extends Controller
 
         return new JsonResponse($presets);
     }
-
 
     /**
      * @ApiDoc(
@@ -124,8 +123,6 @@ class BackdropController extends Controller
             $image = $this->get('profile.backdrop.service')->getProfileBackdropPreset($presetId);
 
             $this->get('profile.backdrop.service')->setBackdrop($profile, $image);
-
-//            $profile->setBackdrop($image);
 
             $profileService->save($profile);
 
