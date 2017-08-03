@@ -29,26 +29,30 @@ export class PostFormRoute implements OnInit {
 
     ngOnInit() {
         this.form.valueChanges
+            .debounceTime(300) // Ohyenable feature 
             .do(() => this.saved = false)
-            .debounceTime(1000) // Ohyenable feature 
-            .subscribe((data) => {
-                localStorage.setItem("postForm", JSON.stringify(data));
+            .debounceTime(700) // Ohyenable feature 
+            .subscribe((post: Post) => {
+                localStorage.setItem("new-post", JSON.stringify(post));
                 this.saved = true;
             });
     }
-ngOnChanges() {
-        console.log("1");
-}
-    public initForm(): FormGroup {
-        let data;
-        if (localStorage.getItem("postForm")) {
-            data = JSON.parse(localStorage.getItem("postForm"));
-            data.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value));
-        }
 
+    public initForm(): FormGroup {
+        let post: Post;
+        try {
+            post = JSON.parse(localStorage.getItem("new-post"));
+            post.attachments.map(
+                attachment => this.addAttachment(attachment.type, attachment.value)
+            );
+
+        } catch (e) {
+            post = null;
+        }
+        
         return new FormGroup({
-            title: new FormControl(data ? data.title : null, [Validators.required, Validators.minLength(5)]),
-            tags: new FormControl(data ? data.tags : null, [Validators.required]),
+            title: new FormControl(post ? post.title : null, [Validators.required, Validators.minLength(5)]),
+            tags: new FormControl(post ? post.tags : null, [Validators.required]),
             attachments: this.attachments
         });
 
@@ -86,11 +90,16 @@ ngOnChanges() {
             (item: Tag) => item.value == this.authorTag.value
         ).length > 0;
     }
+    
+    public reset() {
+        this.form.reset();
+        this.attachments.controls = [];
+    }
 
     public submit() {
         let post: Post;
-        console.log(this.form.value);
-        localStorage.removeItem("postForm");
+        console.log(this.form);
+        localStorage.removeItem("new-post");
     }
 
     public handleEnterButton(e: KeyboardEvent) {

@@ -60,5 +60,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         input(type="checkbox", [checked]="hasAuthorTag()", (change)="updateAuthorTag($event.target.checked)")
         .checkbox {{ "Author's" | translate }} 
 
+    button.btn-material(type="button", (click)="reset()", *ngIf="!form.pristine")
+      span {{"Reset" | translate }}
     button.btn-material.primary(type="submit", [disabled]="form.invalid")
       span {{"Publish" | translate }}

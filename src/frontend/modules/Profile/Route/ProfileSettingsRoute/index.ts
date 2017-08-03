@@ -48,14 +48,6 @@ export class ProfileSettingsRoute {
         ;
     }
 
-    public reset(): void {
-        this.form.reset(this.defaultValues);
-    }
-    
-    public changed() : boolean {
-        return  JSON.stringify(this.defaultValues) !== JSON.stringify(this.form.value);
-    }
-
     @HostListener('document:keydown.enter')
     public submit(): void {
         if (this.form.valid && !this.disabled) {
@@ -67,6 +59,7 @@ export class ProfileSettingsRoute {
                 .subscribe(profile => {
                     this.defaultValues = JSON.parse(JSON.stringify(this.form.value));
                     this.profile = profile;
+                    this.form.markAsPristine();
                     this.router.navigate(["profile", this.profileService.getOwnProfilePath()]);
                 })
             ;

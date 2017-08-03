@@ -42,9 +42,9 @@
         hr
   
     .controls
-        button.btn(*ngIf="changed()", type="button", (click)="reset()")
+        button.btn-material(*ngIf="!form.pristine", type="button", (click)="form.reset(defaultValues)")
           .fa.fa-ban
           span {{"Cancel" | translate }}
-        button.btn.primary(type="submit", [disabled]="form.invalid")
+        button.btn-material.primary(type="submit", [disabled]="form.invalid")
           .fa.fa-sign-in
           span {{"Save" | translate }}
