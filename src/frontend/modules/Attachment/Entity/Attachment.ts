@@ -4,11 +4,9 @@ export interface Attachment {
     value: any
 }
 
-
 export enum AttachmentType
 {
     text  = <any>"text",
     video  = <any>"video",
     image = <any>"image",
-    map   = <any>"map",
 }

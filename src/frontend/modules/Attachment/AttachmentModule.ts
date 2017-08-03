@@ -1,26 +1,22 @@
 import {NgModule} from "@angular/core";
-import {AttachmentComponent} from "./Component/Attachment/index";
-import {AttachmentRESTService} from "./Service/AttachmentRESTService";
 import {AttachmentInputTextComponent} from "./Component/AttachmentInputText/index";
 import {CommonModule} from "../Common/CommonModule";
 import {AttachmentInputVideoComponent} from "./Component/AttachmentInputVideo/index";
+import {AttachmentInputImageComponent} from "./Component/AttachmentInputImage/index";
 
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        AttachmentComponent,
         AttachmentInputTextComponent,
-        AttachmentInputVideoComponent
-    ],
-    providers: [
-        AttachmentRESTService
+        AttachmentInputVideoComponent,
+        AttachmentInputImageComponent
     ],
     exports: [
-        AttachmentComponent,
         AttachmentInputTextComponent,
-        AttachmentInputVideoComponent
+        AttachmentInputVideoComponent,
+        AttachmentInputImageComponent
     ]
 })
 export class AttachmentModule {

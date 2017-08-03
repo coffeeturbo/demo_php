@@ -5,18 +5,39 @@
   background: #fff;
   padding: 20px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.28);
-  max-width: 500px;
-  margin: -20px auto 0;
+  max-width: 650px;
+  margin: auto;
   position: relative;
   display: block;
+  animation: slideDown cubic-bezier(0.4, 0.0, 0.2, 1) 250ms both;
+
+  @include mq($until: tablet) {
+    max-width: none;
+    margin: -20px -20px 0;
+    box-shadow: none;
+  }  
+}
+
+
+
+h2 span {
+  color: material-color($secondary_material, "500");
+  animation: fade 300ms both;
 }
 
 .material-field {
-  
   align-items: flex-start;
   
   .fa {
     font-size: 1.2em;
+  }
+
+  .input-box {
+    margin-right: 10px;
+
+    #addPostTitle, #addPostTitle ~ label {
+      font-size: 1.3em;
+    }
   }
 
   .drag {
@@ -42,6 +63,7 @@
 
     .fa {
       transition: color 150ms;
+      width: 1rem;
     }
   
     &:hover {
@@ -71,15 +93,21 @@
   span {
     color: material-color($secondary_material, '500');
     vertical-align: middle;
+
+    @include mq($until: tablet) {
+      display: none;
+    }    
   }
 
-  &:hover {
-    .fa {
-      transform: rotate(180deg) scale(0);
-    }
-    
-    .fa.fa-hover {
-      transform: rotate(180deg) scale(1);
+  @include mq($from: tablet) {
+    &:hover {
+      .fa {
+        transform: rotate(180deg) scale(0);
+      }
+
+      .fa.fa-hover {
+        transform: rotate(180deg) scale(1);
+      }
     }
   }
 }

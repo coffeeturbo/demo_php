@@ -23,7 +23,7 @@ export class AutoSizeDirective implements OnInit {
     }
     
     ngAfterViewInit() {
-        setTimeout(()=>this.sync(), 0);
+        setTimeout(()=>this.sync(), 50);
     }
     
     @HostListener('input') 

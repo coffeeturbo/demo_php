@@ -1,4 +1,5 @@
-h2 {{ "Add post" | translate }}
+h2 {{ "Add post" | translate }} 
+  span(*ngIf="!saved") - {{"Saving" | translate}}...
 br
 
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)")
@@ -19,10 +20,11 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       .drag
         i.fa.fa-bars
       .input-box([formGroupName]="i")
-        attachment-input-text(*ngSwitchCase="'text'", id="addPostAttachment{{i}}", formControlName="value")
-        attachment-input-video(*ngSwitchCase="'video'", id="addPostAttachment{{i}}", formControlName="value")
+        attachment-input-text(*ngSwitchCase="'text'", [id]="'addPostAttachment'+i", formControlName="value")
+        attachment-input-video(*ngSwitchCase="'video'", [id]="'addPostAttachment'+i", formControlName="value")
+        attachment-input-image(*ngSwitchCase="'image'", [id]="'addPostAttachment'+i", formControlName="value")
       a.removeAttachment((click)="removeAttachment(i)")
-        i.fa.fa-trash-o()
+        i.fa.fa-trash-o
 
   .controls.center.attachment-button-container
     button.btn-material.secondary(type="button", (click)="addAttachment('text')")
@@ -33,14 +35,11 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
       i.fa.fa-video-camera.fa-fw.fa-2x
       span {{"Video" | translate }}
-    button.btn-material.secondary(type="button", (click)="addAttachment('picture')")
+
+    button.btn-material.secondary(type="button", (onChange)="addAttachment('image', $event)", cropper-browse)
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
       i.fa.fa-picture-o.fa-fw.fa-2x
       span {{"Image" | translate }}
-    button.btn-material.secondary(type="button", (click)="addAttachment('map')")
-      i.fa.fa-plus.fa-hover.fa-fw.fa-2x
-      i.fa.fa-map-o.fa-fw.fa-2x
-      span {{"Map" | translate }}
 
   .material-field
     .input-box
@@ -58,11 +57,8 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
   .controls
     label.material-field.clickable
       .input-box
-        input(type="checkbox", formControlName="author_is_me")
-        .checkbox Моё 
+        input(type="checkbox", [checked]="hasAuthorTag()", (change)="updateAuthorTag($event.target.checked)")
+        .checkbox {{ "Author's" | translate }} 
 
     button.btn-material.primary(type="submit", [disabled]="form.invalid")
-      span {{"Submit" | translate }}
-
-//br
-//.debug {{form.value | json}}
+      span {{"Publish" | translate }}

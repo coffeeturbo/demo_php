@@ -4,11 +4,10 @@ import {DragulaModule} from "ng2-dragula";
 import {TagInputModule} from "ngx-chips";
 
 import {PostRESTService} from "./Service/PostRESTService";
-import {PostComponent} from "./Component/Post/index";
 import {PostResolver} from "./Service/PostResolver";
 import {PostTitleResolver} from "./Service/PostTitleResolver";
 import {PostRoute} from "./Route/PostRoute/index";
-import {AddPostRoute} from "./Route/AddPostRoute/index";
+import {PostFormRoute} from "./Route/PostFormRoute/index";
 import {CommonModule} from "../Common/CommonModule";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
 
@@ -21,9 +20,8 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
         CommonModule
     ],
     declarations: [
-        PostComponent,
         PostRoute,
-        AddPostRoute
+        PostFormRoute
     ],
     providers:[
         PostRESTService,

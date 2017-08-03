@@ -35,3 +35,15 @@
 @keyframes autofill {
   to { background: none; }
 }
+
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-280px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
