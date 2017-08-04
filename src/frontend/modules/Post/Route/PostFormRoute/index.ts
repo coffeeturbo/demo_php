@@ -22,7 +22,7 @@ export class PostFormRoute implements OnInit {
     public form: FormGroup = this.initForm();
     public authorTag: Tag = {
         display: this.translationService.translate("Author's"),
-        value: "Author's"
+        value: this.translationService.translate("Author's")
     };
     
     constructor(private translationService: TranslationService) {}
@@ -55,7 +55,6 @@ export class PostFormRoute implements OnInit {
             tags: new FormControl(post ? post.tags : null, [Validators.required]),
             attachments: this.attachments
         });
-
     }
 
     public addAttachment(type: AttachmentType, value?: any) {
@@ -65,6 +64,7 @@ export class PostFormRoute implements OnInit {
         });
 
         this.attachments.push(attachment);
+        this.form.controls.attachments.markAsDirty();
     }
 
     public removeAttachment(i: number) {
@@ -72,7 +72,7 @@ export class PostFormRoute implements OnInit {
     }
 
     public updateAuthorTag(isAuthor: boolean) {
-        let tags: Tag[] = this.form.controls["tags"].value || [];
+        let tags: Tag[] = this.form.controls.tags.value || [];
 
         if (isAuthor) {
             tags.push(this.authorTag);
@@ -80,11 +80,12 @@ export class PostFormRoute implements OnInit {
             tags = tags.filter((item: Tag) => item.value != this.authorTag.value);
         }
 
-        this.form.controls["tags"].setValue(tags);
+        this.form.controls.tags.setValue(tags);
+        this.form.controls.tags.markAsDirty();
     }
 
     public hasAuthorTag(): boolean {
-        let tags: Tag[] = this.form.controls["tags"].value || [];
+        let tags: Tag[] = this.form.controls.tags.value || [];
 
         return tags.filter(
             (item: Tag) => item.value == this.authorTag.value

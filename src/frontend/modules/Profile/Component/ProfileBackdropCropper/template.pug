@@ -8,9 +8,8 @@
         (onChange)="form.controls['data'].setValue($event)",
       )
   figcaption
-    // @DOTO: translate!
-    h2 Перемещение изображения
-      small При увеличении разрешения экрана некоторые участки могут быть обрезаны
+    h2 {{ "Drag the image" | translate }}
+      small {{ "If you increase the screen resolution, some areas can be cropped" | translate }}
     .controls
       button.btn(*ngIf="!disabled", (click)="helper.destroy()") {{ "Cancel" | translate }}
       button.btn.primary((click)="submit(form.value.data)", [disabled]="disabled || form.invalid")
@@ -24,8 +23,8 @@ modal.errors([width]="'500px'", *ngIf="helper.ready() && form.invalid", (on-clos
     article
       i.fa.fa-exclamation-circle
       ul
-        li(*ngIf="form.controls['src'].hasError('tooLarge')") Изображение слишком большое! (Вставить данные о том какое должно быть)
-        li(*ngIf="form.controls['src'].hasError('tooSmall')") Изображение слишком маленькое! (Вставить данные о том какое должно быть)
+        li(*ngIf="form.controls['src'].hasError('tooLarge')") {{"Image must be no more than 7 000 pixels tall and wide." | translate }}
+        li(*ngIf="form.controls['src'].hasError('tooSmall')") {{"Image must be no less than 1500 pixels wide and 200 pixels tall." | translate }}
 
   modal-footer
     button.btn((click)="helper.destroy()") {{ "Cancel" | translate }}

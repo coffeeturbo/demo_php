@@ -76,6 +76,13 @@ h2 span {
   }
 }
 
+.attachments {
+  .accordion {
+    overflow: hidden;
+    animation: accordion cubic-bezier(0.4, 0.0, 0.2, 1) 700ms;
+  }
+}
+
 .attachment-button-container button {
   .fa {
     color: material-color($secondary_material, "600");
@@ -114,4 +121,10 @@ h2 span {
 
 .controls .material-field + * {
   margin-left: 1em;
+}
+
+
+@keyframes accordion {
+  from { max-height: 0;}
+  to { max-height: 1000px;}
 }
