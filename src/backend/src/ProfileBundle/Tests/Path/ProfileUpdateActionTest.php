@@ -13,7 +13,7 @@ class ProfileUpdateActionTest extends ProfileController
 
     static protected $newProfileData = [
         "name" => "Нимя",
-        "alias" => "nalias",
+        "alias" => "n_alias1",
         "gender" => "female",
         "birth_date" => "2002-02-20",
     ];
