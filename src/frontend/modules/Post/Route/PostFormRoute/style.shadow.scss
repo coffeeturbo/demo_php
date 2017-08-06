@@ -18,8 +18,6 @@
   }  
 }
 
-
-
 h2 span {
   color: material-color($secondary_material, "500");
   animation: fade 300ms both;
@@ -27,13 +25,21 @@ h2 span {
 
 .material-field {
   align-items: flex-start;
-  
+
   .fa {
     font-size: 1.2em;
   }
 
   .input-box {
     margin-right: 10px;
+    
+    *:focus ~ tooltip {
+      display: none;
+    }
+    
+    tooltip {
+      display: block;
+    }
 
     #addPostTitle, #addPostTitle ~ label {
       font-size: 1.3em;

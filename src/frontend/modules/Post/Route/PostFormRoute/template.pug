@@ -9,6 +9,12 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       input#addPostTitle(ng-detect-empty-input, type="text", formControlName="title")
       hr
       label.material-label(for="addPostTitle") {{'History title' | translate }}
+      ng-container(*ngIf="form.controls['title'].invalid && this.submitted")
+        tooltip
+          small(*ngIf="form.controls['title'].hasError('required')") {{ "Title is required" | translate }}.
+          small(*ngIf="form.controls['title'].hasError('minlength')") {{ "Minimum length is" | translate }}  
+            b {{form.controls['title'].getError("minlength").requiredLength}}
+            | .
 
   .attachments(
     formArrayName="attachments",
@@ -51,18 +57,24 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       theme='material',
       inputId="addPostTags"
       )
-      
+        tag-input-dropdown(
+          [autocompleteObservable]="requestAutocompleteItems",
+        )
+      ng-container(*ngIf="form.controls['tags'].invalid && this.submitted")
+        tooltip(*ngIf="form.controls['tags'].hasError('required')")
+          small {{ "Add miminum 2 tags" | translate }}.
+
   br
         
   .controls
     label.material-field.clickable
       .input-box
         input(type="checkbox", [checked]="hasAuthorTag()", (change)="updateAuthorTag($event.target.checked)")
-        .checkbox {{ "Author's" | translate }} 
+        .checkbox {{ "author's" | translate | capitalize}} 
 
     button.btn-material(type="button", (click)="reset()", *ngIf="!form.pristine")
       i.fa.fa-undo
       span {{"Reset" | translate }}
-    button.btn-material.primary(type="submit", [disabled]="form.invalid")
+    button.btn-material.primary(type="submit")
       i.fa.fa-bullhorn
       span {{"Publish" | translate }}
