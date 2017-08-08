@@ -9,37 +9,43 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       input#addPostTitle(ng-detect-empty-input, type="text", formControlName="title")
       hr
       label.material-label(for="addPostTitle") {{'History title' | translate }}
+      ng-container(*ngIf="form.controls['title'].invalid && this.submitted")
+        tooltip
+          small(*ngIf="form.controls['title'].hasError('required')") {{ "Title is required" | translate }}.
+          small(*ngIf="form.controls['title'].hasError('minlength')") {{ "Minimum length is" | translate }}  
+            b {{form.controls['title'].getError("minlength").requiredLength}}
+            | .
 
-  div(
+  .attachments(
     formArrayName="attachments",
     [dragula]='"attachments"',
     [dragulaModel]='attachments.controls', 
     [dragulaOptions]="dragulaOptions",
   )
-    .material-field(*ngFor="let attachment of attachments.controls; let i=index", [ngSwitch]="attachment.value.type")
-      .drag
-        i.fa.fa-bars
-      .input-box([formGroupName]="i")
-        attachment-input-text(*ngSwitchCase="'text'", [id]="'addPostAttachment'+i", formControlName="value")
-        attachment-input-video(*ngSwitchCase="'video'", [id]="'addPostAttachment'+i", formControlName="value")
-        attachment-input-image(*ngSwitchCase="'image'", [id]="'addPostAttachment'+i", formControlName="value")
-      a.removeAttachment((click)="removeAttachment(i)")
-        i.fa.fa-trash-o
+    .accordion(*ngFor="let attachment of attachments.controls; let i=index", [ngSwitch]="attachment.value.type")
+      .material-field
+        .drag
+          i.fa.fa-bars
+        .input-box([formGroupName]="i")
+          attachment-input-text(*ngSwitchCase="'text'", [id]="'addPostAttachment'+i", formControlName="value")
+          attachment-input-video(*ngSwitchCase="'video'", [id]="'addPostAttachment'+i", formControlName="value")
+          attachment-input-image(*ngSwitchCase="'image'", [id]="'addPostAttachment'+i", formControlName="value")
+        a.removeAttachment((click)="removeAttachment(i)")
+          i.fa.fa-trash-o
 
   .controls.center.attachment-button-container
     button.btn-material.secondary(type="button", (click)="addAttachment('text')")
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
       i.fa.fa-file-text-o.fa-fw.fa-2x
       span {{"Text" | translate }}
-    button.btn-material.secondary(type="button", (click)="addAttachment('video')")
-      i.fa.fa-plus.fa-hover.fa-fw.fa-2x
-      i.fa.fa-video-camera.fa-fw.fa-2x
-      span {{"Video" | translate }}
-
     button.btn-material.secondary(type="button", (onChange)="addAttachment('image', $event)", cropper-browse)
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
       i.fa.fa-picture-o.fa-fw.fa-2x
       span {{"Image" | translate }}
+    button.btn-material.secondary(type="button", (click)="addAttachment('video')")
+      i.fa.fa-plus.fa-hover.fa-fw.fa-2x
+      i.fa.fa-video-camera.fa-fw.fa-2x
+      span {{"Video" | translate }}
 
   .material-field
     .input-box
@@ -51,16 +57,24 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       theme='material',
       inputId="addPostTags"
       )
-      
+        tag-input-dropdown(
+          [autocompleteObservable]="requestAutocompleteItems",
+        )
+      ng-container(*ngIf="form.controls['tags'].invalid && this.submitted")
+        tooltip(*ngIf="form.controls['tags'].hasError('required')")
+          small {{ "Add miminum 2 tags" | translate }}.
+
   br
         
   .controls
     label.material-field.clickable
       .input-box
         input(type="checkbox", [checked]="hasAuthorTag()", (change)="updateAuthorTag($event.target.checked)")
-        .checkbox {{ "Author's" | translate }} 
+        .checkbox {{ "author's" | translate | capitalize}} 
 
     button.btn-material(type="button", (click)="reset()", *ngIf="!form.pristine")
+      i.fa.fa-undo
       span {{"Reset" | translate }}
-    button.btn-material.primary(type="submit", [disabled]="form.invalid")
+    button.btn-material.primary(type="submit")
+      i.fa.fa-bullhorn
       span {{"Publish" | translate }}

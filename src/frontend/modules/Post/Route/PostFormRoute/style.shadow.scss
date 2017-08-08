@@ -18,8 +18,6 @@
   }  
 }
 
-
-
 h2 span {
   color: material-color($secondary_material, "500");
   animation: fade 300ms both;
@@ -27,13 +25,21 @@ h2 span {
 
 .material-field {
   align-items: flex-start;
-  
+
   .fa {
     font-size: 1.2em;
   }
 
   .input-box {
     margin-right: 10px;
+    
+    *:focus ~ tooltip {
+      display: none;
+    }
+    
+    tooltip {
+      display: block;
+    }
 
     #addPostTitle, #addPostTitle ~ label {
       font-size: 1.3em;
@@ -76,6 +82,13 @@ h2 span {
   }
 }
 
+.attachments {
+  .accordion {
+    overflow: hidden;
+    animation: accordion cubic-bezier(0.4, 0.0, 0.2, 1) 700ms;
+  }
+}
+
 .attachment-button-container button {
   .fa {
     color: material-color($secondary_material, "600");
@@ -114,4 +127,10 @@ h2 span {
 
 .controls .material-field + * {
   margin-left: 1em;
+}
+
+
+@keyframes accordion {
+  from { max-height: 0;}
+  to { max-height: 1000px;}
 }
