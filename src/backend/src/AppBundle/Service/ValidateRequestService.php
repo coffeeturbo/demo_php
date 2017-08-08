@@ -4,31 +4,35 @@ namespace AppBundle\Service;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ValidateRequestService
 {
     private $formFactory;
 
+    /** @var  FormInterface */
+    private $form;
+
     function __construct(FormFactory $formFactory)
     {
         $this->formFactory = $formFactory;
     }
 
-    public function validate(Request $request, string $type, $data = null)
+    public function validate(Request $request, string $type, $data = null): bool
     {
-        $form = $this->formFactory->createNamed(null, $type, $data);
-        $form->handleRequest($request);
+        $this->form = $this->formFactory->createNamed(null, $type, $data);
+        $this->form->handleRequest($request);
 
-        if(!$form->isSubmitted()) {
+        if(!$this->form->isSubmitted()) {
             $body = json_decode($request->getContent(), true);
             $clearMissing = $request->getMethod() != 'PATCH';
-            $form->submit($body, $clearMissing);
+            $this->form->submit($body, $clearMissing);
         }
 
-        if (!$form->isValid()) {
+        if (!$this->form->isValid()) {
             $errors = [];
-            foreach ($form->all() as $input) {
+            foreach ($this->form->all() as $input) {
                 foreach ($input->getErrors() as $error) {
                     $errors[$input->getName()] = $error->getMessage();
                 }
@@ -37,6 +41,12 @@ class ValidateRequestService
             throw new BadRestRequestHttpException($errors);
         }
 
-        return $form->getData();
+        return true;
+    }
+
+    public function getData(Request $request, string $type, $data = null)
+    {
+        $this->validate($request, $type, $data);
+        return $this->form->getData();
     }
 }

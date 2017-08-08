@@ -43,7 +43,7 @@ class CreateController extends Controller
             $profile = new Profile();
             $account = $this->get('auth.service')->getAccount();
             $profile->setAccount($account);
-            $this->get('app.validate_request')->validate($request, ProfileType::class, $profile);
+            $this->get('app.validate_request')->getData($request, ProfileType::class, $profile);
             $this->get('profile.service')->create($profile);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());

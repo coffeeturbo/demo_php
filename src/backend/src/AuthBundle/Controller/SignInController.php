@@ -43,7 +43,7 @@ class SignInController extends Controller
     public function signInAction(Request $request)
     {
         try {
-            $body = $this->get('app.validate_request')->validate($request, SignInType::class);
+            $body = $this->get('app.validate_request')->getData($request, SignInType::class);
             $account = $this->get('auth.service')->validateCredentials($body["username"], $body["password"]);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());

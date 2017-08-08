@@ -30,7 +30,7 @@ class AvatarController extends Controller
     public function uploadAction(int $id, Request $request)
     {
         try {
-            $body = $this->get('app.validate_request')->validate($request, AvatarUploadType::class);
+            $body = $this->get('app.validate_request')->getData($request, AvatarUploadType::class);
 
             /** @var UploadedFile $image */
             $image = $body['image'];

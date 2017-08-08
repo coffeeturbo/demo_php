@@ -40,7 +40,7 @@ class BackdropController extends Controller
 
             $profile = $profileService->getById($id);
 
-            $body = $this->get('app.validate_request')->validate($request, BackdropUploadType::class);
+            $body = $this->get('app.validate_request')->getData($request, BackdropUploadType::class);
 
             $params = new UploadedImageParameter($body['image']);
             $params->setStartY($body['y']);

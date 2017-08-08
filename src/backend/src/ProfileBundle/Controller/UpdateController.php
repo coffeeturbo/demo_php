@@ -39,7 +39,7 @@ class UpdateController extends Controller
         try {
             $profileService = $this->get('profile.service');
             $profile = $profileService->getById($id);
-            $this->get('app.validate_request')->validate($request, ProfileType::class, $profile);
+            $this->get('app.validate_request')->getData($request, ProfileType::class, $profile);
             $profileService->update($profile);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());

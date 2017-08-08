@@ -40,7 +40,7 @@ class SignUpController extends Controller
     public function signUpAction(Request $request)
     {
         try {
-            $body = $this->get('app.validate_request')->validate($request, SignUpType::class);
+            $body = $this->get('app.validate_request')->getData($request, SignUpType::class);
             $account = $this->get('account.service')->createFromArray($body);
         } catch (BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
