@@ -28,9 +28,9 @@ RUN apt-get update && \
 
 # Setup user & symfony console
 RUN \
-    mkdir ${HOME_PATH} /opt/vendor && \
+    mkdir ${HOME_PATH} && \
     useradd ${APP_USER} -g users -s /bin/bash && \
-    chown -R ${APP_USER}:www-data ${APP_PATH} ${HOME_PATH} /opt/vendor && \
+    chown -R ${APP_USER}:www-data ${APP_PATH} ${HOME_PATH} && \
     echo 'alias console="php ${BACKEND_PATH}/bin/console"' >> ${HOME_PATH}/.bashrc && \
     echo 'alias phpunit="cd ${BACKEND_PATH} && vendor/bin/phpunit"' >> ${HOME_PATH}/.bashrc && \
     echo 'alias migrate="console doctrine:schema:update --force"' >> ${HOME_PATH}/.bashrc

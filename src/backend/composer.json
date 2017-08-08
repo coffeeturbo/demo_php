@@ -8,7 +8,7 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
-        "files": [ "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
+        "files": [ "../../vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php" ]
     },
     "require": {
         "php": ">=7.1.0",
@@ -56,7 +56,6 @@
         "platform": {
             "php": "7.1.4"
         },
-        "vendor-dir": "/opt/vendor",
         "sort-packages": true
     },
     "extra": {
