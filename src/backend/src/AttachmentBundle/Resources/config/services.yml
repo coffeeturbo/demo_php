@@ -1,0 +1,3 @@
+services:
+  attachment.service:
+    class: AttachmentBundle\Service\AttachmentService
