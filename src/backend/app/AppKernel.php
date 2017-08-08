@@ -30,7 +30,8 @@ class AppKernel extends Kernel
             new OAuthBundle\OAuthBundle(),
             new ProfileBundle\ProfileBundle(),
             new AvatarBundle\AvatarBundle(),
-            new ImageBundle\ImageBundle()
+            new ImageBundle\ImageBundle(),
+            new AttachmentBundle\AttachmentBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

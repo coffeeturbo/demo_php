@@ -18,4 +18,12 @@ protected_profile:
   resource: '@ProfileBundle/Resources/config/routing_protected.yml'
   prefix: /protected/profile
 
+attachment:
+  resource: '@AttachmentBundle/Resources/config/routing.yml'
+  prefix: /attachment
+
+protected_attachment:
+  resource: '@AttachmentBundle/Resources/config/routing_protected.yml'
+  prefix: /protected/attachment
+
   
