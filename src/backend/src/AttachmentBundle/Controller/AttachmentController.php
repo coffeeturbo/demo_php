@@ -23,13 +23,9 @@ class AttachmentController extends Controller
      */
     public function linkAction(Request $request)
     {
-        $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
+        $data = $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
 
-
-
-//        $url = $request->get('url');
-
-//        dump($body);
+        dump($data);
 
 
 
