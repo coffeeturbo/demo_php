@@ -28,8 +28,19 @@ class AttachmentController extends Controller
         try{
             $data = $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
 
-            dump($data);
-        } catch(BadRestRequestHttpException $e){
+
+            echo \idn_to_ascii('täst.de');
+
+            //            $resource = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);
+
+//            dump($resource);
+
+
+        }catch(\HttpUrlException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getCode());
+        }
+
+        catch(BadRestRequestHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }
 
