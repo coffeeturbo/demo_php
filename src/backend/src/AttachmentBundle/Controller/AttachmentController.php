@@ -2,6 +2,8 @@
 namespace AttachmentBundle\Controller;
 
 
+use AppBundle\Exception\BadRestRequestHttpException;
+use AppBundle\Http\ErrorJsonResponse;
 use AttachmentBundle\Form\AttachmentLinkType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,15 +25,24 @@ class AttachmentController extends Controller
      */
     public function linkAction(Request $request)
     {
-        $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
+        try{
+            $data = $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
+
+
+            $result = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);
 
 
 
-//        $url = $request->get('url');
-
-//        dump($body);
+            $this->get('attachment.service.attachment_service')->linkAttachment($data['url'], $result);
 
 
+        }catch(\HttpUrlException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getCode());
+        }
+
+        catch(BadRestRequestHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        }
 
         return new JsonResponse(['success' => true ]);
     }

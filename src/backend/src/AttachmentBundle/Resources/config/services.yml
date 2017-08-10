@@ -1,0 +1,6 @@
+services:
+  attachment.service.attachment_service:
+    class: AttachmentBundle\Service\AttachmentService
+
+  attachment.service.fetch_resource_service:
+    class: AttachmentBundle\Service\FetchResourceService
