@@ -18,13 +18,15 @@ class Profile implements AvatarEntity, BackdropEntity
     use AvatarEntityTrait, BackdropEntityTrait;
 
     private $id;
-    private $created;
+
     private $name;
     private $birthDate;
     private $verified;
     private $gender;
     private $alias;
     private $account;
+
+    private $created;
 
     public function __construct()
     {

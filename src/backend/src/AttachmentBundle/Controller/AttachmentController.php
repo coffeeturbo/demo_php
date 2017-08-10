@@ -29,11 +29,11 @@ class AttachmentController extends Controller
             $data = $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
 
 
-            echo \idn_to_ascii('täst.de');
+            $result = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);
 
-            //            $resource = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);
 
-//            dump($resource);
+
+            $this->get('attachment.service.attachment_service')->linkAttachment($data['url'], $result);
 
 
         }catch(\HttpUrlException $e){

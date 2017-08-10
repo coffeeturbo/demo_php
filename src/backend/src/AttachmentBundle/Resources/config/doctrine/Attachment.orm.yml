@@ -1,0 +1,23 @@
+AttachmentBundle\Entity\Attachment:
+  type: entity
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    type:
+      type: string
+      nullable: false
+    content:
+      type: json_array
+      nullable: true
+    metadata:
+      type: json_array
+      nullable: false
+    created:
+      type: datetime
+      nullable: false
+    updated:
+      type: datetime
+      nullable: false

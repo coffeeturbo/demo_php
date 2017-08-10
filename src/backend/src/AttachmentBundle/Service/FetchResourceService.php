@@ -71,7 +71,7 @@ class FetchResourceService
         $urlFragments = parse_url($url);
 
         $protocol = $urlFragments['scheme'] ?? 'http';
-        $host = idn_to_ascii($urlFragments['host']);
+        $host = \idn_to_ascii($urlFragments['host']);
         $path = $urlFragments['path'] ?? null;
         $query = $urlFragments['query'] ?? null;
         $fragment = $urlFragments['fragment'] ?? null;
