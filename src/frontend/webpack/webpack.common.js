@@ -1,8 +1,9 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var AppCachePlugin = require('appcache-webpack-plugin');
-var helpers = require('./helpers');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const AppCachePlugin = require('appcache-webpack-plugin');
+const helpers = require('./helpers');
+const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 
 module.exports = {
   entry: {
@@ -23,7 +24,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
-        loaders: [
+        use: [
           {
             loader: 'awesome-typescript-loader',
             options: { configFileName: helpers.root('tsconfig.json') }
@@ -65,7 +66,7 @@ module.exports = {
           test: /\.scss$/,
           loader: ExtractTextPlugin.extract({
               fallback: 'style-loader',
-              loader: ['css-loader', 'sass-loader']
+              use: ['css-loader', 'sass-loader']
           }),
           include: helpers.root('assets')
       },
@@ -81,6 +82,8 @@ module.exports = {
   },
   
   plugins: [
+    new CheckerPlugin(),
+
     // Workaround for angular/angular#11580
     new webpack.ContextReplacementPlugin(
       /angular([\\\/])core([\\\/])@angular/,
