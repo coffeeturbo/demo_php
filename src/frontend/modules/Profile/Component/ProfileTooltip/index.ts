@@ -34,7 +34,7 @@ export class ProfileTooltipComponent implements OnInit {
     }
 
     @HostListener('document:click', ['$event.target'])
-    public onBlur(target?: HTMLElement) {
+    public onBlur(target?: HTMLElement | null) {
         if (!this.elRef.nativeElement.parentElement.contains(target)) {
             this.onClose.emit()
         }

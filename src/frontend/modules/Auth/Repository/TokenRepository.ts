@@ -3,6 +3,8 @@ import {JwtHelper} from "angular2-jwt";
 import {Token} from "../Entity/Token";
 import {Config} from "../../../app/config";
 
+const localStorage = typeof window !='undefined' ? window.localStorage : { getItem(key: any): any { return null }, removeItem(key: any) {}, setItem(key: any, val: any) {} };
+
 export class TokenRepository
 {
     private static tokenKey: string = Config.auth.token_key;

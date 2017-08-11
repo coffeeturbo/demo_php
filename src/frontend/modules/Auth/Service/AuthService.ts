@@ -59,7 +59,7 @@ export class AuthService implements AuthServiceInterface
 
     public isSignedIn(): boolean
     {
-        return tokenNotExpired();
+        return typeof window !='undefined' && tokenNotExpired();
     }
 
     public getRoles(): Roles

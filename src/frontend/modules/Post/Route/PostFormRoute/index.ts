@@ -7,6 +7,8 @@ import {Tag} from "../../Entity/Tag";
 import {Post} from "../../Entity/Post";
 import {Observable} from "rxjs/Observable";
 
+const localStorage = typeof window !='undefined' ? window.localStorage : { getItem(key: any): any { return null }, removeItem(key: any) {}, setItem(key: any, val: any) {} };
+
 @Component({
     templateUrl: './template.pug',
     styleUrls: ['./style.shadow.scss', './tags.scss']

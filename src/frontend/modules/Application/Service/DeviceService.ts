@@ -12,6 +12,6 @@ const breakpoints: Breakpoints = {
 
 export class Device {
     public static isMobile(): boolean {
-        return window.innerWidth < breakpoints.tablet;
+        return typeof window != 'undefined' && window.innerWidth < breakpoints.tablet;
     }
 }
