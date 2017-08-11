@@ -16,7 +16,7 @@ import {FeedNewRoute} from "../modules/Feed/Route/FeedNewRoute/index";
 import {FeedBestRoute} from "../modules/Feed/Route/FeedBestRoute/index";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute/index";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute/index";
-import {PostFormRoute} from "../modules/Post/Route/PostFormRoute/index";
+// import {PostFormRoute} from "../modules/Post/Route/PostFormRoute/index";
 
 export const appRoutes: JetRoutes = [
     {
@@ -38,12 +38,12 @@ export const appRoutes: JetRoutes = [
         path: 'post',
         children: [
             { path: '', component: PageNotFoundRoute },
-            {
-                path: 'add',
-                component: PostFormRoute,
-                canActivate: [CanActivateService],
-                data: {title: 'Add post'}
-            },
+            // {
+            //     path: 'add',
+            //     component: PostFormRoute,
+            //     canActivate: [CanActivateService],
+            //     data: {title: 'Add post'}
+            // },
             {
                 path: ':path',
                 component: PostRoute,
