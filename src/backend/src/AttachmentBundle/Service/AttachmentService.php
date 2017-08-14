@@ -8,28 +8,29 @@ use AttachmentBundle\Service\FetchResource\Result;
 
 class AttachmentService
 {
-    public function linkAttachment($url, Result $result)
+    public function linkAttachment($url, Result $result): Attachment
     {
         $linkMetadataFactory = new LinkMetadataFactory(new OpenGraphParser());
 
         $linkMetadata = $linkMetadataFactory->createLinkMetadata($url, $result->getContentType(), $result->getContent());
 
-
-
         $metadata = [
             'url' => $linkMetadata->getURL(),
             'title' => $linkMetadata->getTitle(),
             'description' => $linkMetadata->getDescription(),
-            'metadata' => $linkMetadata->jsonSerialize()
+            'metadata' => $linkMetadata->jsonSerialize(),
+            'id' => $linkMetadata->getId(),
+            'duration' => 1,
+            'preview' => 'fssf'
         ];
 
 
         $attachment = new Attachment();
         $attachment->setMetadata($metadata)
             ->setType($result->getContentType())
-            ->setContent($result->getContent());
+        ;
 
-        dump($attachment);
 
+        return $attachment;
     }
 }

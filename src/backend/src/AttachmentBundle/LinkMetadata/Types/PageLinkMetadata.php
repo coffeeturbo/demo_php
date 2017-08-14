@@ -7,7 +7,6 @@ use AttachmentBundle\LinkMetadata\LinkMetadata;
 final class PageLinkMetadata implements LinkMetadata
 {
     const RESOURCE_TYPE = 'page';
-    const VERSION = 1;
 
     /** @var string */
     private $url;
@@ -53,11 +52,6 @@ final class PageLinkMetadata implements LinkMetadata
         }
     }
 
-    public function getVersion(): int
-    {
-        return self::VERSION;
-    }
-
     public function getURL(): string
     {
         return $this->url;
@@ -66,14 +60,6 @@ final class PageLinkMetadata implements LinkMetadata
     public function getResourceType(): string
     {
         return self::RESOURCE_TYPE;
-    }
-
-    // todo убрать это гавно
-    public function toJSON(array $options = []): array
-    {
-        return [
-            'og' => $this->openGraph,
-        ];
     }
 
     function jsonSerialize()

@@ -6,7 +6,6 @@ use AttachmentBundle\LinkMetadata\LinkMetadata;
 
 final class YoutubeLinkMetadata implements LinkMetadata
 {
-    const VERSION = 1;
     const RESOURCE_TYPE = 'youtube';
 
     /** @var string */
@@ -57,11 +56,6 @@ final class YoutubeLinkMetadata implements LinkMetadata
         }
     }
 
-    public function getVersion(): int
-    {
-        return self::VERSION;
-    }
-
     public function getURL(): string
     {
         return $this->url;
@@ -72,21 +66,17 @@ final class YoutubeLinkMetadata implements LinkMetadata
         return self::RESOURCE_TYPE;
     }
 
-
-    // todo убрать это гавно
-    public function toJSON(array $options = []): array
+    public function getId()
     {
-        return [
-            'og' => $this->openGraph,
-            'youtubeId' => $this->youTubeId,
-        ];
+        return $this->youTubeId;
     }
 
     function jsonSerialize()
     {
         return [
-            'og' => $this->openGraph,
             'youtubeId' => $this->youTubeId,
+            'url',
+
         ];
     }
 }

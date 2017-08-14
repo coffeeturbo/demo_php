@@ -31,8 +31,6 @@ class AttachmentController extends Controller
 
             $result = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);
 
-
-
             $this->get('attachment.service.attachment_service')->linkAttachment($data['url'], $result);
 
 

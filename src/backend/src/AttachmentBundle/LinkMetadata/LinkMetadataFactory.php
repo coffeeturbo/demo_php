@@ -33,17 +33,7 @@ final class LinkMetadataFactory
                     $this->getYouTubeId($origURL)
                 );
 
-            case PageLinkMetadata::RESOURCE_TYPE:
-                return new PageLinkMetadata($origURL, $this->getOG($origURL, $content));
-
-            case ImageLinkMetadata::RESOURCE_TYPE:
-                return new ImageLinkMetadata($origURL);
-
-            case WebmLinkMetadata::RESOURCE_TYPE:
-                return new WebmLinkMetadata($origURL, $contentType);
-
-            case UnknownLinkMetadata::RESOURCE_TYPE:
-                return new UnknownLinkMetadata($origURL);
+            // vimeo или другой видео сервис
         }
     }
 
@@ -60,6 +50,7 @@ final class LinkMetadataFactory
         }else{
             return UnknownLinkMetadata::RESOURCE_TYPE;
         }
+
     }
 
     private function testIsYouTube(string $origURL)
