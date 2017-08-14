@@ -17,7 +17,7 @@ services:
     volumes:
       - ./src:/opt/jet
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
-    depends_on: [php]
+    depends_on: [php, node]
 
   php:
     build: ./docker/php
@@ -25,3 +25,11 @@ services:
     volumes: 
       - ./src:/opt/jet
     depends_on: [mysql]
+
+  node:
+    build: ./docker/node
+    stdin_open: true
+    ports: ["8000:8000"]
+    volumes:
+      - ./src:/opt/jet
+    

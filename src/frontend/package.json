@@ -12,7 +12,7 @@
     "prod": "webpack --config webpack/webpack.prod.js --progress",
       "preprod": "npm run clean",
 
-    "render": "webpack --config webpack/webpack.server.js --progress --hide-modules --watch",
+    "render": "webpack --config webpack/webpack.server.js --progress --hide-modules && webpack --config webpack/webpack.prod.js --progress",
       "prerender": "npm run clean",
     
     "server": "nodemon ../web/dist/server.js"

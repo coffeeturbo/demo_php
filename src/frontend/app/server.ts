@@ -18,7 +18,7 @@ app.engine('html', ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', 'modules');
 
-app.use('/dist', express.static('../web/dist', {index: false}));
+// app.use('/dist', express.static('../web/dist', {index: false}));
 
 [
     "/", 
