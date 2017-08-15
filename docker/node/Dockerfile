@@ -5,4 +5,4 @@ ENV FRONTEND_PATH ${APP_PATH}/frontend
 
 WORKDIR ${FRONTEND_PATH}
 
-ENTRYPOINT cd ${FRONTEND_PATH} && npm run server
+CMD npm run server

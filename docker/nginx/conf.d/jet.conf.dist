@@ -10,7 +10,14 @@ server {
     # Frontend (Angular2)
     location / {
         expires max;
-        try_files $uri /dist/index.html =404;
+        try_files $uri @universal_server;
+    }
+
+    location @universal_server {
+        proxy_pass http://node:8000;
+        proxy_intercept_errors on;
+        error_page 404 500 502 503 504 520 =200 /dist/index.html;
+        internal;
     }
 
     # REST BACKEND (Symfony3)
