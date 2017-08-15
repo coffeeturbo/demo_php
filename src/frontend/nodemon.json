@@ -1,0 +1,6 @@
+{
+  "watch": [
+    "../web/dist/*"
+  ],
+  "ext": "js html"
+}

@@ -5,20 +5,19 @@ import * as express from 'express';
 import { Request, Response } from 'express';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { enableProdMode } from '@angular/core';
-import {ApplicationServerModule} from "../modules/Application/ApplicationServerModule";
+import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
+
 enableProdMode();
 const app = express();
 const port = 8000;
 const baseUrl = `http://localhost:${port}`;
 
 app.engine('html', ngExpressEngine({
-    bootstrap: ApplicationServerModule
+    bootstrap: ApplicationModuleServer
 }));
 
 app.set('view engine', 'html');
 app.set('views', 'modules');
-
-// app.use('/dist', express.static('../web/dist', {index: false}));
 
 [
     "/", 

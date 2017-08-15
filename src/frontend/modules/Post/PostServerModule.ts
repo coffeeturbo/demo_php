@@ -4,7 +4,6 @@ import {PostRESTService} from "./Service/PostRESTService";
 import {PostResolver} from "./Service/PostResolver";
 import {PostTitleResolver} from "./Service/PostTitleResolver";
 import {PostRoute} from "./Route/PostRoute/index";
-import {PostFormRoute} from "./Route/PostFormRoute/index";
 import {CommonModule} from "../Common/CommonModule";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
 
@@ -14,8 +13,7 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
         CommonModule
     ],
     declarations: [
-        PostRoute,
-        // PostFormRoute
+        PostRoute
     ],
     providers:[
         PostRESTService,
@@ -23,4 +21,5 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
         PostTitleResolver
     ]
 })
-export class PostModule {}
+export class PostServerModule {
+}

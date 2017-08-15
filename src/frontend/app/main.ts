@@ -26,11 +26,11 @@ if (process.env.ENV === 'production') {
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode } from '@angular/core';
 
-import {ApplicationModule} from "../modules/Application/ApplicationModule";
+import {ApplicationModuleBrowser} from "../modules/Application/ApplicationModuleBrowser";
 import 'hammerjs';
 
 if (process.env.ENV === 'production') {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(ApplicationModule);
+platformBrowserDynamic().bootstrapModule(ApplicationModuleBrowser);

@@ -14,4 +14,4 @@ import {ApplicationComponent} from "./Component/Application/index";
         ApplicationModule
     ]
 })
-export class ApplicationServerModule {}
+export class ApplicationModuleServer {}
