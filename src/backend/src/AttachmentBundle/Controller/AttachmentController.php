@@ -31,17 +31,18 @@ class AttachmentController extends Controller
 
             $result = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);
 
-            $this->get('attachment.service.attachment_service')->linkAttachment($data['url'], $result);
+            $attachment = $this->get('attachment.service.attachment_service')->linkAttachment($data['url'], $result);
 
 
         }catch(\HttpUrlException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getCode());
         }
-
         catch(BadRestRequestHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }
 
-        return new JsonResponse(['success' => true ]);
+        return new JsonResponse([
+            'entity' => $attachment->jsonSerialize(),
+            'success' => true ]);
     }
 }

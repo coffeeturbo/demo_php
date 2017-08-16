@@ -21,12 +21,12 @@ final class OpenGraphParser
             'title' => '',
             'description' => '',
             'url' => $origURL,
+            'image' => ''
         ];
 
         $titleElements = $document->getElementsByTagName('title');
         $descriptionElements = $this->getMetaTags('description', 'name');
 
-        dump($descriptionElements);
 
         if($titleElements->length) {
             $result['title'] = $titleElements->item(0)->textContent;
@@ -236,5 +236,20 @@ final class OpenGraphParser
         }
 
         return $result;
+    }
+
+
+    public function getOG(string $origURL, string $content): array
+    {
+        libxml_use_internal_errors(true);
+        $document = new \DOMDocument($content);
+        $document->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
+        libxml_clear_errors();
+
+        if($document === false) {
+            return [];
+        }else{
+            return $this->parse($origURL, $document);
+        }
     }
 }

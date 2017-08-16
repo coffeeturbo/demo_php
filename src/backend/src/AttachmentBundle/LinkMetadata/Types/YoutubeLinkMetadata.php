@@ -17,11 +17,21 @@ final class YoutubeLinkMetadata implements LinkMetadata
     /** @var string */
     private $youTubeId;
 
-    public function __construct(string $url, array $openGraph, string $youTubeId)
+    private $content;
+
+    public function __construct(string $url, array $openGraph, string $content)
     {
-        $this->youTubeId = $youTubeId;
+        $this->youTubeId = $this->getYouTubeId($url);
         $this->url = $url;
         $this->openGraph = $openGraph;
+        $this->content = $content;
+    }
+
+    private function getYouTubeId(string $origURL): string
+    {
+        preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $origURL, $matches);
+
+        return $matches[1] ?? '';
     }
 
     public function getTitle(): string
@@ -71,12 +81,45 @@ final class YoutubeLinkMetadata implements LinkMetadata
         return $this->youTubeId;
     }
 
+
+    public function getDuration()
+    {
+        libxml_use_internal_errors(true);
+        $document = new \DOMDocument($this->content);
+        $document->loadHTML(mb_convert_encoding($this->content, 'HTML-ENTITIES', 'UTF-8'));
+        libxml_clear_errors();
+
+        $metas = $document->getElementsByTagName('meta');
+
+        $str_value='';
+        for($i = 0; $i < $metas->length; $i++){
+            $node = $metas->item($i);
+
+            $attr = $node->attributes->getNamedItem('itemprop');
+
+            if($attr && $attr->nodeValue == 'duration'){
+                $str_value = $node->attributes->getNamedItem('content')->nodeValue;
+            }
+        }
+
+
+        $dateInterval = new \DateInterval($str_value);
+
+        // переводим в секунды
+        $reference = new \DateTimeImmutable;
+        $endTime = $reference->add($dateInterval);
+
+        return $endTime->getTimestamp() - $reference->getTimestamp();
+    }
+
     function jsonSerialize()
     {
         return [
             'youtubeId' => $this->youTubeId,
-            'url',
-
+            'url' => $this->url,
+            'duration' => $this->getDuration(),
+            'title' => $this->getTitle(),
+            'description' => $this->getDescription()
         ];
     }
 }

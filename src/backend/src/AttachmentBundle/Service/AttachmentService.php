@@ -14,20 +14,11 @@ class AttachmentService
 
         $linkMetadata = $linkMetadataFactory->createLinkMetadata($url, $result->getContentType(), $result->getContent());
 
-        $metadata = [
-            'url' => $linkMetadata->getURL(),
-            'title' => $linkMetadata->getTitle(),
-            'description' => $linkMetadata->getDescription(),
-            'metadata' => $linkMetadata->jsonSerialize(),
-            'id' => $linkMetadata->getId(),
-            'duration' => 1,
-            'preview' => 'fssf'
-        ];
-
+        $metadata = $linkMetadata->jsonSerialize();
 
         $attachment = new Attachment();
-        $attachment->setMetadata($metadata)
-            ->setType($result->getContentType())
+        $attachment->setContent($metadata)
+            ->setType($linkMetadata->getResourceType())
         ;
 
 

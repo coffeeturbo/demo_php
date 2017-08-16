@@ -29,8 +29,8 @@ final class LinkMetadataFactory
             case YoutubeLinkMetadata::RESOURCE_TYPE:
                 return new YoutubeLinkMetadata(
                     $origURL,
-                    $this->getOG($origURL, $content),
-                    $this->getYouTubeId($origURL)
+                    $this->openGraphParser->getOG($origURL, $content),
+                    $content
                 );
 
             // vimeo или другой видео сервис
@@ -39,7 +39,7 @@ final class LinkMetadataFactory
 
     private function getResourceType(string $origURL, string $contentType): string
     {
-        if($this->testIsYouTube($origURL) && strlen($this->getYouTubeId($origURL))) {
+        if($this->testIsYouTube($origURL)) {
             return YoutubeLinkMetadata::RESOURCE_TYPE;
         }else if($this->test(['text/html', 'application/xml', 'application/xhtml'], $contentType)) {
             return PageLinkMetadata::RESOURCE_TYPE;
@@ -73,24 +73,7 @@ final class LinkMetadataFactory
         return false;
     }
 
-    private function getOG(string $origURL, string $content): array
-    {
-        libxml_use_internal_errors(true);
-        $document = new \DOMDocument($content);
-        $document->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
-        libxml_clear_errors();
 
-        if($document === false) {
-            return [];
-        }else{
-            return $this->openGraphParser->parse($origURL, $document);
-        }
-    }
 
-    private function getYouTubeId(string $origURL): string
-    {
-        preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $origURL, $matches);
 
-        return $matches[1] ?? '';
-    }
 }
