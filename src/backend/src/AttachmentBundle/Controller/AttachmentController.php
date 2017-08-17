@@ -5,6 +5,7 @@ namespace AttachmentBundle\Controller;
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use AttachmentBundle\Form\AttachmentLinkType;
+use AttachmentBundle\Response\SuccessAttachmentResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class AttachmentController extends Controller
      *      section="Attachment",
      *      description= "Возвращает аттачмент ссылки",
      *      input = {"class" = "AttachmentBundle\Form\AttachmentLinkType", "name"  = ""},
-     *
+     *      output = {"class" = "AttachmentBundle\Response\SuccessAttachmentResponse"},
      * )
      *
      * @param Request $request
@@ -27,7 +28,6 @@ class AttachmentController extends Controller
     {
         try{
             $data = $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
-
 
             $result = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);
 
@@ -41,8 +41,6 @@ class AttachmentController extends Controller
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }
 
-        return new JsonResponse([
-            'entity' => $attachment->jsonSerialize(),
-            'success' => true ]);
+        return new SuccessAttachmentResponse($attachment);
     }
 }

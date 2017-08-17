@@ -7,7 +7,7 @@ use AppBundle\Entity\ModifyDateEntityTrait;
 /**
  * Attachment
  */
-class Attachment implements ModifyDateEntityInterface, \JsonSerializable
+class Attachment implements ModifyDateEntityInterface
 {
 
     use ModifyDateEntityTrait;
@@ -45,12 +45,5 @@ class Attachment implements ModifyDateEntityInterface, \JsonSerializable
         return $this->content;
     }
 
-    function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'type' => $this->type,
-            'content' => $this->content
-        ];
-    }
+
 }
