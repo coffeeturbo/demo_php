@@ -12,9 +12,6 @@ AttachmentBundle\Entity\Attachment:
     content:
       type: json_array
       nullable: true
-    metadata:
-      type: json_array
-      nullable: false
     created:
       type: datetime
       nullable: false
