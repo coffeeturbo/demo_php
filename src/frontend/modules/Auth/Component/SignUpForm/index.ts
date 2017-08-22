@@ -15,7 +15,7 @@ export class SignUpFormComponent {
     public config = Config;
 
     @Input("show-controls") showControls: boolean = true;
-    protected isPasswordHidden: boolean = true;
+    public isPasswordHidden: boolean = true;
     public disabled: boolean = false;
     public fail: boolean = false;
     public form: FormGroup = new FormGroup({

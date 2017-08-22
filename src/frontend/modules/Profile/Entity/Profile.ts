@@ -18,7 +18,7 @@ type ProfileAvatar = {
     small: Image,
     cropped: Image,
     origin: Image
-} | {};
+};
 
 interface Image {
     public_path: string;

@@ -15,7 +15,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 export class AttachmentInputImageComponent implements ControlValueAccessor  {
     propagateChange:any = () => {};
     @Input() id: string;
-    @Input('value') _value = "";
+    @Input('value') _value: any = "";
 
     get value() {
         return this._value;
