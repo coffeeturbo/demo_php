@@ -9,6 +9,10 @@ use AppBundle\Entity\ModifyDateEntityTrait;
  */
 class Attachment implements ModifyDateEntityInterface
 {
+    const VIDEO_TYPE = 1;
+    const TEXT_TYPE = 2;
+    const IMAGE_TYPE = 3;
+
 
     use ModifyDateEntityTrait;
 

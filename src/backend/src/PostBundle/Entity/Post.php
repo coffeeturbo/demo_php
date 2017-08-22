@@ -10,11 +10,24 @@ class Post implements ModifyDateEntityInterface
     use ModifyDateEntityTrait;
 
     private $id;
+    private $title;
     private $attachments;
+    private $tags;
 
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     public function setAttachments($attachments)
@@ -27,5 +40,16 @@ class Post implements ModifyDateEntityInterface
     public function getAttachments()
     {
         return $this->attachments;
+    }
+
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+        return $this;
+    }
+
+    public function getTags()
+    {
+        return $this->tags;
     }
 }
