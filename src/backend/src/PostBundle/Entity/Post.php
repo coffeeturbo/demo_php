@@ -14,6 +14,12 @@ class Post implements ModifyDateEntityInterface
     private $attachments;
     private $tags;
 
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+        $this->markUpdated();
+    }
+
     public function getId()
     {
         return $this->id;

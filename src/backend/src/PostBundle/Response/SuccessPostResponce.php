@@ -24,6 +24,7 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
         return [
             'entity' => [
                 'id' => $post->getId(),
+                'title' => $post->getTitle(),
                 'created' => $post->getCreated(),
                 'updated' => $post->getUpdated(),
                 'tags'  => $post->getTags(),

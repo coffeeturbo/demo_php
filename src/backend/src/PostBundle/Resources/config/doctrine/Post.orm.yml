@@ -21,4 +21,4 @@ PostBundle\Entity\Post:
       nullable: true
     attachments:
       type: json_array
-      nullable: false
+      nullable: true

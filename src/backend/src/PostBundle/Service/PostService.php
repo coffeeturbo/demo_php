@@ -19,8 +19,9 @@ class PostService
 
         $newPost = new Post();
         $newPost->setTitle($data['title'] ?? null)
-
         ;
+
+        $this->create($newPost);
 
 
         return $newPost;
@@ -29,6 +30,7 @@ class PostService
     public function create(Post $post): Post
     {
 
+        $this->postRepository->save($post);
 
         return $post;
     }
