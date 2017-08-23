@@ -15,7 +15,7 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
     ],
     declarations: [
         PostRoute,
-        // PostFormRoute
+        PostFormRoute
     ],
     providers:[
         PostRESTService,

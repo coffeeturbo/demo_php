@@ -8,7 +8,7 @@ import {ApplicationComponent} from "./Component/Application/index";
     bootstrap: [ ApplicationComponent ],
     imports: [
         BrowserModule.withServerTransition({
-            appId: 'my-app-id'
+            appId: 'application'
         }),
         ServerModule,
         ApplicationModule

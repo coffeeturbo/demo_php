@@ -1,4 +1,4 @@
-{
+export const LocaleRU = {
   "403 - Access denied":  "403 - Доступ запрещен",
   "404 - Now found":      "404 - Страница не найдена",
   "Add post":     "Добавить пост",

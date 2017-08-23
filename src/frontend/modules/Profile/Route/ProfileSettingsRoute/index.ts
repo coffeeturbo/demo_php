@@ -21,7 +21,7 @@ export class ProfileSettingsRoute {
             this.profile.alias,
             [
                 Validators.minLength(this.constraints.alias.min_length),
-                Validators.pattern(this.constraints.alias.match)
+                Validators.pattern(new RegExp(this.constraints.alias.match))
             ],
             this.aliasValidator.bind(this)
         ),

@@ -1,16 +1,21 @@
 import {Dictionaries} from "@angular-addons/translate";
+import {LocaleRU} from "./RU";
+import {AuthLocaleRU} from "../modules/Auth/Dictionaries/AuthLocaleRU";
+import {SettingsLocaleRU} from "../modules/Settings/Dictionaries/SettingsLocaleRU";
+import {ProfileLocaleRU} from "../modules/Profile/Dictionaries/ProfileLocaleRU";
+import {PostLocaleRU} from "../modules/Post/Dictionaries/PostLocaleRU";
 
 export const dictionaries: Dictionaries = {
-    "RU": Object.assign(
-        require('./RU.json'),
-        require('../modules/Auth/Dictionaries/RU.json'),
-        require('../modules/Settings/Dictionaries/RU.json'),
-        require('../modules/Profile/Dictionaries/RU.json'),
-        require('../modules/Post/Dictionaries/RU.json')
-    ),
-    "EN": {
+    "RU": [
+        LocaleRU,
+        AuthLocaleRU,
+        SettingsLocaleRU,
+        ProfileLocaleRU,
+        PostLocaleRU
+    ],
+    "EN": [{
         "days1":    "days",
-        "donths1":  "months",
+        "months1":  "months",
         "years1":   "years",
-    }
+    }]
 };
