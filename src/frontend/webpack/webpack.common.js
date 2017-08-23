@@ -5,6 +5,10 @@ const AppCachePlugin = require('appcache-webpack-plugin');
 const helpers = require('./helpers');
 const ngtools = require('@ngtools/webpack');
 
+console.log("Is server: " + helpers.isServer);
+console.log("Is dev: " + helpers.isDev);
+console.log("Is prod: " + helpers.isProd);
+
 module.exports = {
     entry: {
         'app': './app/main.ts'
@@ -78,11 +82,11 @@ module.exports = {
     plugins: [
         new ngtools.AotPlugin({
             tsConfigPath: helpers.root("tsconfig.json"),
-            skipCodeGeneration: helpers.enviroment === "dev", 
+            skipCodeGeneration: !helpers.isProd, 
             entryModule: helpers.root(
                 "modules",
                 "Application",
-                helpers.enviroment === "server" ? "ApplicationModuleServer#ApplicationModuleServer" : "ApplicationModuleBrowser#ApplicationModuleBrowser"
+                helpers.isServer ? "ApplicationModuleServer#ApplicationModuleServer" : "ApplicationModuleBrowser#ApplicationModuleBrowser"
             )
         }),
 

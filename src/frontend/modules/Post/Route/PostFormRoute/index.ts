@@ -15,7 +15,7 @@ const localStorage = typeof window !='undefined' ? window.localStorage : { getIt
 })
 
 export class PostFormRoute implements OnInit {
-
+    public AttachmentType = AttachmentType;
     public attachments = new FormArray([]);
     public submitted: boolean = false;
     public saved: boolean = true;
