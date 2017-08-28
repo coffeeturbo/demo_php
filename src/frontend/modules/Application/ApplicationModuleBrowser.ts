@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import {ApplicationModule} from "./ApplicationModule";
 import {ApplicationComponent} from "./Component/Application/index";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     bootstrap: [ ApplicationComponent ],
@@ -10,6 +11,7 @@ import {ApplicationComponent} from "./Component/Application/index";
         BrowserModule.withServerTransition({
             appId: 'application'
         }),
+        BrowserAnimationsModule,
         ApplicationModule
     ]
 })

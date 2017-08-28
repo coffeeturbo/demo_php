@@ -13,25 +13,25 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         tooltip
           small(*ngIf="form.controls['title'].hasError('required')") {{ "Title is required" | translate }}.
           small(*ngIf="form.controls['title'].hasError('minlength')") {{ "Minimum length is" | translate }}  
-            b {{form.controls['title'].getError("minlength").requiredLength}}
+            b {{ form.controls['title'].getError("minlength").requiredLength }}
             | .
 
-  .attachments(
-    formArrayName="attachments",
-    [dragula]='"attachments"',
-    [dragulaModel]='attachments.controls', 
-    [dragulaOptions]="dragulaOptions",
-  )
-    .accordion(*ngFor="let attachment of attachments.controls; let i=index", [ngSwitch]="attachment.value.type")
-      .material-field
-        .drag
-          i.fa.fa-bars
-        .input-box([formGroupName]="i")
-          attachment-input-text(*ngSwitchCase="'text'", [id]="'addPostAttachment'+i", formControlName="value")
-          attachment-input-video(*ngSwitchCase="'video'", [id]="'addPostAttachment'+i", formControlName="value")
-          attachment-input-image(*ngSwitchCase="'image'", [id]="'addPostAttachment'+i", formControlName="value")
-        a.removeAttachment((click)="removeAttachment(i)")
-          i.fa.fa-trash-o
+  .attachments(formArrayName="attachments")
+    div(dnd-sortable-container, [sortableData]="attachments.controls")
+      div(
+        *ngFor="let attachment of attachments.controls; index as i",
+        [ngSwitch]="attachment.value.type",
+        dnd-sortable, [sortableIndex]="i"
+      )
+        .material-field
+          .drag
+            i.fa.fa-bars(dnd-sortable-handle)
+          .input-box([formGroupName]="i")
+            attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'addPostAttachment'+i", formControlName="value")
+            attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'addPostAttachment'+i", formControlName="value")
+            attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'addPostAttachment'+i", formControlName="value")
+          a.removeAttachment((click)="removeAttachment(i)")
+            i.fa.fa-trash-o
 
   .controls.center.attachment-button-container
     button.btn-material.secondary(type="button", (click)="addAttachment(AttachmentType.text)")

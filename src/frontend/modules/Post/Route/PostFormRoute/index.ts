@@ -19,9 +19,6 @@ export class PostFormRoute implements OnInit {
     public attachments = new FormArray([]);
     public submitted: boolean = false;
     public saved: boolean = true;
-    public dragulaOptions = {
-        moves: (el, container, handle) => handle.classList.contains('drag') || handle.parentElement.classList.contains('drag')
-    };
 
     public form: FormGroup = new FormGroup({
         title: new FormControl(null, [Validators.required, Validators.minLength(5)]),
@@ -34,8 +31,7 @@ export class PostFormRoute implements OnInit {
         value: this.translationService.translate("author's")
     };
 
-    constructor(private translationService: TranslationService) {
-    }
+    constructor(private translationService: TranslationService) {}
 
     ngOnInit() {
         try {
