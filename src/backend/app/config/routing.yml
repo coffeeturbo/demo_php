@@ -26,4 +26,12 @@ protected_attachment:
   resource: '@AttachmentBundle/Resources/config/routing_protected.yml'
   prefix: /protected/attachment
 
+post:
+  resource: '@PostBundle/Resources/config/routing.yml'
+  prefix: '/post'
+
+protected_post:
+  resource: '@PostBundle/Resources/config/routing_protected.yml'
+  prefix: '/protected/post'
+
   

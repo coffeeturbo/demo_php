@@ -7,7 +7,6 @@ use AttachmentBundle\LinkMetadata\Properties\HasPreview;
 
 final class WebmLinkMetadata implements LinkMetadata, HasPreview
 {
-    const VERSION = 2;
     const RESOURCE_TYPE = 'webm';
 
     /** @var string */
@@ -40,11 +39,6 @@ final class WebmLinkMetadata implements LinkMetadata, HasPreview
         return '';
     }
 
-    public function getVersion(): int
-    {
-        return self::VERSION;
-    }
-
     public function getURL(): string
     {
         return $this->url;
@@ -69,18 +63,6 @@ final class WebmLinkMetadata implements LinkMetadata, HasPreview
     public function getPreviewPublicPath(): string
     {
         return $this->previewPublicPath;
-    }
-
-    // Todo убрать это навно
-    public function toJSON(array $options = []): array
-    {
-        return [
-            'type' => $this->type,
-            'preview' => [
-                'public' => $this->previewPublicPath,
-                'storage' => $this->previewStoragePath,
-            ]
-        ];
     }
 
     function jsonSerialize()

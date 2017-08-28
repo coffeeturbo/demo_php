@@ -22,7 +22,8 @@ trait ModifyDateEntityTrait
 
     public function markUpdated(): self
     {
-        $this->updated = new DateTime();
+        $this->updated = new \DateTime();
+
         return $this;
     }
 

@@ -1,0 +1,24 @@
+PostBundle\Entity\Post:
+  type: entity
+  repositoryClass: PostBundle\Repository\PostRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    created:
+      type: datetime
+      nullable: false
+    updated:
+      type: datetime
+      nullable: false
+    title:
+      type: string
+      nullable: false
+    tags:
+      type: json_array
+      nullable: true
+    attachments:
+      type: json_array
+      nullable: true

@@ -9,13 +9,16 @@ use AppBundle\Entity\ModifyDateEntityTrait;
  */
 class Attachment implements ModifyDateEntityInterface
 {
+    const VIDEO_TYPE = 1;
+    const TEXT_TYPE = 2;
+    const IMAGE_TYPE = 3;
+
 
     use ModifyDateEntityTrait;
 
     private $id;
     private $type;
     private $content;
-    private $metadata;
 
     public function getId()
     {
@@ -46,15 +49,5 @@ class Attachment implements ModifyDateEntityInterface
         return $this->content;
     }
 
-    public function setMetadata($metadata)
-    {
-        $this->metadata = $metadata;
 
-        return $this;
-    }
-
-    public function getMetadata()
-    {
-        return $this->metadata;
-    }
 }

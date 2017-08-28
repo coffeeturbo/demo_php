@@ -12,7 +12,6 @@ final class OpenGraphParser
 
         return [
             'basic' => $this->fetchBasic($origURL, $document),
-            'og' => $this->fetchOG($document)
         ];
     }
 
@@ -22,10 +21,12 @@ final class OpenGraphParser
             'title' => '',
             'description' => '',
             'url' => $origURL,
+            'image' => ''
         ];
 
         $titleElements = $document->getElementsByTagName('title');
         $descriptionElements = $this->getMetaTags('description', 'name');
+
 
         if($titleElements->length) {
             $result['title'] = $titleElements->item(0)->textContent;
@@ -55,47 +56,47 @@ final class OpenGraphParser
         return $result;
     }
 
-    private function fetchOG(\DOMDocument $document): array
-    {
+//    private function fetchOG(\DOMDocument $document): array
+//    {
+//
+//        $result = [
+//            'basic' => $this->fetchOGBasic(),
+//            'images' => $this->fetchOGImages(),
+//            'audios' => $this->fetchOGAudios(),
+//            'videos' => $this->fetchOGVideos(),
+//        ];
+//
+//        return $result;
+//    }
 
-        $result = [
-            'basic' => $this->fetchOGBasic(),
-            'images' => $this->fetchOGImages(),
-            'audios' => $this->fetchOGAudios(),
-            'videos' => $this->fetchOGVideos(),
-        ];
+//    private function fetchOGBasic()
+//    {
+//        $attributes = [
+//            'og:title' => '',
+//            'og:type' => '',
+//            'og:url' => '',
+//            'og:description' => '',
+//            'og:determiner' => '',
+//            'og:locale' => '',
+//            'og:locale:alternate' => '',
+//            'og:site_name' => '',
+//            'og:image' => '',
+//            'og:video' => '',
+//            'og:audio' => '',
+//        ];
+//
+//        foreach(array_keys($attributes) as $attr) {
+//            $elements = $this->getMetaTags($attr);
+//
+//            $attributes[$attr] = count($elements)
+//                ? $elements[0]->attributes->getNamedItem('content')->textContent
+//                : '';
+//        }
+//
+//        return $attributes;
+//    }
 
-        return $result;
-    }
-
-    private function fetchOGBasic()
-    {
-        $attributes = [
-            'og:title' => '',
-            'og:type' => '',
-            'og:url' => '',
-            'og:description' => '',
-            'og:determiner' => '',
-            'og:locale' => '',
-            'og:locale:alternate' => '',
-            'og:site_name' => '',
-            'og:image' => '',
-            'og:video' => '',
-            'og:audio' => '',
-        ];
-
-        foreach(array_keys($attributes) as $attr) {
-            $elements = $this->getMetaTags($attr);
-
-            $attributes[$attr] = count($elements)
-                ? $elements[0]->attributes->getNamedItem('content')->textContent
-                : '';
-        }
-
-        return $attributes;
-    }
-
-    private function fetchOGImages()
+    /*private function fetchOGImages()
     {
         $result = [];
         $attributes = [
@@ -134,9 +135,9 @@ final class OpenGraphParser
         }
 
         return $result;
-    }
+    }*/
 
-    private function fetchOGVideos()
+    /*private function fetchOGVideos()
     {
         $result = [];
         $attributes = [
@@ -175,9 +176,9 @@ final class OpenGraphParser
         }
 
         return $result;
-    }
+    }*/
 
-    private function fetchOGAudios()
+    /*private function fetchOGAudios()
     {
         $result = [];
         $attributes = [
@@ -216,7 +217,7 @@ final class OpenGraphParser
         }
 
         return $result;
-    }
+    }*/
 
 
     private function getMetaTags(string $property, string $attrName = 'property'): array
@@ -235,5 +236,20 @@ final class OpenGraphParser
         }
 
         return $result;
+    }
+
+
+    public function getOG(string $origURL, string $content): array
+    {
+        libxml_use_internal_errors(true);
+        $document = new \DOMDocument($content);
+        $document->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
+        libxml_clear_errors();
+
+        if($document === false) {
+            return [];
+        }else{
+            return $this->parse($origURL, $document);
+        }
     }
 }
