@@ -112,6 +112,12 @@ final class YoutubeLinkMetadata implements LinkMetadata
         return $endTime->getTimestamp() - $reference->getTimestamp();
     }
 
+    public function getImage()
+    {
+        return $this->openGraph['basic']['image']?? '';
+    }
+
+
     function jsonSerialize()
     {
         return [
@@ -119,7 +125,8 @@ final class YoutubeLinkMetadata implements LinkMetadata
             'url' => $this->url,
             'duration' => $this->getDuration(),
             'title' => $this->getTitle(),
-            'description' => $this->getDescription()
+            'description' => $this->getDescription(),
+            'image' => $this->getImage()
         ];
     }
 }

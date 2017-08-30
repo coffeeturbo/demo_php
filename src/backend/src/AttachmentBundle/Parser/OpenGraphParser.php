@@ -28,6 +28,8 @@ final class OpenGraphParser
         $descriptionElements = $this->getMetaTags('description', 'name');
 
 
+        $imageElements = $this->getMetaTags('og:image', 'property');
+
         if($titleElements->length) {
             $result['title'] = $titleElements->item(0)->textContent;
         }
@@ -36,22 +38,27 @@ final class OpenGraphParser
             $result['description'] = $descriptionElements[0]->attributes->getNamedItem('content')->textContent;
         }
 
-        $linkElements = $document->getElementsByTagName('link');
+        if(count($imageElements)) {
+            $result['image'] = $imageElements[0]->attributes->getNamedItem('content')->textContent;
+        }
+
+
+//        $linkElements = $document->getElementsByTagName('link');
 
         /** @var \DOMNode $linkElement */
-        foreach($linkElements as $linkElement) {
-            if($linkElement->attributes->getNamedItem('rel') && $linkElement->attributes->getNamedItem('rel')->nodeValue === 'image_src') {
-                $attr = $linkElement->attributes->getNamedItem('href');
-
-                if(is_object($attr) && isset($attr->nodeValue)) {
-                    $href = trim($attr->nodeValue);
-
-                    if(strlen($href)) {
-                        $result['image'] = $href;
-                    }
-                }
-            }
-        }
+//        foreach($linkElements as $linkElement) {
+//            if($linkElement->attributes->getNamedItem('rel') && $linkElement->attributes->getNamedItem('rel')->nodeValue === 'image_src') {
+//                $attr = $linkElement->attributes->getNamedItem('href');
+//
+//                if(is_object($attr) && isset($attr->nodeValue)) {
+//                    $href = trim($attr->nodeValue);
+//
+//                    if(strlen($href)) {
+//                        $result['image'] = $href;
+//                    }
+//                }
+//            }
+//        }
 
         return $result;
     }
