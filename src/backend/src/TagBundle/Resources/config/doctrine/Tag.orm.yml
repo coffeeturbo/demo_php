@@ -1,0 +1,13 @@
+TagBundle\Entity\Tag:
+  type: entity
+  repositoryClass: TagBundle\Repository\TagRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      nullable: false
+

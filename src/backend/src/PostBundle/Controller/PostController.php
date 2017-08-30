@@ -28,9 +28,7 @@ class PostController extends Controller
 
         $post = $this->get('post.service')->createFromData($data);
 
-
         return new SuccessPostResponce($post);
-
     }
 
     public function updateAction()
