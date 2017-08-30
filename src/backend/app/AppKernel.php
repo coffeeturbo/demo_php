@@ -32,7 +32,8 @@ class AppKernel extends Kernel
             new AvatarBundle\AvatarBundle(),
             new ImageBundle\ImageBundle(),
             new AttachmentBundle\AttachmentBundle(),
-            new PostBundle\PostBundle()
+            new PostBundle\PostBundle(),
+            new TagBundle\TagBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

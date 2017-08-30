@@ -10,4 +10,5 @@ TagBundle\Entity\Tag:
     name:
       type: string
       nullable: false
+      uniqie: true
 

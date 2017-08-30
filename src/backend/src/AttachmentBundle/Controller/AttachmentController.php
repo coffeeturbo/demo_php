@@ -26,7 +26,7 @@ class AttachmentController extends Controller
      */
     public function linkAction(Request $request)
     {
-        try{
+        try {
             $data = $this->get('app.validate_request')->getData($request, AttachmentLinkType::class);
 
             $result = $this->get('attachment.service.fetch_resource_service')->fetchResource($data['url']);

@@ -1,4 +1,4 @@
 attackment_link:
   path: /link
-  methods: [ GET ]
+  methods: [ PUT ]
   defaults: { _controller: AttachmentBundle:Attachment:link }

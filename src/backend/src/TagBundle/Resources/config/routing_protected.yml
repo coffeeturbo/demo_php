@@ -1,0 +1,4 @@
+tag_create:
+  path: /create
+  methods: [ PUT ]
+  defaults: { _controller: TagBundle:Tag:create }
