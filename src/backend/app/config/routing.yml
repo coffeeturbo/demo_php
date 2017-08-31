@@ -33,13 +33,13 @@ post:
 protected_post:
   resource: '@PostBundle/Resources/config/routing_protected.yml'
   prefix: '/protected/post'
-
-tag:
-  resource: '@TagBundle/Resources/config/routing.yml'
-  prefix: '/tag'
-
-protected_tag:
-  resource: '@TagBundle/Resources/config/routing_protected.yml'
-  prefix: '/protected/tag'
-
-  
+#
+#tag:
+#  resource: '@TagBundle/Resources/config/routing.yml'
+#  prefix: '/tag'
+#
+#protected_tag:
+#  resource: '@TagBundle/Resources/config/routing_protected.yml'
+#  prefix: '/protected/tag'
+#
+#

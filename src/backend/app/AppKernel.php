@@ -33,7 +33,7 @@ class AppKernel extends Kernel
             new ImageBundle\ImageBundle(),
             new AttachmentBundle\AttachmentBundle(),
             new PostBundle\PostBundle(),
-            new TagBundle\TagBundle()
+            new Beelab\TagBundle\BeelabTagBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

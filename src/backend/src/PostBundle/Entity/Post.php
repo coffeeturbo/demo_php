@@ -3,8 +3,10 @@ namespace PostBundle\Entity;
 
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
+use Beelab\TagBundle\Entity\AbstractTaggable;
+use Beelab\TagBundle\Tag\TaggableInterface;
 
-class Post implements ModifyDateEntityInterface
+class Post extends AbstractTaggable implements ModifyDateEntityInterface, TaggableInterface
 {
 
     use ModifyDateEntityTrait;
@@ -12,11 +14,11 @@ class Post implements ModifyDateEntityInterface
     private $id;
     private $title;
     private $attachments;
-    private $tags;
 
     public function __construct()
     {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        parent::__construct();
+
         $this->created = new \DateTime();
         $this->markUpdated();
     }
@@ -49,20 +51,4 @@ class Post implements ModifyDateEntityInterface
         return $this->attachments;
     }
 
-    public function addTag(\TagBundle\Entity\Tag $tag)
-    {
-        $this->tags[] = $tag;
-
-        return $this;
-    }
-
-    public function removeTag(\TagBundle\Entity\Tag $tag)
-    {
-        $this->tags->removeElement($tag);
-    }
-
-    public function getTags()
-    {
-        return $this->tags;
-    }
 }

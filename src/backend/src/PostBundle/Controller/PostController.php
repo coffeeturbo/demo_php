@@ -25,8 +25,14 @@ class PostController extends Controller
     public function createAction(Request $request)
     {
         $data = $this->get('app.validate_request')->getData($request, PostFormType::class);
+dump($data);
+        $post = new Post();
 
-        $post = $this->get('post.service')->createFromData($data);
+        $post->setTitle($data['title'])
+            ->setTagsText($data['tags']);
+        dump($data);
+        $this->get('post.service')->create($post);
+//        $post = $this->get('post.service')->createFromData($data);
 
         return new SuccessPostResponce($post);
     }

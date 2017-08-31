@@ -176,3 +176,7 @@ profile:
         12:
           absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/12.jpg'
           web_path: 'bundles/profile/backdrop/presets/12.jpg'
+
+beelab_tag:
+    tag_class: PostBundle\Entity\Tag
+    purge:     true

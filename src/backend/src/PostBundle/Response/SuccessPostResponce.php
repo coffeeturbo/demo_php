@@ -30,7 +30,8 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
                 'title' => $post->getTitle(),
                 'created' => $post->getCreated(),
                 'updated' => $post->getUpdated(),
-                'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
+//                'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
+//                'tags'  => $post->getTagsText(),
                 'attachments' => $post->getAttachments()
             ]
         ];
@@ -43,7 +44,7 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
         $entity
             ->setTitle('Test POst')
             ->setAttachments([])
-            ->setTags([])
+//            ->setTags([])
             ->setCreated(new \DateTime())
             ->markUpdated()
         ;
