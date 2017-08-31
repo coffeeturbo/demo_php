@@ -3,6 +3,7 @@ namespace PostBundle\Service;
 
 use PostBundle\Entity\Post;
 use PostBundle\Repository\PostRepository;
+use TagBundle\Entity\Tag;
 
 class PostService
 {
@@ -21,6 +22,17 @@ class PostService
         $newPost->setTitle($data['title'] ?? null)
         ;
 
+        $jsonTags = json_decode($data['tags'], true);
+
+        $tags = array_map(function(array $json){
+            return Tag::createFromJson($json['entity']);
+        }, $jsonTags);
+
+
+        foreach($tags as $tag){
+            $newPost->addTag($tag);
+        }
+
         $this->create($newPost);
 
 
@@ -29,7 +41,6 @@ class PostService
 
     public function create(Post $post): Post
     {
-
         $this->postRepository->save($post);
 
         return $post;

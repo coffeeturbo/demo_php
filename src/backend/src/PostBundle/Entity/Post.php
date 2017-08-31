@@ -16,6 +16,7 @@ class Post implements ModifyDateEntityInterface
 
     public function __construct()
     {
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
         $this->created = new \DateTime();
         $this->markUpdated();
     }
@@ -48,10 +49,16 @@ class Post implements ModifyDateEntityInterface
         return $this->attachments;
     }
 
-    public function setTags($tags)
+    public function addTag(\TagBundle\Entity\Tag $tag)
     {
-        $this->tags = $tags;
+        $this->tags[] = $tag;
+
         return $this;
+    }
+
+    public function removeTag(\TagBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
     }
 
     public function getTags()
