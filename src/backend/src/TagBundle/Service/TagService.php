@@ -23,8 +23,4 @@ class TagService
 
         return $tag;
     }
-
-    public function update(){}
-
-    public function delete(){}
 }

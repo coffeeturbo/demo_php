@@ -2,3 +2,10 @@ tag_create:
   path: /create
   methods: [ PUT ]
   defaults: { _controller: TagBundle:Tag:create }
+
+tag_get_by_first_letters:
+  path: /search/{query}
+  methods: [ GET ]
+  defaults: { _controller: TagBundle:Tag:search }
+  requirements:
+    query: .+

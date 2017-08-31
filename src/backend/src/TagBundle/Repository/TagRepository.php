@@ -13,8 +13,14 @@ class TagRepository extends EntityRepository
         $em->flush($tag);
     }
 
-    public function delete()
+    public function search(string $query): ?array
     {
+        return  $this->createQueryBuilder('t')
+            ->where('t.name LIKE :query')
+            ->setParameter('query', '%'.$query.'%')
+            ->setMaxResults(5)
+            ->getQuery()->getResult()
+            ;
 
     }
 }
