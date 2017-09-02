@@ -30,12 +30,12 @@ class PostService
         if(is_null($data['title']))
             throw new BadRequestHttpException("field title required");
 
-        $newPost->setTitle($data['title'])
-        ;
+        $newPost->setTitle($data['title']);
 
         $jsonTags = json_decode($data['tags'], true);
 
-        $this->setTagsFromJson($newPost, $jsonTags);
+        if($jsonTags)
+            $this->setTagsFromJson($newPost, $jsonTags);
 
         $this->create($newPost);
 
