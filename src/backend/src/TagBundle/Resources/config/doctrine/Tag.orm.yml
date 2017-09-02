@@ -11,4 +11,3 @@ TagBundle\Entity\Tag:
       type: string
       nullable: false
       unique: true
-

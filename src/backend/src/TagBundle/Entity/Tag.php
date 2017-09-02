@@ -1,14 +1,17 @@
 <?php
 namespace TagBundle\Entity;
 
-class Tag
+use TagBundle\Tag\TagEntityInterface;
+
+class Tag implements TagEntityInterface
 {
     private $id;
+
     private $name;
 
-    public function __toString()
+    function __toString()
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getId()
@@ -16,7 +19,7 @@ class Tag
         return $this->id;
     }
 
-    public function setId($id)
+    public function setId($id = null)
     {
         $this->id = $id;
         return $this;
@@ -27,20 +30,10 @@ class Tag
         return $this->name;
     }
 
-    public function setName(string $name)
+    public function setName($name)
     {
-        $this->name = $name;
+        $this->name = trim($name);
         return $this;
-    }
-
-
-    static public function createFromJson(array $data)
-    {
-        $tag = new Tag();
-        $tag->setName($data['name'])->setId($data['id']);
-
-        return $tag;
-
     }
 
 }

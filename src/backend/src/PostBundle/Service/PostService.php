@@ -4,6 +4,7 @@ namespace PostBundle\Service;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\PostRepository;
 use TagBundle\Entity\Tag;
+use TagBundle\Tag\TaggableEntityInterface;
 
 class PostService
 {
@@ -24,17 +25,9 @@ class PostService
 
         $jsonTags = json_decode($data['tags'], true);
 
-        $tags = array_map(function(array $json){
-            return Tag::createFromJson($json['entity']);
-        }, $jsonTags);
-
-
-        foreach($tags as $tag){
-            $newPost->addTag($tag);
-        }
+        $this->setTagsFromJson($newPost, $jsonTags);
 
         $this->create($newPost);
-
 
         return $newPost;
     }
@@ -44,6 +37,19 @@ class PostService
         $this->postRepository->save($post);
 
         return $post;
+    }
+
+    public function setTagsFromJson(TaggableEntityInterface $entity, array $jsonTags)
+    {
+        foreach($jsonTags as $tagJson) {
+            $tag = new Tag();
+            $tag->setId($tagJson['entity']['id'] ?? null)->setName($tagJson['entity']['name']);
+
+            if(!$entity->hasTag($tag)) $entity->addTag($tag);
+
+        }
+
+        return $this;
     }
 
 }
