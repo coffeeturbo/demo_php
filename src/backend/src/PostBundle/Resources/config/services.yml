@@ -9,4 +9,5 @@ services:
     class: PostBundle\Service\PostService
     arguments:
       - '@post.repository'
+      - '%post.max_tags_limit%'
 

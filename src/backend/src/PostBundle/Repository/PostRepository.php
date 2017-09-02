@@ -18,8 +18,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         // сохраняем теги
         $tagRep->saveTags($post);
 
-
-        $em->flush();
-
+        $em->flush($post);
     }
 }

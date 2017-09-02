@@ -10,10 +10,10 @@ class TagRepository extends EntityRepository
 {
     public function create(Tag $tag)
     {
-
         $em =  $this->getEntityManager();
         $em->persist($tag);
-        $em->flush();
+        $em->flush($tag);
+        return $tag;
     }
 
     public function search(string $query): ?array
@@ -37,19 +37,18 @@ class TagRepository extends EntityRepository
 
         $entityTags = $entity->getTags();
 
-        foreach($entityTags as $tag)
+        foreach($entityTags->toArray() as $tag)
         {
             /** @var $tag Tag */
             $oldTag = $this->findOneByName($tag->getName());
 
-            if($oldTag ) {
+            if( $oldTag ) {
                 $entityTags->removeElement($tag);
                 $entityTags->add($oldTag);
             } else {
-                $this->create($tag);
                 $em->persist($tag);
             }
-
         }
+
     }
 }

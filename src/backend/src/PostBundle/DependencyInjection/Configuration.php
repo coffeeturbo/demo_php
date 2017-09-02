@@ -11,7 +11,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('post');
 
-
+        $rootNode
+            ->children()
+                ->integerNode('max_tags_limit')
+                    ->defaultValue(10)
+                ->end()
+            ->end()
+            ;
 
         return $treeBuilder;
     }
