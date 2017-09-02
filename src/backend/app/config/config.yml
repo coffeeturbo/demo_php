@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: '@ProfileBundle/Resources/config/config.yml' }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -118,61 +119,3 @@ hwi_oauth:
 gesdinet_jwt_refresh_token:
     ttl: 2592000           
     user_provider: fos_user.user_provider.username_email
-
-profile:
-    limit: 1
-    min_age: 13
-    max_age: 150
-    avatar:
-      absolute_path: '%kernel.root_dir%/../../web/uploads/avatar'
-      web_path: 'uploads/avatar'
-      min_width: 200
-      min_height: 200
-      max_width: 7000
-      max_height: 7000
-      min_ratio: 0.25
-      max_ratio: 3
-    backdrop:
-      absolute_path: '%kernel.root_dir%/../../web/uploads/backdrop'
-      web_path: 'uploads/backdrop'
-      min_width: 1500
-      min_height: 200
-      max_width: 7000
-      max_height: 7000
-      presets:
-        1:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/1.jpg'
-          web_path: 'bundles/profile/backdrop/presets/1.jpg'
-        2:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/2.jpg'
-          web_path: 'bundles/profile/backdrop/presets/2.jpg'
-        3:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/3.jpg'
-          web_path: 'bundles/profile/backdrop/presets/3.jpg'
-        4:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/4.jpg'
-          web_path: 'bundles/profile/backdrop/presets/4.jpg'
-        5:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/5.jpg'
-          web_path: 'bundles/profile/backdrop/presets/5.jpg'
-        6:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/6.jpg'
-          web_path: 'bundles/profile/backdrop/presets/6.jpg'
-        7:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/7.jpg'
-          web_path: 'bundles/profile/backdrop/presets/7.jpg'
-        8:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/8.jpg'
-          web_path: 'bundles/profile/backdrop/presets/8.jpg'
-        9:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/9.jpg'
-          web_path: 'bundles/profile/backdrop/presets/9.jpg'
-        10:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/10.jpg'
-          web_path: 'bundles/profile/backdrop/presets/10.jpg'
-        11:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/11.jpg'
-          web_path: 'bundles/profile/backdrop/presets/11.jpg'
-        12:
-          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/12.jpg'
-          web_path: 'bundles/profile/backdrop/presets/12.jpg'
