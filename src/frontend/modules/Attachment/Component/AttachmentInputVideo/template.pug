@@ -1,10 +1,16 @@
-input(
-  ng-detect-empty-input,
-  type="text",
-  [id] = "id",
-  [value]="value",
-  rows="1",
-  (input)="onInput($event.target.value)"
-)
-hr
-label.material-label([for]="id") {{'Enter video link. Support Youtube, Coub' | translate }}
+ng-container(*ngIf="!attachmentVideo")
+  input(
+    ng-detect-empty-input,
+    type="text",
+    [id] = "id",
+    [value]="value",
+    rows="1",
+    [disabled]="disabled",
+    (input)="onInput($event.target.value)"
+  )
+  hr
+  label.material-label([for]="id") {{'Enter video link. Support Youtube, Coub' | translate }}
+
+.preview(*ngIf="attachmentVideo")
+  img(src="{{ attachmentVideo.content.image }}")
+  .fa.fa-play-circle

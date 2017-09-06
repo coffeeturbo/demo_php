@@ -9,7 +9,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       input#addPostTitle(ng-detect-empty-input, type="text", formControlName="title")
       hr
       label.material-label(for="addPostTitle") {{'History title' | translate }}
-      ng-container(*ngIf="form.controls['title'].invalid && this.submitted")
+      ng-container(*ngIf="form.controls['title'].invalid && submitted")
         tooltip
           small(*ngIf="form.controls['title'].hasError('required')") {{ "Title is required" | translate }}.
           small(*ngIf="form.controls['title'].hasError('minlength')") {{ "Minimum length is" | translate }}  
@@ -18,7 +18,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
 
   .attachments(formArrayName="attachments")
     div(dnd-sortable-container, [sortableData]="attachments.controls")
-      div(
+      div.dnd-sortable-cursor-fix(
         *ngFor="let attachment of attachments.controls; index as i",
         [ngSwitch]="attachment.value.type",
         dnd-sortable, [sortableIndex]="i"
@@ -30,6 +30,10 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
             attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'addPostAttachment'+i", formControlName="value")
             attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'addPostAttachment'+i", formControlName="value")
             attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'addPostAttachment'+i", formControlName="value")
+            ng-container(*ngIf="attachment.controls.value.invalid && submitted")
+              tooltip(*ngIf="attachment.controls.value.hasError('invalidLink')")
+                small Can't parse video link
+
           a.removeAttachment((click)="removeAttachment(i)")
             i.fa.fa-trash-o
 
@@ -60,7 +64,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         tag-input-dropdown(
           [autocompleteObservable]="requestAutocompleteItems",
         )
-      ng-container(*ngIf="form.controls['tags'].invalid && this.submitted")
+      ng-container(*ngIf="form.controls['tags'].invalid && submitted")
         tooltip(*ngIf="form.controls['tags'].hasError('required')")
           small {{ "Add miminum 2 tags" | translate }}.
 

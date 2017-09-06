@@ -3,6 +3,7 @@ import {AttachmentInputTextComponent} from "./Component/AttachmentInputText/inde
 import {CommonModule} from "../Common/CommonModule";
 import {AttachmentInputVideoComponent} from "./Component/AttachmentInputVideo/index";
 import {AttachmentInputImageComponent} from "./Component/AttachmentInputImage/index";
+import {AttachmentRESTService} from "./Service/AttachmentRESTService";
 
 @NgModule({
     imports: [
@@ -12,6 +13,9 @@ import {AttachmentInputImageComponent} from "./Component/AttachmentInputImage/in
         AttachmentInputTextComponent,
         AttachmentInputVideoComponent,
         AttachmentInputImageComponent
+    ],
+    providers: [
+        AttachmentRESTService
     ],
     exports: [
         AttachmentInputTextComponent,
