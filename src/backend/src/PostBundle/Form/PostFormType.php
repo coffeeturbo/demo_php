@@ -20,7 +20,7 @@ class PostFormType extends AbstractType
             ])
             ->add('tags', TextareaType::class, [
             ])
-//            ->add('attachments')
+            ->add('attachments', TextareaType::class)
         ;
     }
 }
