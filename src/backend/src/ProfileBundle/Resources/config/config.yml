@@ -55,3 +55,6 @@ profile:
         12:
           absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/12.jpg'
           web_path: 'bundles/profile/backdrop/presets/12.jpg'
+        13:
+          absolute_path: '%kernel.root_dir%/../../web/bundles/profile/backdrop/presets/13.jpg'
+          web_path: 'bundles/profile/backdrop/presets/13.jpg'
