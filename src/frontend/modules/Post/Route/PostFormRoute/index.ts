@@ -39,7 +39,7 @@ export class PostFormRoute implements OnInit {
             
             if (post.attachments.length > 0) {
                 post.attachments.map(
-                    attachment => this.addAttachment(attachment.type, attachment.value)
+                    attachment => this.addAttachment(attachment.type, attachment.content)
                 );
             }
 
