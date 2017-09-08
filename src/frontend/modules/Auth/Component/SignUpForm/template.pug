@@ -1,5 +1,9 @@
 //@DOTO finish material labels
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+  .errors(*ngIf="form.hasError('conflict')")
+    i.fa.fa-exclamation-circle
+    ul
+      li Пользователь с таким email уже существует!
   .material-field
     i.fa.fa-lg.fa-fw.fa-address-card-o
     .input-box

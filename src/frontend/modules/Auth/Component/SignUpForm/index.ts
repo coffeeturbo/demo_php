@@ -45,7 +45,13 @@ export class SignUpFormComponent {
                     password: formData.password,
                 })
                 .finally(() => this.disabled = false)
-                .subscribe(null, () => this.fail = true);
+                .subscribe(null, error => {
+                    switch (error.code) {
+                        case 409 : this.form.setErrors({"conflict": true}); break;        
+                    }
+                    
+                    this.fail = true;
+                });
         }
     }
 }

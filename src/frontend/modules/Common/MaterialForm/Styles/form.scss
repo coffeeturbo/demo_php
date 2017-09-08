@@ -1,5 +1,26 @@
 @import "../../../../assets/styles/global";
+.material-form .errors {
+  display: flex;
+  align-items: center;
+  background: material-color("red", "50");
+  border: 1px solid material-color("red", "200");
+  padding: 5px;
+  font-size: 0.9em;
 
+  > * {
+    padding: 5px;
+  }
+
+  .fa-exclamation-circle {
+    font-size: 3em;
+    color: material-color("red", "200");
+  }
+
+  ul li + li {
+    padding-top: 10px;
+  }
+  
+}
 .field,
 .material-field {
   display: flex;
