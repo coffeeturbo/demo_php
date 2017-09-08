@@ -88,6 +88,12 @@ small { font-size: $small_size; }
   cursor: pointer;
 }
 
+@include mq($from: desktop) {
+  .shake .modal-center {
+    animation: shake 600ms cubic-bezier(.36,.07,.19,.97) both;
+  }
+}
+
 .debug {
   font: 12px "Courier New";
   white-space: pre;
