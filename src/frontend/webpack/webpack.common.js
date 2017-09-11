@@ -53,7 +53,14 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: ['to-string-loader', 'css-loader', 'sass-loader'],
+                use: [
+                    'to-string-loader',
+                    {
+                        "loader":"css-loader",
+                        "options": { "minimize": false}
+                    },
+                    'sass-loader'
+                ],
                 exclude: helpers.root('assets')
             },
             {
