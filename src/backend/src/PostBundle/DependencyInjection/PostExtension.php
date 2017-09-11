@@ -17,5 +17,6 @@ class PostExtension extends Extension
         $loader->load('services.yml');
 
         $container->setParameter('post.max_tags_limit', $config['max_tags_limit']);
+        $container->setParameter('post.max_attachments_limit', $config['max_attachments_limit']);
     }
 }

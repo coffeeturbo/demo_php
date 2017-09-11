@@ -7,9 +7,9 @@ use AppBundle\Http\ErrorJsonResponse;
 use AttachmentBundle\Form\AttachmentLinkType;
 use AttachmentBundle\Response\SuccessAttachmentResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class AttachmentController extends Controller
 {
@@ -34,10 +34,11 @@ class AttachmentController extends Controller
             $attachment = $this->get('attachment.service.attachment_service')->linkAttachment($data['url'], $result);
 
 
-        }catch(\HttpUrlException $e){
+        } catch(\HttpUrlException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getCode());
-        }
-        catch(BadRestRequestHttpException $e){
+        } catch(BadRequestHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getCode());
+        } catch(BadRestRequestHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         }
 

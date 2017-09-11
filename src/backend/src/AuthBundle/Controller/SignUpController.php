@@ -24,6 +24,7 @@ class SignUpController extends Controller
      *  statusCodes = {
      *      200 = "Успешная авторизация",
      *      400 = "Неправильный запрос",
+     *      409 = "Пользователь уже существует"
      *  },
      *  headers = {
      *      {

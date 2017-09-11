@@ -1,6 +1,14 @@
 services:
+  attachment.repository.attachment_repository:
+    class: AttachmentBundle\Repository\AttachmentRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - AttachmentBundle\Entity\Attachment
+
   attachment.service.attachment_service:
     class: AttachmentBundle\Service\AttachmentService
+    arguments:
+      - '@attachment.repository.attachment_repository'
 
   attachment.service.fetch_resource_service:
     class: AttachmentBundle\Service\FetchResourceService

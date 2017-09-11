@@ -10,4 +10,5 @@ services:
     arguments:
       - '@post.repository'
       - '%post.max_tags_limit%'
+      - '%post.max_attachments_limit%'
 

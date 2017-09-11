@@ -4,21 +4,23 @@ namespace AttachmentBundle\Entity;
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
 
-/**
- * Attachment
- */
 class Attachment implements ModifyDateEntityInterface
 {
     const VIDEO_TYPE = 1;
     const TEXT_TYPE = 2;
     const IMAGE_TYPE = 3;
 
-
     use ModifyDateEntityTrait;
 
-    private $id;
-    private $type;
-    private $content;
+    protected $id;
+    protected $type;
+    protected $content;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+        $this->markUpdated();
+    }
 
     public function getId()
     {
@@ -48,6 +50,4 @@ class Attachment implements ModifyDateEntityInterface
     {
         return $this->content;
     }
-
-
 }

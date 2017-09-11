@@ -3,12 +3,15 @@ namespace PostBundle\Entity;
 
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
+use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Entity\AttachmentableEntity;
+use AttachmentBundle\Entity\AttachmentableEntityTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use TagBundle\Entity\AbstractTaggable;
 
-class Post extends AbstractTaggable implements ModifyDateEntityInterface
+class Post extends AbstractTaggable implements ModifyDateEntityInterface, AttachmentableEntity
 {
-
-    use ModifyDateEntityTrait;
+    use ModifyDateEntityTrait, AttachmentableEntityTrait;
 
     private $id;
     private $title;
@@ -17,7 +20,7 @@ class Post extends AbstractTaggable implements ModifyDateEntityInterface
     public function __construct()
     {
         parent::__construct();
-
+        $this->attachments = new ArrayCollection();
         $this->created = new \DateTime();
         $this->markUpdated();
     }
@@ -37,17 +40,4 @@ class Post extends AbstractTaggable implements ModifyDateEntityInterface
     {
         return $this->title;
     }
-
-    public function setAttachments($attachments)
-    {
-        $this->attachments = $attachments;
-
-        return $this;
-    }
-
-    public function getAttachments()
-    {
-        return $this->attachments;
-    }
-
 }

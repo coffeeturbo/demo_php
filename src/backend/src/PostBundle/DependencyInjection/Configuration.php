@@ -16,6 +16,9 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('max_tags_limit')
                     ->defaultValue(10)
                 ->end()
+                ->integerNode('max_attachments_limit')
+                    ->defaultValue(100)
+                ->end()
             ->end()
             ;
 

@@ -7,6 +7,7 @@ use AttachmentBundle\LinkMetadata\Types\UnknownLinkMetadata;
 use AttachmentBundle\LinkMetadata\Types\WebmLinkMetadata;
 use AttachmentBundle\LinkMetadata\Types\YoutubeLinkMetadata;
 use AttachmentBundle\Parser\OpenGraphParser;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class LinkMetadataFactory
 {
@@ -24,7 +25,7 @@ final class LinkMetadataFactory
 
         switch($resourceType) {
             default:
-                throw new \Exception(sprintf('Unknown resource type `%s`', $resourceType));
+                throw new BadRequestHttpException(sprintf('Unknown resource type `%s`', $resourceType));
 
             case YoutubeLinkMetadata::RESOURCE_TYPE:
                 return new YoutubeLinkMetadata(

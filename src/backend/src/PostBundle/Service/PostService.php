@@ -1,6 +1,8 @@
 <?php
 namespace PostBundle\Service;
 
+use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Entity\AttachmentableEntity;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\PostRepository;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -13,13 +15,17 @@ class PostService
 
     private $postRepository;
     private $maxTagsLimit;
+    private $maxAttachmentsLimit;
 
     public function __construct(
         PostRepository $postRepository,
-        int $maxTagsLimit
-    ){
+        int $maxTagsLimit,
+        int $maxAttachmentsLimit
+    )
+    {
         $this->postRepository = $postRepository;
         $this->maxTagsLimit = $maxTagsLimit;
+        $this->maxAttachmentsLimit = $maxAttachmentsLimit;
     }
 
     public function createFromData(array $data): Post
@@ -27,15 +33,19 @@ class PostService
 
         $newPost = new Post();
 
-        if(is_null($data['title']))
+        if(is_null($data['title'])) {
             throw new BadRequestHttpException("field title required");
+        }
 
         $newPost->setTitle($data['title']);
 
-        $jsonTags = json_decode($data['tags'], true);
+        if($data['tags']) {
+            $this->setTagsFromJson($newPost, $data['tags']);
+        }
 
-        if($jsonTags)
-            $this->setTagsFromJson($newPost, $jsonTags);
+        if($data['attachments']) {
+            $this->setAttachmentsFromJson($newPost, $data['attachments']);
+        }
 
         $this->create($newPost);
 
@@ -49,25 +59,59 @@ class PostService
         return $post;
     }
 
-    public function setTagsFromJson(TaggableEntityInterface $entity, array $jsonTags)
+    public function setTagsFromJson(TaggableEntityInterface $entity, string $jsonTagsString)
     {
-        if($this->maxTagsLimit < count($jsonTags))
+        $jsonTags = json_decode($jsonTagsString, true);
+
+        if($this->maxTagsLimit < count($jsonTags)) {
             throw new AccessDeniedHttpException(sprintf("you have exceed tag limit: %s", $this->maxTagsLimit));
+        }
 
         foreach($jsonTags as $tagJson) {
-            $tag = new Tag();
+            $tag = new Tag;
 
             if(is_null($tagJson['entity']['name'])
-                || (strlen($tagJson['entity']['name']) === 0)  )
+                || (strlen($tagJson['entity']['name']) === 0)
+            ) {
                 throw new BadRequestHttpException("field name required");
+            }
 
             $tag->setId($tagJson['entity']['id'] ?? null)->setName($tagJson['entity']['name']);
 
-            if(!$entity->hasTag($tag)) $entity->addTag($tag);
-
+            if(! $entity->hasTag($tag)) {
+                $entity->addTag($tag);
+            }
         }
 
         return $this;
     }
 
+    public function setAttachmentsFromJson(AttachmentableEntity $entity, string $jsonAttachmString)
+    {
+        $jsonAttachs = json_decode($jsonAttachmString, true);
+
+        if($this->maxAttachmentsLimit < count($jsonAttachs)) {
+            throw new AccessDeniedHttpException(sprintf("you have exceed attachments limit: %s", $this->maxAttachmentsLimit));
+        }
+
+        foreach($jsonAttachs as $attachmentJson) {
+
+
+            $attachment = new Attachment();
+
+
+            $attachment->setType()->setContent();
+
+            if(is_null($attachmentJson['entity']['name'])
+                || (strlen($attachmentJson['entity']['name']) === 0)
+            ) {
+                throw new BadRequestHttpException("field name required");
+            }
+
+            if(!$entity->hasAttachment($attachment)){
+                $entity->hasAttachment($attachment);
+            }
+
+        }
+    }
 }

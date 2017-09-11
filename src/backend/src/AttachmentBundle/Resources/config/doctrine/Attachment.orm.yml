@@ -1,5 +1,6 @@
 AttachmentBundle\Entity\Attachment:
   type: entity
+  repositoryClass: AttachmentBundle\Repository\AttachmentRepository
   id:
     id:
       type: integer
