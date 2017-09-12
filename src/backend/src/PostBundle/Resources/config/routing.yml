@@ -1,0 +1,4 @@
+post_get_by_id:
+  path: '{id}/get-by-id'
+  methods: [ GET ]
+  defaults: { _controller: PostBundle:Post:getById }

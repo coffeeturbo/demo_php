@@ -3,6 +3,7 @@ namespace PostBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
+use Doctrine\ORM\NoResultException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PostBundle\Entity\Post;
 use PostBundle\Form\PostFormType;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostController extends Controller
 {
@@ -39,6 +41,30 @@ class PostController extends Controller
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
         } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
+        }
+
+        return new SuccessPostResponce($post);
+    }
+
+    /**
+     * @ApiDoc(
+     *  section="Post",
+     *  description="Получаем пост по id",
+     * )
+     *
+     * @param Request $request
+     */
+    public function getByIdAction($id)
+    {
+        try{
+            $post = $this->get('post.repository')
+                ->getWithTagsAndAttachmentsById($id);
+        }
+//        catch(NoResultException $e){
+//            return new ErrorJsonResponse($e->getMessage(), [], 404);
+//        }
+        catch(NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
         return new SuccessPostResponce($post);
