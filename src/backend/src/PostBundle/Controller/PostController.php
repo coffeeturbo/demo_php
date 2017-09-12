@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function createAction(Request $request)
     {
-        try{
+        try {
             $data = $this->get('app.validate_request')->getData($request, PostFormType::class);
 
             $post = $this->get('post.service')->createFromData($data);

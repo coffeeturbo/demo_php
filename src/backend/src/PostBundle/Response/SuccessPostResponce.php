@@ -1,6 +1,8 @@
 <?php
 namespace PostBundle\Response;
 
+use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Response\SuccessAttachmentResponse;
 use PostBundle\Entity\Post;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,8 +33,22 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
                 'created' => $post->getCreated(),
                 'updated' => $post->getUpdated(),
                 'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
-                'attachments' => $post->getAttachments()
+                'attachments' => $this->getSuccessAttachmentsResponse($post->getAttachments())
             ]
+        ];
+    }
+
+    public function getSuccessAttachmentsResponse(array $attachments)
+    {
+
+        $entities = array_map(function(Attachment $attachment){
+            return (new SuccessAttachmentResponse($attachment))->jsonSerialize();
+        }, $attachments);
+
+
+        return $attachments = [
+            'total' => count($entities),
+            'entities' => $entities
         ];
     }
 

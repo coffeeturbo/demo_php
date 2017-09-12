@@ -16,9 +16,8 @@ PostBundle\Entity\Post:
     title:
       type: string
       nullable: false
-    attachments:
-      type: json_array
-      nullable: true
   manyToMany:
     tags:
       targetEntity: TagBundle\Entity\Tag
+    attachments:
+      targetEntity: AttachmentBundle\Entity\Attachment

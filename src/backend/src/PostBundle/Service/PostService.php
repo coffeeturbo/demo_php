@@ -1,6 +1,7 @@
 <?php
 namespace PostBundle\Service;
 
+use PostBundle\Service\AttachmentHandler\AttachmentHandler;
 use AttachmentBundle\Entity\Attachment;
 use AttachmentBundle\Entity\AttachmentableEntity;
 use PostBundle\Entity\Post;
@@ -88,28 +89,23 @@ class PostService
 
     public function setAttachmentsFromJson(AttachmentableEntity $entity, string $jsonAttachmString)
     {
+
         $jsonAttachs = json_decode($jsonAttachmString, true);
 
         if($this->maxAttachmentsLimit < count($jsonAttachs)) {
             throw new AccessDeniedHttpException(sprintf("you have exceed attachments limit: %s", $this->maxAttachmentsLimit));
         }
 
+
+
         foreach($jsonAttachs as $attachmentJson) {
 
+            $handler = new AttachmentHandler($attachmentJson['entity']);
 
-            $attachment = new Attachment();
-
-
-            $attachment->setType()->setContent();
-
-            if(is_null($attachmentJson['entity']['name'])
-                || (strlen($attachmentJson['entity']['name']) === 0)
-            ) {
-                throw new BadRequestHttpException("field name required");
-            }
+            $attachment = $handler->getAttachment();
 
             if(!$entity->hasAttachment($attachment)){
-                $entity->hasAttachment($attachment);
+                $entity->addAttachment($attachment);
             }
 
         }
