@@ -2,6 +2,7 @@
 
 namespace ProfileBundle\Repository;
 
+use AccountBundle\Entity\Account;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityRepository;
 use ProfileBundle\Entity\Profile;
@@ -67,5 +68,10 @@ class ProfileRepository extends EntityRepository
     public function getByAccountId(int $accountId): ?array
     {
         return $this->findBy(['account' => $accountId]);
+    }
+
+    public function getCurrentProfileByAccount(Account $account)
+    {
+        return $this->findOneBy(['account' => $account->getId()]);
     }
 }

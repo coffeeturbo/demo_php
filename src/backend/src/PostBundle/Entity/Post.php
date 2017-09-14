@@ -7,6 +7,7 @@ use AttachmentBundle\Entity\Attachment;
 use AttachmentBundle\Entity\AttachmentableEntity;
 use AttachmentBundle\Entity\AttachmentableEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use ProfileBundle\Entity\Profile;
 use TagBundle\Entity\AbstractTaggable;
 
 class Post extends AbstractTaggable implements ModifyDateEntityInterface, AttachmentableEntity
@@ -16,6 +17,7 @@ class Post extends AbstractTaggable implements ModifyDateEntityInterface, Attach
     private $id;
     private $title;
     private $attachments;
+    private $profile;
 
     public function __construct()
     {
@@ -39,5 +41,16 @@ class Post extends AbstractTaggable implements ModifyDateEntityInterface, Attach
     public function getTitle()
     {
         return $this->title;
+    }
+
+    // todo пост без владельца лигильно ли?
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(Profile $profile)
+    {
+        $this->profile = $profile;
     }
 }

@@ -11,7 +11,7 @@ AttachmentBundle\Entity\Attachment:
       type: string
       nullable: false
     content:
-      type: json_array
+      type: json
       nullable: true
     created:
       type: datetime

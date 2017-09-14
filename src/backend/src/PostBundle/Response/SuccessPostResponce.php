@@ -4,6 +4,7 @@ namespace PostBundle\Response;
 use AttachmentBundle\Entity\Attachment;
 use AttachmentBundle\Response\SuccessAttachmentResponse;
 use PostBundle\Entity\Post;
+use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use TagBundle\Entity\Tag;
@@ -33,7 +34,8 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
                 'created' => $post->getCreated(),
                 'updated' => $post->getUpdated(),
                 'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
-                'attachments' => $this->getSuccessAttachmentsResponse($post->getAttachments())
+                'attachments' => $this->getSuccessAttachmentsResponse($post->getAttachments()),
+                'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity']
             ]
         ];
     }

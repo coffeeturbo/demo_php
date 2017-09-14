@@ -16,6 +16,9 @@ PostBundle\Entity\Post:
     title:
       type: string
       nullable: false
+  manyToOne:
+    profile:
+      targetEntity: ProfileBundle\Entity\Profile
   manyToMany:
     tags:
       targetEntity: TagBundle\Entity\Tag

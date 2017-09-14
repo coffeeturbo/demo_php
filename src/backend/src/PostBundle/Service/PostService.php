@@ -1,6 +1,7 @@
 <?php
 namespace PostBundle\Service;
 
+use AuthBundle\Service\AuthService;
 use PostBundle\Service\AttachmentHandler\AttachmentHandler;
 use AttachmentBundle\Entity\Attachment;
 use AttachmentBundle\Entity\AttachmentableEntity;
@@ -22,8 +23,7 @@ class PostService
         PostRepository $postRepository,
         int $maxTagsLimit,
         int $maxAttachmentsLimit
-    )
-    {
+    ){
         $this->postRepository = $postRepository;
         $this->maxTagsLimit = $maxTagsLimit;
         $this->maxAttachmentsLimit = $maxAttachmentsLimit;
@@ -48,13 +48,13 @@ class PostService
             $this->setAttachmentsFromJson($newPost, $data['attachments']);
         }
 
-        $this->create($newPost);
-
         return $newPost;
     }
 
     public function create(Post $post): Post
     {
+
+
         $this->postRepository->save($post);
 
         return $post;
