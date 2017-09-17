@@ -29,6 +29,4 @@ abstract class ImageStrategy
 
     abstract public function getEntity() ;
     abstract public function setEntity($entity);
-
-
 }

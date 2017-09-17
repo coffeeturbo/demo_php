@@ -2,10 +2,12 @@
 namespace AttachmentBundle\Service;
 
 use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Entity\AttachmentType\AttachmentType;
 use AttachmentBundle\LinkMetadata\LinkMetadataFactory;
 use AttachmentBundle\Parser\OpenGraphParser;
 use AttachmentBundle\Repository\AttachmentRepository;
 use AttachmentBundle\Service\FetchResource\Result;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
 {
@@ -26,7 +28,9 @@ class AttachmentService
 
         $attachment = new Attachment();
         $attachment->setContent($metadata)
-            ->setType($linkMetadata->getResourceType())
+            ->setType(
+                AttachmentType::createFromStringCode($linkMetadata->getResourceType())
+            )
         ;
 
 
@@ -36,6 +40,11 @@ class AttachmentService
     public function createAttachment(Attachment $attachment)
     {
         $this->attachmentRepository->create($attachment);
+    }
+
+    public function uploadImage(UploadedFile $file): Attachment
+    {
+
     }
 
     public function fetchAttachmentFromJson(string $json): Attachment

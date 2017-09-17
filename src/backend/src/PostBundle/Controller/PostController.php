@@ -1,15 +1,12 @@
 <?php
 namespace PostBundle\Controller;
 
-use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use Doctrine\ORM\NoResultException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use PostBundle\Entity\Post;
 use PostBundle\Form\PostFormType;
 use PostBundle\Response\SuccessPostResponce;
 use PostBundle\Response\SuccessPostsResponse;
-use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +21,7 @@ class PostController extends Controller
      * @ApiDoc(
      *  section="Post",
      *  description="Создаём пост",
-     *  authentification="true",
+     *  authentication=true,
      *  input= { "class"="PostBundle\Form\PostFormType", "name"=""}
      * )
      *
@@ -35,17 +32,14 @@ class PostController extends Controller
         try {
             $data = $this->get('app.validate_request')->getData($request, PostFormType::class);
 
-            $postService = $this->get('post.service');
-
-            $post = $postService->createFromData($data);
+            $post = $this->get('post.form.handler.create_post_data_handler')->handle($data);
 
             $account = $this->get('auth.service')->getAccount();
 
             $profile = $this->get('profile.repository')->getCurrentProfileByAccount($account);
 
             $post->setProfile($profile);
-
-            $postService->create($post);
+            $this->get('post.service')->create($post);
 
         } catch(BadRequestHttpException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
@@ -72,9 +66,9 @@ class PostController extends Controller
             $post = $this->get('post.repository')
                 ->getPostWithTagsAndAttachmentsById($id);
         }
-//        catch(NoResultException $e){
-//            return new ErrorJsonResponse($e->getMessage(), [], 404);
-//        }
+        catch(NoResultException $e){
+            return new ErrorJsonResponse($e->getMessage(), [], 404);
+        }
         catch(NotFoundHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
@@ -94,9 +88,6 @@ class PostController extends Controller
     {
         // todo добавить максимальный limit для ленты и вынести в файл конфигурации
 
-//        $posts = $this->get('post.repository')
-//            ->findBy([],
-//            [],$limit, $offset);
         $posts = $this->get('post.repository')
             ->getPostsWithTagsAndAttachments($limit, $offset);
 

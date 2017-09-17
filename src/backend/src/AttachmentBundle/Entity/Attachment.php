@@ -3,12 +3,10 @@
 namespace AttachmentBundle\Entity;
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
+use AttachmentBundle\Entity\AttachmentType\AttachmentType;
 
 class Attachment implements ModifyDateEntityInterface
 {
-    const VIDEO_TYPE = 1;
-    const TEXT_TYPE = 2;
-    const IMAGE_TYPE = 3;
 
     use ModifyDateEntityTrait;
 
@@ -27,16 +25,16 @@ class Attachment implements ModifyDateEntityInterface
         return $this->id;
     }
 
-    public function setType($type)
+    public function setType(AttachmentType $type)
     {
-        $this->type = $type;
+        $this->type = $type->getIntCode();
 
         return $this;
     }
 
-    public function getType()
+    public function getType(): AttachmentType
     {
-        return $this->type;
+        return AttachmentType::createFromIntCode($this->type);
     }
 
     public function setContent($content)

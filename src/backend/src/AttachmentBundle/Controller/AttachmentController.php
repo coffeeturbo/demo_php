@@ -4,6 +4,7 @@ namespace AttachmentBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
+use AttachmentBundle\Form\AttachmentImageUploadType;
 use AttachmentBundle\Form\AttachmentLinkType;
 use AttachmentBundle\Response\SuccessAttachmentResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,6 +19,7 @@ class AttachmentController extends Controller
      * @ApiDoc(
      *      section="Attachment",
      *      description= "Возвращает аттачмент ссылки",
+     *      authentication=true,
      *      input = {"class" = "AttachmentBundle\Form\AttachmentLinkType", "name"  = ""},
      *      output = {"class" = "AttachmentBundle\Response\SuccessAttachmentResponse"},
      * )
@@ -43,5 +45,29 @@ class AttachmentController extends Controller
         }
 
         return new SuccessAttachmentResponse($attachment);
+    }
+
+    /**
+     * @ApiDoc(
+     *      section="Attachment",
+     *      description= "Загружаем картинку аттачмента",
+     *      authentication=true,
+     *      input = {"class" = "AttachmentBundle\Form\AttachmentImageUploadType", "name"  = ""},
+     *      output = {"class" = "AttachmentBundle\Response\SuccessAttachmentResponse"},
+     * )
+     *
+     * @param Request $request
+     */
+    public function imageUploadAction(Request $request)
+    {
+        $data = $this->get('app.validate_request')->getData($request, AttachmentImageUploadType::class);
+
+
+        $this->get('image.service')->
+        dump($data['image']);
+
+
+
+        return new SuccessAttachmentResponse();
     }
 }

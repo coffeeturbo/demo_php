@@ -38,7 +38,8 @@ class AttachmentHandler
             break;
 
             case 'image':
-                break;
+                $this->getImageAttachment();
+            break;
 
             default: throw new \Exception('Unknown attachment type');
 
@@ -50,7 +51,22 @@ class AttachmentHandler
     private function getTextAttachment()
     {
         $this->attachment->setContent([
-            'text' => $this->attachmentJson['value']
+            'text' => \htmlentities($this->attachmentJson['value'])
+        ]);
+    }
+
+
+    private function getImageAttachment()
+    {
+
+
+
+        // загружаем картинку
+
+        $this->attachment->setContent([
+            '' => '',
+            'storage_path' => '',
+            'public_path' => ''
         ]);
     }
 }

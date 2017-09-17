@@ -3,7 +3,6 @@ namespace PostBundle\Entity;
 
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
-use AttachmentBundle\Entity\Attachment;
 use AttachmentBundle\Entity\AttachmentableEntity;
 use AttachmentBundle\Entity\AttachmentableEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -43,8 +42,7 @@ class Post extends AbstractTaggable implements ModifyDateEntityInterface, Attach
         return $this->title;
     }
 
-    // todo пост без владельца лигильно ли?
-    public function getProfile(): ?Profile
+    public function getProfile(): Profile
     {
         return $this->profile;
     }

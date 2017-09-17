@@ -8,11 +8,11 @@ AttachmentBundle\Entity\Attachment:
         strategy: AUTO
   fields:
     type:
-      type: string
+      type: smallint
       nullable: false
     content:
       type: json
-      nullable: true
+      nullable: false
     created:
       type: datetime
       nullable: false
