@@ -22,13 +22,15 @@ class AttachmentRepository extends EntityRepository
         /** @var Attachment $attachment */
         foreach($entity->getAttachments() as $attachment){
 
-
             if($id = $attachment->getId()){
+
                 /** @var Attachment $oldAttachment */
                 $oldAttachment = $this->find($id);
 
-                $oldAttachment->setContent($attachment->getContent())
-                                ->setType($attachment->getType());
+                if($attachment->getContent()){
+                    $oldAttachment->setContent($attachment->getContent())
+                        ->setType($attachment->getType());
+                }
 
                 $entity->removeAttachment($attachment);
                 $entity->addAttachment($oldAttachment);

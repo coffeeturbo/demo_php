@@ -2,6 +2,10 @@
 namespace PostBundle\Service\AttachmentHandler;
 
 use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Entity\AttachmentType\AttachmentType;
+use AttachmentBundle\Entity\AttachmentType\AttachmentTypeImage;
+use AttachmentBundle\Entity\AttachmentType\AttachmentTypeText;
+use AttachmentBundle\Entity\AttachmentType\AttachmentTypeVideoYouTube;
 
 class AttachmentHandler
 {
@@ -21,8 +25,13 @@ class AttachmentHandler
     private function baseAttachmentFactory($json){
         $attachment = new Attachment();
 
-        $attachment->setType($json['type']);
+        if(!isset($json['type'])) throw new \Exception(sprintf('field type is required'));
 
+        $type = AttachmentType::createFromStringCode($json['type']);
+        $attachment->setType($type);
+
+
+        $attachment->setId($json['id'] ?? null);
         return $attachment;
     }
 
@@ -30,18 +39,20 @@ class AttachmentHandler
 
         switch($this->attachmentJson['type'])
         {
-            case 'video-youtube-attachment':
+            case AttachmentTypeVideoYouTube::STRING_CODE:
                 break;
 
-            case 'text':
+            case AttachmentTypeText::STRING_CODE:
                 $this->getTextAttachment();
             break;
 
-            case 'image':
+            case AttachmentTypeImage::STRING_CODE:
                 $this->getImageAttachment();
             break;
 
-            default: throw new \Exception('Unknown attachment type');
+            default:
+                throw new \Exception(
+                    sprintf('Unknown attachment type %s', $this->attachmentJson['type']));
 
         }
 
@@ -59,14 +70,15 @@ class AttachmentHandler
     private function getImageAttachment()
     {
 
-
-
-        // загружаем картинку
-
-        $this->attachment->setContent([
-            '' => '',
-            'storage_path' => '',
-            'public_path' => ''
-        ]);
+        $this->attachment
+            ->setContent(
+                (isset($this->attachmentJson['storage_path'])
+                    || isset($this->attachmentJson['public_path'])) ?
+                [
+                    'storage_path' => $this->attachmentJson['storage_path'] ?? '',
+                    'public_path' => $this->attachmentJson['public_path'] ?? ''
+                ]
+                    : null
+            );
     }
 }

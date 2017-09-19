@@ -24,13 +24,13 @@ abstract class AttachmentType
         }
     }
 
-    static public function createFromStringCode($stringCode)
+    static public function createFromStringCode($stringCode): AttachmentType
     {
         switch(strtolower($stringCode)){
             case AttachmentTypeText::STRING_CODE:
-                return new AttachmentTypeImage();
+                return new AttachmentTypeText();
             case AttachmentTypeVideoYouTube::STRING_CODE:
-                return new AttachmentTypeImage();
+                return new AttachmentTypeVideoYouTube();
             case AttachmentTypeImage::STRING_CODE:
                 return new AttachmentTypeImage();
             default:

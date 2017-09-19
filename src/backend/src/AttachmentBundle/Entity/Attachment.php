@@ -20,6 +20,12 @@ class Attachment implements ModifyDateEntityInterface
         $this->markUpdated();
     }
 
+    public function setId(int $id = null)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     public function getId()
     {
         return $this->id;

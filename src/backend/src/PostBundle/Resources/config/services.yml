@@ -14,7 +14,6 @@ services:
 
 
   post.form.handler.create_post_data_handler:
-    public: false
     class: PostBundle\Form\Handler\CreatePostDataHandler
     arguments:
       - '%post.max_tags_limit%'

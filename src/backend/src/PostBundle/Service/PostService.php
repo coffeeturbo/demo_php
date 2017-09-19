@@ -22,7 +22,6 @@ class PostService
     }
 
 
-
     public function create(Post $post): Post
     {
         $this->postRepository->save($post);
