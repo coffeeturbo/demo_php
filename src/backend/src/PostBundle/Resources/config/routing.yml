@@ -2,16 +2,3 @@ post_get_by_id:
   path: '{id}/get-by-id'
   methods: [ GET ]
   defaults: { _controller: PostBundle:Post:getById }
-
-post_feed:
-  path: 'feed/limit/{limit}/offset/{offset}'
-  methods: [ GET ]
-  defaults: { _controller: PostBundle:Post:feed }
-  requirements:
-    limit: \d+
-    offset: \d+
-
-post_feed_total:
-  path: 'feed/total'
-  methods: [ GET ]
-  defaults: { _controller: PostBundle:Post:feedTotal }

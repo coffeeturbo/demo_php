@@ -42,4 +42,12 @@ protected_tag:
   resource: '@TagBundle/Resources/config/routing_protected.yml'
   prefix: '/protected/tag'
 
+feed:
+  resource: '@FeedBundle/Resources/config/routing.yml'
+  prefix: '/feed'
+
+protected_feed:
+  resource: '@FeedBundle/Resources/config/routing_protected.yml'
+  prefix: '/protected/feed'
+
   

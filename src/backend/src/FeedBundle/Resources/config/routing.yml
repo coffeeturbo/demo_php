@@ -1,0 +1,19 @@
+feed:
+  path: '/limit/{limit}/offset/{offset}'
+  methods: [ GET ]
+  defaults: { _controller: FeedBundle:Feed:feed }
+  requirements:
+    limit: \d+
+    offset: \d+
+
+feed_total:
+  path: '/total'
+  methods: [ GET ]
+  defaults: { _controller: FeedBundle:Feed:feedTotal }
+
+profile_feed:
+  path: '/profile/{id}'
+  methods: [ GET ]
+  defaults: { _controller: FeedBundle:ProfileFeed:feed }
+  requirements:
+    id: \d+

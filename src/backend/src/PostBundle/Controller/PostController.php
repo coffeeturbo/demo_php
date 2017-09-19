@@ -6,9 +6,7 @@ use Doctrine\ORM\NoResultException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PostBundle\Form\PostFormType;
 use PostBundle\Response\SuccessPostResponce;
-use PostBundle\Response\SuccessPostsResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -75,42 +73,6 @@ class PostController extends Controller
 
         return new SuccessPostResponce($post);
     }
-
-    /**
-     * @ApiDoc(
-     *  section="Post",
-     *  description="Получаем посты",
-     * )
-     *
-     * @param Request $request
-     */
-    public function feedAction(int $limit, int $offset)
-    {
-        // todo добавить максимальный limit для ленты и вынести в файл конфигурации
-
-        $posts = $this->get('post.repository')
-            ->getPostsWithTagsAndAttachments($limit, $offset);
-
-        return new SuccessPostsResponse($posts);
-    }
-
-    /**
-     * @ApiDoc(
-     *  section="Post",
-     *  description="Получаем количество постов",
-     * )
-     *
-     * @param Request $request
-     */
-    public function feedTotalAction()
-    {
-        $total = $this->get('post.repository')->getPostsTotal();
-
-        return new JsonResponse([
-            'total' => $total
-        ]);
-    }
-
 
 
     public function updateAction()
