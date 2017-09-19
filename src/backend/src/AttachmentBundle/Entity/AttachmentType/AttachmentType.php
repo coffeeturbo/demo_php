@@ -11,6 +11,10 @@ abstract class AttachmentType
     static public function createFromIntCode(int $code)
     {
         switch($code){
+            case AttachmentTypeText::INT_CODE:
+                return new AttachmentTypeImage();
+            case AttachmentTypeVideoYouTube::INT_CODE:
+                return new AttachmentTypeImage();
             case AttachmentTypeImage::INT_CODE:
                 return new AttachmentTypeImage();
 
@@ -23,6 +27,10 @@ abstract class AttachmentType
     static public function createFromStringCode($stringCode)
     {
         switch(strtolower($stringCode)){
+            case AttachmentTypeText::STRING_CODE:
+                return new AttachmentTypeImage();
+            case AttachmentTypeVideoYouTube::STRING_CODE:
+                return new AttachmentTypeImage();
             case AttachmentTypeImage::STRING_CODE:
                 return new AttachmentTypeImage();
             default:

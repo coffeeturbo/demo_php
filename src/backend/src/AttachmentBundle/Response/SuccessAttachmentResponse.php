@@ -2,6 +2,8 @@
 namespace AttachmentBundle\Response;
 
 use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Entity\AttachmentType\AttachmentType;
+use AttachmentBundle\Entity\AttachmentType\AttachmentTypeVideoYouTube;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,7 +21,9 @@ class SuccessAttachmentResponse extends JsonResponse implements \JsonSerializabl
     {
         $attachment = new Attachment();
 
-        return $attachment->setType('youtube')->setContent([]);
+        $type = AttachmentType::createFromIntCode(AttachmentTypeVideoYouTube::INT_CODE);
+
+        return $attachment->setType($type)->setContent([]);
     }
 
     function jsonSerialize()

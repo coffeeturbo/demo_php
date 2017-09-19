@@ -7,6 +7,7 @@ use AppBundle\Http\ErrorJsonResponse;
 use AttachmentBundle\Form\AttachmentImageUploadType;
 use AttachmentBundle\Form\AttachmentLinkType;
 use AttachmentBundle\Response\SuccessAttachmentResponse;
+use AvatarBundle\Parameter\UploadedImageParameter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -62,8 +63,9 @@ class AttachmentController extends Controller
     {
         $data = $this->get('app.validate_request')->getData($request, AttachmentImageUploadType::class);
 
+        $parameter = new UploadedImageParameter($data['image']);
 
-        $this->get('image.service')->
+        $this->get('image.service')->generateImage($parameter);
         dump($data['image']);
 
 
