@@ -3,10 +3,12 @@ namespace AttachmentBundle\Service;
 
 use AttachmentBundle\Entity\Attachment;
 use AttachmentBundle\Entity\AttachmentType\AttachmentType;
+use AttachmentBundle\Entity\AttachmentType\AttachmentTypeImage;
 use AttachmentBundle\LinkMetadata\LinkMetadataFactory;
 use AttachmentBundle\Parser\OpenGraphParser;
 use AttachmentBundle\Repository\AttachmentRepository;
 use AttachmentBundle\Service\FetchResource\Result;
+use ImageBundle\Image\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentService
@@ -42,9 +44,14 @@ class AttachmentService
         $this->attachmentRepository->create($attachment);
     }
 
-    public function uploadImage(UploadedFile $file): Attachment
+    public function uploadImage(Image $image): Attachment
     {
+        $attachment = new Attachment();
 
+        $attachment->setType(AttachmentType::createFromIntCode(AttachmentTypeImage::INT_CODE))
+            ->setContent($image->jsonSerialize());
+
+        return $attachment;
     }
 
     public function fetchAttachmentFromJson(string $json): Attachment

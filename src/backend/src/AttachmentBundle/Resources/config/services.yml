@@ -12,3 +12,9 @@ services:
 
   attachment.service.fetch_resource_service:
     class: AttachmentBundle\Service\FetchResourceService
+
+  attachment.service.strategy.image_attachment_strategy:
+    class: AttachmentBundle\Service\Strategy\ImageAttachmentStrategy
+    arguments:
+      - '%attachment.image_type.absolute_path%'
+      - '%attachment.image_type.web_path%'

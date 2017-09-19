@@ -7,8 +7,10 @@ use AppBundle\Http\ErrorJsonResponse;
 use AttachmentBundle\Form\AttachmentImageUploadType;
 use AttachmentBundle\Form\AttachmentLinkType;
 use AttachmentBundle\Response\SuccessAttachmentResponse;
+use AttachmentBundle\Service\Strategy\ImageAttachmentStrategy;
 use AvatarBundle\Parameter\UploadedImageParameter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -63,13 +65,20 @@ class AttachmentController extends Controller
     {
         $data = $this->get('app.validate_request')->getData($request, AttachmentImageUploadType::class);
 
-        $parameter = new UploadedImageParameter($data['image']);
+        /** @var UploadedFile $image  */
+        $image = $data['image'];
 
-        $this->get('image.service')->generateImage($parameter);
-        dump($data['image']);
+        $attachmentStrategy = $this->get('attachment.service.strategy.image_attachment_strategy');
+
+        $image = $this->get('image.service')->generateImage($image->getRealPath(), null, $attachmentStrategy);
+
+        $attachmentService = $this->get('attachment.service.attachment_service');
 
 
+        $attachment = $attachmentService->uploadImage($image);
+        $attachmentService->createAttachment($attachment);
 
-        return new SuccessAttachmentResponse();
+
+        return new SuccessAttachmentResponse($attachment);
     }
 }

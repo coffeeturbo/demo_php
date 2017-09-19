@@ -1,0 +1,4 @@
+attachment:
+  image_type:
+    absolute_path: '%kernel.root_dir%/../../web/uploads/attachment/image'
+    web_path: 'uploads/attachment/image'

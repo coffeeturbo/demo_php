@@ -1,5 +1,3 @@
-
-
 services:
   profile.repository:
     class: ProfileBundle\Repository\ProfileRepository

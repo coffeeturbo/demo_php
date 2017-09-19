@@ -16,6 +16,8 @@ class AttachmentExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        $container->setParameter('attachment.image_type.web_path', $config['image_type']['web_path']);
+        $container->setParameter('attachment.image_type.absolute_path', $config['image_type']['absolute_path']);
 
     }
 }

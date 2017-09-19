@@ -12,6 +12,19 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('attachment');
 
 
+        $rootNode
+            ->children()
+                ->arrayNode('image_type')
+                    ->children()
+                        ->scalarNode('absolute_path')
+                            ->defaultValue('%kernel.root_dir%/../web/uploads/attachment/image')
+                        ->end()
+                        ->scalarNode('web_path')
+                            ->defaultValue('uploads/attachment/image')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

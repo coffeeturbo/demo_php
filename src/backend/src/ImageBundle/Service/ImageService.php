@@ -6,6 +6,7 @@ use AvatarBundle\Parameter\UploadedImageParameter;
 use ImageBundle\Image\Image;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Image as ImageLayout;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageService
 {
@@ -31,7 +32,9 @@ class ImageService
         $absolutePath = $strategy->getStorageDirPath();
         $webPath = $strategy->getPublicDirPath();
 
-        if(!is_dir($absolutePath)) mkdir($absolutePath);
+        dump($absolutePath);
+
+        if(!is_dir($absolutePath)) mkdir($absolutePath,0777, true);
 
         $imageName = sprintf('%s_%s.%s', $name, uniqid(), 'jpg');
 
@@ -76,4 +79,5 @@ class ImageService
     {
         return $image->resize($width, $height, $calback);
     }
+
 }
