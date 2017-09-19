@@ -65,19 +65,18 @@ class AttachmentController extends Controller
     {
         $data = $this->get('app.validate_request')->getData($request, AttachmentImageUploadType::class);
 
-        /** @var UploadedFile $image  */
-        $image = $data['image'];
+        /** @var UploadedFile $file  */
+        $file = $data['image'];
 
         $attachmentStrategy = $this->get('attachment.service.strategy.image_attachment_strategy');
 
-        $image = $this->get('image.service')->generateImage($image->getRealPath(), null, $attachmentStrategy);
+        $image = $this->get('image.service')
+                    ->generateImage($file->getRealPath(), null, $attachmentStrategy);
 
         $attachmentService = $this->get('attachment.service.attachment_service');
 
-
         $attachment = $attachmentService->uploadImage($image);
         $attachmentService->createAttachment($attachment);
-
 
         return new SuccessAttachmentResponse($attachment);
     }
