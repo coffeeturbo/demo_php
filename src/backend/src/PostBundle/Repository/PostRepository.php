@@ -29,7 +29,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function getPostWithTagsAndAttachmentsById(int $id)
+    public function getPostWithTagsAndAttachmentsByPostId(int $postId)
     {
         try {
             $qb = $this->createQueryBuilder('p')
@@ -38,7 +38,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                 ->leftJoin('p.attachments', 'attachments')
                 ->leftJoin('p.profile', 'profile')
                 ->where('p.id = :id')
-                ->setParameter('id', $id)
+                ->setParameter('id', $postId)
             ->getQuery();
 
             $result = $qb->getSingleResult();

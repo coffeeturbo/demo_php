@@ -1,0 +1,5 @@
+services:
+  feed.service.feed_service:
+    class: FeedBundle\Service\FeedService
+    arguments:
+      - "@post.repository"

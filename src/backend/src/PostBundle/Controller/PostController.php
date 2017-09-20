@@ -62,7 +62,7 @@ class PostController extends Controller
     {
         try{
             $post = $this->get('post.repository')
-                ->getPostWithTagsAndAttachmentsById($id);
+                ->getPostWithTagsAndAttachmentsByPostId($id);
         }
         catch(NoResultException $e){
             return new ErrorJsonResponse($e->getMessage(), [], 404);
