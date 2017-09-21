@@ -1,6 +1,8 @@
 <?php
 namespace AttachmentBundle\LinkMetadata;
 
+use AttachmentBundle\Entity\AttachmentType\AttachmentType;
+use AttachmentBundle\Entity\AttachmentType\AttachmentTypeVideoYouTube;
 use AttachmentBundle\LinkMetadata\Types\ImageLinkMetadata;
 use AttachmentBundle\LinkMetadata\Types\PageLinkMetadata;
 use AttachmentBundle\LinkMetadata\Types\UnknownLinkMetadata;
@@ -27,7 +29,7 @@ final class LinkMetadataFactory
             default:
                 throw new BadRequestHttpException(sprintf('Unknown resource type `%s`', $resourceType));
 
-            case YoutubeLinkMetadata::RESOURCE_TYPE:
+            case AttachmentTypeVideoYouTube::STRING_CODE:
                 return new YoutubeLinkMetadata(
                     $origURL,
                     $this->openGraphParser->getOG($origURL, $content),
@@ -41,7 +43,7 @@ final class LinkMetadataFactory
     private function getResourceType(string $origURL, string $contentType): string
     {
         if($this->testIsYouTube($origURL)) {
-            return YoutubeLinkMetadata::RESOURCE_TYPE;
+            return AttachmentTypeVideoYouTube::STRING_CODE;
         }else if($this->test(['text/html', 'application/xml', 'application/xhtml'], $contentType)) {
             return PageLinkMetadata::RESOURCE_TYPE;
         }else if($this->test(['image/jpg', 'image/jpeg', 'image/gif', 'image/png', 'image/bmp'], $contentType)) {

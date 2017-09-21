@@ -6,7 +6,7 @@ use AttachmentBundle\LinkMetadata\LinkMetadata;
 
 final class YoutubeLinkMetadata implements LinkMetadata
 {
-    const RESOURCE_TYPE = 'youtube';
+    const RESOURCE_TYPE = 'attachment-video-youtube';
 
     /** @var string */
     private $url;

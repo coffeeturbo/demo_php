@@ -1,0 +1,19 @@
+VoteBundle\Entity\Vote:
+  type: entity
+  repositoryClass: VoteBundle\Repository\VoteRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    content_type:
+      type: smallint
+      nullable: false
+    content_id:
+      type: integer
+      nullable: false
+
+  manyToOne:
+    profile:
+      targetEntity: ProfileBundle\Entity\Profile

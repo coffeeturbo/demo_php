@@ -38,7 +38,6 @@ class AttachmentController extends Controller
 
             $attachment = $this->get('attachment.service.attachment_service')->linkAttachment($data['url'], $result);
 
-
         } catch(\HttpUrlException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getCode());
         } catch(BadRequestHttpException $e){

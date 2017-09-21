@@ -14,7 +14,7 @@ feed_total:
 profile_feed:
   path: '/profile/{id}/limit/{limit}/offset/{offset}'
   methods: [ GET ]
-  defaults: { _controller: FeedBundle:ProfileFeed:feed, limit: 10, offset: 1 }
+  defaults: { _controller: FeedBundle:ProfileFeed:feed }
   requirements:
     id: \d+
     limit: \d+

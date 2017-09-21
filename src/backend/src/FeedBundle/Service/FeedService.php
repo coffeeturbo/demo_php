@@ -30,7 +30,7 @@ class FeedService
                 ->getQuery();
 
         } catch(NoResultException $e){
-            throw new NotFoundHttpException(sprintf("no posts founded", $id));
+            throw new NotFoundHttpException(sprintf("no posts founded for profile %s", $profile->getId()));
         }
 
         return $qb->getResult();
