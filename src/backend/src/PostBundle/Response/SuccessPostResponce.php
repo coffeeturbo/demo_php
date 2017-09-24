@@ -7,8 +7,6 @@ use PostBundle\Entity\Post;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use TagBundle\Entity\Tag;
-use TagBundle\Response\SuccessTagResponse;
 use TagBundle\Response\SuccessTagsResponse;
 
 class SuccessPostResponce extends JsonResponse implements \JsonSerializable
@@ -35,7 +33,14 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
                 'updated' => $post->getUpdated(),
                 'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
                 'attachments' => $this->getSuccessAttachmentsResponse($post->getAttachments()),
-                'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity']
+                'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
+
+                'votes' => [
+                    'state' => 'none',
+                    'rating' => $post->getVotesRating(),
+                    'positive' => $post->getVotesPositive(),
+                    'negative' => $post->getVotesNegative()
+                ],
             ]
         ];
     }

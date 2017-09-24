@@ -1,0 +1,26 @@
+vote_post_like:
+  methods: [ POST ]
+  path: /post/{postId}/positive
+  defaults: { _controller: VoteBundle:PostVote:votePositive }
+  requirements:
+    postId: \d+
+
+vote_post_dislike:
+  methods: [ POST ]
+  path: /post/{postId}/dislike
+
+vote_post_update:
+  methods: [ POST ]
+  path: /post/{postId}/update
+
+vote_comment_like:
+  methods: [ POST ]
+  path: /comment/{commentId}/like
+
+vote_comment_dislike:
+  methods: [ POST ]
+  path: /comment/{commentId}/dislike
+
+vote_comment_update:
+  methods: [ POST ]
+  path: /comment/{commentId}/update

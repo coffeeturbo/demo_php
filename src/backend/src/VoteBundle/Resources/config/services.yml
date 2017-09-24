@@ -1,0 +1,11 @@
+services:
+  vote.repository.vote_repository:
+    class: VoteBundle\Repository\VoteRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - VoteBundle\Entity\Vote
+
+  vote.service.vote_service:
+    class: VoteBundle\Service\VoteService
+    arguments:
+      - "@vote.repository.vote_repository"

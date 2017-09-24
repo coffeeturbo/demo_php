@@ -16,6 +16,15 @@ PostBundle\Entity\Post:
     title:
       type: string
       nullable: false
+    votesRating:
+      type: integer
+      nullable: false
+    votesPositive:
+      type: integer
+      nullable: false
+    votesNegative:
+      type: integer
+      nullable: false
   manyToOne:
     profile:
       targetEntity: ProfileBundle\Entity\Profile

@@ -8,10 +8,21 @@ use AttachmentBundle\Entity\AttachmentableEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use ProfileBundle\Entity\Profile;
 use TagBundle\Entity\AbstractTaggable;
+use VoteBundle\Vote\VoteableEntity;
+use VoteBundle\Vote\VoteableEntityTrait;
 
-class Post extends AbstractTaggable implements ModifyDateEntityInterface, AttachmentableEntity
+class Post extends
+                AbstractTaggable
+            implements
+                ModifyDateEntityInterface,
+                AttachmentableEntity,
+                VoteableEntity
 {
-    use ModifyDateEntityTrait, AttachmentableEntityTrait;
+    use
+        ModifyDateEntityTrait,
+        AttachmentableEntityTrait,
+        VoteableEntityTrait
+        ;
 
     private $id;
     private $title;

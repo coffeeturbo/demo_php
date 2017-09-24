@@ -34,7 +34,8 @@ class AppKernel extends Kernel
             new AttachmentBundle\AttachmentBundle(),
             new PostBundle\PostBundle(),
             new TagBundle\TagBundle(),
-            new FeedBundle\FeedBundle()
+            new FeedBundle\FeedBundle(),
+            new VoteBundle\VoteBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
