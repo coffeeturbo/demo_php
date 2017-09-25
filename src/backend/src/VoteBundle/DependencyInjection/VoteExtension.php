@@ -16,5 +16,7 @@ class VoteExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        $container->setParameter('vote.post_vote_weight', $config['post_vote_weight']);
+        $container->setParameter('vote.comment_vote_weight', $config['comment_vote_weight']);
     }
 }

@@ -20,7 +20,7 @@ class Vote implements VoteEntity
 
     private $voteableEntity;
 
-    public function getVoteableEntity()
+    public function getVoteableEntity(): VoteableEntity
     {
         return $this->voteableEntity;
     }
@@ -41,7 +41,7 @@ class Vote implements VoteEntity
         $this->profile = new ArrayCollection();
     }
 
-    public function getProfile()
+    public function getProfile(): Profile
     {
         return $this->profile;
     }

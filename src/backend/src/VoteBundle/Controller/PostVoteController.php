@@ -30,11 +30,17 @@ class PostVoteController extends Controller
         $vote = $this->voteFactory($post, new VoteTypePositive(), $profile);
 
 
-        // todo добавить проверку на существующий отзыв
-        $this->get('vote.service.vote_service')
-            ->create($vote);
+        $existsVote = $this->get('vote.service.vote_service')->findVote($vote);
 
-        $post->attachVote($vote);
+        dump($existsVote);
+
+        // todo добавить проверку на существующий отзыв
+        $voteService = $this->get('vote.service.vote_service');
+
+            $voteService->create($vote);
+
+            $voteService->attachVote($post, $vote);
+
         $this->get('post.repository')->save($post);
 
         return new SuccessPostResponce($post);

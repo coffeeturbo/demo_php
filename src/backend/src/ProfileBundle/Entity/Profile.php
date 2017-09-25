@@ -27,6 +27,25 @@ class Profile implements AvatarEntity, BackdropEntity
     private $account;
 
     private $created;
+    private $rating;
+
+
+    public function ratingIncrease(){
+        $this->rating++;
+    }
+    public function ratingDecrease()
+    {
+        $this->rating--;
+    }
+
+    public function getRating()
+    {
+        return $this->rating;
+    }
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
 
     public function __construct()
     {

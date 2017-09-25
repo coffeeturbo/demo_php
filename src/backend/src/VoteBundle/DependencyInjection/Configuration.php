@@ -10,6 +10,14 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('vote');
+        $rootNode->children()
+                ->integerNode('post_vote_weight')
+                    ->defaultValue(1)
+                ->end()
+                ->integerNode('comment_vote_weight')
+                    ->defaultValue(1)
+                ->end()
+            ->end();
 
         return $treeBuilder;
     }

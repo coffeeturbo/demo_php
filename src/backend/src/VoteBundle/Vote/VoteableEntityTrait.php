@@ -5,8 +5,6 @@ namespace VoteBundle\Vote;
 use PostBundle\Entity\Post;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
-use VoteBundle\Entity\VoteType\VoteTypeNegative;
-use VoteBundle\Entity\VoteType\VoteTypePositive;
 
 trait VoteableEntityTrait
 {
@@ -29,28 +27,40 @@ trait VoteableEntityTrait
         return $this->votesRating;
     }
 
-    public function attachVote(VoteEntity $entity)
-    {
-
-        // TODO Добавить вес лайка и вес дизлайка
-        switch($entity->getType()->getIntCode()){
-            case VoteTypePositive::INT_CODE:
-                $this->votesRating += 1;
-                $this->votesPositive++;
-            break;
-
-            case VoteTypeNegative::INT_CODE:
-                $this->votesRating -= 1;
-                $this->votesNegative++;
-            break;
-        }
-
-        return $this;
-    }
 
     public function getType(): VoteContentType
     {
         if($this instanceof Post) return new VoteContentTypePost();
         throw new \Exception("unknown type votable entity type");
+    }
+
+    public function increaseVotesRating(int $inc)
+    {
+        $this->votesRating += $inc;
+    }
+
+    public function decreaseVotesRating(int $dec)
+    {
+        $this->votesRating -= $dec;
+    }
+
+    public function increaseVotesNegative()
+    {
+        $this->votesNegative++;
+    }
+
+    public function decreaseVotesNegative()
+    {
+        $this->votesNegative--;
+    }
+
+    public function increaseVotesPositive()
+    {
+        $this->votesPositive++;
+    }
+
+    public function decreaseVotesPositive()
+    {
+        $this->votesPositive--;
     }
 }
