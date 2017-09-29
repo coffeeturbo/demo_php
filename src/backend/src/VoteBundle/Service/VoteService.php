@@ -57,6 +57,11 @@ class VoteService
 
     }
 
+    public function delete(Vote $vote)
+    {
+        $this->voteRepository->remove($vote);
+    }
+
     public function attachVote(VoteableEntity $entity, VoteEntity $vote)
     {
         $voteWeight = $this->countVoteWeight($entity->getType());
@@ -76,9 +81,21 @@ class VoteService
 
 
 
-    public function detach()
+    public function detach(VoteableEntity $entity, Vote $vote)
     {
+        $voteWeight = $this->countVoteWeight($entity->getType());
 
+        switch($vote->getType()->getIntCode()){
+            case VoteTypePositive::INT_CODE:
+                $entity->decreaseVotesRating($voteWeight);
+                $entity->decreaseVotesPositive();
+                break;
+
+            case VoteTypeNegative::INT_CODE:
+                $entity->increaseVotesRating($voteWeight);
+                $entity->decreaseVotesNegative();
+                break;
+        }
     }
 
     private function countVoteWeight(VoteContentType $type): int{

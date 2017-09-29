@@ -12,4 +12,11 @@ class VoteRepository extends EntityRepository
         $em->persist($vote);
         $em->flush($vote);
     }
+
+    public function remove(Vote $vote)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($vote);
+        $em->flush($vote);
+    }
 }

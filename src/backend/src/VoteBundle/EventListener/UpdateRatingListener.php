@@ -34,4 +34,5 @@ class UpdateRatingListener implements EventSubscriberInterface
         $this->profileRepository->save($profile);
 
     }
+
 }

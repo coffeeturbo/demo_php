@@ -27,35 +27,20 @@ class PostVoteController extends Controller
 
         $profile = $this->get('profile.service')->getCurrentProfile();
 
-        $vote = $this->voteFactory($post, new VoteTypePositive(), $profile);
-
+        $vote = new Vote($profile, $post, new VoteTypePositive());
 
         $existsVote = $this->get('vote.service.vote_service')->findVote($vote);
-
-        dump($existsVote);
-
-        // todo добавить проверку на существующий отзыв
         $voteService = $this->get('vote.service.vote_service');
 
+        if(is_null($existsVote)){
             $voteService->create($vote);
 
             $voteService->attachVote($post, $vote);
+        }
 
         $this->get('post.repository')->save($post);
 
         return new SuccessPostResponce($post);
-    }
-
-
-    public function voteFactory(VoteableEntity $entity, VoteType $type, Profile $profile): Vote
-    {
-        $vote = new Vote();
-        $vote->setProfile($profile)
-            ->setVoteableEntity($entity)
-            ->setType($type)
-        ;
-
-        return $vote;
     }
 
 

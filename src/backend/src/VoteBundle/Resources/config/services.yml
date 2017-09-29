@@ -1,5 +1,6 @@
 services:
   vote.repository.vote_repository:
+    public: false
     class: VoteBundle\Repository\VoteRepository
     factory: ['@doctrine.orm.entity_manager', 'getRepository']
     arguments:
