@@ -19,7 +19,7 @@
 
 h2 span {
   color: material-color($secondary_material, "500");
-  animation: fade 300ms both;
+  animation: fade 500ms both;
 }
 
 .material-field {
@@ -101,7 +101,7 @@ h2 span {
 
     @include mq($until: tablet) {
       display: none;
-    }    
+    }
   }
 
   @include mq($from: tablet) {
