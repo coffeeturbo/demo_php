@@ -1,0 +1,3 @@
+vote:
+  post_vote_weight: 2
+  comment_vote_weight: 1

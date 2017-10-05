@@ -1,0 +1,22 @@
+services:
+  vote.repository.vote_repository:
+    public: false
+    class: VoteBundle\Repository\VoteRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - VoteBundle\Entity\Vote
+
+  vote.service.vote_service:
+    class: VoteBundle\Service\VoteService
+    arguments:
+      - "@vote.repository.vote_repository"
+      - "%vote.post_vote_weight%"
+      - "%vote.comment_vote_weight%"
+      - "@event_dispatcher"
+
+  vote.event_listener.update_rating_listener:
+    class: VoteBundle\EventListener\UpdateRatingListener
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments:
+      - "@profile.repository"

@@ -28,6 +28,22 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         $em->flush($post);
     }
 
+    public function getPostById(int $postId): Post
+    {
+        try {
+            $qb = $this->createQueryBuilder('p')
+                ->select('p')
+                ->where('p.id = :id')
+                ->setParameter('id', $postId)
+                ->getQuery();
+
+            $result = $qb->getSingleResult();
+        } catch(NoResultException $e){
+            throw new NotFoundHttpException(sprintf("post wid id= %s not found", $postId));
+        }
+
+        return $result;
+    }
 
     public function getPostWithTagsAndAttachmentsByPostId(int $postId)
     {
@@ -43,7 +59,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
             $result = $qb->getSingleResult();
         } catch(NoResultException $e){
-            throw new NotFoundHttpException(sprintf("post wid id= %s not found", $id));
+            throw new NotFoundHttpException(sprintf("post wid id= %s not found", $postId));
         }
 
         return $result;
@@ -68,7 +84,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
             return $qb->getResult();
         } catch(NoResultException $e){
-            throw new NotFoundHttpException(sprintf("no posts founded", $id));
+            throw new NotFoundHttpException(sprintf("no posts founded"));
         }
     }
 

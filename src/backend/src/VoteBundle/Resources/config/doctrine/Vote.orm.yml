@@ -7,13 +7,17 @@ VoteBundle\Entity\Vote:
       generator:
         strategy: AUTO
   fields:
-    content_type:
+    type:
       type: smallint
       nullable: false
-    content_id:
+    contentType:
+      column: content_type
+      type: smallint
+      nullable: false
+    contentId:
+      column: content_id
       type: integer
       nullable: false
-
   manyToOne:
     profile:
       targetEntity: ProfileBundle\Entity\Profile

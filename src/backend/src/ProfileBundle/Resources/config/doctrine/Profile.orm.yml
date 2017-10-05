@@ -33,6 +33,9 @@ ProfileBundle\Entity\Profile:
     backdrop:
       type: json_array
       nullable: true
+    rating:
+      type: integer
+      nullable: false
   manyToOne:
     account:
       targetEntity: AccountBundle\Entity\Account

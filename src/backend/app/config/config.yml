@@ -5,6 +5,7 @@ imports:
     - { resource: '@ProfileBundle/Resources/config/config.yml' }
     - { resource: '@PostBundle/Resources/config/config.yml' }
     - { resource: '@AttachmentBundle/Resources/config/config.yml' }
+    - { resource: '@VoteBundle/Resources/config/config.yml' }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

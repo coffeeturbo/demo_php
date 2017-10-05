@@ -50,4 +50,10 @@ protected_feed:
   resource: '@FeedBundle/Resources/config/routing_protected.yml'
   prefix: '/protected/feed'
 
-  
+vote:
+  resource: '@VoteBundle/Resources/config/routing.yml'
+  prefix: '/vote'
+
+protected_vote:
+  resource: '@VoteBundle/Resources/config/routing_protected.yml'
+  prefix: '/protected/vote'
