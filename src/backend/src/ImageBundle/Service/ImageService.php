@@ -32,8 +32,6 @@ class ImageService
         $absolutePath = $strategy->getStorageDirPath();
         $webPath = $strategy->getPublicDirPath();
 
-        dump($absolutePath);
-
         if(!is_dir($absolutePath)) mkdir($absolutePath,0777, true);
 
         $imageName = sprintf('%s_%s.%s', $name, uniqid(), 'jpg');

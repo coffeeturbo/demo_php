@@ -52,6 +52,7 @@ class Profile implements AvatarEntity, BackdropEntity
         $this->gender = (new NoneGender())->getIntCode();
         $this->created = new \DateTime();
         $this->verified = false;
+        $this->rating = 0;
     }
 
     public function getId(): ?int

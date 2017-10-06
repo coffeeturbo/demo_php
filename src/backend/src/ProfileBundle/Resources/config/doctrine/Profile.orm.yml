@@ -36,6 +36,8 @@ ProfileBundle\Entity\Profile:
     rating:
       type: integer
       nullable: false
+      options:
+        default: 0
   manyToOne:
     account:
       targetEntity: AccountBundle\Entity\Account
