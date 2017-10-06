@@ -10,6 +10,7 @@ import {ProfileAvatarCropperHelper} from "../../Component/ProfileAvatarCropper/h
 import {ProfileBackdropCropperHelper} from "../../Component/ProfileBackdropCropper/helper";
 import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
 import {ProfileBackdropActionsHelper} from "../../Component/ProfileBackdropActions/helper";
+import {Feed} from "../../../Feed/Entity/Feed";
 
 @Component({
     templateUrl: "./template.pug",
@@ -18,6 +19,7 @@ import {ProfileBackdropActionsHelper} from "../../Component/ProfileBackdropActio
 export class ProfileRoute implements OnInit {
 
     public profile: Profile;
+    public profileFeed: Feed;
     public disabled: boolean = false;
 
     constructor(
@@ -32,6 +34,11 @@ export class ProfileRoute implements OnInit {
 
     ngOnInit() {
         this.profile = this.route.snapshot.data.profile;
+        this.profileFeed = this.route.snapshot.data.profileFeed;
+
+        this.route.data.subscribe(data => {
+            // console.log("route.data.profileFeed", data);
+        });
         
         if(this.profileService.hasAvatar(this.profile)) {
             // Preload fullsize avatar

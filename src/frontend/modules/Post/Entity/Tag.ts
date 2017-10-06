@@ -1,4 +1,4 @@
 export interface Tag {
-    value: string;
-    display: string;
+    id?: number;
+    name: string;
 }

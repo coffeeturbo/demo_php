@@ -5,6 +5,9 @@ import {FeedProfileRoute} from "./Route/FeedProfileRoute/index";
 import {FeedHotRoute} from "./Route/FeedHotRoute/index";
 import {FeedNewRoute} from "./Route/FeedNewRoute/index";
 import {FeedBestRoute} from "./Route/FeedBestRoute/index";
+import {FeedService} from "./Service/FeedService";
+import {FeedRESTService} from "./Service/FeedRESTService";
+import {FeedComponent} from "./Component/FeedComponent/index";
 
 @NgModule({
     imports: [
@@ -14,7 +17,16 @@ import {FeedBestRoute} from "./Route/FeedBestRoute/index";
         FeedProfileRoute,
         FeedHotRoute,
         FeedNewRoute,
-        FeedBestRoute
+        FeedBestRoute,
+
+        FeedComponent
+    ],
+    providers: [
+        FeedService,
+        FeedRESTService
+    ],
+    exports: [
+        FeedComponent
     ]
 })
 export class FeedModule {} 

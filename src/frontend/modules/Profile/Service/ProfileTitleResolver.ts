@@ -13,6 +13,7 @@ export class ProfileTitleResolver implements Resolve<string> {
         let onTitleLoad = new EventEmitter<string>();
 
         this.profileService.onProfileResolve
+            .first()
             .map(profile => profile.name)
             .subscribe((title) => {
                 onTitleLoad.emit(title);

@@ -17,6 +17,7 @@ import {FeedBestRoute} from "../modules/Feed/Route/FeedBestRoute/index";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute/index";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute/index";
 import {PostFormRoute} from "../modules/Post/Route/PostFormRoute/index";
+import {ProfileFeedResolver} from "../modules/Profile/Service/ProfileFeedResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -87,7 +88,11 @@ export const appRoutes: JetRoutes = [
                 children: [
                     { path: 'avatar', component: ProfileAvatarRoute}
                 ],
-                resolve: { profile: ProfileResolver, title: ProfileTitleResolver }
+                resolve: { 
+                    profile: ProfileResolver,
+                    title: ProfileTitleResolver,
+                    profileFeed: ProfileFeedResolver, 
+                }
             }
         ]
     },

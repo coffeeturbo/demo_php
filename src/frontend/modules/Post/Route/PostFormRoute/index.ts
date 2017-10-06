@@ -27,8 +27,7 @@ export class PostFormRoute implements OnInit {
     });
 
     public authorTag: Tag = {
-        display: this.translationService.translate("author's"),
-        value: this.translationService.translate("author's")
+        name: this.translationService.translate("author's")
     };
 
     constructor(private translationService: TranslationService) {}
@@ -85,7 +84,7 @@ export class PostFormRoute implements OnInit {
         if (isAuthor) {
             tags.push(this.authorTag);
         } else {
-            tags = tags.filter((item: Tag) => item.value != this.authorTag.value);
+            tags = tags.filter((item: Tag) => item.name != this.authorTag.name);
         }
 
         this.form.controls.tags.setValue(tags);
@@ -96,7 +95,7 @@ export class PostFormRoute implements OnInit {
         let tags: Tag[] = this.form.controls.tags.value || [];
 
         return tags.filter(
-                (item: Tag) => item.value == this.authorTag.value
+                (item: Tag) => item.name == this.authorTag.name
             ).length > 0;
     }
 
@@ -127,10 +126,10 @@ export class PostFormRoute implements OnInit {
         // @DOTO: Make rest service
         return Observable
             .of([
-                {value: text, display: text},
-                {value: text + " foo", display: text + " foo"},
-                {value: text + " bar", display: text + " bar"},
-                {value: text + " baz", display: text + " baz"}
+                {name: text},
+                {name: text + " foo"},
+                {name: text + " bar"},
+                {name: text + " baz"}
             ])
         ;
     };

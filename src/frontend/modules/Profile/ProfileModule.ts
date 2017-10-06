@@ -19,12 +19,15 @@ import {ProfileBackdropCropperHelper} from "./Component/ProfileBackdropCropper/h
 import {ProfileTooltipComponent} from "./Component/ProfileTooltip/index";
 import {ProfileBackdropActionsHelper} from "./Component/ProfileBackdropActions/helper";
 import {ProfileBackdropActionsComponent} from "./Component/ProfileBackdropActions/index";
+import {ProfileFeedResolver} from "./Service/ProfileFeedResolver";
+import {FeedModule} from "../Feed/FeedModule";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         RouterModule,
+        FeedModule,
         ReactiveFormsModule
     ],
     declarations: [
@@ -44,6 +47,7 @@ import {ProfileBackdropActionsComponent} from "./Component/ProfileBackdropAction
         
         ProfileResolver,
         ProfileTitleResolver,
+        ProfileFeedResolver,
         
         ProfileAvatarCropperHelper,
         ProfileBackdropCropperHelper,

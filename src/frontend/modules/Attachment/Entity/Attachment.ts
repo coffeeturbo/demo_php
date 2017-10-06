@@ -6,7 +6,7 @@ export interface Attachment {
 
 export enum AttachmentType
 {
-    text  = <any>"text",
-    video  = <any>"video",
-    image = <any>"image",
+    text  = <any>"attachment-text",
+    video  = <any>"attachment-video",
+    image = <any>"attachment-image"
 }
