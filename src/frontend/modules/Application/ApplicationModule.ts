@@ -10,16 +10,18 @@ import {appRoutes} from "../../app/routes";
 import "../../assets/styles/index.scss";
 
 import {ApplicationComponent} from "./Component/Application/index";
+import {ApplicationMainFrameComponent} from "./Component/ApplicationMain/index";
+import {ApplicationScrollButtonComponent} from "./Component/ApplicationScrollButton/index";
 import {ForbiddenRoute} from "./Route/ForbiddenRoute/index";
 import {PageNotFoundRoute} from "./Route/PageNotFoundRoute/index";
 import {StartupService} from "./Service/StartupService";
-
 import {AuthModule} from "../Auth/AuthModule";
 import {CommonModule} from "../Common/CommonModule";
 import {SidebarModule} from "../Sidebar/SidebarModule";
 import {SettingsModule} from "../Settings/SettingsModule";
 import {FeedModule} from "../Feed/FeedModule";
 import {ProfileModule} from "../Profile/ProfileModule";
+import {ApplicationScrollService} from "./Service/ApplicationScrollService";
 import {RouteHelperService} from "./Service/RouteHelperService";
 import {ApplicationLogoComponent} from "./Component/ApplicationLogo/index";
 import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/index";
@@ -69,12 +71,15 @@ export class HammerConfig extends HammerGestureConfig  {
         ApplicationComponent,
         ApplicationLogoComponent,
         ApplicationLoadingBarComponent,
+        ApplicationMainFrameComponent,
+        ApplicationScrollButtonComponent,
         ForbiddenRoute,
         PageNotFoundRoute,
     ],
     providers: [
         StartupService,
         RouteHelperService,
+        ApplicationScrollService,
         {
             provide: LOCALE_ID,
             useFactory: LocaleFactory,

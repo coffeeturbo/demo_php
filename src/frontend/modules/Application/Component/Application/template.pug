@@ -14,9 +14,6 @@
         i.fa.fa-2x.fa-search
         i {{"Search" | translate}}  
       ng-container(*ngIf="auth.isSignedIn()")
-        a(routerLink="/post/add")
-          i.fa.fa-2x.fa-plus-circle
-          span {{"Add post" | translate}}  
         .relative
           a((click)="isProfileTooltipVisible = !isProfileTooltipVisible", [ngClass]="{'active': isProfileTooltipVisible}")
             i.fa.fa-2x.fa-user-circle
@@ -31,8 +28,10 @@
           a(href="") {{ result }}
   sidebar
 
-main([ngClass]="'sidebar-' + sidebar.state")
+application-main
   router-outlet
-  
+
+post-create-button(*ngIf="auth.isSignedIn()", routerLink="/post/add", routerLinkActive="hidden")  
 application-loading-bar
+application-scroll-button(*ngIf="!device.isMobile()")
 settings-modal

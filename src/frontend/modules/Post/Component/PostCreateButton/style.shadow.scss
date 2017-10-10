@@ -1,0 +1,19 @@
+@import '../../../../assets/styles/global';
+
+:host {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  transition: bottom 250ms;
+  cursor: pointer;
+  background: material-color($primary_material, '700');
+  border-radius: 50%;
+  display: block;
+  padding: 21px 16px;
+  color: #fff;
+  
+  &.hidden {
+    bottom: -68px;
+  }
+}
+

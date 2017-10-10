@@ -15,4 +15,4 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
       .checkbox {{"Show pad" | translate }} 
 
   .controls
-    button.btn.primary(type="submit", [disabled]="!form.valid") {{"Save" | translate}}
+    button.btn-material.primary(type="submit", [disabled]="form.invalid") {{"Save" | translate}}

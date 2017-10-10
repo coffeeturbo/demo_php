@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+import {RouterModule} from "@angular/router";
 import {DndModule} from "ng2-dnd";
 import {TagInputModule} from "ngx-chips";
 
@@ -9,15 +10,18 @@ import {PostRoute} from "./Route/PostRoute/index";
 import {PostFormRoute} from "./Route/PostFormRoute/index";
 import {CommonModule} from "../Common/CommonModule";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
+import {PostCreateButtonComponent} from "./Component/PostCreateButton/index";
 
 @NgModule({
     imports: [
         TagInputModule,
         DndModule.forRoot(),
         AttachmentModule,
-        CommonModule
+        CommonModule,
+        RouterModule
     ],
     declarations: [
+        PostCreateButtonComponent,
         PostRoute,
         PostFormRoute
     ],
@@ -25,6 +29,9 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
         PostRESTService,
         PostResolver,
         PostTitleResolver
+    ],
+    exports:[
+        PostCreateButtonComponent
     ]
 })
 export class PostModule {}

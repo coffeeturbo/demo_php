@@ -30,6 +30,7 @@ b { font-weight: bold; }
 
 button, input, textarea {
   font-size: $font_size;
+  font-family: $font_family;
   background: none;
   border: none;
   outline: none;

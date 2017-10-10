@@ -5,7 +5,7 @@ ng-container(*ngIf="profile")
       ng-container(*ngIf="backdropHelper.disabled()")
         img(*ngIf="profileService.hasBackdrop(profile)", src="{{ profile.backdrop.public_path}}")
         button((click)="backdropActionsHelper.show()") {{ "Change" | translate }}
-      figure
+      figure(*ngIf="backdropHelper.disabled()")
         .avatar
           a(*ngIf="profileService.hasAvatar(profile)", routerLink="avatar")
             img(src="{{profile.avatar.medium.public_path}}")

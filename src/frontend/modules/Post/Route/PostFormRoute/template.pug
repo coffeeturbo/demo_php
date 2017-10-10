@@ -59,6 +59,8 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       secondaryPlaceholder="{{'Tags' | translate}}",
       maxItems="8",
       theme='material',
+      displayBy='name',
+      identifyBy='id',
       inputId="addPostTags"
       )
         tag-input-dropdown(
@@ -74,11 +76,11 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
     label.material-field.clickable
       .input-box
         input(type="checkbox", [checked]="hasAuthorTag()", (change)="updateAuthorTag($event.target.checked)")
-        .checkbox {{ "author's" | translate | capitalize}} 
+        .checkbox {{ "author's" | translate | capitalize }}
 
     button.btn-material(type="button", (click)="reset()", *ngIf="!form.pristine")
       i.fa.fa-undo
-      span {{"Reset" | translate }}
+      span {{ "Reset" | translate }}
     button.btn-material.primary(type="submit")
       i.fa.fa-bullhorn
-      span {{"Publish" | translate }}
+      span {{ "Publish" | translate }}

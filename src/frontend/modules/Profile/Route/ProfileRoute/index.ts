@@ -36,10 +36,6 @@ export class ProfileRoute implements OnInit {
         this.profile = this.route.snapshot.data.profile;
         this.profileFeed = this.route.snapshot.data.profileFeed;
 
-        this.route.data.subscribe(data => {
-            // console.log("route.data.profileFeed", data);
-        });
-        
         if(this.profileService.hasAvatar(this.profile)) {
             // Preload fullsize avatar
             (new Image()).src = this.profile.avatar['origin'].public_path;
@@ -74,8 +70,5 @@ export class ProfileRoute implements OnInit {
                 this.backdropHelper.destroy();
             })
         ;
-    }
-
-    test() {
     }
 }
