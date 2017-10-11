@@ -64,7 +64,9 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       inputId="addPostTags"
       )
         tag-input-dropdown(
-          [autocompleteObservable]="requestAutocompleteItems",
+        displayBy='name',
+        identifyBy='id',
+        [autocompleteObservable]="requestAutocompleteItems",
         )
       ng-container(*ngIf="form.controls['tags'].invalid && submitted")
         tooltip(*ngIf="form.controls['tags'].hasError('required')")
