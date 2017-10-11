@@ -1,6 +1,8 @@
 <?php
 namespace VoteBundle\Service;
 
+use ProfileBundle\Entity\Profile;
+use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use VoteBundle\Entity\Vote;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
@@ -20,17 +22,20 @@ class VoteService
     private $eventDispatcher;
     private $postVoteWeight;
     private $commentVoteWeight;
+    private $profileRepository;
 
     public function __construct(
         VoteRepository $voteRepository,
         int $postVoteWeight,
         int $commentVoteWeight,
-        EventDispatcherInterface $eventDispatcher)
-    {
+        EventDispatcherInterface $eventDispatcher,
+        ProfileRepository $profileRepository
+    ){
         $this->voteRepository = $voteRepository;
         $this->eventDispatcher = $eventDispatcher;
         $this->postVoteWeight = $postVoteWeight;
         $this->commentVoteWeight = $commentVoteWeight;
+        $this->profileRepository = $profileRepository;
     }
 
     public function findVote(Vote $vote): ?Vote
@@ -59,7 +64,15 @@ class VoteService
 
     public function delete(Vote $vote)
     {
+        // todo сделать проверку на хозяина поста или модератора
+
         $this->voteRepository->remove($vote);
+
+        $this->eventDispatcher->dispatch(
+            VoteEvents::VOTE_DELETED,
+            new VoteEvent($vote)
+
+        );
     }
 
     public function attachVote(VoteableEntity $entity, VoteEntity $vote)
@@ -70,7 +83,7 @@ class VoteService
             case VoteTypePositive::INT_CODE:
                 $entity->increaseVotesRating($voteWeight);
                 $entity->increaseVotesPositive();
-                break;
+            break;
 
             case VoteTypeNegative::INT_CODE:
                 $entity->decreaseVotesRating($voteWeight);
@@ -78,8 +91,6 @@ class VoteService
             break;
         }
     }
-
-
 
     public function detach(VoteableEntity $entity, Vote $vote)
     {
@@ -98,7 +109,49 @@ class VoteService
         }
     }
 
-    private function countVoteWeight(VoteContentType $type): int{
+    public function attachVoteToProfile(Vote $vote, Profile $profile)
+    {
+        $voteWeight = $this->countVoteWeight($vote->getVoteableEntity()->getType());
+
+        switch($vote->getType()->getIntCode()){
+            case VoteTypePositive::INT_CODE:
+                $profile->increaseVotesRating($voteWeight);
+                break;
+            case VoteTypeNegative::INT_CODE:
+                $profile->decreaseVotesRating($voteWeight);
+                break;
+            default:
+                throw new \Exception(
+                    sprintf("unknown vote type %s", $vote->getType()->getStringCode())
+                );
+
+        }
+
+        $this->profileRepository->save($profile);
+    }
+
+    public function detachVoteFromProfile(Vote $vote, Profile $profile)
+    {
+        $voteWeight = $this->countVoteWeight($vote->getVoteableEntity()->getType());
+        switch($vote->getType()->getIntCode()){
+            case VoteTypePositive::INT_CODE:
+                $profile->decreaseVotesRating($voteWeight);
+                break;
+            case VoteTypeNegative::INT_CODE:
+                $profile->increaseVotesRating($voteWeight);
+                break;
+            default:
+                throw new \Exception(
+                    sprintf("unknown vote type %s", $vote->getType()->getStringCode())
+                );
+
+        }
+
+        $this->profileRepository->save($profile);
+    }
+
+    private function countVoteWeight(VoteContentType $type): int
+    {
 
         switch($type->getIntCode()){
             case VoteContentTypePost::INT_CODE:

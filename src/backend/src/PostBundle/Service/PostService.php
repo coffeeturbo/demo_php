@@ -21,6 +21,10 @@ class PostService
         $this->maxAttachmentsLimit = $maxAttachmentsLimit;
     }
 
+    public function getPostRepository(): PostRepository
+    {
+        return $this->postRepository;
+    }
 
     public function create(Post $post): Post
     {

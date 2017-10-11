@@ -1,14 +1,16 @@
 <?php
 namespace VoteBundle\Controller;
 
+use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PostBundle\Response\SuccessPostResponce;
-use ProfileBundle\Entity\Profile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use VoteBundle\Entity\Vote;
-use VoteBundle\Entity\VoteType\VoteType;
+use VoteBundle\Entity\VoteType\VoteTypeNegative;
 use VoteBundle\Entity\VoteType\VoteTypePositive;
-use VoteBundle\Vote\VoteableEntity;
 
 class PostVoteController extends Controller
 {
@@ -22,31 +24,111 @@ class PostVoteController extends Controller
      */
     public function votePositiveAction($postId)
     {
+        try {
 
-        $post = $this->get('post.repository')->getPostById($postId);
+            $postRepository = $this->get('post.service')->getPostRepository();
+            $voteService = $this->get('vote.service.vote_service');
+            $profile = $this->get('profile.service')->getCurrentProfile();
 
-        $profile = $this->get('profile.service')->getCurrentProfile();
+            $post = $postRepository->getPostById($postId);
+            $vote = new Vote($profile, $post, new VoteTypePositive());
 
-        $vote = new Vote($profile, $post, new VoteTypePositive());
+            $existsVote = $voteService->findVote($vote);
 
-        $existsVote = $this->get('vote.service.vote_service')->findVote($vote);
-        $voteService = $this->get('vote.service.vote_service');
 
-        if(is_null($existsVote)){
-            $voteService->create($vote);
+            if(is_null($existsVote)){
+                $voteService->create($vote);
 
-            $voteService->attachVote($post, $vote);
+                $voteService->attachVote($post, $vote);
+                $postRepository->save($post);
+            }
+
+        } catch(NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch (UnauthorizedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
-
-        $this->get('post.repository')->save($post);
 
         return new SuccessPostResponce($post);
     }
 
 
-    public function voteDislikeAction()
+    /**
+     * @ApiDoc(
+     *     section="Vote",
+     *     description= "негативная оценка поста",
+     *     authentication=true,
+     * )
+     */
+    public function voteNegativeAction($postId)
     {
+        try {
+            $postRepository = $this->get('post.service')->getPostRepository();
+            $voteService = $this->get('vote.service.vote_service');
+            $profile = $this->get('profile.service')->getCurrentProfile();
 
+
+            $post = $postRepository->getPostById($postId);
+            $vote = new Vote($profile, $post, new VoteTypeNegative());
+
+            $existsVote = $voteService->findVote($vote);
+
+
+            if(is_null($existsVote)){
+                $voteService->create($vote);
+                $voteService->attachVote($post, $vote);
+                $postRepository->save($post);
+            }
+
+        } catch(NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch (UnauthorizedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        }
+
+        return new SuccessPostResponce($post);
+    }
+
+    /**
+     * @ApiDoc(
+     *     section="Vote",
+     *     description= "удалить оценку поста",
+     *     authentication=true,
+     * )
+     */
+    public function voteRemoveAction($postId)
+    {
+        try {
+            $postRepository = $this->get('post.service')->getPostRepository();
+            $voteService = $this->get('vote.service.vote_service');
+
+            $profile = $this->get('profile.service')->getCurrentProfile();
+
+            $post = $postRepository->getPostById($postId);
+
+            $vote = new Vote($profile, $post);
+
+            $existsVote = $voteService->findVote($vote);
+
+            if($existsVote){
+                $existsVote->setVoteableEntity($post);
+                $voteService->detach($post, $existsVote);
+                $voteService->delete($existsVote);
+            }
+
+        } catch(NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch (UnauthorizedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        }
+
+        return new SuccessPostResponce($post);
     }
 
 }

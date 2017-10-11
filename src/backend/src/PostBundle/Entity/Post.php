@@ -8,20 +8,24 @@ use AttachmentBundle\Entity\AttachmentableEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use ProfileBundle\Entity\Profile;
 use TagBundle\Entity\AbstractTaggable;
+use VoteBundle\Rating\RatingableEntity;
+use VoteBundle\Rating\RatingableEntityTrait;
 use VoteBundle\Vote\VoteableEntity;
 use VoteBundle\Vote\VoteableEntityTrait;
 
-class Post extends
-                AbstractTaggable
+class Post extends AbstractTaggable
             implements
                 ModifyDateEntityInterface,
                 AttachmentableEntity,
-                VoteableEntity
+                VoteableEntity,
+                RatingableEntity
+
 {
     use
         ModifyDateEntityTrait,
         AttachmentableEntityTrait,
-        VoteableEntityTrait
+        VoteableEntityTrait,
+        RatingableEntityTrait
         ;
 
     private $id;

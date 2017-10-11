@@ -75,5 +75,4 @@ class ProfileRepository extends EntityRepository
         return $this->findOneBy(['account' => $account->getId()]);
     }
 
-
 }

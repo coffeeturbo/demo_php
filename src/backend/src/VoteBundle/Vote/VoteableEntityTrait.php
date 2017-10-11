@@ -8,7 +8,6 @@ use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
 
 trait VoteableEntityTrait
 {
-    private $votesRating = 0;
     private $votesPositive = 0;
     private $votesNegative = 0;
 
@@ -22,11 +21,6 @@ trait VoteableEntityTrait
         return $this->votesNegative;
     }
 
-    public function getVotesRating(): int
-    {
-        return $this->votesRating;
-    }
-
 
     public function getType(): VoteContentType
     {
@@ -34,15 +28,6 @@ trait VoteableEntityTrait
         throw new \Exception("unknown type votable entity type");
     }
 
-    public function increaseVotesRating(int $inc)
-    {
-        $this->votesRating += $inc;
-    }
-
-    public function decreaseVotesRating(int $dec)
-    {
-        $this->votesRating -= $dec;
-    }
 
     public function increaseVotesNegative()
     {

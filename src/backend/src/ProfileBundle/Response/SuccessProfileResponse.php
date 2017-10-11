@@ -31,7 +31,8 @@ class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
                 'backdrop' => $profile->getBackdrop() ?  $profile->getBackdrop()->jsonSerialize(): $profile->getBackdrop(),
                 'birth_date' => $profile->getBirthDate() ? $profile->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT) : null,
                 'verified' => $profile->isVerified(),
-                'created' => $profile->getCreated()->format(\DateTime::W3C)
+                'created' => $profile->getCreated()->format(\DateTime::W3C),
+                'rating' => $profile->getVotesRating()
             ]
         ];
     }

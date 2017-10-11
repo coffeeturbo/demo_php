@@ -9,13 +9,14 @@ use ImageBundle\Image\BackdropEntity;
 use ImageBundle\Image\BackdropEntityTrait;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
+use VoteBundle\Rating\RatingableEntity;
+use VoteBundle\Rating\RatingableEntityTrait;
 
-
-class Profile implements AvatarEntity, BackdropEntity
+class Profile implements AvatarEntity, BackdropEntity, RatingableEntity
 {
     const BIRTH_DATE_FORMAT = 'Y-m-d';
 
-    use AvatarEntityTrait, BackdropEntityTrait;
+    use AvatarEntityTrait, BackdropEntityTrait, RatingableEntityTrait;
 
     private $id;
 
@@ -27,32 +28,12 @@ class Profile implements AvatarEntity, BackdropEntity
     private $account;
 
     private $created;
-    private $rating;
-
-
-    public function ratingIncrease(){
-        $this->rating++;
-    }
-    public function ratingDecrease()
-    {
-        $this->rating--;
-    }
-
-    public function getRating()
-    {
-        return $this->rating;
-    }
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-    }
 
     public function __construct()
     {
         $this->gender = (new NoneGender())->getIntCode();
         $this->created = new \DateTime();
         $this->verified = false;
-        $this->rating = 0;
     }
 
     public function getId(): ?int

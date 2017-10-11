@@ -20,11 +20,12 @@ class Vote implements VoteEntity
 
     private $voteableEntity;
 
-    public function __construct(Profile $profile, VoteableEntity $entity, VoteType $type)
+    public function __construct(Profile $profile, VoteableEntity $entity, VoteType $type = null)
     {
         $this->profile = $profile;
-        $this->type = $type;
         $this->setVoteableEntity($entity);
+
+        $this->type =  isset($type) ? $type->getIntCode() : null;
     }
 
     public function getVoteableEntity(): VoteableEntity

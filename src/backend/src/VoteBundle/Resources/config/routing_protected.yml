@@ -1,17 +1,23 @@
-vote_post_like:
+vote_post_positive:
   methods: [ POST ]
   path: /post/{postId}/positive
   defaults: { _controller: VoteBundle:PostVote:votePositive }
   requirements:
     postId: \d+
 
-vote_post_dislike:
+vote_post_negative:
   methods: [ POST ]
-  path: /post/{postId}/dislike
+  path: /post/{postId}/negative
+  defaults: { _controller: VoteBundle:PostVote:voteNegative }
+  requirements:
+    postId: \d+
 
-vote_post_update:
-  methods: [ POST ]
-  path: /post/{postId}/update
+vote_post_delete:
+  methods: [ DELETE ]
+  path: /post/{postId}/delete
+  defaults: { _controller: VoteBundle:PostVote:voteRemove }
+  requirements:
+    postId: \d+
 
 vote_comment_like:
   methods: [ POST ]

@@ -12,7 +12,6 @@ services:
       - '%post.max_tags_limit%'
       - '%post.max_attachments_limit%'
 
-
   post.form.handler.create_post_data_handler:
     class: PostBundle\Form\Handler\CreatePostDataHandler
     arguments:

@@ -29,8 +29,8 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
             'entity' => [
                 'id' => $post->getId(),
                 'title' => $post->getTitle(),
-                'created' => $post->getCreated(),
-                'updated' => $post->getUpdated(),
+                'created' => $post->getCreated()->format(\DateTime::W3C),
+                'updated' => $post->getUpdated()->format(\DateTime::W3C),
                 'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
                 'attachments' => $this->getSuccessAttachmentsResponse($post->getAttachments()),
                 'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
@@ -69,6 +69,7 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
             ->setTags([])
             ->setCreated(new \DateTime())
             ->markUpdated()
+
         ;
 
         return $entity;

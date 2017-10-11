@@ -27,6 +27,7 @@ class ProfileService
         $this->container = $container;
     }
 
+
     public function __construct(
         ProfileRepository $profileRepository,
         AuthService $authService,
@@ -37,6 +38,11 @@ class ProfileService
         $this->authService = $authService;
         $this->eventDispatcher = $eventDispatcher;
         $this->profilesLimit = $profilesLimit;
+    }
+
+    public function getProfileRepository(): ProfileRepository
+    {
+        return $this->profileRepository;
     }
 
     public function getById($id): Profile

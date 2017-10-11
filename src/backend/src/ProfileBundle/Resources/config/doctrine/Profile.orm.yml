@@ -33,7 +33,7 @@ ProfileBundle\Entity\Profile:
     backdrop:
       type: json_array
       nullable: true
-    rating:
+    votesRating:
       type: bigint
       nullable: false
       options:
@@ -45,10 +45,6 @@ ProfileBundle\Entity\Profile:
         name: account_id
         referencedColumnName: id
 
-
-#    alias:
-#      type: string
-#      nullable: true
 #    family_status:
 #      nullable: true
 #    interests:

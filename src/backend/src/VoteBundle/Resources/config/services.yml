@@ -13,10 +13,11 @@ services:
       - "%vote.post_vote_weight%"
       - "%vote.comment_vote_weight%"
       - "@event_dispatcher"
+      - "@profile.repository"
 
   vote.event_listener.update_rating_listener:
     class: VoteBundle\EventListener\UpdateRatingListener
     tags:
       - { name: kernel.event_subscriber }
     arguments:
-      - "@profile.repository"
+      - "@vote.service.vote_service"
