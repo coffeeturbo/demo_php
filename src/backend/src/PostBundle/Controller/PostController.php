@@ -5,7 +5,7 @@ use AppBundle\Http\ErrorJsonResponse;
 use Doctrine\ORM\NoResultException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PostBundle\Form\PostFormType;
-use PostBundle\Response\SuccessPostResponce;
+use PostBundle\Response\SuccessPostResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -47,7 +47,7 @@ class PostController extends Controller
             return new ErrorJsonResponse($e->getMessage());
         }
 
-        return new SuccessPostResponce($post);
+        return new SuccessPostResponse($post);
     }
 
     /**
@@ -71,7 +71,7 @@ class PostController extends Controller
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
-        return new SuccessPostResponce($post);
+        return new SuccessPostResponse($post);
     }
 
 

@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use TagBundle\Response\SuccessTagsResponse;
 
-class SuccessPostResponce extends JsonResponse implements \JsonSerializable
+class SuccessPostResponse extends JsonResponse implements \JsonSerializable
 {
 
     private $entity;

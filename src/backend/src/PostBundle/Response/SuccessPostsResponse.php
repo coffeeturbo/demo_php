@@ -21,25 +21,11 @@ class SuccessPostsResponse extends JsonResponse implements \JsonSerializable
         $posts = $this->entities ?? $this->createMockEntity();
 
         $entities = array_map(function(Post $post){
-            return (new SuccessPostResponce($post))->jsonSerialize();
+            return (new SuccessPostResponse($post))->jsonSerialize();
         }, $posts );
 
         return $entities;
     }
-
-//    public function getSuccessAttachmentsResponse(array $attachments)
-//    {
-//
-//        $entities = array_map(function(Attachment $attachment){
-//            return (new SuccessAttachmentResponse($attachment))->jsonSerialize();
-//        }, $attachments);
-//
-//
-//        return $attachments = [
-//            'total' => count($entities),
-//            'entities' => $entities
-//        ];
-//    }
 
     public function createMockEntity(): array
     {

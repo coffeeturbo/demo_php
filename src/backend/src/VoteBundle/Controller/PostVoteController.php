@@ -3,7 +3,7 @@ namespace VoteBundle\Controller;
 
 use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use PostBundle\Response\SuccessPostResponce;
+use PostBundle\Response\SuccessPostResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -51,7 +51,7 @@ class PostVoteController extends Controller
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
-        return new SuccessPostResponce($post);
+        return new SuccessPostResponse($post);
     }
 
 
@@ -90,7 +90,7 @@ class PostVoteController extends Controller
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
-        return new SuccessPostResponce($post);
+        return new SuccessPostResponse($post);
     }
 
     /**
@@ -128,7 +128,7 @@ class PostVoteController extends Controller
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
-        return new SuccessPostResponce($post);
+        return new SuccessPostResponse($post);
     }
 
 }
