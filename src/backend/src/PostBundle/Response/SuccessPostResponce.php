@@ -1,8 +1,7 @@
 <?php
 namespace PostBundle\Response;
 
-use AttachmentBundle\Entity\Attachment;
-use AttachmentBundle\Response\SuccessAttachmentResponse;
+use AttachmentBundle\Response\SuccessAttachmentsResponse;
 use PostBundle\Entity\Post;
 use ProfileBundle\Response\SuccessProfileResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,7 +31,7 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
                 'created' => $post->getCreated()->format(\DateTime::W3C),
                 'updated' => $post->getUpdated()->format(\DateTime::W3C),
                 'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
-                'attachments' => $this->getSuccessAttachmentsResponse($post->getAttachments()),
+                'attachments' => (new SuccessAttachmentsResponse($post->getAttachments()))->jsonSerialize(),
                 'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
 
                 'votes' => [
@@ -45,19 +44,6 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
         ];
     }
 
-    public function getSuccessAttachmentsResponse(array $attachments)
-    {
-
-        $entities = array_map(function(Attachment $attachment){
-            return (new SuccessAttachmentResponse($attachment))->jsonSerialize();
-        }, $attachments);
-
-
-        return $attachments = [
-            'total' => count($entities),
-            'entities' => $entities
-        ];
-    }
 
     public function createMockEntity(): Post
     {

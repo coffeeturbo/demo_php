@@ -12,11 +12,11 @@ feed_total:
   defaults: { _controller: FeedBundle:Feed:feedTotal }
 
 profile_feed:
-  path: '/profile/{id}/limit/{limit}/offset/{offset}'
+  path: '/profile/{profileId}/limit/{limit}/offset/{offset}'
   methods: [ GET ]
   defaults: { _controller: FeedBundle:ProfileFeed:feed }
   requirements:
-    id: \d+
+    profileId: \d+
     limit: \d+
     offset: \d+
 

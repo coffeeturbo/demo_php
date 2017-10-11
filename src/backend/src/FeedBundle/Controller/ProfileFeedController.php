@@ -17,9 +17,9 @@ class ProfileFeedController extends Controller
      * )
      *
      */
-    public function feedAction($id, $limit, $offset)
+    public function feedAction($profileId, $limit, $offset)
     {
-        $profile = $this->get('profile.repository')->getById($id);
+        $profile = $this->get('profile.repository')->getById($profileId);
 
         $posts = $this->get('feed.service.feed_service')->getProfileFeed($profile, $limit, $offset);
 
