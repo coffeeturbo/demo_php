@@ -34,7 +34,7 @@ ProfileBundle\Entity\Profile:
       type: json_array
       nullable: true
     rating:
-      type: integer
+      type: bigint
       nullable: false
       options:
         default: 0
