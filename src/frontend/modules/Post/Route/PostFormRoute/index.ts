@@ -6,6 +6,7 @@ import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 import {Tag} from "../../Entity/Tag";
 import {Post} from "../../Entity/Post";
 import {Observable} from "rxjs/Observable";
+import {AttachmentRESTService} from "../../../Attachment/Service/AttachmentRESTService";
 
 const localStorage = typeof window !='undefined' ? window.localStorage : { getItem(key: any): any { return null }, removeItem(key: any) {}, setItem(key: any, val: any) {} };
 
@@ -30,25 +31,26 @@ export class PostFormRoute implements OnInit {
         name: this.translationService.translate("author's")
     };
 
-    constructor(private translationService: TranslationService) {}
+    constructor(
+        private translationService: TranslationService,
+        private attachmentRest: AttachmentRESTService
+    ) {}
 
     ngOnInit() {
         try {
-            let post: Post = JSON.parse(localStorage.getItem("new-post"));
+            let postForm = JSON.parse(localStorage.getItem("post-form"));
             
-            if (post.attachments.length > 0) {
-                post.attachments.map(
-                    attachment => this.addAttachment(attachment.type, attachment.content)
-                );
+            if (postForm.attachments.length > 0) {
+                postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value));
             }
 
-            if (post.title) {
-                this.form.controls.title.setValue(post.title);
+            if (postForm.title) {
+                this.form.controls.title.setValue(postForm.title);
                 this.form.controls.title.markAsDirty();
             }
             
-            if (post.tags) {
-                this.form.controls.tags.setValue(post.tags);
+            if (postForm.tags) {
+                this.form.controls.tags.setValue(postForm.tags);
                 this.form.controls.tags.markAsDirty();
             }
         } catch (e) {}
@@ -58,7 +60,7 @@ export class PostFormRoute implements OnInit {
             .do(() => this.saved = false)
             .debounceTime(500) // Ohyenable feature 
             .subscribe((post: Post) => {
-                localStorage.setItem("new-post", JSON.stringify(post));
+                localStorage.setItem("post-form", JSON.stringify(post));
                 this.saved = true;
             });
 
@@ -107,10 +109,19 @@ export class PostFormRoute implements OnInit {
 
     public submit() {
         this.submitted = true;
-        let post: Post;
-        console.log(this.form);
-        // console.log(this.form.value);
-        localStorage.removeItem("new-post");
+        
+        // this.form.value.attachments.forEach(attachment => {
+        //     if(attachment.type == AttachmentType.image) {
+        //         console.log(attachment.value);
+        //         this.attachmentRest.uploadImage({image: attachment.value.image}).subscribe((data)=>{
+        //             console.log("123");
+        //             console.log(data);
+        //         })
+        //     }
+        // });
+        
+        console.log(this.form.value);
+        // localStorage.removeItem("post-form");
         // this.form.controls['title'].getError("minlength").requiredLength
     }
 

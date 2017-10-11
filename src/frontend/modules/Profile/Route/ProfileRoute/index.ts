@@ -19,7 +19,7 @@ import {Feed} from "../../../Feed/Entity/Feed";
 export class ProfileRoute implements OnInit {
 
     public profile: Profile;
-    public profileFeed: Feed;
+    public feed: Feed;
     public disabled: boolean = false;
 
     constructor(
@@ -34,7 +34,7 @@ export class ProfileRoute implements OnInit {
 
     ngOnInit() {
         this.profile = this.route.snapshot.data.profile;
-        this.profileFeed = this.route.snapshot.data.profileFeed;
+        this.feed = this.route.snapshot.data.profileFeed;
 
         if(this.profileService.hasAvatar(this.profile)) {
             // Preload fullsize avatar

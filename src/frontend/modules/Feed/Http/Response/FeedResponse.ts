@@ -1,7 +1,7 @@
 import {Response} from "../../../Application/Http/Response";
-import {Post} from "../../../Post/Entity/Post";
-import {Feed} from "../../Entity/Feed";
+import {PostResponse} from "../../../Post/Http/Response/PostResponse";
 
-export interface FeedResponse extends Response, Feed {
+export interface FeedResponse extends Response {
+    entities: PostResponse[]
     total: number;
 }

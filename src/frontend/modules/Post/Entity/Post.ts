@@ -3,13 +3,11 @@ import {Attachment} from "../../Attachment/Entity/Attachment";
 import {Profile} from "../../Profile/Entity/Profile";
 
 export interface Post {
-    entity: {
-        id?: number;
-        title: string;
-        created: string;
-        updated: string;
-        tags: Tag[];
-        attachments: Attachment[];
-        profile: Profile;
-    }
+    id?: number;
+    title: string;
+    created: string;
+    updated: string;
+    tags: Tag[];
+    attachments: Attachment[];
+    profile: Profile;
 }

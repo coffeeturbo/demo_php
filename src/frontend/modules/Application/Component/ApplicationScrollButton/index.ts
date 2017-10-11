@@ -35,7 +35,7 @@ export class ApplicationScrollButtonComponent {
     constructor(private appScrollService: ApplicationScrollService) {
         appScrollService
             .onScroll
-            .debounce(val => Observable.interval(50))
+            .debounceTime(50)
             .filter(()=> !this.isProgrammScroll)
             .subscribe(() => {
                 this.appScrollService.clearScrollPosition()

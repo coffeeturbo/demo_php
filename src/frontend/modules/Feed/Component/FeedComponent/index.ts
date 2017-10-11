@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Post} from "../../../Post/Entity/Post";
+
+import {Feed} from "../../Entity/Feed";
 
 @Component({
     selector: 'feed',
@@ -8,5 +9,5 @@ import {Post} from "../../../Post/Entity/Post";
 })
 
 export class FeedComponent {
-    @Input() posts: Post[];
+    @Input() feed: Feed;
 }

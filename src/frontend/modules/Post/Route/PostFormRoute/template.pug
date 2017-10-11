@@ -27,11 +27,12 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
           .drag
             i.fa.fa-bars(dnd-sortable-handle)
           .input-box([formGroupName]="i")
-            attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'addPostAttachment'+i", formControlName="value")
-            attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'addPostAttachment'+i", formControlName="value")
-            attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'addPostAttachment'+i", formControlName="value")
+            attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value")
+            attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
+            attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")
             ng-container(*ngIf="attachment.controls.value.invalid && submitted")
               tooltip(*ngIf="attachment.controls.value.hasError('invalidLink')")
+                // @DOTO: Translate!
                 small Can't parse video link
 
           a.removeAttachment((click)="removeAttachment(i)")
@@ -64,9 +65,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       inputId="addPostTags"
       )
         tag-input-dropdown(
-        displayBy='name',
-        identifyBy='id',
-        [autocompleteObservable]="requestAutocompleteItems",
+          [autocompleteObservable]="requestAutocompleteItems",
         )
       ng-container(*ngIf="form.controls['tags'].invalid && submitted")
         tooltip(*ngIf="form.controls['tags'].hasError('required')")
