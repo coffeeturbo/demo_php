@@ -24,10 +24,7 @@ class SuccessPostsResponse extends JsonResponse implements \JsonSerializable
             return (new SuccessPostResponce($post))->jsonSerialize();
         }, $posts );
 
-        return [
-            'total' => count($entities),
-            'entities' => $entities
-        ];
+        return $entities;
     }
 
 //    public function getSuccessAttachmentsResponse(array $attachments)

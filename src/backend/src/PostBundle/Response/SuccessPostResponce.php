@@ -25,22 +25,20 @@ class SuccessPostResponce extends JsonResponse implements \JsonSerializable
         $post = $this->entity ?? $this->createMockEntity();
 
         return [
-            'entity' => [
-                'id' => $post->getId(),
-                'title' => $post->getTitle(),
-                'created' => $post->getCreated()->format(\DateTime::W3C),
-                'updated' => $post->getUpdated()->format(\DateTime::W3C),
-                'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
-                'attachments' => (new SuccessAttachmentsResponse($post->getAttachments()))->jsonSerialize(),
-                'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
+            'id' => $post->getId(),
+            'title' => $post->getTitle(),
+            'created' => $post->getCreated()->format(\DateTime::W3C),
+            'updated' => $post->getUpdated()->format(\DateTime::W3C),
+            'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
+            'attachments' => (new SuccessAttachmentsResponse($post->getAttachments()))->jsonSerialize(),
+            'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
 
-                'votes' => [
-                    'state' => 'none',
-                    'rating' => $post->getVotesRating(),
-                    'positive' => $post->getVotesPositive(),
-                    'negative' => $post->getVotesNegative()
-                ],
-            ]
+            'votes' => [
+                'state' => 'none',
+                'rating' => $post->getVotesRating(),
+                'positive' => $post->getVotesPositive(),
+                'negative' => $post->getVotesNegative()
+            ],
         ];
     }
 
