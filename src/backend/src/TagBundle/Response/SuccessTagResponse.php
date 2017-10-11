@@ -21,10 +21,8 @@ class SuccessTagResponse extends JsonResponse implements \JsonSerializable
         $tag = $this->entity ?? $this->createMockEntity();
 
         return [
-            'entity' => [
-                'id' => $tag->getId(),
-                'name' => $tag->getName(),
-            ]
+            'id' => $tag->getId(),
+            'name' => $tag->getName(),
         ];
     }
 

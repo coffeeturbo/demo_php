@@ -22,10 +22,7 @@ class SuccessTagsResponse extends JsonResponse implements \JsonSerializable
             return (new SuccessTagResponse($tag))->jsonSerialize();
         }, $this->entities);
 
-        return [
-            'total' => count($entities),
-            'entities' => $entities,
-        ];
+        return $entities;
     }
 
 }
