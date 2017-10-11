@@ -1,7 +1,21 @@
 // @DOTO: Сверстать!
+.feed
+  article.post(*ngFor="let post of posts;")
+    a.author([routerLink]="['/profile', post.entity.profile.alias || post.entity.profile.id]")
+      img.avatar(src="{{ post.entity.profile.avatar.small.public_path }}") 
+      .name {{ post.entity.profile.name }}
+    .created {{ post.entity.created.date }}
+    h2.title
+      a([routerLink]="['/post', post.entity.id ]") {{ post.entity.title }}
+    nav.tags
+      ul
+        li(*ngFor="let tag of post.entity.tags.entities;") {{tag.entity.name }}
+  .content
+    .attachment-video
+      
 .debug
   div(*ngFor="let post of posts;")
     h2 {{ post.entity.title }}
     span(*ngFor="let tag of post.entity.tags.entities;")
       | {{tag.entity.name }}
-    | {{ post | json }}
+    | {{ post | json }}      

@@ -8,10 +8,12 @@ import {FeedBestRoute} from "./Route/FeedBestRoute/index";
 import {FeedService} from "./Service/FeedService";
 import {FeedRESTService} from "./Service/FeedRESTService";
 import {FeedComponent} from "./Component/FeedComponent/index";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        RouterModule
     ],
     declarations: [
         FeedProfileRoute,

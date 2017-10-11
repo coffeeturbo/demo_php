@@ -12,7 +12,7 @@ import {ApplicationScrollService} from "../../../Application/Service/Application
 export class PostCreateButtonComponent {
     @HostBinding('class.hidden')
     get isHidden () {
-        return this.appScrollService.getScroll() > 0 || this.appScrollService.getScrollSavedPosition();
+        return this.appScrollService.getScroll() > 300 || this.appScrollService.getScrollSavedPosition();
     }
     
     @HostListener('click')
