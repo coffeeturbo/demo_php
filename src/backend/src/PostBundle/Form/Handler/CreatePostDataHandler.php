@@ -90,7 +90,7 @@ class CreatePostDataHandler
 
         foreach($jsonAttachs as $attachmentJson) {
 
-            $handler = new AttachmentHandler($attachmentJson['entity']);
+            $handler = new AttachmentHandler($attachmentJson);
 
             $attachment = $handler->getAttachment();
 

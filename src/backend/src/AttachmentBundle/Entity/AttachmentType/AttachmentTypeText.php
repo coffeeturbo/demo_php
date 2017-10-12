@@ -1,10 +1,4 @@
 <?php
-/**
- * User: savuskinvaceslav
- * Date: 17.09.17
- * Time: 14:30
- * To change this template use File | Settings | File Templates.
- */
 namespace AttachmentBundle\Entity\AttachmentType;
 
 class AttachmentTypeText extends AttachmentType

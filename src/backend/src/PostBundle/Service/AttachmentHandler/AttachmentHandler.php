@@ -30,7 +30,6 @@ class AttachmentHandler
         $type = AttachmentType::createFromStringCode($json['type']);
         $attachment->setType($type);
 
-
         $attachment->setId($json['id'] ?? null);
         return $attachment;
     }
