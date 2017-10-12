@@ -77,7 +77,7 @@ class VoteService
 
     public function attachVote(VoteableEntity $entity, VoteEntity $vote)
     {
-        $voteWeight = $this->countVoteWeight($entity->getType());
+        $voteWeight = 1;
 
         switch($vote->getType()->getIntCode()){
             case VoteTypePositive::INT_CODE:
@@ -94,7 +94,7 @@ class VoteService
 
     public function detach(VoteableEntity $entity, Vote $vote)
     {
-        $voteWeight = $this->countVoteWeight($entity->getType());
+        $voteWeight = 1;
 
         switch($vote->getType()->getIntCode()){
             case VoteTypePositive::INT_CODE:
@@ -155,7 +155,7 @@ class VoteService
 
         switch($type->getIntCode()){
             case VoteContentTypePost::INT_CODE:
-                return 1* $this->postVoteWeight;
+                return 1 * $this->postVoteWeight;
             case VoteContentTypeComment::INT_CODE:
                 return 1 * $this->commentVoteWeight;
 
