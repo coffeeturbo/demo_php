@@ -61,13 +61,13 @@ class CreatePostDataHandler
         foreach($jsonTags as $tagJson) {
             $tag = new Tag();
 
-            if(is_null($tagJson['entity']['name'])
-                || (strlen($tagJson['entity']['name']) === 0)
+            if(is_null($tagJson['name'])
+                || (strlen($tagJson['name']) === 0)
             ) {
                 throw new BadRequestHttpException("field name required");
             }
 
-            $tag->setId($tagJson['entity']['id'] ?? null)->setName($tagJson['entity']['name']);
+            $tag->setId($tagJson['id'] ?? null)->setName($tagJson['name']);
 
             if(! $entity->hasTag($tag)) {
                 $entity->addTag($tag);
