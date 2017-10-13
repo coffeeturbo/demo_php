@@ -14,7 +14,7 @@ abstract class AttachmentType
             case AttachmentTypeText::INT_CODE:
                 return new AttachmentTypeText();
             case AttachmentTypeVideoYouTube::INT_CODE:
-                return new AttachmentTypeImage();
+                return new AttachmentTypeVideoYouTube();
             case AttachmentTypeImage::INT_CODE:
                 return new AttachmentTypeImage();
 
