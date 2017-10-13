@@ -12,7 +12,7 @@ abstract class AttachmentType
     {
         switch($code){
             case AttachmentTypeText::INT_CODE:
-                return new AttachmentTypeImage();
+                return new AttachmentTypeText();
             case AttachmentTypeVideoYouTube::INT_CODE:
                 return new AttachmentTypeImage();
             case AttachmentTypeImage::INT_CODE:
