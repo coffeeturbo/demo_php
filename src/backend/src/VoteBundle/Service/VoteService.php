@@ -1,6 +1,7 @@
 <?php
 namespace VoteBundle\Service;
 
+use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -37,6 +38,13 @@ class VoteService
         $this->commentVoteWeight = $commentVoteWeight;
         $this->profileRepository = $profileRepository;
     }
+
+    public function getVoteRepository(): VoteRepository
+    {
+        return $this->voteRepository;
+    }
+
+
 
     public function findVote(Vote $vote): ?Vote
     {
@@ -162,6 +170,25 @@ class VoteService
             default: return 1;
         }
 
+    }
+
+    public function getVotesToPosts(array $posts, $profile)
+    {
+        $postIds = array_map(function(Post $post){
+            return $post->getId();
+        }, $posts);
+
+        $votes = $this->voteRepository->getVotesByPostIds($postIds, $profile);
+
+        array_walk($posts, function(Post $post) use ($votes){
+            /** @var Vote $vote */
+            foreach($votes as $vote) {
+                if($post->getId() === $vote->getContentId()){
+                    $post->setVote($vote);
+                    break;
+                }
+            }
+        });
     }
 
 }

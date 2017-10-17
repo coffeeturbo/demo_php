@@ -8,6 +8,7 @@ use AttachmentBundle\Entity\AttachmentableEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use ProfileBundle\Entity\Profile;
 use TagBundle\Entity\AbstractTaggable;
+use VoteBundle\Entity\Vote;
 use VoteBundle\Rating\RatingableEntity;
 use VoteBundle\Rating\RatingableEntityTrait;
 use VoteBundle\Vote\VoteableEntity;
@@ -32,6 +33,21 @@ class Post extends AbstractTaggable
     private $title;
     private $attachments;
     private $profile;
+
+    private $vote;
+
+
+    public function getVote(): ?Vote
+    {
+        return $this->vote;
+    }
+
+
+    public function setVote(Vote $vote)
+    {
+        $this->vote = $vote;
+    }
+
 
     public function __construct()
     {

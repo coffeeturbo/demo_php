@@ -82,6 +82,11 @@ class Vote implements VoteEntity
         return $this;
     }
 
+
+    public function getContentId(): int
+    {
+        return $this->contentId;
+    }
     /*
     public function getContentType(): VoteContentType
     {
@@ -92,11 +97,6 @@ class Vote implements VoteEntity
     {
         $this->contentType = $contentType->getIntCode();
         return $this;
-    }
-
-    public function getContentId(): int
-    {
-        return $this->contentId;
     }
 
     public function setContentId(int $contentId): self

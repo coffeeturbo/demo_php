@@ -46,3 +46,15 @@ security:
                     prefix:  Bearer
                 throw_exceptions:        false
                 create_entry_point:      true
+
+        # пытается авторизоваться на страницах на которых не нужна авторизация
+        protectedless_api:
+            pattern: ^/
+            anonymous: ~
+            stateless: true
+            lexik_jwt:
+                authorization_header:
+                    enabled: true
+                    prefix:  Bearer
+                throw_exceptions:        false
+                create_entry_point:      true

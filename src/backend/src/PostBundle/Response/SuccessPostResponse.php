@@ -34,7 +34,7 @@ class SuccessPostResponse extends JsonResponse implements \JsonSerializable
             'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
 
             'votes' => [
-                'state' => 'none',
+                'state' =>  $post->getVote() ? $post->getVote()->getType()->getStringCode() :'none',
                 'rating' => $post->getVotesRating(),
                 'positive' => $post->getVotesPositive(),
                 'negative' => $post->getVotesNegative()
