@@ -50,7 +50,7 @@ security:
         # пытается авторизоваться на страницах на которых не нужна авторизация
         protectedless_api:
             pattern: ^/
-            anonymous: ~
+            anonymous: true
             stateless: true
             lexik_jwt:
                 authorization_header:

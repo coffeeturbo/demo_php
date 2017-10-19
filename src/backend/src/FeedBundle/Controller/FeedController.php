@@ -27,9 +27,7 @@ class FeedController extends Controller
                 ->getPostsWithTagsAndAttachments($limit, $offset);
 
 
-
             if($account = $this->get('auth.service')->getAccount()){
-
 
                 $profile = $this->get('profile.service')->getCurrentProfile();
                 $this->get('vote.service.vote_service')->getVotesToPosts($posts, $profile);

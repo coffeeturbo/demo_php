@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class AuthService
 {
@@ -24,7 +25,9 @@ class AuthService
         $token = $tokenStorage->getToken();
         
         if($token instanceof TokenInterface) {
-            $this->account = $token->getUser();
+            if($token->getUser() instanceof UserInterface){
+                $this->account = $token->getUser();
+            }
         }
 
         $this->accountRepository = $accountRepository;
