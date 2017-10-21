@@ -11,11 +11,13 @@ use TagBundle\Tag\TaggableEntityInterface;
 
 class CreatePostDataHandler
 {
+    private $minTagsLimit;
     private $maxTagsLimit;
     private $maxAttachmentsLimit;
 
-    public function __construct(int $maxTagsLimit, int $maxAttachmentsLimit)
+    public function __construct(int $minTagsLimit, int $maxTagsLimit, int $maxAttachmentsLimit)
     {
+        $this->minTagsLimit = $minTagsLimit;
         $this->maxTagsLimit = $maxTagsLimit;
         $this->maxAttachmentsLimit = $maxAttachmentsLimit;
     }
@@ -54,7 +56,11 @@ class CreatePostDataHandler
     {
         $jsonTags = json_decode($jsonTagsString, true);
 
-        if($this->maxTagsLimit < count($jsonTags)) {
+        if($this->minTagsLimit <= count($jsonTags)){
+            throw new AccessDeniedHttpException(sprintf("min allowed tags: %s", $this->minTagsLimit));
+        }
+
+        if($this->maxTagsLimit <= count($jsonTags)) {
             throw new AccessDeniedHttpException(sprintf("you have exceed tag limit: %s", $this->maxTagsLimit));
         }
 

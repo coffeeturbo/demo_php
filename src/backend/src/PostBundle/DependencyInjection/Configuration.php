@@ -13,6 +13,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->integerNode('min_tags_limit')
+                    ->defaultValue(0)
+                ->end()
                 ->integerNode('max_tags_limit')
                     ->defaultValue(10)
                 ->end()
