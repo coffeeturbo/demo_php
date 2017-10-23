@@ -9,11 +9,13 @@ import {FeedService} from "./Service/FeedService";
 import {FeedRESTService} from "./Service/FeedRESTService";
 import {FeedComponent} from "./Component/FeedComponent/index";
 import {RouterModule} from "@angular/router";
+import {PostModule} from "../Post/PostModule";
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        PostModule
     ],
     declarations: [
         FeedProfileRoute,

@@ -11,6 +11,7 @@ import {PostFormRoute} from "./Route/PostFormRoute/index";
 import {CommonModule} from "../Common/CommonModule";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
 import {PostCreateButtonComponent} from "./Component/PostCreateButton/index";
+import {PostComponent} from "./Component/Post/index";
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import {PostCreateButtonComponent} from "./Component/PostCreateButton/index";
         RouterModule
     ],
     declarations: [
+        PostComponent,
         PostCreateButtonComponent,
         PostRoute,
         PostFormRoute
@@ -31,6 +33,7 @@ import {PostCreateButtonComponent} from "./Component/PostCreateButton/index";
         PostTitleResolver
     ],
     exports:[
+        PostComponent,
         PostCreateButtonComponent
     ]
 })

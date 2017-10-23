@@ -1,16 +1,3 @@
-// @DOTO: Сверстать!
-.feed
-  article.post(*ngFor="let post of feed;")
-    a.author([routerLink]="['/profile', post.profile.alias || post.profile.id]")
-      img.avatar(src="{{ post.profile.avatar.small.public_path }}") 
-      .name {{ post.profile.name }}
-    .created {{ post.created.date }}
-    h2.title
-      a([routerLink]="['/post', post.id ]") {{ post.title }}
-    nav.tags
-      ul
-        li(*ngFor="let tag of post.tags;") {{ tag.name }}
-  .content
-    .attachment-video
+post(*ngFor="let post of feed;", [post]="post")
 
-.debug {{ feed | json }}
+//.debug {{ feed | json }}

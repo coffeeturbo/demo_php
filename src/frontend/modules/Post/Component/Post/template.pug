@@ -1,0 +1,15 @@
+// @DOTO: Сверстать!
+a.author([routerLink]="['/profile', post.profile.alias || post.profile.id]")
+  img.avatar([src]="post.profile.avatar.small.public_path")
+  .name {{ post.profile.name }}
+.created {{ post.created.date }}
+h2.title
+  a([routerLink]="['/post', post.id ]") {{ post.title }}
+nav.tags
+  ul
+    li(*ngFor="let tag of post.tags;") {{ tag.name }}
+.content(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
+  .attachment-text(*ngSwitchCase="AttachmentType.text")
+    p {{attachment.content.text}}
+  //.attachment-image
+  //.attachment-video

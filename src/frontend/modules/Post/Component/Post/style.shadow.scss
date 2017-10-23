@@ -1,0 +1,44 @@
+@import '../../../../assets/styles/global';
+
+:host {
+  width: 100%;
+  max-width: 750px;
+  background: #fff;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);;
+
+  .author {
+    display: flex;
+    align-items: center;
+    color: material-color($primary_material, "600");
+
+    .avatar {
+      border-radius: 50%;
+      width: 24px; height: 24px;
+      vertical-align: middle;
+    }
+
+    .name {
+      margin-left: 20px;
+    }
+  }
+
+  .title {
+    margin: 1em 0;
+    color: material-color($primary_material, "800");
+  }
+
+  .tags {
+    ul {
+      li {
+      }
+    }
+  }
+
+  .content {
+  }
+
+  .attachment-video {
+  }
+}
