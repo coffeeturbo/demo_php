@@ -12,6 +12,7 @@ import {CommonModule} from "../Common/CommonModule";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
 import {PostCreateButtonComponent} from "./Component/PostCreateButton/index";
 import {PostComponent} from "./Component/Post/index";
+import {PostCreatedPipe} from "./Pipe/PostCreatedPipe";
 
 @NgModule({
     imports: [
@@ -25,7 +26,8 @@ import {PostComponent} from "./Component/Post/index";
         PostComponent,
         PostCreateButtonComponent,
         PostRoute,
-        PostFormRoute
+        PostFormRoute,
+        PostCreatedPipe
     ],
     providers: [
         PostRESTService,

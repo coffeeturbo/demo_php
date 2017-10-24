@@ -24,6 +24,7 @@ class FeedService
                 ->leftJoin('p.attachments', 'attachments')
                 ->leftJoin('p.profile', 'profile')
                 ->where('profile = :profile')
+                ->orderBy("p.id", "DESC")
                 ->setParameter('profile', $profile)
                 ->setFirstResult($offset)
                 ->setMaxResults($limit)

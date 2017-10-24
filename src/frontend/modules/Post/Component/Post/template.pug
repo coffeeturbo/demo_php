@@ -1,15 +1,78 @@
-// @DOTO: Сверстать!
-a.author([routerLink]="['/profile', post.profile.alias || post.profile.id]")
-  img.avatar([src]="post.profile.avatar.small.public_path")
-  .name {{ post.profile.name }}
-.created {{ post.created.date }}
-h2.title
-  a([routerLink]="['/post', post.id ]") {{ post.title }}
-nav.tags
-  ul
-    li(*ngFor="let tag of post.tags;") {{ tag.name }}
-.content(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
-  .attachment-text(*ngSwitchCase="AttachmentType.text")
-    p {{attachment.content.text}}
-  //.attachment-image
-  //.attachment-video
+// @DOTO: Доверстать!
+doctype html
+// этот div необходим для корректного position:sticky у .actions (что б не заезжал на .footer) 
+div
+  .sticky
+    button.btn-material.secondary(*ngIf="!minimized", (click)="minimized = true; el.nativeElement.scrollIntoView();")
+      .fa.fa-fw.fa-compress
+      tooltip Развернуть пост
+
+    button.btn-material.secondary(*ngIf="minimized", (click)="minimized = false;")
+        .fa.fa-fw.fa-expand
+        tooltip Развернуть пост
+
+
+  .header(*ngIf="!minimized")
+    ng-container(*ngIf="!minimized")
+      a.author([routerLink]="['/profile', post.profile.alias || post.profile.id]")
+        img.avatar([src]="post.profile.avatar.small.public_path")
+        .name {{ post.profile.name }} 
+      .created(*ngIf='post.created', title="{{ post.created | date }}") 
+          | {{ post.created | post_created }} 
+    .flex-space
+    .rating.positive(*ngIf="post.votes.rating >= 0")
+      .fa.fa-line-chart
+      span {{ post.votes.rating }}
+    .rating.negative(*ngIf="post.votes.rating < 0")
+      .fa.fa-line-chart
+      span {{ post.votes.rating }}
+  
+  h2.title
+    a([routerLink]="['/post', post.id ]", target="_blank") {{ post.title }} {{ current }} 
+    
+  nav.tags
+    .fa.fa-tags
+    ul
+      li(*ngFor="let tag of post.tags;") 
+        a([routerLink]='["/tag", tag.name]') {{ tag.name }}
+  
+  ng-container(*ngIf="!minimized")
+    .content(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
+      .attachment-text(*ngSwitchCase="AttachmentType.text")
+        p {{attachment.content.text}}
+      //.attachment-image
+      //.attachment-video
+.footer
+  .btn-material.secondary.positive
+    .fa.fa-thumbs-o-up
+    | {{ post.votes.positive }}
+  .btn-material.secondary.negative
+    .fa.fa-thumbs-o-down
+    | {{ post.votes.negative }}
+  .flex-space
+  .btn-material.secondary
+    .fa.fa-comments-o
+    | 249 комментариев
+  .btn-material.secondary
+    .fa.fa-bullhorn
+    | Поделиться
+  button.btn-material.secondary.actions((click)='render.addClass(actions,"active")', (focusout)='render.removeClass(actions,"active")')
+    .fa.fa-ellipsis-v
+    ul(#actions)
+      li
+        a((click)="console.log('foo')")
+          .fa.fa-fw.fa-floppy-o
+          | Сохранить
+      li
+        a
+          .fa.fa-fw.fa-pencil
+          | Изменить
+      li
+        a
+          .fa.fa-fw.fa-flag
+          | Пожаловаться
+      li
+        a
+          .fa.fa-fw.fa-bullhorn
+          | Поделиться
+  

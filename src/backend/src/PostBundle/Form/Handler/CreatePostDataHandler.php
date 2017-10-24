@@ -56,7 +56,7 @@ class CreatePostDataHandler
     {
         $jsonTags = json_decode($jsonTagsString, true);
 
-        if($this->minTagsLimit <= count($jsonTags)){
+        if($this->minTagsLimit > count($jsonTags)) {
             throw new AccessDeniedHttpException(sprintf("min allowed tags: %s", $this->minTagsLimit));
         }
 

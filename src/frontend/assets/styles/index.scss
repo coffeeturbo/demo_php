@@ -13,7 +13,7 @@
 @import "../../modules/Common/MaterialForm/Styles/form";
 @import "animations";
 
-body {
+html, body {
   background: material-color($secondary_material, "200");
   font-family: $font_family;
   font-size: $font_size;
