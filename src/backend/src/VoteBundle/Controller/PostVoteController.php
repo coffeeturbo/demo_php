@@ -40,6 +40,7 @@ class PostVoteController extends Controller
                 $voteService->create($vote);
 
                 $voteService->attachVote($post, $vote);
+                $post->setVote($vote);
                 $postRepository->save($post);
             }
 
@@ -79,6 +80,7 @@ class PostVoteController extends Controller
             if(is_null($existsVote)){
                 $voteService->create($vote);
                 $voteService->attachVote($post, $vote);
+                $post->setVote($vote);
                 $postRepository->save($post);
             }
 

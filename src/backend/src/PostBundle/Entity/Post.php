@@ -37,6 +37,17 @@ class Post extends AbstractTaggable
     private $vote;
 
 
+
+
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->attachments = new ArrayCollection();
+        $this->created = new \DateTime();
+        $this->markUpdated();
+    }
+
     public function getVote(): ?Vote
     {
         return $this->vote;
@@ -46,15 +57,6 @@ class Post extends AbstractTaggable
     public function setVote(Vote $vote)
     {
         $this->vote = $vote;
-    }
-
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->attachments = new ArrayCollection();
-        $this->created = new \DateTime();
-        $this->markUpdated();
     }
 
     public function getId()
