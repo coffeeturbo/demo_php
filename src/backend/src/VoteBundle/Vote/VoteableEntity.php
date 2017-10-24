@@ -2,6 +2,7 @@
 namespace VoteBundle\Vote;
 
 use ProfileBundle\Entity\Profile;
+use VoteBundle\Entity\Vote;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
 
 interface VoteableEntity
@@ -23,5 +24,8 @@ interface VoteableEntity
 
     public function increaseVotesPositive();
     public function decreaseVotesPositive();
+
+    public function getVote(): ?Vote;
+    public function setVote(Vote $vote);
 
 }

@@ -3,6 +3,7 @@
 namespace VoteBundle\Vote;
 
 use PostBundle\Entity\Post;
+use VoteBundle\Entity\Vote;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
 
@@ -10,6 +11,7 @@ trait VoteableEntityTrait
 {
     private $votesPositive = 0;
     private $votesNegative = 0;
+    private $vote;
 
     public function getVotesPositive(): int
     {
@@ -47,5 +49,16 @@ trait VoteableEntityTrait
     public function decreaseVotesPositive()
     {
         $this->votesPositive--;
+    }
+
+    public function getVote(): ?Vote
+    {
+        return $this->vote;
+    }
+
+
+    public function setVote(Vote $vote)
+    {
+        $this->vote = $vote;
     }
 }
