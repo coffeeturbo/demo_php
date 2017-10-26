@@ -10,4 +10,10 @@ export interface Post {
     tags: Tag[];
     attachments: Attachment[];
     profile: Profile;
+    votes: {
+        negative : number;
+        positive: number;
+        rating: number;
+        state: "none" | "positive" | "negative"
+    }
 }

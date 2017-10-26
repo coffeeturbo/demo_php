@@ -33,6 +33,7 @@ export const LocaleRU = {
   "Publish":      "Опубликовать",
   "Registration": "Регистрация",
   "Registered":   "Загерестрирован",
+  "Report":       "Пожаловаться",
   "Russian":      "Русский",
   "Save":         "Сохранить",
   "Saving":       "Сохраняем",
@@ -59,5 +60,8 @@ export const LocaleRU = {
   "months1":      "месяцев",
   "year":         "год",
   "years":        "года",
-  "years1":       "лет"
+  "years1":       "лет",
+  "comment":      "комментарий",
+  "comments":     "комментарии",
+  "comments1":    "комментариев",
 }

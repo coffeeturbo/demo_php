@@ -6,7 +6,20 @@
   background: #fff;
   padding: 20px;
   margin: 20px 0;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+
+  &.highlight {
+    animation: highlightPost 2s;
+
+    @keyframes highlightPost {
+      0% {
+        background: material-color("yellow", '100');
+      }
+      100% {
+        background: #fff;
+      }
+    }
+  }
   
   &.visited {
     .title a {
@@ -14,12 +27,42 @@
     }
   }
 
-  .header {
+  .sticky {
+    float: right;
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+
+    button {
+      color: #999;
+      font-size: 18px;
+    }
+  }
+
+  .rating {
+    float: right;
+    margin-right: 5px;
+    padding: 11px 0;
+
+    .fa + * {
+      margin-left: 5px;
+    }
+
+    &.positive {
+      color: material-color($primary_material, "600");
+    }
+
+    &.negative {
+      color: material-color($error_material, "600");
+    }
+  }
+
+  .author {
     display: flex;
     align-items: center;
-    padding: 7px 0;
 
-    .author {
+    a {
       display: flex;
       align-items: center;
       color: material-color($primary_material, "600");
@@ -38,53 +81,15 @@
 
     .created {
       margin-left: .5em;
-      color: #999
-    }
-    
-    .rating {
-      margin-right: 5px;
-      .fa + * {
-        margin-left: 5px;
-      }
-      
-      &.positive {
-        color: material-color($primary_material, "600"); 
-      }
-      
-      &.negative {
-        color: material-color($error_material, "600");
-      }
-    }
-  }
-  
-  .sticky {
-    float: right;
-    position: sticky;
-    top: 0;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 2px;
-
-    tooltip {
-      visibility: hidden;
-      transition: visibility;
-    }
-    &:hover {
-      tooltip {
-        visibility: visible;
-        transition-delay:500ms;
-      }
-    }
-    button {
       color: #999;
-      font-size: 18px;
+      position: relative;
     }
   }
-  
-  
+
   .title {
     margin: .3em 0;
     font-size: $h1_size;
-    
+
     a {
       color: material-color($primary_material, "800");
     }
@@ -94,11 +99,12 @@
     margin: .5em 0;
     display: flex;
     align-items: center;
+
     .fa {
       color: #999;
       margin-right: .5em;
     }
-    
+
     ul {
       display: flex;
 
@@ -115,7 +121,7 @@
 
           &:hover {
             border-color: #999;
-            color:#666;
+            color: #666;
           }
         }
       }
@@ -125,10 +131,10 @@
   .content {
     line-height: 1.5em;
   }
-  
+
   .footer {
     margin: 20px -20px -20px;
-    padding: 10px 5px;
+    padding: 10px;
     border-top: 1px #e0e0e0 solid;
     display: flex;
     align-items: center;
@@ -136,7 +142,7 @@
     border-top: 1px material-color($secondary_material, '300') solid;
     font-size: $small_size;
     color: #777;
-    
+
     & > * + * {
       margin-left: 1em;
     }
@@ -157,7 +163,7 @@
         bottom: 0;
         right: 0;
         background: #fff;
-        box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
+        box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
         text-align: left;
         white-space: nowrap;
         font-size: $font_size;
@@ -181,16 +187,26 @@
           }
         }
       }
-      
+
       .fa {
         margin: 0;
       }
     }
   }
 
+  *:hover {
+    >tooltip {
+      visibility: visible!important;
+      transition-delay: 500ms;
+    }
+  }
+  
   tooltip {
+    visibility: hidden;
+    transition: visibility;
+    text-align: center;
     font-size: $small_size;
-    left: calc(50% - 50px);
-    width: 86px;
+    left: calc(50% - 60px);
+    width: 106px;
   }
 }

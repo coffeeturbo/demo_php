@@ -5,6 +5,7 @@ export class ApplicationScrollService {
     private savedPosition: number;
     private scroll: number = 0;
     public onScroll = new EventEmitter<number>();
+    public mainHeight: number = 0;
     
     public scrollTo(scroll: number) {
         this.scroll = scroll;

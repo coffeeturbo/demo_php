@@ -1,4 +1,4 @@
 post:
-  min_tags_limit: 0
-  max_tags_limit: 5
+  min_tags_limit: 2
+  max_tags_limit: 8
   max_attachments_limit: 50

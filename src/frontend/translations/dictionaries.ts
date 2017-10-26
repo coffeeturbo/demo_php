@@ -17,5 +17,6 @@ export const dictionaries: Dictionaries = {
         "days1":    "days",
         "months1":  "months",
         "years1":   "years",
+        "comments1":   "comments",
     }]
 };
