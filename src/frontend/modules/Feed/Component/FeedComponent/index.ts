@@ -3,6 +3,7 @@ import * as scrollIntoView from 'scroll-into-view';
 
 import {Feed} from "../../Entity/Feed";
 import {PostComponent} from "../../../Post/Component/Post/index";
+import {PostHotkeys} from "../../../Post/Component/Post/hotkeys";
 
 @Component({
     selector: 'feed',
@@ -14,23 +15,23 @@ export class FeedComponent {
     @Input() feed: Feed;
     @ViewChildren(PostComponent) posts: QueryList<PostComponent>;
 
-    @HostListener('window:keydown', ['$event'])
-    nextElementSibling(e: KeyboardEvent) {
-        if (e.code == "KeyD" || e.code == "KeyA") {
-
+    @HostListener('window:keyup', ['$event.keyCode'])
+    onKeydown1(keyCode: number) {
+        if(keyCode == PostHotkeys.NextPost || keyCode == PostHotkeys.PreviousPost) {
             let postComponent: PostComponent = this.posts.find(post => post.isIntoView == true);
-
             let postEl = this.posts.first.el.nativeElement;
-
-            if (postComponent) {
-                if (e.code == "KeyD") {
-                    postEl = postComponent.el.nativeElement.nextElementSibling;
-                }
-                if (e.code == "KeyA") {
-                    postEl = postComponent.el.nativeElement.previousElementSibling;
+        
+            if(postComponent) {
+                switch (keyCode) {
+                    case PostHotkeys.NextPost:
+                        postEl = postComponent.el.nativeElement.nextElementSibling;
+                        break;
+                    case PostHotkeys.PreviousPost:
+                        postEl = postComponent.el.nativeElement.previousElementSibling;
+                        break;
                 }
             }
-            
+
             scrollIntoView(postEl, {
                 time: 100,
                 align: {top: 0, topOffset: 20}
