@@ -1,4 +1,4 @@
-import {Tag} from "./Tag";
+import {Tag} from "../../Tag/Entity/Tag";
 import {Attachment} from "../../Attachment/Entity/Attachment";
 import {Profile} from "../../Profile/Entity/Profile";
 import {Vote} from "../../Vote/Entity/Vote";

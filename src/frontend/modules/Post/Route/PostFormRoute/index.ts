@@ -3,7 +3,7 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TranslationService} from "@angular-addons/translate";
 
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
-import {Tag} from "../../Entity/Tag";
+import {Tag} from "../../../Tag/Entity/Tag";
 import {Post} from "../../Entity/Post";
 import {Observable} from "rxjs/Observable";
 import {AttachmentRESTService} from "../../../Attachment/Service/AttachmentRESTService";
