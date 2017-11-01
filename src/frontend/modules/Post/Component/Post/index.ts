@@ -1,20 +1,23 @@
-import {Component, ElementRef, HostBinding, HostListener, Input, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostBinding, HostListener, Input, Renderer2} from '@angular/core';
+import {Router} from "@angular/router";
+import {TranslationService} from "@angular-addons/translate";
+import * as getSlug from "speakingurl";
+
+import {PostHotkeys} from "./hotkeys";
 import {Post} from "../../Entity/Post";
+import {PostService} from "../../Service/PostService";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
-import {TranslationService} from "@angular-addons/translate";
-import {PostHotkeys} from "./hotkeys";
-import {Router} from "@angular/router";
+import {VoteState} from "../../../Vote/Entity/Vote";
 
 @Component({
     selector: 'post',
     templateUrl: './template.pug',
     styleUrls: ['./style.shadow.scss']
 })
-
 export class PostComponent {
     public AttachmentType = AttachmentType;
-    public minimized:boolean = false;
+    public minimized: boolean = false;
     public isIntoView: boolean = false;
 
     // @ViewChild("content") content: ElementRef;
@@ -37,6 +40,7 @@ export class PostComponent {
         public el: ElementRef,
         public appScrollService: ApplicationScrollService,
         public translationService: TranslationService,
+        public postService: PostService,
         public router: Router
     ){
         this.appScrollService
@@ -72,27 +76,43 @@ export class PostComponent {
         this.visited = true;    
     }
 
-    @HostListener('window:keydown', ['$event.keyCode'])
+    @HostListener('window:keyup', ['$event.keyCode'])
     onKeydown(keyCode: number) {
         switch (keyCode) {
             case PostHotkeys.VotePositive:
                 this.vote("positive");
                 break;
             case PostHotkeys.VoteNegative:
-                this.vote("positive");
+                this.vote("negative");
                 break;
             case PostHotkeys.OpenPost:
-                typeof window != 'undefined' && window.open(`/post/${this.post.id}`);
+                typeof window != 'undefined' && window.open(this.getPostUrl());
                 break;
         }
     }
 
-    public vote(state: "positive" | "negative") {
-        if (state == "positive") {
-            console.log(this.post.id, "Like!")
-        } else {
-            console.log(this.post.id, "Dislike!")
+    private voteInProgress = false;
+    public vote(state: VoteState) {
+        if(!this.voteInProgress && this.post.votes.state !== state) {
+
+            if(this.post.votes.state !== "none") {
+                this.post.votes[this.post.votes.state] -= 1;
+                state = "none";
+            }
+
+            this.post.votes[state] += 1;
+            this.post.votes.state = state;
+
+            this.postService
+                .vote(this.post, state)
+                .finally(() => this.voteInProgress = false)
+                .subscribe()
+            ;
         }
     }
-
+    
+    getPostUrl() {
+        return `/post/${getSlug(this.post.title)}-${this.post.id}`;
+    }
+    
 }

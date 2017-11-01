@@ -22,7 +22,7 @@ div
         tooltip {{ post.created | date }}
 
   h2.title
-    a([routerLink]="['/post', post.id ]", target="_blank") {{ post.title }} 
+    a([routerLink]="getPostUrl()", ftarget="_blank") {{ post.title }} 
 
   nav.tags(*ngIf="post.tags.length > 0")
     .fa.fa-tags
@@ -32,20 +32,19 @@ div
 
   .content(*ngIf="!minimized", #content)
     ng-container(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
-      .attachment-text(*ngSwitchCase="AttachmentType.text")
-        p {{attachment.content.text}}
+      p.attachment-text(*ngSwitchCase="AttachmentType.text") {{attachment.content.text}}
+      img.attachment-image(*ngSwitchCase="AttachmentType.image")([src]="attachment.content.public_path")
       // @DOTO:
-      // .attachment-image
       // .attachment-video
 .footer
-  .btn-material.secondary.positive
+  .btn-material.secondary.vote.positive([class.active]="post.votes.state=='positive'", (click)='vote("positive")')
     .fa.fa-thumbs-o-up
     | {{ post.votes.positive }}
-  .btn-material.secondary.negative
+  .btn-material.secondary.vote.negative([class.active]="post.votes.state=='negative'", (click)='vote("negative")')
     .fa.fa-thumbs-o-down
     | {{ post.votes.negative }}
   .flex-space
-  .btn-material.secondary
+  .btn-material.secondary([routerLink]="getPostUrl()", fragment="comments")
     .fa.fa-comments-o
     | {{ 249 | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
   .btn-material.secondary

@@ -13,6 +13,7 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
 import {PostCreateButtonComponent} from "./Component/PostCreateButton/index";
 import {PostComponent} from "./Component/Post/index";
 import {PostCreatedPipe} from "./Pipe/PostCreatedPipe";
+import {PostService} from "./Service/PostService";
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import {PostCreatedPipe} from "./Pipe/PostCreatedPipe";
     ],
     providers: [
         PostRESTService,
+        PostService,
         PostResolver,
         PostTitleResolver
     ],
