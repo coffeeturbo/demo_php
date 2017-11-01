@@ -36,7 +36,6 @@ class PostVoteController extends Controller
 
             $existsVote = $voteService->findVote($vote);
 
-            $post->setVote($existsVote);
             if(is_null($existsVote)){
                 $voteService->create($vote);
 
@@ -80,8 +79,6 @@ class PostVoteController extends Controller
             $vote = new Vote($profile, $post, new VoteTypeNegative());
 
             $existsVote = $voteService->findVote($vote);
-
-            $post->setVote($existsVote);
 
             if(is_null($existsVote)){
                 $voteService->create($vote);
