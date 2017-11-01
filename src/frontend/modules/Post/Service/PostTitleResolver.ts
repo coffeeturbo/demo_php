@@ -1,12 +1,27 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Resolve} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
 import {Post} from "../Entity/Post";
+import {PostService} from "./PostService";
 
 @Injectable()
 export class PostTitleResolver implements Resolve<string>{
-    resolve(route: ActivatedRouteSnapshot): Observable<string> {
-        return Observable.of("Post");
+
+
+    constructor(private postService: PostService) {}
+
+    resolve(): Observable<string> {
+        let onTitleLoad = new EventEmitter<string>();
+
+        this.postService.onPostResolve
+            .first()
+            .map(post => post.title)
+            .subscribe((title) => {
+                onTitleLoad.emit(title);
+                onTitleLoad.complete();
+            });
+
+        return onTitleLoad;
     }
 }

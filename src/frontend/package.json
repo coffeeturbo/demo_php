@@ -60,6 +60,7 @@
     "sass-mq": "^3.3.2",
     "scroll-into-view": "^1.9.1",
     "serialize-javascript": "^1.3.0",
+    "speakingurl": "^14.0.1",
     "url-loader": "^0.5.9",
     "webpack-manifest-plugin": "^1.2.1",
     "zone.js": "0.8.5"

@@ -1,6 +1,7 @@
 import {Tag} from "./Tag";
 import {Attachment} from "../../Attachment/Entity/Attachment";
 import {Profile} from "../../Profile/Entity/Profile";
+import {Vote} from "../../Vote/Entity/Vote";
 
 export interface Post {
     id?: number;
@@ -10,10 +11,5 @@ export interface Post {
     tags: Tag[];
     attachments: Attachment[];
     profile: Profile;
-    votes: {
-        negative : number;
-        positive: number;
-        rating: number;
-        state: "none" | "positive" | "negative"
-    }
+    votes: Vote
 }

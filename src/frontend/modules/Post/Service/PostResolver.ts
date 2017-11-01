@@ -3,10 +3,15 @@ import {ActivatedRouteSnapshot, Resolve} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
 import {Post} from "../Entity/Post";
+import {PostService} from "./PostService";
 
 @Injectable()
 export class PostResolver implements Resolve<Post>{
+    
+    constructor(private postService: PostService){}
+    
     resolve(route: ActivatedRouteSnapshot): Observable<Post> {
-        return Observable.of(null);
+        let postId = route.params["path"].replace(/^.*?(\d+)$/g, '$1');
+        return this.postService.get(postId);
     }
 }

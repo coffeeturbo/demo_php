@@ -130,6 +130,10 @@
 
   .content {
     line-height: 1.5em;
+    
+    img {
+      width: 100%;
+    }
   }
 
   .footer {
@@ -150,6 +154,10 @@
     .fa {
       margin-right: .4em;
       font-size: 14px;
+    }
+    
+    .vote.active {
+        color: material-color($secondary_material, '900');
     }
 
     .actions {
