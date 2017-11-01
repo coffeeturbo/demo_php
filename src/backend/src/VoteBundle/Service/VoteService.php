@@ -195,7 +195,7 @@ class VoteService
     {
         $vote = $this->voteRepository->getVoteByPost($post);
 
-        $post->setVote($vote);
+        if($vote) $post->setVote($vote);
     }
 
 }
