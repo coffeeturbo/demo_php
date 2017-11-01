@@ -1,10 +1,15 @@
 feed:
-  path: '/limit/{limit}/offset/{offset}'
+  path: '/limit/{limit}/cursor/{cursor}'
   methods: [ GET ]
   defaults: { _controller: FeedBundle:Feed:feed }
   requirements:
     limit: \d+
-    offset: \d+
+    cursor: \d+
+#    dateFrom: \d+
+#    dateNow: \d+
+#    profile: \d+
+    order: "[a-z_]+"
+    direction: ASC|DESC
 
 feed_total:
   path: '/total'

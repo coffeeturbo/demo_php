@@ -4,6 +4,7 @@ namespace PostBundle\Repository;
 
 use AttachmentBundle\Entity\Attachment;
 use Doctrine\ORM\NoResultException;
+use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TagBundle\Entity\Tag;
@@ -70,16 +71,18 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         // todo написать метод getWithTagsAndAttachmentsByAlias
     }
 
-    public function getPostsWithTagsAndAttachments(int $limit, int $offset)
+    public function getPostsWithTagsAndAttachments(FeedCriteria $criteria)
     {
+
         try {
             $qb = $this->createQueryBuilder('p')
                 ->select('p', 'tags', 'attachments', 'profile')
                 ->leftJoin('p.tags', 'tags')
                 ->leftJoin('p.attachments', 'attachments')
                 ->leftJoin('p.profile', 'profile')
-                ->setFirstResult($offset)
-                ->setMaxResults($limit)
+                ->setFirstResult($criteria->getCursor())
+                ->setMaxResults($criteria->getLimit())
+                ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
                 ->getQuery();
 
             return $qb->getResult();

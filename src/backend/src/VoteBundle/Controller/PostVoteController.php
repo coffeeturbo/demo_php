@@ -6,6 +6,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PostBundle\Response\SuccessPostResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use VoteBundle\Entity\Vote;
@@ -35,13 +36,15 @@ class PostVoteController extends Controller
 
             $existsVote = $voteService->findVote($vote);
 
-
+            $post->setVote($existsVote);
             if(is_null($existsVote)){
                 $voteService->create($vote);
 
                 $voteService->attachVote($post, $vote);
                 $post->setVote($vote);
                 $postRepository->save($post);
+            } else {
+                throw new ConflictHttpException("already voted");
             }
 
         } catch(NotFoundHttpException $e){
@@ -49,6 +52,8 @@ class PostVoteController extends Controller
         } catch(AccessDeniedHttpException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
         } catch (UnauthorizedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        } catch(ConflictHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
@@ -76,12 +81,15 @@ class PostVoteController extends Controller
 
             $existsVote = $voteService->findVote($vote);
 
+            $post->setVote($existsVote);
 
             if(is_null($existsVote)){
                 $voteService->create($vote);
                 $voteService->attachVote($post, $vote);
                 $post->setVote($vote);
                 $postRepository->save($post);
+            } else {
+                throw new ConflictHttpException("already voted");
             }
 
         } catch(NotFoundHttpException $e){
@@ -89,6 +97,8 @@ class PostVoteController extends Controller
         } catch(AccessDeniedHttpException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
         } catch (UnauthorizedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        } catch(ConflictHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
