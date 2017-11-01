@@ -63,6 +63,12 @@ class PostController extends Controller
         try{
             $post = $this->get('post.repository')
                 ->getPostWithTagsAndAttachmentsByPostId($id);
+
+
+
+            $this->get('vote.service.vote_service')->getVoteToPost($post);
+
+
         }
         catch(NoResultException $e){
             return new ErrorJsonResponse($e->getMessage(), [], 404);

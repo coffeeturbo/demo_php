@@ -191,4 +191,11 @@ class VoteService
         });
     }
 
+    public function getVoteToPost(Post $post)
+    {
+        $vote = $this->voteRepository->getVoteByPost($post);
+
+        $post->setVote($vote);
+    }
+
 }

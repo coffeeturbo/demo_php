@@ -3,6 +3,7 @@ namespace VoteBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use VoteBundle\Entity\Vote;
@@ -38,6 +39,17 @@ class VoteRepository extends EntityRepository
 
         return $votes;
 
+    }
+
+    public function getVoteByPost(Post $post): ?Vote
+    {
+        $vote = $this->findOneBy([
+            'profile' => $post->getProfile()->getId(),
+            'contentType' => $post->getType()->getIntCode(),
+            'contentId' => $post->getId(),
+        ]);
+
+        return $vote instanceof Vote ? $vote : null;
     }
 
 
