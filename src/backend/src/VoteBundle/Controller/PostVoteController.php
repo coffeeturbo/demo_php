@@ -32,6 +32,7 @@ class PostVoteController extends Controller
             $profile = $this->get('profile.service')->getCurrentProfile();
 
             $post = $postRepository->getPostById($postId);
+
             $vote = new Vote($profile, $post, new VoteTypePositive());
 
             $existsVote = $voteService->findVote($vote);
@@ -127,6 +128,7 @@ class PostVoteController extends Controller
                 $existsVote->setVoteableEntity($post);
                 $voteService->detach($post, $existsVote);
                 $voteService->delete($existsVote);
+                $postRepository->save($post);
             }
 
         } catch(NotFoundHttpException $e){

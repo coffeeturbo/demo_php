@@ -34,5 +34,4 @@ trait AttachmentableEntityTrait
         return $this->attachments->toArray();
     }
 
-
 }

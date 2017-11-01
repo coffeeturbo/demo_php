@@ -2,6 +2,7 @@
 namespace AttachmentBundle\Response;
 
 use AttachmentBundle\Entity\Attachment;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
