@@ -26,7 +26,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         $attachmentRep = $em->getRepository(Attachment::class);
         $attachmentRep->saveAttachments($post);
 
-        $em->flush($post);
+        $em->flush();
     }
 
     public function getPostById(int $postId): Post
@@ -53,6 +53,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                 ->select('p', 'tags', 'attachments', 'profile')
                 ->leftJoin('p.tags', 'tags')
                 ->leftJoin('p.attachments', 'attachments')
+                ->orderBy('attachments.position', 'ASC')
                 ->leftJoin('p.profile', 'profile')
                 ->where('p.id = :id')
                 ->setParameter('id', $postId)

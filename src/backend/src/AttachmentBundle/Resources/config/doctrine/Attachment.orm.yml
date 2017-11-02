@@ -19,3 +19,8 @@ AttachmentBundle\Entity\Attachment:
     updated:
       type: datetime
       nullable: false
+    position:
+      type: smallint
+      nullable: false
+      options:
+        default: 0

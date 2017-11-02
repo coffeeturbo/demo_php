@@ -20,7 +20,7 @@ class AttachmentRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         /** @var Attachment $attachment */
-        foreach($entity->getAttachments() as $attachment){
+        foreach($entity->getAttachments() as $idx => $attachment){
 
             if($id = $attachment->getId()){
 
@@ -34,10 +34,13 @@ class AttachmentRepository extends EntityRepository
 
                 $entity->removeAttachment($attachment);
                 $entity->addAttachment($oldAttachment);
-
-
+                $oldAttachment->setPosition($idx);
+                $em->persist($oldAttachment);
             } else {
+
+                $attachment->setPosition($idx);
                 $em->persist($attachment);
+
             }
         }
     }

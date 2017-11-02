@@ -33,7 +33,7 @@ class SuccessAttachmentResponse extends JsonResponse implements \JsonSerializabl
         return [
             'id' => $entity->getId(),
             'type' => $entity->getType()->getStringCode(),
-            'content' => $entity->getContent()
+            'content' => $entity->getContent(),
         ];
     }
 
