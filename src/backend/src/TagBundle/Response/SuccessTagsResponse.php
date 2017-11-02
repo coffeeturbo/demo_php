@@ -18,10 +18,10 @@ class SuccessTagsResponse extends JsonResponse implements \JsonSerializable
 
     function jsonSerialize()
     {
-        $entities = array_map(function(Tag $tag){
+        $entities = array_values(array_map(function (Tag $tag) {
             return (new SuccessTagResponse($tag))->jsonSerialize();
-        }, $this->entities);
-
+        }, $this->entities));
+        
         return $entities;
     }
 

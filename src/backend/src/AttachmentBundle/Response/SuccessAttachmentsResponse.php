@@ -1,4 +1,5 @@
 <?php
+
 namespace AttachmentBundle\Response;
 
 use AttachmentBundle\Entity\Attachment;
@@ -20,9 +21,9 @@ class SuccessAttachmentsResponse extends JsonResponse implements \JsonSerializab
     {
         $attachments = $this->entities ?? $this->createMockEntity();
 
-        $entities = array_map(function(Attachment $attachment){
+        $entities = array_values(array_map(function (Attachment $attachment) {
             return (new SuccessAttachmentResponse($attachment))->jsonSerialize();
-        }, $attachments );
+        }, $attachments));
 
         return $entities;
     }
