@@ -30,7 +30,7 @@ class SuccessPostResponse extends JsonResponse implements \JsonSerializable
             'created' => $post->getCreated()->format(\DateTime::W3C),
             'updated' => $post->getUpdated()->format(\DateTime::W3C),
             'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
-            'attachments' => (new SuccessAttachmentsResponse($post->getAttachments()))->jsonSerialize(),
+            'attachments' =>  (new SuccessAttachmentsResponse($post->getAttachments()))->jsonSerialize(),
             'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
 
             'votes' => [

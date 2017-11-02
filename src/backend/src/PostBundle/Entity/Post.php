@@ -46,7 +46,7 @@ class Post extends AbstractTaggable
         return $this->id;
     }
 
-    public function setTitle(string $title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
         return $this;
