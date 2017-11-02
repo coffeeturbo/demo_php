@@ -18,6 +18,8 @@ import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute/index";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute/index";
 import {PostFormRoute} from "../modules/Post/Route/PostFormRoute/index";
 import {ProfileFeedResolver} from "../modules/Profile/Service/ProfileFeedResolver";
+import {TagRoute} from "../modules/Tag/Route/TagRoute/index";
+import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -54,6 +56,13 @@ export const appRoutes: JetRoutes = [
                 }
             }
         ]
+    },
+    {
+        path: 'tag/:path',
+        component: TagRoute,
+        resolve: {
+            title: TagTitleResolver
+        }
     },
     { // Страница авторизации
         path: 'login',

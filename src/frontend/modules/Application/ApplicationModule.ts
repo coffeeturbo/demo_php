@@ -29,6 +29,7 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
 import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
 import {VoteModule} from "../Vote/VoteModule";
+import {TagModule} from "../Tag/TagModule";
 
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {
@@ -65,6 +66,7 @@ export class HammerConfig extends HammerGestureConfig  {
         ProfileModule,
         SettingsModule,
         SidebarModule,
+        TagModule,
         VoteModule,
         CommonModule,
         RESTModule.init(Config.uri.api, Config.auth.token_key)
