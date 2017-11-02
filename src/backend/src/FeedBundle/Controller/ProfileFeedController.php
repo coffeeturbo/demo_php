@@ -23,6 +23,12 @@ class ProfileFeedController extends Controller
 
         $posts = $this->get('feed.service.feed_service')->getProfileFeed($profile, $limit, $offset);
 
+        if($account = $this->get('auth.service')->getAccount()){
+
+            $profile = $this->get('profile.service')->getCurrentProfile();
+            $this->get('vote.service.vote_service')->getVotesToPosts($posts, $profile);
+        }
+
         return new SuccessPostsResponse($posts);
     }
 
