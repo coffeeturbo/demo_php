@@ -31,7 +31,7 @@ export class SignUpFormComponent {
 
     constructor(private authService: AuthService) {}
 
-    @HostListener('document:keydown.enter')
+    @HostListener('document:keyup.enter')
     public submit(): void {
         if (this.form.valid && !this.disabled) {
             let formData = this.form.value;

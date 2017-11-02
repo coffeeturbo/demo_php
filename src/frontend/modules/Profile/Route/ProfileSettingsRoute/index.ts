@@ -48,7 +48,7 @@ export class ProfileSettingsRoute {
         ;
     }
 
-    @HostListener('document:keydown.enter')
+    @HostListener('document:keyup.enter')
     public submit(): void {
         if (this.form.valid && !this.disabled) {
             this.disabled = true;

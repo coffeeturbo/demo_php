@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Renderer} from "@angular/core";
+import {Component, ElementRef, HostBinding, HostListener, Renderer} from "@angular/core";
 import {LoadingBar, LoadingBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
@@ -6,6 +6,8 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 import {RouteHelperService} from "../../Service/RouteHelperService";
 import {Device} from "../../Service/DeviceService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
+import {AppHotkeys} from "./hotkeys";
+import {ApplicationScrollService} from "../../Service/ApplicationScrollService";
 
 @Component({
     selector: "application",
@@ -30,6 +32,7 @@ export class ApplicationComponent {
         public sidebar: SidebarService,
         public auth: AuthService,
         public profile: ProfileService,
+        private appScrollService: ApplicationScrollService,
         private routeHelper: RouteHelperService,
         private loadingBarEvents: LoadingBarEvents,
         private elRef: ElementRef,
@@ -45,6 +48,18 @@ export class ApplicationComponent {
 
         if(this.device.isMobile()) {
             this.renderer.listen(this.elRef.nativeElement, 'panright', () => this.sidebar.show());
+        }
+    }
+
+    @HostListener('window:keydown', ['$event.keyCode'])
+    onKeydown(keyCode: number) {
+        switch (keyCode) {
+            case AppHotkeys.ScrollUp:
+                this.appScrollService.scrollTo(this.appScrollService.getScroll() - 100);
+                break;
+            case AppHotkeys.ScrollDown:
+                this.appScrollService.scrollTo(this.appScrollService.getScroll() + 100);
+                break;
         }
     }
 }

@@ -4,5 +4,6 @@ export enum PostHotkeys
     VoteNegative = 83,  // s
     NextPost = 68,      // d
     PreviousPost = 65,  // a
-    OpenPost = 69       // e
+    OpenPost = 69,       // e
+    StartPost = 88       // x
 }

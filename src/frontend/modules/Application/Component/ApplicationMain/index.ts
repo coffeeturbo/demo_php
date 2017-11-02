@@ -37,5 +37,7 @@ export class ApplicationMainFrameComponent implements OnInit {
         if (typeof window != 'undefined') {
             this.appScrollService.mainHeight = window.innerHeight - this.el.nativeElement.offsetTop;
         }
+        
+        this.appScrollService.setMainElement(this.el);
     }
 }

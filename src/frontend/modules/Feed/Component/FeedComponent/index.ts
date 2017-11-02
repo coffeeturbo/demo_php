@@ -4,6 +4,7 @@ import * as scrollIntoView from 'scroll-into-view';
 import {Feed} from "../../Entity/Feed";
 import {PostComponent} from "../../../Post/Component/Post/index";
 import {PostHotkeys} from "../../../Post/Component/Post/hotkeys";
+import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
 
 @Component({
     selector: 'feed',
@@ -14,20 +15,38 @@ import {PostHotkeys} from "../../../Post/Component/Post/hotkeys";
 export class FeedComponent {
     @Input() feed: Feed;
     @ViewChildren(PostComponent) posts: QueryList<PostComponent>;
-
+    
+    private currentPostComponent: PostComponent;
+    
+    constructor(public appScrollService: ApplicationScrollService){}
+    
+    ngAfterViewInit() {
+        this.posts.forEach(post => post.current = false);
+        this.appScrollService
+            .onScroll
+            .debounceTime(50)
+            .subscribe(() => {
+                this.posts.forEach(post => post.current = false);
+                this.currentPostComponent = this.posts.find(post => post.isIntoView == true);
+                if(this.currentPostComponent) {
+                    this.currentPostComponent.current = true;
+                }
+            })
+        ;
+    }
+    
     @HostListener('window:keyup', ['$event.keyCode'])
-    onKeydown1(keyCode: number) {
+    onKeydown(keyCode: number) {
         if(keyCode == PostHotkeys.NextPost || keyCode == PostHotkeys.PreviousPost) {
-            let postComponent: PostComponent = this.posts.find(post => post.isIntoView == true);
             let postEl = this.posts.first.el.nativeElement;
-        
-            if(postComponent) {
+            
+            if(this.currentPostComponent) {
                 switch (keyCode) {
                     case PostHotkeys.NextPost:
-                        postEl = postComponent.el.nativeElement.nextElementSibling;
+                        postEl = this.currentPostComponent.el.nativeElement.nextElementSibling;
                         break;
                     case PostHotkeys.PreviousPost:
-                        postEl = postComponent.el.nativeElement.previousElementSibling;
+                        postEl = this.currentPostComponent.el.nativeElement.previousElementSibling;
                         break;
                 }
             }
