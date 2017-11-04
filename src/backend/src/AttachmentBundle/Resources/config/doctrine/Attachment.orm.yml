@@ -21,6 +21,6 @@ AttachmentBundle\Entity\Attachment:
       nullable: false
     position:
       type: smallint
-      nullable: false
+      nullable: true
       options:
         default: 0

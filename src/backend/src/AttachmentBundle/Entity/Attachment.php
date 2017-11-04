@@ -16,12 +16,10 @@ class Attachment implements ModifyDateEntityInterface
 
     protected $position;
 
-
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->markUpdated();
-        $this->position = 0;
     }
     public function getPosition(): int
     {
