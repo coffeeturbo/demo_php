@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TranslationService} from "@angular-addons/translate";
 
@@ -31,9 +31,11 @@ export class PostFormRoute implements OnInit {
         value: this.translationService.translate("author's")
     };
 
-    constructor(private translationService: TranslationService) {}
+    constructor(private translationService: TranslationService, private el: ElementRef) {}
 
     ngOnInit() {
+        this.el.nativeElement.querySelector(".ng2-tag-input__text-input").size = 1; // bugfix ngxchips (flex width input)
+        
         try {
             let post: Post = JSON.parse(localStorage.getItem("new-post"));
             

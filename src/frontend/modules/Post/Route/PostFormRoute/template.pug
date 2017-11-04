@@ -57,9 +57,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       theme='material',
       inputId="addPostTags"
       )
-        tag-input-dropdown(
-          [autocompleteObservable]="requestAutocompleteItems",
-        )
+        //tag-input-dropdown([autocompleteObservable]="requestAutocompleteItems")
       ng-container(*ngIf="form.controls['tags'].invalid && this.submitted")
         tooltip(*ngIf="form.controls['tags'].hasError('required')")
           small {{ "Add miminum 2 tags" | translate }}.

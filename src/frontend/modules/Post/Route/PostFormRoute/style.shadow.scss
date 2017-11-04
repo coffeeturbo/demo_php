@@ -117,6 +117,14 @@ h2 span {
   }
 }
 
-.controls .material-field + * {
-  margin-left: 1em;
+.controls .material-field {
+  & + * {
+    margin-left: 1em;
+  }
+
+  @include mq($until: tablet) {
+    button span {
+      display: none;
+    }
+  }
 }

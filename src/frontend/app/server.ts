@@ -28,7 +28,8 @@ app.get(route, (req: Request, res: Response) => {
     console.time(`GET: ${req.originalUrl}`);
     res.render('../../web/dist/index', {
         req: req,
-        res: res
+        res: res,
+        preboot: false,
     });
     console.timeEnd(`GET: ${req.originalUrl}`);
 });

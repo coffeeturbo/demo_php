@@ -34,11 +34,23 @@ $material-icon-theme: (
   transition: all 0.35s,
 );
 
-/deep/ div.ng2-tag-input.material { @include tag-input-theme($material-tag-input-theme); }
-/deep/ div.ng2-tag-input.material tag { @include tag-theme($material-tag-theme); }
-/deep/ div.ng2-tag-input.material input { @include tag-input-form-theme($material-tag-input-form-theme); }
-/deep/ div.ng2-tag-input.material tag delete-icon {
-  @include icon-theme($material-icon-theme);
-  svg { height: $height + 2px; }
-  &:hover { transform: none; }
+/deep/ div.ng2-tag-input.material { 
+  @include tag-input-theme($material-tag-input-theme);
+  tag { 
+    @include tag-theme($material-tag-theme);
+
+    delete-icon {
+      @include icon-theme($material-icon-theme);
+      svg { height: $height + 2px; }
+      &:hover { transform: none; }
+    }
+  }
+
+  tag-input-form {
+    flex-grow: 1;
+    
+    input {
+      @include tag-input-form-theme($material-tag-input-form-theme);
+    }
+  }
 }
