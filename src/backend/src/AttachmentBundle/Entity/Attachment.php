@@ -17,6 +17,12 @@ class Attachment implements ModifyDateEntityInterface
     protected $position;
 
 
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+        $this->markUpdated();
+        $this->position = 0;
+    }
     public function getPosition(): int
     {
         return $this->position;
@@ -28,11 +34,7 @@ class Attachment implements ModifyDateEntityInterface
         return $this;
     }
 
-    public function __construct()
-    {
-        $this->created = new \DateTime();
-        $this->markUpdated();
-    }
+
 
     public function setId(int $id = null)
     {
