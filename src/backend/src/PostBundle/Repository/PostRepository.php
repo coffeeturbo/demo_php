@@ -4,6 +4,7 @@ namespace PostBundle\Repository;
 
 use AttachmentBundle\Entity\Attachment;
 use Doctrine\ORM\NoResultException;
+use FeedBundle\Criteria\Criteria;
 use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -46,6 +47,24 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $result;
     }
 
+
+    private function getPostsByCriteria(Criteria $criteria)
+    {
+        try {
+            $qb = $this->createQueryBuilder('p')
+                ->select('p')
+                ->orderBy('p.id', 'DESC')
+                ->setFirstResult($criteria->getCursor())
+                ->setMaxResults($criteria->getLimit())
+                ->getQuery();
+
+        } catch(NoResultException $e){
+            throw new NotFoundHttpException(sprintf("no posts founded"));
+        }
+
+        return $qb->getResult();
+    }
+
     public function getPostWithTagsAndAttachmentsByPostId(int $postId)
     {
         try {
@@ -75,29 +94,23 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getPostsWithTagsAndAttachments(FeedCriteria $criteria)
     {
 
-        try {
-            $qb = $this->createQueryBuilder('p')
-                ->select('p', 'tags', 'attachments', 'profile')
-                ->leftJoin('p.tags', 'tags')
-                ->leftJoin('p.attachments', 'attachments')
-                ->leftJoin('p.profile', 'profile')
-                ->setFirstResult($criteria->getCursor())
-                ->setMaxResults($criteria->getLimit())
-                ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
-                ->getQuery();
+        $posts = $this->getPostsByCriteria($criteria);
 
-            return $qb->getResult();
-        } catch(NoResultException $e){
-            throw new NotFoundHttpException(sprintf("no posts founded"));
-        }
-    }
+        $postIds = array_map(function(Post $post){
+            return $post->getId();
+        }, $posts);
 
-    public function getPostsTotal(): int
-    {
         $qb = $this->createQueryBuilder('p')
-            ->select('count(p)')
+            ->select('p', 'tags', 'attachments')
+            ->leftJoin('p.tags', 'tags')
+            ->leftJoin('p.attachments', 'attachments')
+            ->where('p.id IN (:postIds)')
+            ->setParameter('postIds', $postIds)
+            ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
             ->getQuery();
 
-        return $qb->getSingleScalarResult();
+
+        return $qb->getResult();
     }
+
 }

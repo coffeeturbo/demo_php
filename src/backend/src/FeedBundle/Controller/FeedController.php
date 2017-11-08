@@ -2,10 +2,9 @@
 namespace FeedBundle\Controller;
 
 use AppBundle\Http\ErrorJsonResponse;
-use FeedBundle\Criteria\FeedCriteria;
+use FeedBundle\Handler\FeedHandler;
 use PostBundle\Response\SuccessPostsResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,20 +19,15 @@ class FeedController extends Controller
      * )
      *
      */
-    public function feedAction(int $limit, int $cursor, Request $request)
+    public function feedAction(Request $request)
     {
         // todo добавить максимальный limit для ленты и вынести в файл конфигурации
 
-//        dump($request);
         try {
-            $request->get('order');
-//            $data = $this->get('app.validate_request')->getData($request, FeedFormType::class);
-            $data = json_decode($request->getContent(), true);
-
-            $criteria = new FeedCriteria($limit, $cursor, $order= 'id', $direction = 'ASC');
+            $handler = new FeedHandler($request);
 
             $posts = $this->get('post.repository')
-                ->getPostsWithTagsAndAttachments($criteria);
+                ->getPostsWithTagsAndAttachments($handler->getCriteria());
 
 
             if($account = $this->get('auth.service')->getAccount()){
@@ -48,23 +42,7 @@ class FeedController extends Controller
             return new ErrorJsonResponse($e->getMessage(), []);
         }
 
-
         return new SuccessPostsResponse($posts);
     }
 
-    /**
-     * @ApiDoc(
-     *  section="Feed",
-     *  description="Получаем количество постов",
-     * )
-     *
-     */
-    public function feedTotalAction()
-    {
-        $total = $this->get('post.repository')->getPostsTotal();
-
-        return new JsonResponse([
-            'total' => $total
-        ]);
-    }
 }
