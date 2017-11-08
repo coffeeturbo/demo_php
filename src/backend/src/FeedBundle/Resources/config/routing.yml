@@ -11,11 +11,6 @@ feed:
     order: "[a-z_]+"
     direction: ASC|DESC
 
-feed_total:
-  path: '/total'
-  methods: [ GET ]
-  defaults: { _controller: FeedBundle:Feed:feedTotal }
-
 profile_feed:
   path: '/profile/{profileId}/limit/{limit}/offset/{offset}'
   methods: [ GET ]
@@ -24,10 +19,3 @@ profile_feed:
     profileId: \d+
     limit: \d+
     offset: \d+
-
-profile_feed_total:
-  path: '/profile/{id}/total'
-  methods: [ GET ]
-  defaults: { _controller: FeedBundle:ProfileFeed:feedTotal }
-  requirements:
-    id: \d+
