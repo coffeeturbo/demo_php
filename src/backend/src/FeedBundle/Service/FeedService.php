@@ -6,7 +6,6 @@ use PostBundle\Entity\Post;
 use PostBundle\Repository\PostRepository;
 use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use TagBundle\Repository\TagRepository;
 
 class FeedService
 {
@@ -16,7 +15,6 @@ class FeedService
     {
         $this->postRepository = $postRepository;
     }
-
 
     public function getProfileFeed(Profile $profile, int $limit, int $offset = 0)
     {
