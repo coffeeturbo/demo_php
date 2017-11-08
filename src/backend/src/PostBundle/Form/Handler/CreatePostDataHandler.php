@@ -54,6 +54,7 @@ class CreatePostDataHandler
 
     private function setTagsFromJson(TaggableEntityInterface $entity, string $jsonTagsString)
     {
+        $jsonTags = json_decode($jsonTagsString, true);
 
         if($this->minTagsLimit > count($jsonTags)) {
             throw new AccessDeniedHttpException(sprintf("min allowed tags: %s", $this->minTagsLimit));
@@ -82,8 +83,11 @@ class CreatePostDataHandler
         return $this;
     }
 
-    private function setAttachmentsFromJson(AttachmentableEntity $entity, array $jsonAttachs)
+    private function setAttachmentsFromJson(AttachmentableEntity $entity, string $jsonAttachmString)
     {
+
+        $jsonAttachs = json_decode($jsonAttachmString, true);
+
         if($this->maxAttachmentsLimit < count($jsonAttachs)) {
             throw new AccessDeniedHttpException(
                 sprintf("you have exceed attachments limit: %s", $this->maxAttachmentsLimit));

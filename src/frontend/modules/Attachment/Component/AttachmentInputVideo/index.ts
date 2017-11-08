@@ -1,8 +1,10 @@
 import {Component, forwardRef, Input, OnChanges} from '@angular/core';
 import {AsyncValidator, ControlValueAccessor, FormControl, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {AttachmentRESTService} from "../../Service/AttachmentRESTService";
-import {AttachmentGetVideoLinkResponse} from "../../Http/Response/AttachmentGetVideoLinkResponse";
+
+import {Attachment} from "../../Entity/Attachment";
+import {AttachmentVideo} from "../../Entity/AttachmentVideo";
 import {AttachmentGetVideoLinkRequest} from "../../Http/Request/AttachmentGetVideoLinkRequest";
+import {AttachmentRESTService} from "../../Service/AttachmentRESTService";
 
 @Component({
     selector: 'attachment-input-video',
@@ -26,7 +28,7 @@ export class AttachmentInputVideoComponent implements ControlValueAccessor, Asyn
     propagateChange:any = () => {};
     @Input() id: string;
     @Input('value') _value = "";
-    public attachmentVideo: AttachmentGetVideoLinkResponse;
+    public attachmentVideo: Attachment<AttachmentVideo>;
     public disabled: boolean = false;
     public linkHasError: boolean = false;
     

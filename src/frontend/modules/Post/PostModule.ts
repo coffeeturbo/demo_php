@@ -14,6 +14,7 @@ import {PostCreateButtonComponent} from "./Component/PostCreateButton/index";
 import {PostComponent} from "./Component/Post/index";
 import {PostCreatedPipe} from "./Pipe/PostCreatedPipe";
 import {PostService} from "./Service/PostService";
+import {PostTextFormat} from "./Pipe/PostTextFormat";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {PostService} from "./Service/PostService";
         PostCreateButtonComponent,
         PostRoute,
         PostFormRoute,
-        PostCreatedPipe
+        PostCreatedPipe,
+        PostTextFormat
     ],
     providers: [
         PostRESTService,

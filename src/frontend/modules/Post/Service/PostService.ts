@@ -5,6 +5,8 @@ import {PostRESTService} from "./PostRESTService";
 import {Post} from "../Entity/Post";
 import {VoteState} from "../../Vote/Entity/Vote";
 import {VoteRESTService} from "../../Vote/Service/VoteRESTService";
+import {AttachmentRESTService} from "../../Attachment/Service/AttachmentRESTService";
+import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
 
 @Injectable()
 export class PostService {
@@ -12,7 +14,11 @@ export class PostService {
     public onPostResolve = new EventEmitter<Post>(true);
     
     
-    constructor(private rest: PostRESTService, private voteRest: VoteRESTService) {}
+    constructor(
+        private rest: PostRESTService, 
+        private voteRest: VoteRESTService,
+        private attachmentRest: AttachmentRESTService
+    ) {}
 
     public get(postId: number): Observable<Post> 
     {
@@ -30,8 +36,13 @@ export class PostService {
             .do(post => this.onPostResolve.emit(post))
         ;
     }
+    
+    public create(postCreateRequest: PostCreateRequest)
+    {
+        return this.rest.create(postCreateRequest)
+    }
 
-    vote(post: Post, state: VoteState): Observable<Post>
+    public vote(post: Post, state: VoteState): Observable<Post>
     {
         let oldPost = post;
         let voteObservable: Observable<Post>;
