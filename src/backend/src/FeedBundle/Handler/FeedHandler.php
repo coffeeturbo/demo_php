@@ -15,7 +15,6 @@ class FeedHandler
 
     public function handleRequest( Request $request)
     {
-
         $order = $request->get('order');
         $limit = $request->get('limit');
         $cursor = $request->get('cursor');
@@ -23,6 +22,8 @@ class FeedHandler
 
         $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction);
     }
+
+
 
     public function getCriteria(): FeedCriteria
     {

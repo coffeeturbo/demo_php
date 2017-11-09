@@ -8,7 +8,7 @@ feed:
 #    dateFrom: \d+
 #    dateNow: \d+
 #    profile: \d+
-    order: "[a-z_]+"
+    order: "id|rating"
     direction: ASC|DESC
 
 profile_feed:

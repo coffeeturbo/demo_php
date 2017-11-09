@@ -53,7 +53,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         try {
             $qb = $this->createQueryBuilder('p')
                 ->select('p')
-                ->orderBy('p.id', 'DESC')
+                ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
                 ->setFirstResult($criteria->getCursor())
                 ->setMaxResults($criteria->getLimit())
                 ->getQuery();

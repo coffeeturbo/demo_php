@@ -5,6 +5,8 @@ abstract class Criteria
 {
     private $limit;
     private $cursor;
+    protected $order;
+    protected $direction;
 
     public function __construct(int $limit, int $cursor)
     {
@@ -20,6 +22,16 @@ abstract class Criteria
     public function setLimit($limit)
     {
         $this->limit = $limit;
+    }
+
+    public function getOrder(): string
+    {
+        return $this->order;
+    }
+
+    public function getDirection(): string
+    {
+        return $this->direction;
     }
 
 

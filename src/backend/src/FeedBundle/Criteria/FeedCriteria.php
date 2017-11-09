@@ -6,19 +6,20 @@ class FeedCriteria extends Criteria
 
     private $validOrders = [
         'id',
-
+        'votesRating',
+        'votes_rating',
+        'rating',
     ];
 
-    private $order = 'id';
-    private $direction = "DESC";
 
     public function __construct(int $limit, int $cursor, string $order, string $direction)
     {
         parent::__construct($limit, $cursor);
 
-        $this->order = $order;
+        $this->setOrder($order);
         $this->direction = $direction;
     }
+
 
     public function getOrder(): string
     {
@@ -27,13 +28,18 @@ class FeedCriteria extends Criteria
 
     public function setOrder(string $order)
     {
+
+        if(strcmp($order, 'votes_rating') == 0
+            | strcmp($order, 'rating') == 0
+        ){
+            $order = 'votesRating';
+        }
+
         $this->order = $order;
+        return $this;
     }
 
-    public function getDirection(): string
-    {
-        return $this->direction;
-    }
+
 
     public function setDirection(string $direction)
     {
