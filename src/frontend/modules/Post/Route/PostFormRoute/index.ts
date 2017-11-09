@@ -12,6 +12,7 @@ import {AttachmentText} from "../../../Attachment/Entity/AttachmentText";
 import {AttachmentVideo} from "../../../Attachment/Entity/AttachmentVideo";
 import {PostCreateRequest} from "../../Http/Request/PostCreateRequest";
 import {Tag} from "../../../Tag/Entity/Tag";
+import {Router} from "@angular/router";
 
 const localStorage = typeof window !='undefined' ? window.localStorage : { getItem(key: any): any { return null }, removeItem(key: any) {}, setItem(key: any, val: any) {} };
 
@@ -39,7 +40,8 @@ export class PostFormRoute implements OnInit {
     constructor(
         private translationService: TranslationService,
         private attachmentRest: AttachmentRESTService,
-        private postService: PostService
+        private postService: PostService,
+        private router: Router
     ) {}
 
     ngOnInit() {
@@ -140,12 +142,13 @@ export class PostFormRoute implements OnInit {
 
         Observable
             .combineLatest(attachmentsObservable)
-            .do(attachments => postCreateRequest.attachments = attachments)
             .flatMap((attachments) => {
-                // postCreateRequest.attachments = attachments;
+                // Fck nelmio
+                postCreateRequest.attachments = JSON.stringify(attachments);
+                postCreateRequest.tags = JSON.stringify(postCreateRequest.tags);
                 return this.postService.create(postCreateRequest)
             })
-            .subscribe()
+            .subscribe((post) => this.router.navigate(["/post", post.id]))
         ;
 
         // @DOTO: Make handle success submit!

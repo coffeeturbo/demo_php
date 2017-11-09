@@ -28,8 +28,6 @@ export class PostService {
         } catch (e) {
             postObservable = this.rest.getById(postId)
                 // .do(post => this.saveToCache(post))
-
-            
         }
         
         return postObservable
@@ -37,7 +35,7 @@ export class PostService {
         ;
     }
     
-    public create(postCreateRequest: PostCreateRequest)
+    public create(postCreateRequest: PostCreateRequest): Observable<Post>
     {
         return this.rest.create(postCreateRequest)
     }

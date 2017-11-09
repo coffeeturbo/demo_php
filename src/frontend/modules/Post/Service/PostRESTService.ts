@@ -2,13 +2,15 @@ import {Injectable} from "@angular/core";
 import {RESTService} from "@angular-addons/rest";
 
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
+import {Observable} from "rxjs/Observable";
+import {Post} from "../Entity/Post";
 
 @Injectable()
 export class PostRESTService
 {
     constructor(private rest: RESTService) {}
     
-    public getById(postId: number)
+    public getById(postId: number): Observable<Post>
     {
         let url = `/post/${postId}/get-by-id`;
 
@@ -18,7 +20,7 @@ export class PostRESTService
         
     }
 
-    public create(postCreateRequest: PostCreateRequest)
+    public create(postCreateRequest: PostCreateRequest): Observable<Post>
     {
         let url = `/protected/post/create`;
 

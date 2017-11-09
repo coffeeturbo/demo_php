@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {DndModule} from "ng2-dnd";
 import {TagInputModule} from "ngx-chips";
+import {LinkyModule} from 'angular-linky';
 
 import {PostRESTService} from "./Service/PostRESTService";
 import {PostResolver} from "./Service/PostResolver";
@@ -20,6 +21,7 @@ import {PostTextFormat} from "./Pipe/PostTextFormat";
     imports: [
         TagInputModule,
         DndModule.forRoot(),
+        LinkyModule,
         AttachmentModule,
         CommonModule,
         RouterModule
