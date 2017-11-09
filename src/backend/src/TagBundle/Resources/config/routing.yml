@@ -1,0 +1,6 @@
+tag_get_by_first_letters:
+  path: /search/{query}
+  methods: [ GET ]
+  defaults: { _controller: TagBundle:Tag:search }
+  requirements:
+    query: .+

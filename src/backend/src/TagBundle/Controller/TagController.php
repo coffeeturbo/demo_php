@@ -39,7 +39,6 @@ class TagController extends Controller
      * @ApiDoc(
      *     section="Tag",
      *     description= "Находит подходящиие теги",
-     *     authentication=true,
      *     output = {"class" = "TagBundle\Response\SuccessTagResponse"},
      * )
      */
