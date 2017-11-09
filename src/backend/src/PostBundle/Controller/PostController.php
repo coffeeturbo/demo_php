@@ -64,7 +64,12 @@ class PostController extends Controller
             $post = $this->get('post.repository')
                 ->getPostWithTagsAndAttachmentsByPostId($id);
 
-            $this->get('vote.service.vote_service')->getVoteToPost($post);
+
+            if($account = $this->get('auth.service')->getAccount()){
+                $profile = $this->get('profile.service')->getCurrentProfile();
+                $this->get('vote.service.vote_service')->getVoteToPost($post, $profile);
+            }
+
         } catch(NoResultException $e){
             return new ErrorJsonResponse($e->getMessage(), [], 404);
         } catch(NotFoundHttpException $e){

@@ -191,9 +191,9 @@ class VoteService
         });
     }
 
-    public function getVoteToPost(Post $post)
+    public function getVoteToPost(Post $post, Profile $profile)
     {
-        $vote = $this->voteRepository->getVoteByPost($post);
+        $vote = $this->voteRepository->getVoteByPost($post, $profile);
 
         if($vote) $post->setVote($vote);
     }

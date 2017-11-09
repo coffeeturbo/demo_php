@@ -41,10 +41,10 @@ class VoteRepository extends EntityRepository
 
     }
 
-    public function getVoteByPost(Post $post): ?Vote
+    public function getVoteByPost(Post $post, Profile $profile): ?Vote
     {
         $vote = $this->findOneBy([
-            'profile' => $post->getProfile()->getId(),
+            'profile' => $profile->getId(),
             'contentType' => $post->getType()->getIntCode(),
             'contentId' => $post->getId(),
         ]);
