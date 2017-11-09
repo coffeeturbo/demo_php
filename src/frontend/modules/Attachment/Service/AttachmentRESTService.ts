@@ -3,16 +3,17 @@ import {RESTService} from "@angular-addons/rest";
 import {Observable} from "rxjs";
 
 import {AttachmentGetVideoLinkRequest} from "../Http/Request/AttachmentGetVideoLinkRequest";
-import {AttachmentGetVideoLinkResponse} from "../Http/Response/AttachmentGetVideoLinkResponse";
 import {AttachmentImageUploadRequest} from "../Http/Request/AttachmentImageUploadRequest";
-import {AttachmentImageUploadResponse} from "../Http/Response/AttachmentImageUploadResponse";
+import {Attachment} from "../Entity/Attachment";
+import {AttachmentImage} from "../Entity/AttachmentImage";
+import {AttachmentVideo} from "../Entity/AttachmentVideo";
 
 @Injectable()
 export class AttachmentRESTService {
     
     constructor(private rest: RESTService) {}
     
-    public parseVideoLink(getVideoLinkRequest: AttachmentGetVideoLinkRequest) : Observable<AttachmentGetVideoLinkResponse>
+    public parseVideoLink(getVideoLinkRequest: AttachmentGetVideoLinkRequest) : Observable<Attachment<AttachmentVideo>>
     {
         let url = `/attachment/link`;
         
@@ -21,7 +22,7 @@ export class AttachmentRESTService {
             .map(res => res.json())
     }
     
-    public uploadImage(attachmentImageUploadRequest: AttachmentImageUploadRequest): Observable<AttachmentImageUploadResponse>
+    public uploadImage(attachmentImageUploadRequest: AttachmentImageUploadRequest): Observable<Attachment<AttachmentImage>>
     {
         let url = `/protected/attachment/upload/image`;
         let formData = new FormData();

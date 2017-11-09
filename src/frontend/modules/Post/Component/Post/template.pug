@@ -32,7 +32,7 @@ div
 
   .content(*ngIf="!minimized", #content)
     ng-container(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
-      p.attachment-text(*ngSwitchCase="AttachmentType.text") {{attachment.content.text}}
+      p.attachment-text(*ngSwitchCase="AttachmentType.text", [innerHTML]="attachment.content.text | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
       img.attachment-image(*ngSwitchCase="AttachmentType.image")([src]="attachment.content.public_path")
       // @DOTO:
       // .attachment-video

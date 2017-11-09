@@ -1,7 +1,7 @@
-export interface Attachment {
+export interface Attachment<AttachmentContent> {
     id: number;
     type: AttachmentType;
-    content: any;
+    content: AttachmentContent;
 }
 
 export enum AttachmentType
