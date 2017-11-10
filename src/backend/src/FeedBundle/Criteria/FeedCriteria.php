@@ -21,11 +21,6 @@ class FeedCriteria extends Criteria
     }
 
 
-    public function getOrder(): string
-    {
-        return $this->order;
-    }
-
     public function setOrder(string $order)
     {
 
@@ -38,8 +33,6 @@ class FeedCriteria extends Criteria
         $this->order = $order;
         return $this;
     }
-
-
 
     public function setDirection(string $direction)
     {
