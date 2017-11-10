@@ -5,6 +5,7 @@ import {TagRoute} from "./Route/TagRoute/index";
 import {PostModule} from "../Post/PostModule";
 import {CommonModule} from "../Common/CommonModule";
 import {TagTitleResolver} from "./Service/TagTitleResolver";
+import {TagRESTService} from "./Service/TagRESTService";
 
 @NgModule({
     imports:[
@@ -16,7 +17,8 @@ import {TagTitleResolver} from "./Service/TagTitleResolver";
         TagRoute
     ],
     providers: [
-        TagTitleResolver
+        TagTitleResolver,
+        TagRESTService
     ]
 })
 export class TagModule {} 

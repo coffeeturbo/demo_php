@@ -13,6 +13,8 @@ import {AttachmentVideo} from "../../../Attachment/Entity/AttachmentVideo";
 import {PostCreateRequest} from "../../Http/Request/PostCreateRequest";
 import {Tag} from "../../../Tag/Entity/Tag";
 import {Router} from "@angular/router";
+import {TagRESTService} from "../../../Tag/Service/TagRESTService";
+import {Config} from "../../../../app/config";
 
 const localStorage = typeof window !='undefined' ? window.localStorage : { getItem(key: any): any { return null }, removeItem(key: any) {}, setItem(key: any, val: any) {} };
 
@@ -22,14 +24,24 @@ const localStorage = typeof window !='undefined' ? window.localStorage : { getIt
 })
 
 export class PostFormRoute implements OnInit {
+    public config = Config.post;
     public AttachmentType = AttachmentType;
-    public attachments = new FormArray([]);
+    public attachments = new FormArray([], Validators.required);
     public submitted: boolean = false;
     public saved: boolean = true;
+    public isLoading: boolean = false;
 
     public form: FormGroup = new FormGroup({
-        title: new FormControl(null, [Validators.required, Validators.minLength(5)]),
-        tags: new FormControl(null, [Validators.required]),
+        title: new FormControl(null, [
+            Validators.required, 
+            Validators.minLength(this.config.title.constraints.min_length),
+            Validators.maxLength(this.config.title.constraints.max_length)
+        ]),
+        tags: new FormControl(null, [
+            Validators.required, 
+            Validators.minLength(this.config.tags.constraints.min_length),
+            Validators.maxLength(this.config.title.constraints.max_length)
+        ]),
         attachments: this.attachments
     });
 
@@ -40,6 +52,7 @@ export class PostFormRoute implements OnInit {
     constructor(
         private translationService: TranslationService,
         private attachmentRest: AttachmentRESTService,
+        private tagRest: TagRESTService,
         private postService: PostService,
         private router: Router
     ) {}
@@ -77,7 +90,7 @@ export class PostFormRoute implements OnInit {
     public addAttachment(type: AttachmentType, value?: any) {
         let attachment = new FormGroup({
             type: new FormControl(type || AttachmentType.text),
-            value: new FormControl(value || null)
+            value: new FormControl(value || null, Validators.required)
         });
 
         this.attachments.push(attachment);
@@ -118,6 +131,10 @@ export class PostFormRoute implements OnInit {
     public submit() {
         this.submitted = true;
         
+        if(this.form.invalid) return;
+
+        this.isLoading = true;
+        
         let attachmentsObservable: Observable<Attachment<AttachmentImage | AttachmentText | AttachmentVideo>>[] = [];
 
         this.form.value.attachments.forEach(attachment => {
@@ -148,12 +165,11 @@ export class PostFormRoute implements OnInit {
                 postCreateRequest.tags = JSON.stringify(postCreateRequest.tags);
                 return this.postService.create(postCreateRequest)
             })
-            .subscribe((post) => this.router.navigate(["/post", post.id]))
+            .subscribe((post) => {
+                this.router.navigate(["/post", post.id]);
+                localStorage.removeItem("post-form");
+            }, () => this.isLoading = false)
         ;
-
-        // @DOTO: Make handle success submit!
-        // localStorage.removeItem("post-form");
-        // this.form.controls['title'].getError("minlength").requiredLength
     }
 
     public handleEnterButton(e: KeyboardEvent) {
@@ -164,16 +180,8 @@ export class PostFormRoute implements OnInit {
         }
     }
 
-    public requestAutocompleteItems = (text: string): Observable<Tag[]> => {
-        // @DOTO: Make rest service
-        return Observable
-            .of([
-                {name: text},
-                {name: text + " foo"},
-                {name: text + " bar"},
-                {name: text + " baz"}
-            ])
-        ;
+    public requestAutocompleteItems = (query: string): Observable<Tag[]> => {
+        return this.tagRest.search(query);
     };
 }   
  

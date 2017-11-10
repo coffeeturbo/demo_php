@@ -1,0 +1,42 @@
+@import "../../../../assets/styles/global";
+
+$shaft: material-color($primary_material, '200');
+$shaft-dark: darken($shaft, 25%);
+.shaft-load {
+  position: relative;
+  width: 100px;
+  height: 100px;
+
+  > div {
+    background: transparent;
+    border: 4px solid transparent;
+    border-color: transparent transparent transparent $shaft-dark;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0);
+    animation: shaft-loading 2s infinite ease-in-out;
+  }
+
+  .shaft1 { animation-delay: 0.1s; width: 20px; height: 20px; }
+  .shaft2 { animation-delay: 0.2s; width: 25px; height: 25px; }
+  .shaft3 { animation-delay: 0.3s; width: 30px; height: 30px; }
+  .shaft4 { animation-delay: 0.4s; width: 35px; height: 35px; }
+  .shaft5 { animation-delay: 0.5s; width: 40px; height: 40px; }
+  .shaft6 { animation-delay: 0.6s; width: 45px; height: 45px; }
+  .shaft7 { animation-delay: 0.7s; width: 50px; height: 50px; }
+  .shaft8 { animation-delay: 0.8s; width: 55px; height: 55px; }
+  .shaft9 { animation-delay: 0.9s; width: 60px; height: 60px; }
+  .shaft10 { animation-delay: 1.0s; width: 65px; height: 65px; }
+}
+
+@keyframes shaft-loading {
+  50% {
+    transform: translate(-50%, -50%) rotate(360deg);
+    border-color: transparent transparent rgba($shaft, 0.10) $shaft;
+  }
+  75% {
+    border-color: rgba($shaft, 0.10) transparent transparent $shaft;
+  }
+}

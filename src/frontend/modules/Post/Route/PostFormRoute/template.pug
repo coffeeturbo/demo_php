@@ -1,21 +1,29 @@
-h2 {{ "Add post" | translate }} 
-  span(*ngIf="!saved") - {{"Saving" | translate}}...
-br
+// @DOTO: Translate!
+loader(*ngIf="isLoading")
+  post-loading
+  h2 {{ "Pinch of geek magic..." | translate}}
 
-form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)")
+form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)", [class.loading]='isLoading')
 
+  h2 {{ "Add post" | translate }} 
+    span(*ngIf="!saved") - {{"Saving" | translate}}...
+  
+  br
+  
+  // TITLE
   .material-field
     .input-box
       input#addPostTitle(ng-detect-empty-input, type="text", formControlName="title")
       hr
-      label.material-label(for="addPostTitle") {{'History title' | translate }}
-      ng-container(*ngIf="form.controls['title'].invalid && submitted")
-        tooltip
-          small(*ngIf="form.controls['title'].hasError('required')") {{ "Title is required" | translate }}.
-          small(*ngIf="form.controls['title'].hasError('minlength')") {{ "Minimum length is" | translate }}  
-            b {{ form.controls['title'].getError("minlength").requiredLength }}
-            | .
+      label.material-label(for="addPostTitle") {{"History title" | translate }}
+      tooltip(*ngIf="form.controls['title'].invalid && submitted")
+        small(*ngIf="form.controls['title'].hasError('required')") {{ "Title is required" | translate }}.
+        small(*ngIf="form.controls['title'].hasError('minlength')") {{ "Minimum length is" | translate }}  
+          b {{ form.controls['title'].getError("minlength").requiredLength }}.
+        small(*ngIf="form.controls['title'].hasError('maxlength')") {{ "Maximum length is" | translate }}  
+          b {{ form.controls['title'].getError("maxlength").requiredLength }}.
 
+  // ATTACHMENTS
   .attachments(formArrayName="attachments")
     div(dnd-sortable-container, [sortableData]="attachments.controls")
       div.dnd-sortable-cursor-fix(
@@ -30,14 +38,14 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
             attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value")
             attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
             attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")
-            ng-container(*ngIf="attachment.controls.value.invalid && submitted")
-              tooltip(*ngIf="attachment.controls.value.hasError('invalidLink')")
-                // @DOTO: Translate!
-                small Can't parse video link
-
+            tooltip(*ngIf="attachment.controls.value.invalid && submitted")
+              small(*ngIf="attachment.controls.value.hasError('invalidLink')") {{ "Can't parse video link" | translate }}
+              small(*ngIf="attachment.controls.value.hasError('required')") {{ "Can't be empty" | translate }}
+              
           a.removeAttachment((click)="removeAttachment(i)")
             i.fa.fa-trash-o
 
+  // ADD ATTACHMENTS
   .controls.center.attachment-button-container
     button.btn-material.secondary(type="button", (click)="addAttachment(AttachmentType.text)")
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
@@ -51,25 +59,35 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
       i.fa.fa-video-camera.fa-fw.fa-2x
       span {{"Video" | translate }}
+    
+    tooltip(*ngIf="form.controls['attachments'].hasError('required') && submitted")
+      small {{ "Add attachment" | translate }}.
 
+
+  // TAGS
   .material-field
     .input-box
       tag-input(
-      formControlName="tags",
-      placeholder=" ",
-      secondaryPlaceholder="{{'Tags' | translate}}",
-      maxItems="8",
-      theme='material',
-      displayBy='name',
-      identifyBy='name',
-      inputId="addPostTags"
+        formControlName="tags",
+        placeholder=" ",
+        secondaryPlaceholder="{{'Tags' | translate}}",
+        maxItems="8",
+        theme='material',
+        displayBy='name',
+        identifyBy='name',
+        inputId="addPostTags"
       )
         tag-input-dropdown(
           [autocompleteObservable]="requestAutocompleteItems",
+          minimumTextLength="3",
+          displayBy='name',
+          identifyBy='name',
         )
-      ng-container(*ngIf="form.controls['tags'].invalid && submitted")
-        tooltip(*ngIf="form.controls['tags'].hasError('required')")
-          small {{ "Add miminum 2 tags" | translate }}.
+      tooltip(*ngIf="form.controls['tags'].invalid && submitted")
+        small(*ngIf="form.controls['tags'].hasError('minlength')") 
+          | {{ "Minimum number of tags" | translate }}: 
+          b {{ form.controls['tags'].getError("minlength").requiredLength }}.
+        small(*ngIf="form.controls['tags'].hasError('required')") {{ "Tags are required" | translate }}.
 
   br
         

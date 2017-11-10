@@ -14,113 +14,131 @@
     max-width: none;
     margin: -20px -20px 0;
     box-shadow: none;
-  }  
-}
-
-h2 span {
-  color: material-color($secondary_material, "500");
-  animation: fade 500ms both;
-}
-
-.material-field {
-  align-items: flex-start;
-
-  .fa {
-    font-size: 1.2em;
   }
 
-  .input-box {
-    margin-right: 10px;
-    
-    *:focus ~ tooltip {
-      display: none;
-    }
-    
-    tooltip {
-      display: block;
-    }
-
-    #addPostTitle, #addPostTitle ~ label {
-      font-size: 1.3em;
-    }
+  loader {
+    z-index: 1;
   }
 
-  .drag {
-    cursor: move;
-    padding: 5px 0;
-    margin-right: 10px;
-    
-    .fa {
-      transition: color 150ms;
+  .material-form {
+    &.loading {
+      filter: blur(1px);
     }
 
-    &:hover .fa {
-      color: material-color($primary_material, '800');
+    h2 span {
+      color: material-color($secondary_material, "500");
+      animation: fade 500ms both;
     }
-  }
 
-  .removeAttachment {
-    border-radius: 50%;
-    padding: 5px;
-    width: 1.2em;
-    text-align: center;
-    transition: background 150ms;
+    .material-field {
+      align-items: flex-start;
 
-    .fa {
-      transition: color 150ms;
-      width: 1rem;
-    }
-  
-    &:hover {
-      background: material-color($error_material, '100');;
-      
       .fa {
-        color: material-color($error_material, '800');
+        font-size: 1.2em;
+      }
+
+      .input-box {
+        margin-right: 10px;
+
+        *:focus ~ tooltip {
+          display: none;
+        }
+
+        tag-input {
+          z-index: 0;
+        }
+
+        tooltip {
+          display: block;
+        }
+
+        #addPostTitle, #addPostTitle ~ label {
+          font-size: 1.3em;
+        }
+      }
+
+      .drag {
+        cursor: move;
+        padding: 5px 0;
+        margin-right: 10px;
+
+        .fa {
+          transition: color 150ms;
+        }
+
+        &:hover .fa {
+          color: material-color($primary_material, '800');
+        }
+      }
+
+      .removeAttachment {
+        border-radius: 50%;
+        padding: 5px;
+        width: 1.2em;
+        text-align: center;
+        transition: background 150ms;
+
+        .fa {
+          transition: color 150ms;
+          width: 1rem;
+        }
+
+        &:hover {
+          background: material-color($error_material, '100');;
+
+          .fa {
+            color: material-color($error_material, '800');
+          }
+        }
       }
     }
-  }
-}
 
-.attachment-button-container button {
-  .fa {
-    color: material-color($secondary_material, "600");
-    margin: 0;
-    transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
-    will-change: transform;
-    vertical-align: middle;
-  }
-  
-  .fa-hover {
-    position: absolute;
-    transform: rotate(0deg) scale(0);
-  }
-  
-  span {
-    color: material-color($secondary_material, '500');
-    vertical-align: middle;
-
-    @include mq($until: tablet) {
-      display: none;
+    .dnd-sortable-cursor-fix {
+      cursor: default !important;
     }
-  }
 
-  @include mq($from: tablet) {
-    &:hover {
+    .attachment-button-container button {
       .fa {
-        transform: rotate(180deg) scale(0);
+        color: material-color($secondary_material, "600");
+        margin: 0;
+        transition: transform 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        will-change: transform;
+        vertical-align: middle;
       }
 
-      .fa.fa-hover {
-        transform: rotate(180deg) scale(1);
+      .fa-hover {
+        position: absolute;
+        transform: rotate(0deg) scale(0);
+      }
+
+      span {
+        color: material-color($secondary_material, '500');
+        vertical-align: middle;
+
+        @include mq($until: tablet) {
+          display: none;
+        }
+      }
+
+      @include mq($from: tablet) {
+        &:hover {
+          .fa {
+            transform: rotate(180deg) scale(0);
+          }
+
+          .fa.fa-hover {
+            transform: rotate(180deg) scale(1);
+          }
+        }
+      }
+    }
+
+    .controls {
+      position: relative;
+
+      .material-field + * {
+        margin-left: 1em;
       }
     }
   }
-}
-
-.controls .material-field + * {
-  margin-left: 1em;
-}
-
-.dnd-sortable-cursor-fix {
-  cursor: default!important;
 }

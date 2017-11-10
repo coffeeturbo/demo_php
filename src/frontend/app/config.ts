@@ -54,6 +54,20 @@ export const Config: ConfigInterface = {
                 "maxWidth": 7000,
             }
         }
+    },
+    "post": {
+        "title" : {
+            "constraints": {
+                "min_length": 5,
+                "max_length": 140,
+            }
+        },
+        "tags" : {
+            "constraints": {
+                "min_length": 2,
+                "max_length": 7,
+            }
+        }
     }
 };
 
@@ -105,5 +119,19 @@ interface ConfigInterface {
                 maxWidth: number,
             }
         }
+    },
+    post: {
+        title : {
+            constraints: {
+                min_length: number,
+                max_length: number,
+            }
+        },
+        tags : {
+            constraints: {
+                min_length: number,
+                max_length: number,
+            }
+        }    
     }
 }
