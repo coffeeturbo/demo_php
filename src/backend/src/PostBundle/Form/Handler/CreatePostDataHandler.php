@@ -38,9 +38,6 @@ class CreatePostDataHandler
         if(is_null($data['title'])) {
             throw new BadRequestHttpException("field title required");
         }
-        if( ($titleLen = strlen($data['title'])) > 140 ) {
-            throw new BadRequestHttpException( sprintf("field title must be %s < 140", $titleLen));
-        }
 
         $newPost->setTitle($data['title']);
 

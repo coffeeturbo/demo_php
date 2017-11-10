@@ -1,6 +1,7 @@
 <?php
 namespace PostBundle\Controller;
 
+use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use Doctrine\ORM\NoResultException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -9,7 +10,6 @@ use PostBundle\Response\SuccessPostResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostController extends Controller
@@ -39,8 +39,8 @@ class PostController extends Controller
             $post->setProfile($profile);
             $this->get('post.service')->create($post);
 
-        } catch(BadRequestHttpException $e){
-            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch(BadRestRequestHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch(AccessDeniedHttpException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
         } catch(\Exception $e){

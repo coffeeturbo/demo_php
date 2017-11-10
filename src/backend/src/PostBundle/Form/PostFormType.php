@@ -5,6 +5,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LengthValidator;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PostFormType extends AbstractType
@@ -15,7 +17,11 @@ class PostFormType extends AbstractType
             ->add("title", TextType::class, [
                 'required' => true,
                 "constraints" => [
-                    new NotBlank()
+                    new NotBlank(),
+                    new Length([
+                        "min" => 4,
+                        "max" => 140
+                    ])
                 ]
             ])
             ->add('tags', TextareaType::class, [
