@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 import {ApplicationModule} from "./ApplicationModule";
 import {ApplicationComponent} from "./Component/Application/index";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     bootstrap: [ ApplicationComponent ],
