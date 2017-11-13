@@ -1,5 +1,4 @@
 import {Component, HostBinding, HostListener} from '@angular/core';
-import {Observable} from "rxjs/Observable";
 
 import {ApplicationScrollService} from "../../Service/ApplicationScrollService";
 

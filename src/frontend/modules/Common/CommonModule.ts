@@ -20,6 +20,7 @@ import {ChromeAutoFillModule} from "./ChromeAutoFill/ChromeAutoFillModule";
 
 @NgModule({
     imports: [
+        TranslationModule.setConfig(dictionaries, <Locale>Config.locale.default, Config.locale.aliases)
     ],
     exports: [
         CropperModule,
@@ -33,6 +34,7 @@ import {ChromeAutoFillModule} from "./ChromeAutoFill/ChromeAutoFillModule";
         ModalModule,
         MaterialFormModule,
         TooltipModule,
+        TranslationModule,
         PluralizeModule,
         PalleteModule,
         NotImplementedModule

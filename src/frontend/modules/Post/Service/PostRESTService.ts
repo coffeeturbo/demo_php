@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {RESTService} from "@angular-addons/rest";
 
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {Post} from "../Entity/Post";
 
 @Injectable()

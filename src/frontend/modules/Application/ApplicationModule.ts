@@ -1,7 +1,10 @@
-import {APP_INITIALIZER, LOCALE_ID, NgModule} from "@angular/core";
+import {APP_INITIALIZER, Injectable, LOCALE_ID, NgModule} from "@angular/core";
 import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
 import {Http, HttpModule, RequestOptions} from "@angular/http";
+import {registerLocaleData} from "@angular/common";
+import localeRu from '@angular/common/locales/ru';
+
 import {RESTModule} from "@angular-addons/rest";
 import {Locale, TranslationService} from "@angular-addons/translate";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
@@ -30,7 +33,9 @@ import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
 import {VoteModule} from "../Vote/VoteModule";
 import {TagModule} from "../Tag/TagModule";
+import {HttpClientModule} from "@angular/common/http";
 
+registerLocaleData(localeRu);
 
 export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {
     return new AuthHttp(new AuthConfig(), http, options);
@@ -42,10 +47,15 @@ export function StartupServiceFactory(startupService: StartupService): Function 
 
 export function LocaleFactory(translationService: TranslationService) {
     let locale: Locale = translationService.getLocale();
+    
+    console.log(locale, Config.locale.aliases[locale][0]);
+    
     return Config.locale.aliases[locale][0];
 }
 
 declare let Hammer: any;
+
+@Injectable()
 export class HammerConfig extends HammerGestureConfig  {
     buildHammer(element: HTMLElement) {
         return new Hammer(element, {

@@ -1,5 +1,5 @@
 import {AfterViewInit, Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2} from "@angular/core";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 
 @Directive({
     selector: '[autosize]'

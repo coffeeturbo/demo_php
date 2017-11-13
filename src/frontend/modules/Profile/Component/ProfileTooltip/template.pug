@@ -14,8 +14,8 @@
       br
       br
       nav
-        button.btn-material.primary([routerLink]="['profile', profileService.getOwnProfilePath()]") Моя Страница
-        button.btn-material.secondary(routerLink="/settings", routerLinkActive="active")
+        a.btn-material.primary([routerLink]="['profile', profileService.getOwnProfilePath()]") Моя Страница
+        a.btn-material.secondary(routerLink="/settings", routerLinkActive="active")
           i.fa.fa-fw.fa-sliders
           span {{ "Edit" | translate }}
 

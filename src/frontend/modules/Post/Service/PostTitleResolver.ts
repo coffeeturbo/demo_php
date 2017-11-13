@@ -1,8 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, Resolve} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import {Resolve} from "@angular/router";
+import {Observable} from "rxjs";
 
-import {Post} from "../Entity/Post";
 import {PostService} from "./PostService";
 
 @Injectable()

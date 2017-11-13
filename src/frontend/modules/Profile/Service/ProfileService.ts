@@ -1,5 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {Observable} from "rxjs";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
@@ -55,7 +57,10 @@ export class ProfileService implements ProfileServiceInterface{
         }
 
         return profileObservable
-            .do(profile => this.onProfileResolve.emit(profile))
+            .do(profile => {
+                console.log("Resolve profile!", profile);
+                this.onProfileResolve.emit(profile)
+            })
         ;
     }
     

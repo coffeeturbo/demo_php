@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
-import {RESTService} from "@angular-addons/rest";
+import {Observable} from "rxjs";
+
 import {VoteState} from "../Entity/Vote";
 import {VoteRESTService} from "./VoteRESTService";
-import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class VoteService {

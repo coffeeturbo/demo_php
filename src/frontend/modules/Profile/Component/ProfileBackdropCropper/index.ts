@@ -1,10 +1,11 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
-import {ProfileBackdropCropperHelper} from "./helper";
 import {FormControl, FormGroup, ValidationErrors} from "@angular/forms";
-import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
 import {Data} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
+
 import {Config} from "../../../../app/config";
+import {ProfileBackdropCropperHelper} from "./helper";
+import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
 
 @Component({
     selector: 'profile-backdrop-cropper',

@@ -1,11 +1,11 @@
+import {FormControl, FormGroup, ValidationErrors} from "@angular/forms";
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Data} from "cropperjs";
+import {Observable} from "rxjs";
 
 import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
 import {ProfileAvatarCropperHelper} from "./helper";
 import {Config} from "../../../../app/config";
-import {FormControl, FormGroup, ValidationErrors} from "@angular/forms";
-import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'profile-avatar-cropper',

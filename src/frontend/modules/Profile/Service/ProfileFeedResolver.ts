@@ -1,6 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {Resolve} from "@angular/router";
 import {Observable} from "rxjs";
+import 'rxjs/add/operator/publishReplay';
 
 import {ProfileService} from "./ProfileService";
 import {Feed} from "../../Feed/Entity/Feed";

@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {Resolve} from "@angular/router";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 
 import {ProfileService} from "./ProfileService";
 
