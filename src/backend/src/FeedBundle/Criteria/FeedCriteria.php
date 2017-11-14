@@ -11,13 +11,42 @@ class FeedCriteria extends Criteria
         'rating',
     ];
 
+    private $startDate;
+    private $endDate;
 
-    public function __construct(int $limit, int $cursor, string $order, string $direction)
+
+
+
+    public function __construct(int $limit, int $cursor, string $order, string $direction, $dateFrom = null, $dateTo = null)
     {
         parent::__construct($limit, $cursor);
 
         $this->setOrder($order);
         $this->direction = $direction;
+        $this->startDate = $dateFrom;
+        $this->endDate = $dateTo;
+    }
+
+    public function getStartDate(): ?\DateTime
+    {
+        return $this->startDate;
+    }
+
+    public function setStartDate(\DateTime $startDate)
+    {
+        $this->startDate = $startDate;
+        return $this;
+    }
+
+    public function getEndDate(): ?\DateTime
+    {
+        return $this->endDate;
+    }
+
+    public function setEndDate(\DateTime $endDate)
+    {
+        $this->endDate = $endDate;
+        return $this;
     }
 
 

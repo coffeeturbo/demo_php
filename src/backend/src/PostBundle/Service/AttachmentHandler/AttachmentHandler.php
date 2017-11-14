@@ -39,7 +39,8 @@ class AttachmentHandler
         switch($this->attachmentJson['type'])
         {
             case AttachmentTypeVideoYouTube::STRING_CODE:
-                break;
+                $this->getVideoYoutubeAttachment();
+            break;
 
             case AttachmentTypeText::STRING_CODE:
                 $this->getTextAttachment();
@@ -79,5 +80,11 @@ class AttachmentHandler
                 ]
                     : null
             );
+    }
+
+    private function getVideoYoutubeAttachment()
+    {
+        $this->attachment
+            ->setContent($this->attachmentJson['content']);
     }
 }

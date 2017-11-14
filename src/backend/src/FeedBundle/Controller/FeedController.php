@@ -36,9 +36,9 @@ class FeedController extends Controller
                 $this->get('vote.service.vote_service')->getVotesToPosts($posts, $profile);
             }
 
-        }catch(NotFoundHttpException $e){
+        } catch(NotFoundHttpException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
-        }catch(\Exception $e){
+        } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage(), []);
         }
 

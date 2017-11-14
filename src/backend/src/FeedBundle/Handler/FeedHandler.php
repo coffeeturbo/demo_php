@@ -15,10 +15,11 @@ class FeedHandler
 
     public function handleRequest( Request $request)
     {
-        $order = $request->get('order');
+
         $limit = $request->get('limit');
         $cursor = $request->get('cursor');
-        $direction = $request->get('direction');
+        $order = $request->get('order') ?? 'id';
+        $direction = $request->get('direction') ?? 'DESC';
 
         $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction);
     }

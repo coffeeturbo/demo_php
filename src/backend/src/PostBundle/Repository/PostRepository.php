@@ -48,21 +48,40 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    private function getPostsByCriteria(Criteria $criteria)
+    private function getPostsByCriteria(FeedCriteria $criteria)
     {
+        $startDate = new \DateTime("2017-11-07T22:20:21+00:00");
+
         try {
             $qb = $this->createQueryBuilder('p')
                 ->select('p')
-                ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
-                ->setFirstResult($criteria->getCursor())
-                ->setMaxResults($criteria->getLimit())
-                ->getQuery();
+                ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection());
 
+            if($cursor = $criteria->getCursor()){
+                $qb->andWhere('p.id > :cursor')
+                    ->setParameter('cursor', $cursor);
+            }
+
+            if($startDate = $criteria->getStartDate()){
+                $qb->andWhere('p.created > :start')
+                    ->setParameter('start', $startDate)
+                ;
+            }
+
+            if($endDate = $criteria->getEndDate()){
+                $qb->andWhere('p.created > :end')
+                    ->setParameter('end', $endDate)
+                ;
+            }
+
+            $qb->setMaxResults($criteria->getLimit());
+
+            $q = $qb->getQuery();
         } catch(NoResultException $e){
             throw new NotFoundHttpException(sprintf("no posts founded"));
         }
 
-        return $qb->getResult();
+        return $q->getResult();
     }
 
     public function getPostWithTagsAndAttachmentsByPostId(int $postId)
