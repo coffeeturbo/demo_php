@@ -1,13 +1,13 @@
 feed:
-  path: '/limit/{limit}/cursor/{cursor}'
+  path: '/limit/{limit}'
   methods: [ GET ]
   defaults: { _controller: FeedBundle:Feed:feed }
   requirements:
     limit: \d+
     cursor: \d+
-#    dateFrom: \d+
-#    dateNow: \d+
-#    profile: \d+
+    dateFrom: "*"
+    dateTo: "*"
+    profile: \d+
     order: "id|rating"
     direction: ASC|DESC
 

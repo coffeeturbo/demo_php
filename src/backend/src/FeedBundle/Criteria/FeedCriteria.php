@@ -13,11 +13,9 @@ class FeedCriteria extends Criteria
 
     private $startDate;
     private $endDate;
+    private $profileId;
 
-
-
-
-    public function __construct(int $limit, int $cursor, string $order, string $direction, $dateFrom = null, $dateTo = null)
+    public function __construct(int $limit, $cursor, string $order, string $direction, $dateFrom = null, $dateTo = null, $profileId)
     {
         parent::__construct($limit, $cursor);
 
@@ -25,6 +23,17 @@ class FeedCriteria extends Criteria
         $this->direction = $direction;
         $this->startDate = $dateFrom;
         $this->endDate = $dateTo;
+        $this->profileId = $profileId;
+    }
+
+    public function getProfileId()
+    {
+        return $this->profileId;
+    }
+
+    public function setProfileId($profileId)
+    {
+        $this->profileId = $profileId;
     }
 
     public function getStartDate(): ?\DateTime

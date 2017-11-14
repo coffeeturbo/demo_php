@@ -29,7 +29,6 @@ class FeedController extends Controller
             $posts = $this->get('post.repository')
                 ->getPostsWithTagsAndAttachments($handler->getCriteria());
 
-
             if($account = $this->get('auth.service')->getAccount()){
 
                 $profile = $this->get('profile.service')->getCurrentProfile();

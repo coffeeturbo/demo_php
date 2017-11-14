@@ -19,9 +19,13 @@ class FeedHandler
         $limit = $request->get('limit');
         $cursor = $request->get('cursor');
         $order = $request->get('order') ?? 'id';
+        $profile = $request->get('profile') ?? null;
         $direction = $request->get('direction') ?? 'DESC';
 
-        $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction);
+        $dateFrom = $request->get('dateFrom') ? new \DateTime($request->get('dateFrom')) : null;
+        $dateTo = $request->get('dateTo')? new \DateTime($request->get('dateTo')) : null;
+
+        $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction, $dateFrom, $dateTo, $profile);
     }
 
 

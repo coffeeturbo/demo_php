@@ -8,7 +8,7 @@ abstract class Criteria
     protected $order;
     protected $direction;
 
-    public function __construct(int $limit, int $cursor)
+    public function __construct(int $limit, $cursor)
     {
         $this->limit = $limit;
         $this->cursor = $cursor;

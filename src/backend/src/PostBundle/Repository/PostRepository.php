@@ -50,7 +50,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
     private function getPostsByCriteria(FeedCriteria $criteria)
     {
-        $startDate = new \DateTime("2017-11-07T22:20:21+00:00");
 
         try {
             $qb = $this->createQueryBuilder('p')
@@ -69,8 +68,14 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             }
 
             if($endDate = $criteria->getEndDate()){
-                $qb->andWhere('p.created > :end')
+                $qb->andWhere('p.created < :end')
                     ->setParameter('end', $endDate)
+                ;
+            }
+
+            if($profileId = $criteria->getProfileId()){
+                $qb->andWhere('p.profile = :profile')
+                    ->setParameter('profile', $profileId)
                 ;
             }
 
