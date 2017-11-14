@@ -8,6 +8,7 @@ export interface Profile {
     created: string;
     gender: Gender;
     name: string;
+    rating: number;
     verified: boolean;
     avatar: ProfileAvatar;
     backdrop: Image;

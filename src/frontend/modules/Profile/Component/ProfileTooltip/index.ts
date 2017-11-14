@@ -14,8 +14,8 @@ import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 export class ProfileTooltipComponent implements OnInit {
     @Output() onClose = new EventEmitter<void>();
     public profile: Profile;
-    public rate = 6659.5;
     public subscriptions = 12;
+
     constructor(
         public elRef: ElementRef,
         public auth: AuthService,

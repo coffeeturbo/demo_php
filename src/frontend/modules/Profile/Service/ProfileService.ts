@@ -175,7 +175,7 @@ export class ProfileService implements ProfileServiceInterface{
             throw new Error(`Profile with path "${path}" is not cached`);
         }
 
-        return Observable.of(profile);
+        return Observable.of(profile).delay(1); // delay kostil' for angular resolver...
     }
 
     private saveToCache(profile: Profile): void
