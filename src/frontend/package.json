@@ -20,7 +20,7 @@
   "dependencies": {
     "@angular-addons/focus": "0.0.11",
     "@angular-addons/loading-bar": "0.0.6",
-    "@angular-addons/modal": "^0.1.5",
+    "@angular-addons/modal": "0.1.5",
     "@angular-addons/rest": "0.0.8",
     "@angular-addons/translate": "0.0.5",
     "@angular/animations": "~5.0.1",
