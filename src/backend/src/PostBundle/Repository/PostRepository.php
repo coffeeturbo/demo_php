@@ -8,6 +8,7 @@ use FeedBundle\Criteria\Criteria;
 use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\VarDumper\Tests\Fixture\DumbFoo;
 use TagBundle\Entity\Tag;
 
 class PostRepository extends \Doctrine\ORM\EntityRepository
@@ -59,12 +60,13 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             if($cursor = $criteria->getCursor()){
 
                 // desc
-                switch(strtolower($criteria->getOrder())){
-                    case 'DESC':
+
+                switch(strtolower($criteria->getDirection())){
+                    case 'desc':
                         $qb->andWhere('p.id < :cursor');
                     break;
-                    case 'ASC':
-                        $qb->andWhere('p.id < :cursor');
+                    case 'asc':
+                        $qb->andWhere('p.id > :cursor');
                     break;
 
                     default:
