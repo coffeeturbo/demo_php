@@ -28,8 +28,6 @@ class FeedHandler
         $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction, $dateFrom, $dateTo, $profile);
     }
 
-
-
     public function getCriteria(): FeedCriteria
     {
         return $this->criteria;

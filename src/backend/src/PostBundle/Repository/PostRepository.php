@@ -57,8 +57,22 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                 ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection());
 
             if($cursor = $criteria->getCursor()){
-                $qb->andWhere('p.id > :cursor')
-                    ->setParameter('cursor', $cursor);
+
+                // desc
+                switch(strtolower($criteria->getOrder())){
+                    case 'DESC':
+                        $qb->andWhere('p.id < :cursor');
+                    break;
+                    case 'ASC':
+                        $qb->andWhere('p.id < :cursor');
+                    break;
+
+                    default:
+                        $qb->andWhere('p.id < :cursor');
+
+                }
+                $qb->setParameter('cursor', $cursor);
+
             }
 
             if($startDate = $criteria->getStartDate()){
