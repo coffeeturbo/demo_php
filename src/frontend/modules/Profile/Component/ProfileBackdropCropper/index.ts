@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormControl, FormGroup, ValidationErrors} from "@angular/forms";
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Data} from "@angular/router";
 import {Observable} from "rxjs";
 
-import {Config} from "../../../../app/config";
-import {ProfileBackdropCropperHelper} from "./helper";
 import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
+import {ProfileBackdropCropperHelper} from "./helper";
+import {Config} from "../../../../app/config";
 
 @Component({
     selector: 'profile-backdrop-cropper',
@@ -16,7 +16,6 @@ import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
 export class ProfileBackdropCropperComponent implements OnDestroy {
     @Input() disabled: boolean = false;
     @Output('onCrop') onCrop = new EventEmitter<BackdropUploadRequest>();
-    public constraints = Config.profile.constraints.backdrop;
 
     public form: FormGroup = new FormGroup({
         src: new FormControl(null, null, this.validate.bind(this)),
@@ -45,18 +44,20 @@ export class ProfileBackdropCropperComponent implements OnDestroy {
     }
 
     public validate(srcControl: FormControl): Observable<ValidationErrors> {
-        let avatar = new Image();
-        avatar.src = srcControl.value;
+        let image = new Image();
 
-        return Observable.fromEvent(avatar, "load").map(() => {
-            let constraints = this.constraints;
+        if(srcControl.value)
+            image.src = srcControl.value;
+
+        return Observable.fromEvent(image, "load").map(() => {
+            let constraints = Config.profile.constraints.backdrop;
             let errors: ValidationErrors = {};
 
-            if(avatar.width > constraints.maxWidth || avatar.height > constraints.maxHeight) {
+            if(image.width > constraints.maxWidth || image.height > constraints.maxHeight) {
                 errors.tooLarge = true;
             }
 
-            if(avatar.width < constraints.minWidth || avatar.height < constraints.minHeight) {
+            if(image.width < constraints.minWidth || image.height < constraints.minHeight) {
                 errors.tooSmall = true;
             }
 

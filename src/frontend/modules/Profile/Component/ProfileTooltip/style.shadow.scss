@@ -76,11 +76,9 @@ a {
   }
 }
 
-figure, .loading {
-  padding: 20px;
-}
-
 figure {
+  padding: 20px;
+
   @include mq($from: tablet) {
     display: flex;
   }
