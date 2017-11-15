@@ -8,7 +8,6 @@ use FeedBundle\Criteria\Criteria;
 use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\VarDumper\Tests\Fixture\DumbFoo;
 use TagBundle\Entity\Tag;
 
 class PostRepository extends \Doctrine\ORM\EntityRepository
