@@ -41,19 +41,21 @@ export class ProfileAvatarCropperComponent {
     }
 
     validate(srcControl: FormControl): Observable<ValidationErrors> {
-        let avatar = new Image();
-        avatar.src = srcControl.value;
+        let image = new Image();
 
-        return Observable.fromEvent(avatar, "load").map(() => {
+        if(srcControl.value)
+            image.src = srcControl.value;
+
+        return Observable.fromEvent(image, "load").map(() => {
             let constraints = Config.profile.constraints.avatar;
             let errors: ValidationErrors = {};
-            let ratio = avatar.width / avatar.height;
+            let ratio = image.width / image.height;
             
-            if(avatar.width > constraints.maxWidth || avatar.height > constraints.maxHeight) {
+            if(image.width > constraints.maxWidth || image.height > constraints.maxHeight) {
                 errors.tooLarge = true;
             }
 
-            if(avatar.width < constraints.minWidth || avatar.height < constraints.minHeight) {
+            if(image.width < constraints.minWidth || image.height < constraints.minHeight) {
                 errors.tooSmall = true;
             }
 
@@ -66,7 +68,7 @@ export class ProfileAvatarCropperComponent {
             }
         });
     }
-    
+
     public submit(data: Data) {
         this.onCrop.emit({
             x: data.x,
@@ -75,5 +77,5 @@ export class ProfileAvatarCropperComponent {
             height: data.height,
             image: this.helper.image
         });
-    }    
+    }
 }

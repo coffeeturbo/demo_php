@@ -21,11 +21,11 @@
 
   footer
     button.btn-material.secondary([disabled]) Сменить профиль
-    
+
     .flex-space
-    
+
     button.btn-material((click)="auth.signOut()")
       i.fa.fa-sign-out
       span {{"Sign out" | translate}}
-
-.loading(*ngIf="!profile") {{ 'Loading' | translate }}
+.loading(*ngIf="!profile")
+  figure {{ 'Loading' | translate }}

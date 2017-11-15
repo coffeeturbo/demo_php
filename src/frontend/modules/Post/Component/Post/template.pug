@@ -16,10 +16,10 @@ div
     ng-container(*ngIf="!minimized")
       a([routerLink]="['/profile', post.profile.alias || post.profile.id]")
         img.avatar([src]="post.profile.avatar.small.public_path")
-        .name {{ post.profile.name }} 
-      .created(*ngIf='post.created')
-        span {{ post.created | post_created }} 
-        tooltip {{ post.created | date }}
+        small.name {{ post.profile.name }} 
+          .created(*ngIf='post.created')
+            span {{ post.created | post_created }}
+            tooltip {{ post.created | date }}
 
   h2.title
     a([routerLink]="getPostUrl()", ftarget="_blank") {{ post.title }} 
@@ -46,10 +46,11 @@ div
   .flex-space
   .btn-material.secondary([routerLink]="getPostUrl()", fragment="comments")
     .fa.fa-comments-o
-    | {{ 249 | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
-  .btn-material.secondary
+    span.for-mobile 249 
+    span.for-desktop {{ 249 | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
+  .btn-material.secondary.for-desktop
     .fa.fa-bullhorn
-    | {{"Share" | translate}}
+    span {{"Share" | translate}}
   button.btn-material.secondary.actions((click)='render.addClass(actions, "active")', (focusout)='render.removeClass(actions, "active")')
     .fa.fa-ellipsis-v
     ul(#actions)

@@ -76,13 +76,13 @@
 
       .name {
         margin-left: 1em;
-      }
-    }
+        line-height: normal;
 
-    .created {
-      margin-left: .5em;
-      color: #999;
-      position: relative;
+        .created {
+          color: #999;
+          position: relative;
+        }
+      }
     }
   }
 
@@ -130,10 +130,15 @@
 
   .content {
     line-height: 1.5em;
-    
-    img {
+
+    .attachment-image {
       width: 100%;
       margin: 10px 0 15px;
+      
+      @include mq($until: tablet) {
+        width: calc(100% + 40px);
+        margin-left: -20px;
+      }
     }
   }
 
@@ -155,6 +160,17 @@
     .fa {
       margin-right: .4em;
       font-size: 14px;
+    }
+
+    .for-mobile {
+      @include mq($from: tablet) {
+        display: none;
+      }
+    }
+    .for-desktop {
+      @include mq($until: tablet) {
+        display: none;
+      }
     }
     
     .vote.active {
