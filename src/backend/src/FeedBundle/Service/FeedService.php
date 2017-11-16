@@ -29,10 +29,10 @@ class FeedService
             ->select('p', 'tags', 'attachments')
             ->leftJoin('p.tags', 'tags')
             ->leftJoin('p.attachments', 'attachments')
-            ->addOrderBy('attachments.position', 'ASC')
             ->where('p.id IN (:postIds)')
             ->setParameter('postIds', $postIds)
             ->orderBy('p.id', 'DESC')
+            ->addOrderBy('attachments.position', 'ASC')
             ->getQuery();
 
 
