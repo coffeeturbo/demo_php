@@ -104,7 +104,7 @@ class Profile implements AvatarEntity, BackdropEntity, RatingableEntity
 
     public function setAlias(?string $alias = null): self
     {
-        $this->alias = mb_strtolower($alias);
+        $this->alias = $alias ? mb_strtolower($alias) : null;
 
         return $this;
     }
