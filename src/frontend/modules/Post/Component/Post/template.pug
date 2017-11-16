@@ -15,7 +15,7 @@ div
   .author
     ng-container(*ngIf="!minimized")
       a([routerLink]="['/profile', post.profile.alias || post.profile.id]")
-        img.avatar([src]="post.profile.avatar.small.public_path")
+        img.avatar(*ngIf="profileService.hasAvatar(post.profile)", [src]="post.profile.avatar.small.public_path")
         small.name {{ post.profile.name }} 
           .created(*ngIf='post.created')
             span {{ post.created | post_created }}

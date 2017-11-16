@@ -14,21 +14,20 @@ export class ProfileFeedResolver implements Resolve<Feed> {
     constructor(private profileService: ProfileService, private feedService: FeedService) {}
 
     resolve(): Observable<Feed> {
-        
+
         let onFeedLoad = new EventEmitter<Feed>();
         this.profileService.onProfileResolve
             .first()
             .map(profile => profile.id)
             .subscribe((profileId => {
-            
                 if(!this.cache) {
                     this.cache = this.feedService
-                        .getByProfile(profileId, 20, 0)
+                        .get(10, {profile: profileId})
                         .publishReplay(1)
                         .refCount()
                     ;
                 }
-                
+
                 this.cache.subscribe(feed => {
                         onFeedLoad.emit(<Feed>feed);
                         onFeedLoad.complete();
@@ -36,7 +35,7 @@ export class ProfileFeedResolver implements Resolve<Feed> {
                 ;
             }))
         ;
-        
+
         return onFeedLoad;
     }
 }

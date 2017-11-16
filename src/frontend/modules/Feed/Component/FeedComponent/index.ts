@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren} from '@angular/core';
 import * as scrollIntoView from 'scroll-into-view';
 
 import {Feed} from "../../Entity/Feed";
@@ -12,8 +12,9 @@ import {ApplicationScrollService} from "../../../Application/Service/Application
     styleUrls: ["./style.shadow.scss"]
 })
 
-export class FeedComponent {
+export class FeedComponent implements AfterViewInit {
     @Input() feed: Feed;
+    @Output() onFeedEnd = new EventEmitter<number>();
     @ViewChildren(PostComponent) posts: QueryList<PostComponent>;
     
     private currentPostComponent: PostComponent;
@@ -25,11 +26,18 @@ export class FeedComponent {
         this.appScrollService
             .onScroll
             .debounceTime(50)
-            .subscribe(() => {
+            .subscribe((scroll) => {
                 this.posts.forEach(post => post.current = false);
                 this.currentPostComponent = this.posts.find(post => post.isIntoView == true);
+
                 if(this.currentPostComponent) {
                     this.currentPostComponent.current = true;
+                }
+
+                if(typeof window !='undefined') {
+                    if(this.appScrollService.mainHeight + this.appScrollService.scrollHeight - scroll < 2000) {
+                        this.onFeedEnd.emit(this.feed.slice(-1).pop().id);
+                    }
                 }
             })
         ;

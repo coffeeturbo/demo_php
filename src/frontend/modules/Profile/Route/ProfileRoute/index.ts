@@ -11,6 +11,7 @@ import {ProfileBackdropCropperHelper} from "../../Component/ProfileBackdropCropp
 import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
 import {ProfileBackdropActionsHelper} from "../../Component/ProfileBackdropActions/helper";
 import {Feed} from "../../../Feed/Entity/Feed";
+import {FeedService} from "../../../Feed/Service/FeedService";
 
 @Component({
     templateUrl: "./template.pug",
@@ -29,7 +30,8 @@ export class ProfileRoute implements OnInit {
         public palleteService: PalleteService, 
         public avatarHelper: ProfileAvatarCropperHelper,
         public backdropHelper: ProfileBackdropCropperHelper,
-        public backdropActionsHelper: ProfileBackdropActionsHelper
+        public backdropActionsHelper: ProfileBackdropActionsHelper,
+        public feedService: FeedService
     ) {}
 
     ngOnInit() {
@@ -68,6 +70,23 @@ export class ProfileRoute implements OnInit {
             .subscribe((profile: Profile) => {
                 this.profile = this.route.snapshot.data["profile"] = profile;
                 this.backdropHelper.destroy();
+            })
+        ;
+    }
+    
+    private isLoading: boolean = false;
+    private isFeedEnd: boolean = false;
+    public loadFeed(cursor: number) {
+        if(this.isLoading || this.isFeedEnd) 
+            return;
+
+        this.isLoading = true;
+        this.feedService
+            .get(10, {profile: this.profile.id, cursor: cursor})
+            .finally(() => this.isLoading = false)
+            .subscribe((feed) => {
+                this.isFeedEnd = feed.length == 0;
+                this.feed = this.feed.concat(feed)
             })
         ;
     }

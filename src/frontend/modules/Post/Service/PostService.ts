@@ -70,7 +70,7 @@ export class PostService {
             throw new Error(`Post with id "${postId}" is not cached`);
         }
 
-        return Observable.of(post);
+        return Observable.of(post).delay(1); // delay kostil' for angular resolver...
     }
 
     private saveToCache(post: Post): void

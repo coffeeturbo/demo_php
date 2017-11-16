@@ -56,12 +56,7 @@ export class ProfileService implements ProfileServiceInterface{
             ;
         }
 
-        return profileObservable
-            .do(profile => {
-                console.log("Resolve profile!", profile);
-                this.onProfileResolve.emit(profile)
-            })
-        ;
+        return profileObservable.do(profile => this.onProfileResolve.emit(profile));
     }
     
     public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile> {

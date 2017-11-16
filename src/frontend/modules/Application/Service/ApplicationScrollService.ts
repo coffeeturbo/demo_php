@@ -8,10 +8,14 @@ export class ApplicationScrollService {
 
     public onScroll = new EventEmitter<number>();
     public mainHeight: number = 0;
-    
+
+    get scrollHeight() {
+        return this.el.nativeElement.scrollHeight;
+    }
+
     public scrollTo(scroll: number) {
-        // Не давать уходить в минусовой скролл и не скроллить дальше самого элемента
-        this.scroll = Math.max(0, Math.min(scroll, this.el.nativeElement.scrollHeight - this.mainHeight));
+        // Не давать уходить в минусовой скролл и не скроллить больше максимума
+        this.scroll = Math.max(0, Math.min(scroll, this.scrollHeight - this.mainHeight));
         this.onScroll.emit(this.scroll);
     }
 

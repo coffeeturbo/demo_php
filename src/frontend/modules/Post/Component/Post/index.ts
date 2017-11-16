@@ -11,7 +11,7 @@ import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
 import {VoteState} from "../../../Vote/Entity/Vote";
 import {AuthService} from "../../../Auth/Service/AuthService";
-import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
+import {ProfileService} from "../../../Profile/Service/ProfileService";
 
 @Component({
     selector: 'post',
@@ -46,6 +46,7 @@ export class PostComponent {
         public el: ElementRef,
         public appScrollService: ApplicationScrollService,
         public translationService: TranslationService,
+        public profileService: ProfileService,
         public postService: PostService,
         public router: Router
     ){

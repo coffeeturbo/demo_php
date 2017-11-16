@@ -48,8 +48,6 @@ export function StartupServiceFactory(startupService: StartupService): Function 
 export function LocaleFactory(translationService: TranslationService) {
     let locale: Locale = translationService.getLocale();
     
-    console.log(locale, Config.locale.aliases[locale][0]);
-    
     return Config.locale.aliases[locale][0];
 }
 

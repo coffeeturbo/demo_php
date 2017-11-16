@@ -30,7 +30,7 @@ ng-container(*ngIf="profile")
   //    ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:translate("day"):translate("days"):translate("days1")}} 
   //    | {{"Ago" | translate | lowercase}}
     
-  feed(*ngIf="feed", [feed]="feed")
+  feed(*ngIf="feed", [feed]="feed", (onFeedEnd)="loadFeed($event)")
 profile-avatar-cropper((onCrop)="uploadAvatar($event)", [disabled]="disabled")
 backdrop-actions(*ngIf="backdropActionsHelper.isVisible", (onChange)="profile = route.snapshot.data.profile")
 router-outlet

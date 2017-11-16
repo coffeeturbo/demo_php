@@ -10,6 +10,8 @@ import {FeedRESTService} from "./Service/FeedRESTService";
 import {FeedComponent} from "./Component/FeedComponent/index";
 import {RouterModule} from "@angular/router";
 import {PostModule} from "../Post/PostModule";
+import {FeedNewResolver} from "./Service/FeedNewResolver";
+import {FeedBestResolver} from "./Service/FeedBestResolver";
 
 @NgModule({
     imports: [
@@ -27,7 +29,10 @@ import {PostModule} from "../Post/PostModule";
     ],
     providers: [
         FeedService,
-        FeedRESTService
+        FeedRESTService,
+        
+        FeedNewResolver,
+        FeedBestResolver
     ],
     exports: [
         FeedComponent

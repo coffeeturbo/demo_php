@@ -3,13 +3,14 @@ import {Observable} from "rxjs";
 
 import {FeedRESTService} from "./FeedRESTService";
 import {Feed} from "../Entity/Feed";
+import {GetFeedRequest} from "../Http/Request/GetFeedRequest";
 
 @Injectable()
 export class FeedService {
     constructor(private rest: FeedRESTService) {}
 
-    public getByProfile(profileId: number, limit: number = 0, offset: number = 0) : Observable<Feed>
+    public get(limit: number, getFeedRequest?: GetFeedRequest): Observable<Feed>
     {
-        return this.rest.getByProfile(profileId, limit, offset);
+        return this.rest.get(limit, getFeedRequest);
     }
 }

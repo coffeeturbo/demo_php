@@ -4,26 +4,23 @@ import {Observable} from "rxjs";
 
 import {Feed} from "../Entity/Feed";
 import {AuthService} from "../../Auth/Service/AuthService";
+import {GetFeedRequest} from "../Http/Request/GetFeedRequest";
 
 @Injectable()
 export class FeedRESTService {
     constructor(private rest: RESTService, private authService: AuthService) {}
-    
-    public getByProfile(profileId: number, limit: number = 0, offset: number = 0) : Observable<Feed> 
+
+    public get(limit: number, getFeedRequest?: GetFeedRequest): Observable<Feed>
     {
-        let url = `/feed/profile/${profileId}/limit/${limit}/offset/${offset}`;
+        let url = `/feed/limit/${limit}`;
 
         if(this.authService.isSignedIn()) {
-            return this.rest
-                .auth()
-                .get(url)
-                .map(res => res.json())
-            ;
-        } else {
-            return this.rest
-                .get(url)
-                .map(res => res.json())
-            ;
+            this.rest = this.rest.auth()
         }
+        
+        return this.rest
+            .get(url, {search: getFeedRequest || {}})
+            .map(res => res.json())
+        ;
     }
 }

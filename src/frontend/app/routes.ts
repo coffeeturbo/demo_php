@@ -20,22 +20,39 @@ import {PostFormRoute} from "../modules/Post/Route/PostFormRoute/index";
 import {ProfileFeedResolver} from "../modules/Profile/Service/ProfileFeedResolver";
 import {TagRoute} from "../modules/Tag/Route/TagRoute/index";
 import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
+import {FeedNewResolver} from "../modules/Feed/Service/FeedNewResolver";
+import {FeedBestResolver} from "../modules/Feed/Service/FeedBestResolver";
 
 export const appRoutes: JetRoutes = [
     {
         path: '',
         component: FeedHotRoute,
-        data: {title: 'Hot'}
+        data: {
+            title: 'Hot'
+        },
+        resolve: {
+            // feed:
+        }
     },
     {
         path: 'new',
         component: FeedNewRoute,
-        data: {title: 'New'}
+        data: {
+            title: 'New' 
+        },
+        resolve: {
+            feed: FeedNewResolver,
+        }
     },
     {
         path: 'best',
         component: FeedBestRoute,
-        data: {title: 'Best'}
+        data: {
+            title: 'Best'
+        },
+        resolve: {
+            feed: FeedBestResolver,
+        }
     },
     {
         path: 'post',
