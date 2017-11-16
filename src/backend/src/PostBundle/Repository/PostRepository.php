@@ -4,11 +4,9 @@ namespace PostBundle\Repository;
 
 use AttachmentBundle\Entity\Attachment;
 use Doctrine\ORM\NoResultException;
-use FeedBundle\Criteria\Criteria;
 use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\VarDumper\Tests\Fixture\DumbFoo;
 use TagBundle\Entity\Tag;
 
 class PostRepository extends \Doctrine\ORM\EntityRepository
@@ -147,6 +145,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->where('p.id IN (:postIds)')
             ->setParameter('postIds', $postIds)
             ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
+            ->addOrderBy('attachments.position', 'ASC')
             ->getQuery();
 
 
