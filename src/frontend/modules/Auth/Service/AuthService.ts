@@ -32,7 +32,7 @@ export class AuthService implements AuthServiceInterface
     public onAuthFailure = new EventEmitter<ResponseFailure>();
 
     private tokenExpirationSchedule: Subscription = new Subscription();
-    private returlUrl: string = "/";
+    private returnUrl: string = "/";
 
     constructor(
         private router: Router,
@@ -49,8 +49,8 @@ export class AuthService implements AuthServiceInterface
                     this.addTokenExpirationSchedule();
                 }
 
-                if (this.returlUrl) {
-                    this.router.navigateByUrl(this.returlUrl);
+                if (this.returnUrl) {
+                    this.router.navigateByUrl(this.returnUrl);
                 }
             }
         );
@@ -70,31 +70,31 @@ export class AuthService implements AuthServiceInterface
 
     public signIn(body: SignInRequest): Observable<TokenResponse>
     {
-        this.returlUrl = this.route.data["returnUrl"] || "/";
+        this.returnUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.rest.signIn(body));
     }
 
     public signUp(body: SignUpRequest): Observable<TokenResponse>
     {
-        this.returlUrl = "/";
+        this.returnUrl = "/";
         return this.handleTokenResponse(this.rest.signUp(body));
     }
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse>
     {
-        this.returlUrl = null;
+        this.returnUrl = null;
         return this.handleTokenResponse(this.rest.refreshToken(body));
     }
 
     public connectVK(): Observable<TokenResponse>
     {
-        this.returlUrl = this.route.data["returnUrl"] || "/";
+        this.returnUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.oAuth.connectVK());
     }
 
     public connectFacebook(): Observable<TokenResponse>
     {
-        this.returlUrl = this.route.data["returnUrl"] || "/";
+        this.returnUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.oAuth.connectFacebook());
     }
 
@@ -102,7 +102,6 @@ export class AuthService implements AuthServiceInterface
     {
         TokenRepository.removeTokens();
         this.tokenExpirationSchedule.unsubscribe();
-        // this.router.navigate(["login"]); @DOTO remove this line
     }
 
     public addTokenExpirationSchedule(): void

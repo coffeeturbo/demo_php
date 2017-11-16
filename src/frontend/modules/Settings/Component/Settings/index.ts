@@ -10,7 +10,6 @@ import {Device} from "../../../Application/Service/DeviceService";
 })
 export class SettingsComponent {
     protected disabled: boolean = false;
-    public fail: boolean = false;
     public device = Device;
     
 

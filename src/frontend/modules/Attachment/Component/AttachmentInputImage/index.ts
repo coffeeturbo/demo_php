@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 @Component({
@@ -12,7 +12,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
     }]
 })
 
-export class AttachmentInputImageComponent implements ControlValueAccessor  {
+export class AttachmentInputImageComponent implements ControlValueAccessor, OnChanges  {
     propagateChange:any = () => {};
     @Input() id: string;
     @Input('value') _value: any = "";

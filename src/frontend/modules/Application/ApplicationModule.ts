@@ -33,7 +33,6 @@ import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
 import {VoteModule} from "../Vote/VoteModule";
 import {TagModule} from "../Tag/TagModule";
-import {HttpClientModule} from "@angular/common/http";
 
 registerLocaleData(localeRu);
 
