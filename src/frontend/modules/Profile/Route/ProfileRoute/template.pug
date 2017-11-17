@@ -1,23 +1,23 @@
 ng-container(*ngIf="profile")
   header
     .backdrop
-      profile-backdrop-cropper((onCrop)="uploadBackdrop($event)", [disabled]="disabled")
+      profile-backdrop-cropper(*ngIf="profileService.isOwn(profile)", (onCrop)="uploadBackdrop($event)", [disabled]="disabled")
       ng-container(*ngIf="backdropHelper.disabled()")
         img(*ngIf="profileService.hasBackdrop(profile)", src="{{ profile.backdrop.public_path}}")
-        button((click)="backdropActionsHelper.show()") {{ "Change" | translate }}
+        button(*ngIf="profileService.isOwn(profile)", (click)="backdropActionsHelper.show()") {{ "Change" | translate }}
       figure(*ngIf="backdropHelper.disabled()")
         .avatar
           a(*ngIf="profileService.hasAvatar(profile)", routerLink="avatar")
             img(src="{{profile.avatar.medium.public_path}}")
           div(*ngIf="!profileService.hasAvatar(profile)", [ngClass]="'bg-color-' + palleteService.encode(profile.name) + '-300'") {{ profileService.getProfileFirstLetters(profile) }}	 
-          button((onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
+          button(*ngIf="profileService.isOwn(profile)", (onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
           h1
             | {{profile.name}}
             span.fa-stack
               i.fa.fa-certificate.fa-stack-1x
               i.fa.fa-check.fa-stack-1x
-          span @{{profile.alias}}
+          span(*ngIf="profile.alias") @{{profile.alias}}
   //section
   //  p {{ "Gender" | translate }}: {{ profile.gender | capitalize | translate }}    
   //  p(*ngIf="profile.birth_date") {{ "Birthday" | translate }}: {{ profile.birth_date | birthday }}    

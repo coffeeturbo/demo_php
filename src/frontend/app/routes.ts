@@ -11,47 +11,51 @@ import {ProfileTitleResolver} from "../modules/Profile/Service/ProfileTitleResol
 import {PostRoute} from "../modules/Post/Route/PostRoute/index";
 import {PostResolver} from "../modules/Post/Service/PostResolver";
 import {PostTitleResolver} from "../modules/Post/Service/PostTitleResolver";
-import {FeedHotRoute} from "../modules/Feed/Route/FeedHotRoute/index";
-import {FeedNewRoute} from "../modules/Feed/Route/FeedNewRoute/index";
-import {FeedBestRoute} from "../modules/Feed/Route/FeedBestRoute/index";
+import {FeedRoute} from "../modules/Feed/Route/FeedRoute/index";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute/index";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute/index";
 import {PostFormRoute} from "../modules/Post/Route/PostFormRoute/index";
 import {ProfileFeedResolver} from "../modules/Profile/Service/ProfileFeedResolver";
 import {TagRoute} from "../modules/Tag/Route/TagRoute/index";
 import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
-import {FeedNewResolver} from "../modules/Feed/Service/FeedNewResolver";
-import {FeedBestResolver} from "../modules/Feed/Service/FeedBestResolver";
+import {FeedResolver} from "../modules/Feed/Service/FeedResolver";
+import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
 
 export const appRoutes: JetRoutes = [
     {
         path: '',
-        component: FeedHotRoute,
+        component: FeedRoute,
         data: {
-            title: 'Hot'
+            cacheId: 0,
+            title: 'Hot',
+            feedRequest: <GetFeedRequest>{sort: "id", direction: "ASC"}
         },
         resolve: {
-            // feed:
+            feed: FeedResolver,
         }
     },
     {
         path: 'new',
-        component: FeedNewRoute,
+        component: FeedRoute,
         data: {
-            title: 'New' 
+            cacheId: 1,
+            title: 'New',
+            feedRequest: <GetFeedRequest>{sort: "id"}
         },
         resolve: {
-            feed: FeedNewResolver,
+            feed: FeedResolver,
         }
     },
     {
         path: 'best',
-        component: FeedBestRoute,
+        component: FeedRoute,
         data: {
-            title: 'Best'
+            cacheId: 2,
+            title: 'Best',
+            feedRequest: <GetFeedRequest>{sort: "rating"}
         },
         resolve: {
-            feed: FeedBestResolver,
+            feed: FeedResolver,
         }
     },
     {

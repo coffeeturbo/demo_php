@@ -22,6 +22,8 @@ export class FeedComponent implements AfterViewInit {
     constructor(public appScrollService: ApplicationScrollService){}
     
     ngAfterViewInit() {
+        this.appScrollService.scrollTo(0);
+        
         this.posts.forEach(post => post.current = false);
         this.appScrollService
             .onScroll

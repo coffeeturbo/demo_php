@@ -7,7 +7,7 @@ import {FeedService} from "../../Service/FeedService";
 @Component({
     templateUrl: "./template.pug",
 })
-export class FeedBestRoute implements OnInit {
+export class FeedRoute implements OnInit {
     private isLoading: boolean = false;
     private isFeedEnd: boolean = false;
 
@@ -22,14 +22,13 @@ export class FeedBestRoute implements OnInit {
         this.feed = this.route.snapshot.data.feed;
     }
 
-    
     public loadFeed(cursor: number) {
         if(this.isLoading || this.isFeedEnd)
             return;
 
         this.isLoading = true;
         this.feedService
-            .get(10, {cursor: cursor, sort: "rating"})
+            .get(10, Object.assign(this.route.snapshot.data.feedRequest, {cursor: cursor}))
             .finally(() => this.isLoading = false)
             .subscribe((feed) => {
                 this.isFeedEnd = feed.length == 0;

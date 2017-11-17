@@ -2,16 +2,13 @@ import {NgModule} from "@angular/core";
 
 import {CommonModule} from "../Common/CommonModule";
 import {FeedProfileRoute} from "./Route/FeedProfileRoute/index";
-import {FeedHotRoute} from "./Route/FeedHotRoute/index";
-import {FeedNewRoute} from "./Route/FeedNewRoute/index";
-import {FeedBestRoute} from "./Route/FeedBestRoute/index";
+import {FeedRoute} from "./Route/FeedRoute/index";
 import {FeedService} from "./Service/FeedService";
 import {FeedRESTService} from "./Service/FeedRESTService";
 import {FeedComponent} from "./Component/FeedComponent/index";
 import {RouterModule} from "@angular/router";
 import {PostModule} from "../Post/PostModule";
-import {FeedNewResolver} from "./Service/FeedNewResolver";
-import {FeedBestResolver} from "./Service/FeedBestResolver";
+import {FeedResolver} from "./Service/FeedResolver";
 
 @NgModule({
     imports: [
@@ -21,18 +18,14 @@ import {FeedBestResolver} from "./Service/FeedBestResolver";
     ],
     declarations: [
         FeedProfileRoute,
-        FeedHotRoute,
-        FeedNewRoute,
-        FeedBestRoute,
+        FeedRoute,
 
         FeedComponent
     ],
     providers: [
         FeedService,
         FeedRESTService,
-        
-        FeedNewResolver,
-        FeedBestResolver
+        FeedResolver
     ],
     exports: [
         FeedComponent

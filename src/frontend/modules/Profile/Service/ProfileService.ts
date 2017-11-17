@@ -22,6 +22,7 @@ interface ProfileServiceInterface {
     checkAlias(alias: string): Observable<CheckAliasResponse>;
     getOwnProfilePath(): string;
     getOwnProfile(): Observable<Profile>;
+    isOwn(profile: Profile): boolean;
     isOwnProfileExist(): boolean;
 }
 
@@ -148,8 +149,22 @@ export class ProfileService implements ProfileServiceInterface{
         return this.get(this.getOwnProfilePath());
     }
     
+    public isOwn(profile: Profile): boolean
+    {
+        if(!this.auth.isSignedIn()) {
+            return false;
+        }
+
+        let tokenData: Token = TokenRepository.decodeToken();
+        return this.isOwnProfileExist() && tokenData.profile_id == profile.id;
+    }
+    
     public isOwnProfileExist(): boolean
     {
+        if(!this.auth.isSignedIn()) {
+            return false;
+        }
+        
         let tokenData: Token = TokenRepository.decodeToken();
         return !!tokenData.profile_alias || !!tokenData.profile_id;
     }

@@ -6,12 +6,25 @@ import 'rxjs/add/operator/publishReplay';
 import {ProfileService} from "./ProfileService";
 import {Feed} from "../../Feed/Entity/Feed";
 import {FeedService} from "../../Feed/Service/FeedService";
+import {Post} from "../../Post/Entity/Post";
 
 @Injectable()
 export class ProfileFeedResolver implements Resolve<Feed> {
 
-    private cache;
+    private cache: {
+        profileId: number;
+        feedObservable: Observable<Feed>;
+    }[] = [];
+
     constructor(private profileService: ProfileService, private feedService: FeedService) {}
+
+    private getCache(profileId: number) {
+        return this.cache.find(cacheItem => cacheItem.profileId == profileId);
+    }
+
+    private setCache(cache) {
+        this.cache.push(cache);
+    }
 
     resolve(): Observable<Feed> {
 
@@ -20,15 +33,20 @@ export class ProfileFeedResolver implements Resolve<Feed> {
             .first()
             .map(profile => profile.id)
             .subscribe((profileId => {
-                if(!this.cache) {
-                    this.cache = this.feedService
-                        .get(10, {profile: profileId})
-                        .publishReplay(1)
-                        .refCount()
-                    ;
+                
+                if(!this.getCache(profileId)) {
+                    this.setCache({
+                        profileId: profileId,
+                        feedObservable: this.feedService
+                            .get(10, {profile: profileId})
+                            .publishReplay(1)
+                            .refCount() 
+                            .delay(1)
+                    })
                 }
 
-                this.cache.subscribe(feed => {
+                this.getCache(profileId)
+                    .feedObservable.subscribe(feed => {
                         onFeedLoad.emit(<Feed>feed);
                         onFeedLoad.complete();
                     })
@@ -38,4 +56,5 @@ export class ProfileFeedResolver implements Resolve<Feed> {
 
         return onFeedLoad;
     }
+
 }
