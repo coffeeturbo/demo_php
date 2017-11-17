@@ -16,7 +16,6 @@ export class FeedResolver implements Resolve<Feed> {
     private getCache(id: number) {
         let cache = this.cache.find(item => item.id == id);
         if(!cache) {
-            console.log(`Feed with id "${id}" is not cached`);
             throw new Error(`Feed with id "${id}" is not cached`);
         }
         return cache;
