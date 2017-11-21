@@ -7,6 +7,7 @@ import {GetFeedRequest} from "../Http/Request/GetFeedRequest";
 
 @Injectable()
 export class FeedService {
+    
     constructor(private rest: FeedRESTService) {}
 
     public get(limit: number, getFeedRequest?: GetFeedRequest): Observable<Feed>

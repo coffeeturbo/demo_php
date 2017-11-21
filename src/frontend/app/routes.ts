@@ -116,7 +116,7 @@ export const appRoutes: JetRoutes = [
                 path: ':path',
                 component: ProfileRoute,
                 children: [
-                    { path: 'avatar', component: ProfileAvatarRoute}
+                    { path: 'avatar', component: ProfileAvatarRoute }
                 ],
                 resolve: { 
                     profile: ProfileResolver,

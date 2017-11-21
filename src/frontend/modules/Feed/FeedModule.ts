@@ -9,6 +9,7 @@ import {FeedComponent} from "./Component/FeedComponent/index";
 import {RouterModule} from "@angular/router";
 import {PostModule} from "../Post/PostModule";
 import {FeedResolver} from "./Service/FeedResolver";
+import {FeedCacheService} from "./Service/FeedCacheService";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {FeedResolver} from "./Service/FeedResolver";
     providers: [
         FeedService,
         FeedRESTService,
+        FeedCacheService,
         FeedResolver
     ],
     exports: [

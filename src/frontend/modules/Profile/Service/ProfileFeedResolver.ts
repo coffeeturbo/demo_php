@@ -1,60 +1,44 @@
-import {EventEmitter, Injectable} from "@angular/core";
-import {Resolve} from "@angular/router";
+import {Injectable} from "@angular/core";
+import {ActivatedRouteSnapshot, Resolve} from "@angular/router";
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/publishReplay';
 
 import {ProfileService} from "./ProfileService";
 import {Feed} from "../../Feed/Entity/Feed";
 import {FeedService} from "../../Feed/Service/FeedService";
-import {Post} from "../../Post/Entity/Post";
+import {FeedCacheService} from "../../Feed/Service/FeedCacheService";
 
 @Injectable()
 export class ProfileFeedResolver implements Resolve<Feed> {
 
-    private cache: {
-        profileId: number;
-        feedObservable: Observable<Feed>;
-    }[] = [];
+    constructor(private profileService: ProfileService, private feedService: FeedService, private feedCacheService: FeedCacheService) {}
 
-    constructor(private profileService: ProfileService, private feedService: FeedService) {}
-
-    private getCache(profileId: number) {
-        return this.cache.find(cacheItem => cacheItem.profileId == profileId);
-    }
-
-    private setCache(cache) {
-        this.cache.push(cache);
-    }
-
-    resolve(): Observable<Feed> {
-
-        let onFeedLoad = new EventEmitter<Feed>();
-        this.profileService.onProfileResolve
+    resolve(route: ActivatedRouteSnapshot): Observable<Feed> {
+        
+        return this.profileService.onProfileResolve
             .first()
             .map(profile => profile.id)
-            .subscribe((profileId => {
+            .flatMap((profileId => {
+
+                let feedObservable: Observable<Feed>;
+                route.routeConfig.data = {profile: profileId};
                 
-                if(!this.getCache(profileId)) {
-                    this.setCache({
-                        profileId: profileId,
-                        feedObservable: this.feedService
-                            .get(10, {profile: profileId})
-                            .publishReplay(1)
-                            .refCount() 
-                            .delay(1)
-                    })
+                try {
+                    feedObservable = this.feedCacheService.getFeed(route.data.feedRequest).delay(1);
+                } catch (e) {
+                    feedObservable = this.feedService
+                        .get(10, route.data.feedRequest)
+                        .publishReplay(1)
+                        .refCount()
+                    ;
+
+                    this.feedCacheService.saveFeed(route.data.feedRequest, feedObservable)
                 }
 
-                this.getCache(profileId)
-                    .feedObservable.subscribe(feed => {
-                        onFeedLoad.emit(<Feed>feed);
-                        onFeedLoad.complete();
-                    })
-                ;
+                return feedObservable;
             }))
         ;
 
-        return onFeedLoad;
     }
 
 }

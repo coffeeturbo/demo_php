@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnDestroy, Output, QueryList, ViewChildren} from '@angular/core';
 import * as scrollIntoView from 'scroll-into-view';
 
 import {Feed} from "../../Entity/Feed";
 import {PostComponent} from "../../../Post/Component/Post/index";
 import {PostHotkeys} from "../../../Post/Component/Post/hotkeys";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
+import {ActivatedRoute} from "@angular/router";
+import {FeedCacheService} from "../../Service/FeedCacheService";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
     selector: 'feed',
@@ -12,45 +15,63 @@ import {ApplicationScrollService} from "../../../Application/Service/Application
     styleUrls: ["./style.shadow.scss"]
 })
 
-export class FeedComponent implements AfterViewInit {
+export class FeedComponent implements AfterViewInit, OnDestroy {
     @Input() feed: Feed;
     @Output() onFeedEnd = new EventEmitter<number>();
     @ViewChildren(PostComponent) posts: QueryList<PostComponent>;
-    
+
     private currentPostComponent: PostComponent;
-    
-    constructor(public appScrollService: ApplicationScrollService){}
-    
+    private scrollSubscription: Subscription;
+
+    constructor(
+        public route: ActivatedRoute,
+        public feedCacheService: FeedCacheService,
+        public appScrollService: ApplicationScrollService
+    ) {
+        try {
+            this.appScrollService.scrollTo(
+                this.feedCacheService.getScroll(this.route.snapshot.data.feedRequest)
+            );
+        } catch (e) {
+            this.appScrollService.scrollTo(0);
+        }
+    }
+
     ngAfterViewInit() {
-        this.appScrollService.scrollTo(0);
-        
         this.posts.forEach(post => post.current = false);
-        this.appScrollService
+        this.scrollSubscription = this.appScrollService
             .onScroll
             .debounceTime(50)
             .subscribe((scroll) => {
+
+                this.feedCacheService.saveScroll(this.route.snapshot.data.feedRequest, scroll);
+
                 this.posts.forEach(post => post.current = false);
                 this.currentPostComponent = this.posts.find(post => post.isIntoView == true);
 
-                if(this.currentPostComponent) {
+                if (this.currentPostComponent) {
                     this.currentPostComponent.current = true;
                 }
 
-                if(typeof window !='undefined') {
-                    if(this.appScrollService.mainHeight + this.appScrollService.scrollHeight - scroll < 2000) {
+                if (typeof window != 'undefined') {
+                    if (this.appScrollService.mainHeight + this.appScrollService.scrollHeight - scroll < 2000) {
                         this.onFeedEnd.emit(this.feed.slice(-1).pop().id);
                     }
                 }
             })
         ;
     }
-    
+
+    ngOnDestroy() {
+        this.scrollSubscription.unsubscribe();
+    }
+
     @HostListener('window:keyup', ['$event.keyCode'])
     onKeydown(keyCode: number) {
-        if(keyCode == PostHotkeys.NextPost || keyCode == PostHotkeys.PreviousPost) {
+        if (keyCode == PostHotkeys.NextPost || keyCode == PostHotkeys.PreviousPost) {
             let postEl = this.posts.first.el.nativeElement;
-            
-            if(this.currentPostComponent) {
+
+            if (this.currentPostComponent) {
                 switch (keyCode) {
                     case PostHotkeys.NextPost:
                         postEl = this.currentPostComponent.el.nativeElement.nextElementSibling;
