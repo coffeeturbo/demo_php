@@ -20,6 +20,7 @@ import {TagRoute} from "../modules/Tag/Route/TagRoute/index";
 import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
 import {FeedResolver} from "../modules/Feed/Service/FeedResolver";
 import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
+import {ProfileFeedRequestResolver} from "../modules/Profile/Service/ProfileFeedRequestResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -121,7 +122,8 @@ export const appRoutes: JetRoutes = [
                 resolve: { 
                     profile: ProfileResolver,
                     title: ProfileTitleResolver,
-                    profileFeed: ProfileFeedResolver, 
+                    profileFeed: ProfileFeedResolver,
+                    feedRequest: ProfileFeedRequestResolver
                 }
             }
         ]

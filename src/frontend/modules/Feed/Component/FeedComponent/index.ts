@@ -28,15 +28,18 @@ export class FeedComponent implements AfterViewInit, OnDestroy {
         public feedCacheService: FeedCacheService,
         public appScrollService: ApplicationScrollService
     ) {
-        try {
-            this.appScrollService.scrollTo(
-                this.feedCacheService.getScroll(this.route.snapshot.data.feedRequest)
-            );
-        } catch (e) {
-            this.appScrollService.scrollTo(0);
-        }
+        setTimeout(() => { // Без этого костыля скролл не отрабатывает на странице профиля по нажатию на back d баузере.
+            try {
+                this.appScrollService.scrollTo(
+                    this.feedCacheService.getScroll(this.route.snapshot.data.feedRequest)
+                );
+                
+            } catch (e) {
+                this.appScrollService.scrollTo(0);
+            }
+        }, 0);
     }
-
+    
     ngAfterViewInit() {
         this.posts.forEach(post => post.current = false);
         this.scrollSubscription = this.appScrollService
