@@ -74,21 +74,32 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
         $builder->orderBy('p.votesRating', $criteria->getDirection());
 
-        if($cursor = $criteria->getCursor()){
+        if($postId = $criteria->getCursor()){
+
+            $post = $this->getPostById($postId);
+
+
             // desc
             switch(strtolower($criteria->getDirection())){
                 case 'desc':
-                    $builder->andWhere('p.votesRating < :cursor');
-                    break;
-                case 'asc':
-                    $builder->andWhere('p.votesRating > :cursor');
-                    break;
+                    $builder->andWhere('p.votesRating < :rating');
+                    $builder->andWhere('p.id < :id');
 
-                default:
-                    $builder->andWhere('p.votesRating < :cursor');
+                break;
+                case 'asc':
+                    $builder->andWhere('p.votesRating > :rating');
+                    $builder->andWhere('p.id > :id');
+                break;
+
+                default: {
+                    $builder->andWhere('p.votesRating < :rating');
+                    $builder->andWhere('p.id < :id');
+                }
+
 
             }
-            $builder->setParameter('cursor', $cursor);
+            $builder->setParameter('rating', $post->getVotesRating())
+                ->setParameter('id', $postId);
         }
     }
 
