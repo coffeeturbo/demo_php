@@ -8,14 +8,5 @@ feed:
     dateFrom: "*"
     dateTo: "*"
     profile: \d+
-    order: "id|rating"
+    sort: "id|rating"
     direction: ASC|DESC
-
-profile_feed:
-  path: '/profile/{profileId}/limit/{limit}/offset/{offset}'
-  methods: [ GET ]
-  defaults: { _controller: FeedBundle:ProfileFeed:feed }
-  requirements:
-    profileId: \d+
-    limit: \d+
-    offset: \d+

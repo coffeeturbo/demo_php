@@ -4,6 +4,7 @@ namespace PostBundle\Repository;
 
 use AttachmentBundle\Entity\Attachment;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -47,33 +48,72 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
+    private function createIdOrderQB(QueryBuilder $builder, FeedCriteria $criteria)
+    {
+        $builder->orderBy('p.id', $criteria->getDirection());
+
+        if($cursor = $criteria->getCursor()){
+            // desc
+            switch(strtolower($criteria->getDirection())){
+                case 'desc':
+                    $builder->andWhere('p.id < :cursor');
+                    break;
+                case 'asc':
+                    $builder->andWhere('p.id > :cursor');
+                    break;
+
+                default:
+                    $builder->andWhere('p.id < :cursor');
+
+            }
+            $builder->setParameter('cursor', $cursor);
+        }
+    }
+
+    private function createRatingOrderQB(QueryBuilder $builder, FeedCriteria $criteria)
+    {
+        $builder->orderBy('p.votesRating', $criteria->getDirection());
+
+        if($cursor = $criteria->getCursor()){
+            // desc
+            switch(strtolower($criteria->getDirection())){
+                case 'desc':
+                    $builder->andWhere('p.votesRating < :cursor');
+                    break;
+                case 'asc':
+                    $builder->andWhere('p.votesRating > :cursor');
+                    break;
+
+                default:
+                    $builder->andWhere('p.votesRating < :cursor');
+
+            }
+            $builder->setParameter('cursor', $cursor);
+        }
+    }
+
+    private function addOrder(QueryBuilder $builder, FeedCriteria $criteria)
+    {
+        switch(strtolower($criteria->getOrder())){
+            case  'id':
+                $this->createIdOrderQB($builder, $criteria);
+            break;
+            case 'votesrating':
+                $this->createRatingOrderQB($builder, $criteria);
+            break;
+            default: throw new NotFoundHttpException(sprintf('unknown order %s', $criteria->getOrder()));
+        }
+    }
+
+
     private function getPostsByCriteria(FeedCriteria $criteria)
     {
 
         try {
             $qb = $this->createQueryBuilder('p')
-                ->select('p')
-                ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection());
+                ->select('p');
 
-            if($cursor = $criteria->getCursor()){
-
-                // desc
-
-                switch(strtolower($criteria->getDirection())){
-                    case 'desc':
-                        $qb->andWhere('p.id < :cursor');
-                    break;
-                    case 'asc':
-                        $qb->andWhere('p.id > :cursor');
-                    break;
-
-                    default:
-                        $qb->andWhere('p.id < :cursor');
-
-                }
-                $qb->setParameter('cursor', $cursor);
-
-            }
+            $this->addOrder($qb, $criteria);
 
             if($startDate = $criteria->getStartDate()){
                 $qb->andWhere('p.created > :start')

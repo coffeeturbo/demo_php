@@ -15,10 +15,9 @@ class FeedHandler
 
     public function handleRequest( Request $request)
     {
-
         $limit = $request->get('limit');
         $cursor = $request->get('cursor');
-        $order = $request->get('order') ?? 'id';
+        $order = $request->get('sort') ?? 'id';
         $profile = $request->get('profile') ?? null;
         $direction = $request->get('direction') ?? 'DESC';
 
