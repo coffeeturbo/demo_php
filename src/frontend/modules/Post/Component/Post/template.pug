@@ -34,8 +34,8 @@ div
     ng-container(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
       p.attachment-text(*ngSwitchCase="AttachmentType.text", [innerHTML]="attachment.content.text | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
       img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
-      // @DOTO:
-      // .attachment-video
+      attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [youtubeId]="attachment.content.youtubeId")
+
 .footer
   .btn-material.secondary.vote.positive([class.active]="post.votes.state=='positive'", (click)='vote("positive")')
     .fa.fa-thumbs-o-up

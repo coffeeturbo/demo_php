@@ -5,6 +5,7 @@ import {AttachmentInputTextComponent} from "./Component/AttachmentInputText/inde
 import {AttachmentInputVideoComponent} from "./Component/AttachmentInputVideo/index";
 import {AttachmentInputImageComponent} from "./Component/AttachmentInputImage/index";
 import {AttachmentRESTService} from "./Service/AttachmentRESTService";
+import {AttachmentVideoYoutubeComponent} from "./Component/AttachmentVideoYoutube/index";
 
 @NgModule({
     imports: [
@@ -13,7 +14,9 @@ import {AttachmentRESTService} from "./Service/AttachmentRESTService";
     declarations: [
         AttachmentInputTextComponent,
         AttachmentInputVideoComponent,
-        AttachmentInputImageComponent
+        AttachmentInputImageComponent,
+
+        AttachmentVideoYoutubeComponent
     ],
     providers: [
         AttachmentRESTService
@@ -21,7 +24,9 @@ import {AttachmentRESTService} from "./Service/AttachmentRESTService";
     exports: [
         AttachmentInputTextComponent,
         AttachmentInputVideoComponent,
-        AttachmentInputImageComponent
+        AttachmentInputImageComponent,
+        
+        AttachmentVideoYoutubeComponent
     ]
 })
 export class AttachmentModule {

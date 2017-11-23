@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {TranslationService} from "@angular-addons/translate";
 
@@ -17,7 +17,7 @@ import {FeedService} from "../../../Feed/Service/FeedService";
     templateUrl: "./template.pug",
     styleUrls: ["./style.shadow.scss"]
 })
-export class ProfileRoute implements OnInit {
+export class ProfileRoute {
 
     public profile: Profile;
     public feed: Feed;
@@ -32,16 +32,16 @@ export class ProfileRoute implements OnInit {
         public backdropHelper: ProfileBackdropCropperHelper,
         public backdropActionsHelper: ProfileBackdropActionsHelper,
         public feedService: FeedService
-    ) {}
+    ) {
+        this.route.data.subscribe(data => {
+            this.profile = data.profile;
+            this.feed = data.profileFeed;
 
-    ngOnInit() {
-        this.profile = this.route.snapshot.data.profile;
-        this.feed = this.route.snapshot.data.profileFeed;
-
-        if(this.profileService.hasAvatar(this.profile)) {
-            // Preload fullsize avatar
-            (new Image()).src = this.profile.avatar['origin'].public_path;
-        }
+            if(this.profileService.hasAvatar(this.profile)) {
+                // Preload fullsize avatar
+                (new Image()).src = this.profile.avatar['origin'].public_path;
+            }
+        });
     }
 
     public update() {

@@ -131,14 +131,17 @@
   .content {
     line-height: 1.5em;
 
-    .attachment-image {
-      width: 100%;
+    .attachment-image, .attachment-video{
       margin: 10px 0 15px;
-      
+
       @include mq($until: tablet) {
         width: calc(100% + 40px);
         margin-left: -20px;
       }
+    }
+    
+    .attachment-image {
+      width: 100%;
     }
   }
 

@@ -148,7 +148,7 @@ export class PostFormRoute implements OnInit {
                     attachmentObservable = Observable.of(attachment);
                     break;
                 case AttachmentType.video:
-                    console.log("Backend for video-attachment not implemented!!!");
+                    attachmentObservable = this.attachmentRest.parseVideoLink({url: attachment.value});
                     break;
             }
 
