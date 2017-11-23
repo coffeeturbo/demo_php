@@ -56,7 +56,7 @@ export class FeedComponent implements AfterViewInit, OnDestroy {
                     this.currentPostComponent.current = true;
                 }
 
-                if (typeof window != 'undefined') {
+                if (typeof window != 'undefined' && this.feed.length > 0) {
                     if (this.appScrollService.mainHeight + this.appScrollService.scrollHeight - scroll < 2000) {
                         this.onFeedEnd.emit(this.feed.slice(-1).pop().id);
                     }
