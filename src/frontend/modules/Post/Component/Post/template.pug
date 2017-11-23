@@ -1,10 +1,11 @@
-// @DOTO: Доверстать!
 doctype html
 // этот div необходим для корректного position:sticky у .actions (что б не заезжал на .footer)
 div
   .sticky
     button.btn-material.secondary((click)="toggleView();")
       .fa.fa-fw.fa-expand([ngClass]='{"fa-expand": minimized, "fa-compress": !minimized}')
+      
+      // @DOTO выходит за края поста!!
       tooltip(*ngIf="minimized") {{ "Expand post" | translate }}
       tooltip(*ngIf="!minimized") {{ "Minimize post" | translate }}
 
