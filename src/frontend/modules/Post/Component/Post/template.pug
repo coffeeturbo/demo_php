@@ -6,8 +6,8 @@ div
       .fa.fa-fw.fa-expand([ngClass]='{"fa-expand": minimized, "fa-compress": !minimized}')
       
       // @DOTO выходит за края поста!!
-      tooltip(*ngIf="minimized") {{ "Expand post" | translate }}
-      tooltip(*ngIf="!minimized") {{ "Minimize post" | translate }}
+      tooltip(*ngIf="minimized") {{ "Expand" | translate }}
+      tooltip(*ngIf="!minimized") {{ "Minimize" | translate }}
 
   .rating([ngClass]='{"positive" : post.votes.rating >= 0, "negative" : post.votes.rating < 0}')
     .fa.fa-line-chart
@@ -35,7 +35,8 @@ div
     ng-container(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
       p.attachment-text(*ngSwitchCase="AttachmentType.text", [innerHTML]="attachment.content.text | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
       img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
-      attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [youtubeId]="attachment.content.youtubeId")
+      attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [attachment]="attachment.content")
+      //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
 .footer
   .btn-material.secondary.vote.positive([class.active]="post.votes.state=='positive'", (click)='vote("positive")')

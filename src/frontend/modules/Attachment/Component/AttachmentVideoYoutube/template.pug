@@ -1,1 +1,6 @@
-iframe([src]="videoUrl")
+.preview((click)="isVideoContainerHidden = false", [class.active]="isVideoContainerHidden", [style.background-image]="'url(' + attachment.image + ')'")
+  .fa.fa-youtube-play(*ngIf="isVideoContainerHidden")
+  .fa.fa-circle-o-notch.fa-spin(*ngIf="!isVideoContainerHidden")
+  .duration {{ duration }}
+    
+iframe(*ngIf="!isVideoContainerHidden", [src]="videoUrl")

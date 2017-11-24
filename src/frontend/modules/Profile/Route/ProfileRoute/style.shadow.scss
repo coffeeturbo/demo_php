@@ -42,6 +42,26 @@
     }
   }
 
+  .add-new-backdrop {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 160px;
+    padding: 20px;
+    z-index: 1;
+    
+    button {
+      color: #fff;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      border: 3px dotted;
+      font-size: $h1_size;
+      background: rgba(255,255,255,0.1);
+    }
+  }
+
   figure {
     position: absolute;
     background: #fff;
@@ -148,6 +168,21 @@
     span {
       color: material-color($secondary_material, '600');
     }
+  }
+}
+
+.profile-info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  section {
+    width: 100%;
+    max-width: 900px;
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
   }
 }
 

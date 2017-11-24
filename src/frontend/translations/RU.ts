@@ -24,6 +24,8 @@ export const LocaleRU = {
   "Loading":      "Загрузка",
   "Locale":       "Язык",
   "Login page":   "Страница входа",
+  "Minimize":     "Свернуть",
+  "Expand":       "Развернуть",
   "Name":         "Имя",
   "New":          "Свежее",
   "News":         "Новости",

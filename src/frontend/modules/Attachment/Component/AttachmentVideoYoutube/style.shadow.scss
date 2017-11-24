@@ -5,11 +5,56 @@
   padding-top: 25px;
   height: 0;
 
-  iframe {
+  iframe, .preview {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+  }
+
+  iframe {
+    z-index: 1;
+  }
+
+  .preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background-position: center;
+    background-size: cover;
+
+    &.active{
+      cursor: pointer;
+    }
+    
+    .fa {
+      position: absolute;
+      z-index: 1;
+      font-size: 5em;
+      transition: color 200ms;
+
+      &.fa-circle-o-notch {
+        color: #fff;
+      }
+
+      &.fa-youtube-play {
+        color: rgba(255, 255, 255, 0.5);
+      }
+    }
+    
+    .duration {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      padding: 10px;
+    }
+
+    &:hover .fa {
+      color: #fff;
+    }
   }
 }
