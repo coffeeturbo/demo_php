@@ -51,9 +51,13 @@ export class ApplicationComponent {
         }
     }
 
-    @HostListener('window:keydown', ['$event.keyCode'])
-    onKeydown(keyCode: number) {
-        switch (keyCode) {
+    @HostListener('window:keydown', ['$event'])
+    onKeydown(e) {
+        if(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+            return;
+        }
+
+        switch (e.keyCode) {
             case AppHotkeys.ScrollUp:
                 this.appScrollService.scrollTo(this.appScrollService.getScroll() - 100);
                 break;

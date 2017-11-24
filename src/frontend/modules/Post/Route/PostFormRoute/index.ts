@@ -83,8 +83,8 @@ export class PostFormRoute implements OnInit {
             .subscribe((post: Post) => {
                 localStorage.setItem("post-form", JSON.stringify(post));
                 this.saved = true;
-            });
-
+            })
+        ;
     }
 
     public addAttachment(type: AttachmentType, value?: any) {
