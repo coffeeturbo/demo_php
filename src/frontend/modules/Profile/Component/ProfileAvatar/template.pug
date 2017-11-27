@@ -1,0 +1,6 @@
+a(*ngIf="hasAvatar() && routerLink", [routerLink]="routerLink")
+  img(src="{{ getPath() }}")
+
+img(*ngIf="hasAvatar() && !routerLink", src="{{ getPath() }}")
+
+div(*ngIf="!hasAvatar() && showMock", [ngClass]="'bg-color-' + palleteService.encode(profile.name) + '-300'") {{ profileService.getProfileFirstLetters(profile) }}	 

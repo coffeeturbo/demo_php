@@ -100,6 +100,7 @@ figure {
     text-align: center;
     font-size: 2.5em;
     color: white;
+    overflow: hidden;
 
     & + * {
       @include mq($until: tablet) {

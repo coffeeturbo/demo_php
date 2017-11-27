@@ -42,7 +42,7 @@ import {PostFormLoadingComponent} from "./Component/PostFormLoading/index";
         PostResolver,
         PostTitleResolver
     ],
-    exports:[
+    exports: [
         PostComponent,
         PostCreateButtonComponent
     ]

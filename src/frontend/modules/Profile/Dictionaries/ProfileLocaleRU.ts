@@ -12,6 +12,7 @@ export const ProfileLocaleRU = {
     "Choose other": "Выбрать другую",
     "Invalid format": "Неверный формат",
     "Add post": "Добавить пост",
+    "Add image": "Добавить изображение",
     "Drag the image": "Перемещение изображения",
     "If you increase the screen resolution, some areas can be cropped": "При увеличении разрешения экрана некоторые участки могут быть обрезаны",
     "Now select area for your profile miniature": "Выбрите область для маленьких фотографий",

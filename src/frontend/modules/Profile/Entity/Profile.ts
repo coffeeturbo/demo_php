@@ -21,6 +21,8 @@ type ProfileAvatar = {
     origin: Image
 };
 
+export type ProfileAvatarSizes = "small" | "medium" | "cropped" | "origin"; 
+
 interface Image {
     public_path: string;
     storage_path: string;

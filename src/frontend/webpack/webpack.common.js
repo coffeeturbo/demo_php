@@ -86,22 +86,13 @@ module.exports = {
     plugins: [
         new ngtools.AngularCompilerPlugin({
             tsConfigPath: helpers.root("tsconfig.json"),
+            skipCodeGeneration: helpers.isDev, 
             entryModule: helpers.root(
                 "modules",
                 "Application",
                 helpers.isServer ? "ApplicationModuleServer#ApplicationModuleServer" : "ApplicationModuleBrowser#ApplicationModuleBrowser"
             )
         }),
-        
-        // new ngtools.AotPlugin({
-        //     tsConfigPath: helpers.root("tsconfig.json"),
-        //     skipCodeGeneration: helpers.isDev, 
-        //     entryModule: helpers.root(
-        //         "modules",
-        //         "Application",
-        //         helpers.isServer ? "ApplicationModuleServer#ApplicationModuleServer" : "ApplicationModuleBrowser#ApplicationModuleBrowser"
-        //     )
-        // }),
 
         // Workaround for angular/angular#11580
         new webpack.ContextReplacementPlugin(

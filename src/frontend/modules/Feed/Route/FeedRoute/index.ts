@@ -8,7 +8,7 @@ import {FeedService} from "../../Service/FeedService";
     templateUrl: "./template.pug",
 })
 export class FeedRoute implements OnInit {
-    private isLoading: boolean = false;
+    public isLoading: boolean = false;
     private isFeedEnd: boolean = false;
 
     public feed: Feed;
@@ -28,12 +28,24 @@ export class FeedRoute implements OnInit {
 
         this.isLoading = true;
         this.feedService
-            .get(10, Object.assign(this.route.snapshot.data.feedRequest, {cursor: cursor}))
+            .get(10, Object.assign({}, this.route.snapshot.data.feedRequest, {cursor: cursor}))
             .finally(() => this.isLoading = false)
             .subscribe((feed) => {
                 this.isFeedEnd = feed.length == 0;
                 this.feed = this.feed.concat(feed)
             })
+        ;
+    }
+    
+    public refresh() {
+        if(this.isLoading)
+            return;
+
+        this.isLoading = true;
+        this.feedService
+            .get(10, this.route.snapshot.data.feedRequest)
+            .finally(() => this.isLoading = false)
+            .subscribe((feed) => this.feed = feed)
         ;
     }
 }

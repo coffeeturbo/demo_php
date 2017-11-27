@@ -17,6 +17,9 @@ import {Subscription} from "rxjs/Subscription";
 
 export class FeedComponent implements AfterViewInit, OnDestroy {
     @Input() feed: Feed;
+    @Input() isLoading: boolean;
+    @Input() showRefresh: boolean = false;
+    @Output() onRefresh = new EventEmitter<void>();
     @Output() onFeedEnd = new EventEmitter<number>();
     @ViewChildren(PostComponent) posts: QueryList<PostComponent>;
 
@@ -28,7 +31,7 @@ export class FeedComponent implements AfterViewInit, OnDestroy {
         public feedCacheService: FeedCacheService,
         public appScrollService: ApplicationScrollService
     ) {
-        setTimeout(() => { // Без этого костыля скролл не отрабатывает на странице профиля по нажатию на back d баузере.
+        setTimeout(() => { // Без этого костыля скролл не отрабатывает на странице профиля по нажатию на back в баузере.
             try {
                 this.appScrollService.scrollTo(
                     this.feedCacheService.getScroll(this.route.snapshot.data.feedRequest)

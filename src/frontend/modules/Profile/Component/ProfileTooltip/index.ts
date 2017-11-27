@@ -3,7 +3,6 @@ import {Profile} from "../../Entity/Profile";
 import {ProfileService} from "../../Service/ProfileService";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {NavigationEnd, Router} from "@angular/router";
-import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 
 @Component({
     selector: 'profile-tooltip',
@@ -20,7 +19,6 @@ export class ProfileTooltipComponent implements OnInit {
         public elRef: ElementRef,
         public auth: AuthService,
         public router: Router,
-        public palleteService: PalleteService,
         public profileService: ProfileService
     ) {}
 

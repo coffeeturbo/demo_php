@@ -22,12 +22,12 @@ export class ProfileRoute {
     public profile: Profile;
     public feed: Feed;
     public disabled: boolean = false;
+    public isLoading: boolean = false;
 
     constructor(
         private route: ActivatedRoute, 
         private translationService: TranslationService,
         public profileService: ProfileService, 
-        public palleteService: PalleteService, 
         public avatarHelper: ProfileAvatarCropperHelper,
         public backdropHelper: ProfileBackdropCropperHelper,
         public backdropActionsHelper: ProfileBackdropActionsHelper,
@@ -37,9 +37,9 @@ export class ProfileRoute {
             this.profile = data.profile;
             this.feed = data.profileFeed;
 
-            if(this.profileService.hasAvatar(this.profile)) {
-                // Preload fullsize avatar
-                (new Image()).src = this.profile.avatar['origin'].public_path;
+            // Preload fullsize avatar
+            if(this.profile.avatar) {
+                (new Image()).src = this.profile.avatar.origin.public_path;
             }
         });
     }
@@ -74,7 +74,6 @@ export class ProfileRoute {
         ;
     }
     
-    private isLoading: boolean = false;
     private isFeedEnd: boolean = false;
     public loadFeed(cursor: number) {
         if(this.isLoading || this.isFeedEnd) 

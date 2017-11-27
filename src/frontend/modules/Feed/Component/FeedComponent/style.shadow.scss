@@ -1,5 +1,49 @@
+@import '../../../../assets/styles/global';
+
 :host {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  button {
+    color: material-color($secondary_material, '800');
+    transition: color 300ms;
+
+    &:disabled {
+      cursor: default;
+      color: material-color($secondary_material, '500');
+    }
+  }
+}
+
+.loader {
+  margin-bottom: calc(100vh - 122px);
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    border: (10px / 5) solid #333;
+    border-radius: 50%;
+    float: left;
+    margin: 0 (10px / 2);
+    transform: scale(0);
+    animation: fx 1000ms ease infinite 0ms;
+
+    &:nth-child(2) {
+      animation: fx 1000ms ease infinite 300ms;
+    }
+    &:nth-child(3) {
+      animation: fx 1000ms ease infinite 600ms;
+    }
+  }
+
+  @keyframes fx {
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 }

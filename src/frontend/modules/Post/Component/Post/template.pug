@@ -16,14 +16,14 @@ div
   .author
     ng-container(*ngIf="!minimized")
       a([routerLink]="['/profile', post.profile.alias || post.profile.id]")
-        img.avatar(*ngIf="profileService.hasAvatar(post.profile)", [src]="post.profile.avatar.small.public_path")
+        img.avatar(*ngIf="post.profile.avatar", [src]="post.profile.avatar?.small?.public_path")
         small.name {{ post.profile.name }} 
           .created(*ngIf='post.created')
             span {{ post.created | post_created }}
             tooltip {{ post.created | date }}
 
   h2.title
-    a([routerLink]="getPostUrl()", ftarget="_blank") {{ post.title }} 
+    a([routerLink]="getPostUrl()") {{ post.title }} 
 
   nav.tags(*ngIf="post.tags.length > 0")
     .fa.fa-tags

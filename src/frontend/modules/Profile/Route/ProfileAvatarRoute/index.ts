@@ -13,14 +13,13 @@ export class ProfileAvatarRoute implements OnInit {
     
     constructor(
         private route: ActivatedRoute,
-        private router: Router,
-        private profileService: ProfileService
+        private router: Router
     ) {}
 
     ngOnInit() {
         this.profile = this.route.snapshot.parent.data['profile'];
 
-        if(!this.profileService.hasAvatar(this.profile)) {
+        if(!this.profile.avatar) {
             this.router.navigate(["not-found"]);
         }
     }

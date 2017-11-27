@@ -22,6 +22,7 @@ import {ProfileBackdropActionsComponent} from "./Component/ProfileBackdropAction
 import {ProfileFeedResolver} from "./Service/ProfileFeedResolver";
 import {FeedModule} from "../Feed/FeedModule";
 import {ProfileFeedRequestResolver} from "./Service/ProfileFeedRequestResolver";
+import {ProfileAvatarComponent} from "./Component/ProfileAvatar/index";
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import {ProfileFeedRequestResolver} from "./Service/ProfileFeedRequestResolver";
         ProfileBackdropCropperComponent,
         ProfileBackdropActionsComponent,
         ProfileTooltipComponent,
+        ProfileAvatarComponent,
         ProfileRoute,
         ProfileSettingsRoute,
         ProfileAvatarRoute,
