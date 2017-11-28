@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {RESTService} from "@angular-addons/rest";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
@@ -10,63 +10,60 @@ import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
 import {BackdropPresetsResponse} from "../Http/Response/BackdropPresetsResponse";
 
 @Injectable()
-export class ProfileRESTService {
+export class ProfileRESTService
+{
+    constructor(private http: HttpClient) {}
 
-    constructor(private rest: RESTService) {}
-
-    public getById(profileId: number): Observable<ProfileResponse> 
+    public getById(profileId: number): Observable<ProfileResponse>
     {
         let url = `/profile/${profileId}/get-by-id`;
 
-        return this.rest
-            .get(url)
-            .map(res => res.json())
+        return this.http
+            .get<ProfileResponse>(url)
+        ;
     }
 
-    public getByAlias(profileAlias: string): Observable<ProfileResponse> 
+    public getByAlias(profileAlias: string): Observable<ProfileResponse>
     {
         let url = `/profile/${profileAlias}/get-by-alias`;
-
-        return this.rest
-            .get(url)
-            .map(res => res.json())
+        return this.http
+            .get<ProfileResponse>(url)
+        ;
     }
 
     public create(profileCreateRequest: ProfileCreateUpdateRequest): Observable<ProfileResponse>
     {
         let url = `/protected/profile/create`;
 
-        return this.rest
-            .auth()
-            .put(url, JSON.stringify(profileCreateRequest))
-            .map(res => res.json())
+        return this.http
+            .put<ProfileResponse>(url, profileCreateRequest, {withCredentials: true})
+        ;
     }
 
     public update(profileId: number, profileUpdateRequest: ProfileCreateUpdateRequest): Observable<ProfileResponse>
     {
         let url = `/protected/profile/${profileId}/update`;
 
-        return this.rest
-            .auth()
-            .patch(url, JSON.stringify(profileUpdateRequest))
-            .map(res => res.json())
+        return this.http
+            .patch<ProfileResponse>(url, profileUpdateRequest, {withCredentials: true})
+        ;
     }
 
     public delete(profileId: number): Observable<ProfileResponse>
     {
         let url = `/profile/${profileId}/delete`;
 
-        return this.rest
-            .delete(url)
-            .map(res => res.json())
+        return this.http
+            .delete<ProfileResponse>(url, {withCredentials: true})
+        ;
     }
-    
+
     public checkAlias(alias: string): Observable<CheckAliasResponse>
     {
         let url = `/profile/${alias}/check`;
-        return this.rest
-            .get(url)
-            .map(res => res.json())
+        return this.http
+            .get<CheckAliasResponse>(url)
+        ;
     }
 
     public uploadAvatar(profileId: number, avatarUploadRequest: AvatarUploadRequest): Observable<ProfileResponse>
@@ -78,12 +75,11 @@ export class ProfileRESTService {
             formData.append(field, avatarUploadRequest[field]);
         }
 
-        return this.rest.auth()
-            .post(url, formData)
-            .map(res => res.json())
+        return this.http
+            .post<ProfileResponse>(url, formData, {withCredentials: true})
         ;
     }
-
+    
     public uploadBackdrop(profileId: number, backdropUploadRequest: BackdropUploadRequest): Observable<ProfileResponse>
     {
         let url = `/protected/profile/${profileId}/backdrop/upload`;
@@ -93,36 +89,35 @@ export class ProfileRESTService {
             formData.append(field, backdropUploadRequest[field]);
         }
 
-        return this.rest.auth()
-            .post(url, formData)
-            .map(res => res.json())
+        return this.http
+            .post<ProfileResponse>(url, formData, {withCredentials: true})
         ;
     }
-    
-    public deleteBackdrop(profileId: number)
+
+    public deleteBackdrop(profileId: number): Observable<ProfileResponse>
     {
         let url = `/protected/profile/${profileId}/backdrop/delete`;
-        return this.rest
-            .auth()
-            .delete(url)
-            .map(res => res.json())    
+
+        return this.http
+            .delete<ProfileResponse>(url, {withCredentials: true})
+        ;
     }
-    
-    public backdropPresets(): Observable<BackdropPresetsResponse> 
+
+    public backdropPresets(): Observable<BackdropPresetsResponse>
     {
         let url = `/protected/profile/backdrop/presets`;
-        return this.rest
-            .auth()
-            .get(url)
-            .map(res => res.json())
+
+        return this.http
+            .get<BackdropPresetsResponse>(url, {withCredentials: true})
+        ;
     }
-    
+
     public setBackdropPreset(profileId: number, presetName: string): Observable<ProfileResponse>
     {
         let url = `/protected/profile/${profileId}/backdrop/preset/${presetName}/set`;
-        return this.rest
-            .auth()
-            .post(url, null)
-            .map(res => res.json())
+
+        return this.http
+            .post<ProfileResponse>(url, null, {withCredentials: true})
+        ;
     }
 }

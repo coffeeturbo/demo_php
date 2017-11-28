@@ -1,41 +1,41 @@
 import {Injectable} from "@angular/core";
-import {RESTService} from "@angular-addons/rest";
 import {Observable} from "rxjs";
 
 import {SignInRequest} from "../Http/Request/SignInRequest";
 import {SignUpRequest} from "../Http/Request/SignUpRequest";
 import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 import {TokenResponse} from "../Http/Response/TokenResponse";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class AuthRESTService
 {
-    constructor(private rest: RESTService) {}
+    constructor(private http: HttpClient) {}
 
-    public signIn(signInRequest: SignInRequest): Observable<TokenResponse> 
+    public signIn(signInRequest: SignInRequest): Observable<TokenResponse>
     {
         let url = "/auth/sign-in";
 
-        return this.rest
-            .post(url, JSON.stringify(signInRequest))
-            .map(res => res.json())
+        return this.http
+            .post<TokenResponse>(url, signInRequest)
+        ;
     }
 
-    public signUp(signUpRequest: SignUpRequest): Observable<TokenResponse> 
+    public signUp(signUpRequest: SignUpRequest): Observable<TokenResponse>
     {
         let url = "/auth/sign-up";
 
-        return this.rest
-            .put(url, JSON.stringify(signUpRequest))
-            .map(res => res.json())
+        return this.http
+            .put<TokenResponse>(url, signUpRequest)
+        ;
     }
 
-    public refreshToken(refreshTokenRequest: RefreshTokenRequest): Observable<TokenResponse> 
+    public refreshToken(refreshTokenRequest: RefreshTokenRequest): Observable<TokenResponse>
     {
         let url = "/auth/token/refresh";
 
-        return this.rest
-            .post(url, JSON.stringify(refreshTokenRequest))
-            .map(res => res.json())
+        return this.http
+            .post<TokenResponse>(url, refreshTokenRequest)
+        ;
     }
 }

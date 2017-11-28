@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {RESTService} from "@angular-addons/rest";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {AttachmentGetVideoLinkRequest} from "../Http/Request/AttachmentGetVideoLinkRequest";
@@ -9,17 +9,17 @@ import {AttachmentImage} from "../Entity/AttachmentImage";
 import {AttachmentVideo} from "../Entity/AttachmentVideo";
 
 @Injectable()
-export class AttachmentRESTService {
-    
-    constructor(private rest: RESTService) {}
+export class AttachmentRESTService
+{
+    constructor(private http: HttpClient) {}
     
     public parseVideoLink(getVideoLinkRequest: AttachmentGetVideoLinkRequest) : Observable<Attachment<AttachmentVideo>>
     {
         let url = `/attachment/link`;
         
-        return this.rest
-            .put(url, JSON.stringify(getVideoLinkRequest))
-            .map(res => res.json())
+        return this.http
+            .put<Attachment<AttachmentVideo>>(url, getVideoLinkRequest)
+        ;    
     }
     
     public uploadImage(attachmentImageUploadRequest: AttachmentImageUploadRequest): Observable<Attachment<AttachmentImage>>
@@ -31,9 +31,8 @@ export class AttachmentRESTService {
             formData.append(field, attachmentImageUploadRequest[field]);
         }
 
-        return this.rest.auth()
-            .post(url, formData)
-            .map(res => res.json())
+        return this.http
+            .post<Attachment<AttachmentImage>>(url, formData, {withCredentials: true})
         ;
     }
 }

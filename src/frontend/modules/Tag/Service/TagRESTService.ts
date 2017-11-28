@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {RESTService} from "@angular-addons/rest";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {Tag} from "../Entity/Tag";
@@ -7,24 +7,23 @@ import {Tag} from "../Entity/Tag";
 @Injectable()
 export class TagRESTService
 {
-    constructor(private rest: RESTService) {}
+    constructor(private http: HttpClient) {}
 
     public create(tagCreateRequest: Tag): Observable<Tag[]>
     {
-
         let url = `/protected/tag/create`;
 
-        return this.rest
-            .put(url, tagCreateRequest)
-            .map(res => res.json())
+        return this.http
+            .put<Tag[]>(url, tagCreateRequest, {withCredentials: true})
+        ;
     }
-    
+
     public search(query: string): Observable<Tag[]>
     {
         let url = `/tag/search/${query}`;
 
-        return this.rest
-            .get(url)
-            .map(res => res.json())
+        return this.http
+            .get<Tag[]>(url, {withCredentials: true})
+        ;
     }
 }

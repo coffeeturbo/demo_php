@@ -1,44 +1,37 @@
 import {Injectable} from "@angular/core";
-import {RESTService} from "@angular-addons/rest";
 import {Observable} from "rxjs";
 import {Post} from "../../Post/Entity/Post";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
-export class VoteRESTService {
-    
-    constructor(private rest: RESTService) {}
+export class VoteRESTService
+{
+    constructor(private http: HttpClient) {}
 
-
-    deleteVotePost(postId: number): Observable<Post>
+    public deleteVotePost(postId: number): Observable<Post>
     {
         let url = `/protected/vote/post/${postId}/delete`;
 
-        return this.rest
-            .auth()
-            .delete(url)
-            .map(res => res.json())
+        return this.http
+            .delete<Post>(url, {withCredentials: true})
         ;
     }
 
-    positiveVotePost(postId: number): Observable<Post>
+    public positiveVotePost(postId: number): Observable<Post>
     {
         let url = `/protected/vote/post/${postId}/positive`;
 
-        return this.rest
-            .auth()
-            .post(url, null)
-            .map(res => res.json())
+        return this.http
+            .post<Post>(url, null, {withCredentials: true})
         ;
     }
 
-    negativeVotePost(postId: number): Observable<Post>
+    public negativeVotePost(postId: number): Observable<Post>
     {
         let url = `/protected/vote/post/${postId}/negative`;
 
-        return this.rest
-            .auth()
-            .post(url, null)
-            .map(res => res.json())
+        return this.http
+            .post<Post>(url, null, {withCredentials: true})
         ;
     }
 }

@@ -1,11 +1,12 @@
 import {APP_INITIALIZER, Injectable, LOCALE_ID, NgModule} from "@angular/core";
 import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
-import {Http, HttpModule, RequestOptions} from "@angular/http";
+import {Http, RequestOptions} from "@angular/http";
 import {registerLocaleData} from "@angular/common";
+import {HttpClientModule} from "@angular/common/http";
 import localeRu from '@angular/common/locales/ru';
 
-import {RESTModule} from "@angular-addons/rest";
+import {RESTModule} from "../Common/REST/RESTModule";
 import {Locale, TranslationService} from "@angular-addons/translate";
 import {AuthConfig, AuthHttp} from "angular2-jwt";
 
@@ -65,7 +66,7 @@ export class HammerConfig extends HammerGestureConfig  {
     imports: [
         BrowserModule,
         RouterModule.forRoot(appRoutes),
-        HttpModule,
+        HttpClientModule,
         AttachmentModule,
         AuthModule,
         FeedModule,
