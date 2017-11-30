@@ -24,7 +24,7 @@ export class PostRESTService
         let url = `/protected/post/create`;
 
         return this.http
-            .put<Post>(url, postCreateRequest)
+            .put<Post>(url, postCreateRequest, {withCredentials: true})
         ;
     }
 }
