@@ -6,7 +6,10 @@
   background: #fff;
   padding: 20px;
   margin: 20px 0;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+
+  @include mq($from: tablet) {
+    box-shadow: 0 1px 4px 0 #ccc;
+  }
 
   &.highlight {
     animation: highlightPost 2s;
@@ -67,6 +70,7 @@
       display: flex;
       align-items: center;
       color: material-color($primary_material, "600");
+      margin-bottom: .5rem;
 
       .avatar {
         border-radius: 50%;
@@ -88,8 +92,9 @@
   }
 
   .title {
-    margin: .3em 0;
+    margin-bottom: .5rem;
     font-size: $h1_size;
+    line-height: normal;
 
     a {
       color: material-color($primary_material, "800");
