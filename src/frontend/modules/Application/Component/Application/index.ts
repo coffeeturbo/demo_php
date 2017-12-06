@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, HostListener, Renderer} from "@angular/core";
+import {Component, HostBinding, HostListener} from "@angular/core";
 import {LoadingBar, LoadingBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
@@ -34,9 +34,7 @@ export class ApplicationComponent {
         public profile: ProfileService,
         private appScrollService: ApplicationScrollService,
         private routeHelper: RouteHelperService,
-        private loadingBarEvents: LoadingBarEvents,
-        private elRef: ElementRef,
-        private renderer: Renderer
+        private loadingBarEvents: LoadingBarEvents
     ) {
         loadingBarEvents.onChangeState
             .map((loadingBar: LoadingBar) => loadingBar.state)
@@ -45,10 +43,6 @@ export class ApplicationComponent {
 
         this.routeHelper.titleWatcher();
         this.routeHelper.loadingIndicatorWatcher();
-
-        if(this.device.isMobile()) {
-            this.renderer.listen(this.elRef.nativeElement, 'panright', () => this.sidebar.show());
-        }
     }
 
     @HostListener('window:keydown', ['$event'])
