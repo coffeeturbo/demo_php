@@ -5,11 +5,12 @@ import {FeedProfileRoute} from "./Route/FeedProfileRoute/index";
 import {FeedRoute} from "./Route/FeedRoute/index";
 import {FeedService} from "./Service/FeedService";
 import {FeedRESTService} from "./Service/FeedRESTService";
-import {FeedComponent} from "./Component/FeedComponent/index";
+import {FeedComponent} from "./Component/Feed/index";
 import {RouterModule} from "@angular/router";
 import {PostModule} from "../Post/PostModule";
 import {FeedResolver} from "./Service/FeedResolver";
 import {FeedCacheService} from "./Service/FeedCacheService";
+import {FeedRefreshButtonComponent} from "./Component/FeedRefreshButton/index";
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import {FeedCacheService} from "./Service/FeedCacheService";
         FeedProfileRoute,
         FeedRoute,
 
-        FeedComponent
+        FeedComponent,
+        FeedRefreshButtonComponent
     ],
     providers: [
         FeedService,
@@ -30,7 +32,8 @@ import {FeedCacheService} from "./Service/FeedCacheService";
         FeedResolver
     ],
     exports: [
-        FeedComponent
+        FeedComponent,
+        FeedRefreshButtonComponent
     ]
 })
 export class FeedModule {} 

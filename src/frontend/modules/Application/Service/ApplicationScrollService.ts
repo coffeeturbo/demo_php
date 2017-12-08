@@ -1,4 +1,5 @@
 import {ElementRef, EventEmitter, Injectable} from "@angular/core";
+import * as smoothScroll from 'scroll';
 
 @Injectable()
 export class ApplicationScrollService {
@@ -13,10 +14,22 @@ export class ApplicationScrollService {
         return this.el.nativeElement.scrollHeight;
     }
 
-    public scrollTo(scroll: number) {
+    public scrollTo(scroll: number, smooth: boolean = false) {
         // Не давать уходить в минусовой скролл и не скроллить больше максимума
         this.scroll = Math.max(0, Math.min(scroll, this.scrollHeight - this.mainHeight));
-        this.onScroll.emit(this.scroll);
+        
+        if(smooth) {
+            let inOutCube = function(n){
+                n *= 2;
+                if (n < 1) return 0.5 * n * n * n;
+                return 0.5 * ((n -= 2 ) * n * n + 2);
+            };
+
+            smoothScroll.top(this.el.nativeElement, scroll, {duration: 350, ease: inOutCube})
+            
+        } else {
+            this.onScroll.emit(this.scroll);
+        }
     }
 
     public getScroll(): number {

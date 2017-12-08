@@ -1,9 +1,0 @@
-button.btn-material.secondary(*ngIf="showRefresh", (click)="onRefresh.emit()", [disabled]="isLoading")
-  .fa.fa-refresh([class.fa-spin]="isLoading")
-    
-post(*ngFor="let post of feed;", [post]="post")
-
-.loader(*ngIf="isLoading") 
-  .dot
-  .dot
-  .dot

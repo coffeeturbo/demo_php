@@ -5,7 +5,6 @@ import {TranslationService} from "@angular-addons/translate";
 import {Profile} from "../../Entity/Profile";
 import {AvatarUploadRequest} from "../../Http/Request/AvatarUploadRequest";
 import {ProfileService} from "../../Service/ProfileService";
-import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 import {ProfileAvatarCropperHelper} from "../../Component/ProfileAvatarCropper/helper";
 import {ProfileBackdropCropperHelper} from "../../Component/ProfileBackdropCropper/helper";
 import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
@@ -75,16 +74,21 @@ export class ProfileRoute {
     }
     
     private isFeedEnd: boolean = false;
+    
     public loadFeed(cursor: number) {
+        
         if(this.isLoading || this.isFeedEnd) 
             return;
 
+        let limit = 10;
+
         this.isLoading = true;
+        
         this.feedService
-            .get(10, {profile: this.profile.id, cursor: cursor})
+            .get(limit, {profile: this.profile.id, cursor: cursor})
             .finally(() => this.isLoading = false)
-            .subscribe((feed) => {
-                this.isFeedEnd = feed.length == 0;
+            .subscribe((feed: Feed) => {
+                this.isFeedEnd = feed.length < limit;
                 this.feed = this.feed.concat(feed)
             })
         ;

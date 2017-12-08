@@ -4,16 +4,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  button {
-    color: material-color($secondary_material, '800');
-    transition: color 300ms;
-
-    &:disabled {
-      cursor: default;
-      color: material-color($secondary_material, '500');
-    }
-  }
 }
 
 .loader {
