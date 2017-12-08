@@ -5,6 +5,8 @@ const AppCachePlugin = require('appcache-webpack-plugin');
 const helpers = require('./helpers');
 const ngtools = require('@ngtools/webpack');
 
+const ENV = process.env.ENV = process.env.ENV = helpers.isDev ? 'development' : 'production';
+
 module.exports = {
     entry: {
         'app': './app/main.ts'
@@ -84,6 +86,11 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                'ENV': JSON.stringify(ENV)
+            }
+        }),
         new ngtools.AngularCompilerPlugin({
             tsConfigPath: helpers.root("tsconfig.json"),
             skipCodeGeneration: helpers.isDev, 

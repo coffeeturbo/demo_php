@@ -16,7 +16,7 @@ export const Config: ConfigInterface = {
     },
     "uri": {
         "websocket": "/ws",
-        "api": (process.env.ENV === "production" ? "/api" : "/api/app_dev.php") // @TODO ВРЕМЕННО! убрал пока не работает Universal
+        "api": (process.env.ENV === "development" ? "/api/app_dev.php" : "/api") // @TODO ВРЕМЕННО! убрал пока не работает Universal
     },
     "auth": {
         "token_key": "token",
