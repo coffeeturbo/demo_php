@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 
 import {Feed} from "../../Entity/Feed";
 import {FeedService} from "../../Service/FeedService";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     templateUrl: "./template.pug",
@@ -41,9 +42,11 @@ export class FeedRoute implements OnInit {
         if(this.isLoading)
             return;
 
+        let delay = new Date(Date.now() + 500);
         this.isLoading = true;
         this.feedService
             .get(10, this.route.snapshot.data.feedRequest)
+            .delayWhen(() => Observable.timer(delay))
             .finally(() => this.isLoading = false)
             .subscribe((feed) => this.feed = feed)
         ;
