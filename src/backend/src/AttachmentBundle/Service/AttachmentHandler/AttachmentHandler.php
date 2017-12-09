@@ -1,5 +1,5 @@
 <?php
-namespace PostBundle\Service\AttachmentHandler;
+namespace AttachmentBundle\Service\AttachmentHandler;
 
 use AttachmentBundle\Entity\Attachment;
 use AttachmentBundle\Entity\AttachmentType\AttachmentType;

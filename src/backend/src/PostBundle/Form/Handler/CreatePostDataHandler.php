@@ -1,9 +1,8 @@
 <?php
 namespace PostBundle\Form\Handler;
 
-use AttachmentBundle\Entity\AttachmentableEntity;
+use AttachmentBundle\Service\AttachmentService;
 use PostBundle\Entity\Post;
-use PostBundle\Service\AttachmentHandler\AttachmentHandler;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use TagBundle\Entity\Tag;
@@ -14,12 +13,18 @@ class CreatePostDataHandler
     private $minTagsLimit;
     private $maxTagsLimit;
     private $maxAttachmentsLimit;
+    private $attachmentService;
 
-    public function __construct(int $minTagsLimit, int $maxTagsLimit, int $maxAttachmentsLimit)
-    {
+    public function __construct(
+        int $minTagsLimit,
+        int $maxTagsLimit,
+        int $maxAttachmentsLimit,
+        AttachmentService $attachmentService
+    ){
         $this->minTagsLimit = $minTagsLimit;
         $this->maxTagsLimit = $maxTagsLimit;
         $this->maxAttachmentsLimit = $maxAttachmentsLimit;
+        $this->attachmentService = $attachmentService;
     }
 
     public function handle(array $data): Post
@@ -46,7 +51,7 @@ class CreatePostDataHandler
         }
 
         if($data['attachments']) {
-            $this->setAttachmentsFromJson($newPost, $data['attachments']);
+            $this->attachmentService->setAttachmentsFromJson($newPost, $data['attachments'], $this->maxAttachmentsLimit);
         }
 
         return $newPost;
@@ -81,29 +86,6 @@ class CreatePostDataHandler
         }
 
         return $this;
-    }
-
-    private function setAttachmentsFromJson(AttachmentableEntity $entity, string $jsonAttachmString)
-    {
-
-        $jsonAttachs = json_decode($jsonAttachmString, true);
-
-        if($this->maxAttachmentsLimit < count($jsonAttachs)) {
-            throw new AccessDeniedHttpException(
-                sprintf("you have exceed attachments limit: %s", $this->maxAttachmentsLimit));
-        }
-
-
-        foreach($jsonAttachs as $attachmentJson) {
-
-            $handler = new AttachmentHandler($attachmentJson);
-
-            $attachment = $handler->getAttachment();
-
-            if(!$entity->hasAttachment($attachment)){
-                $entity->addAttachment($attachment);
-            }
-        }
     }
 
 }
