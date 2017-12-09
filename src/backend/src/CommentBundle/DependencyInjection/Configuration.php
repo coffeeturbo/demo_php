@@ -11,19 +11,13 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('comment');
 
-//        $rootNode
-//            ->children()
-//                ->integerNode('min_tags_limit')
-//                    ->defaultValue(0)
-//                ->end()
-//                ->integerNode('max_tags_limit')
-//                    ->defaultValue(10)
-//                ->end()
-//                ->integerNode('max_attachments_limit')
-//                    ->defaultValue(100)
-//                ->end()
-//            ->end()
-//            ;
+        $rootNode
+            ->children()
+                ->integerNode('max_attachments_limit')
+                    ->defaultValue(100)
+                ->end()
+            ->end()
+            ;
 
         return $treeBuilder;
     }

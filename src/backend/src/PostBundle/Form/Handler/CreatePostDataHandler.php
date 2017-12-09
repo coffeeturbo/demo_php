@@ -29,9 +29,7 @@ class CreatePostDataHandler
 
     public function handle(array $data): Post
     {
-        $post = $this->createFromData($data);
-
-        return $post;
+        return $this->createFromData($data);
     }
 
 

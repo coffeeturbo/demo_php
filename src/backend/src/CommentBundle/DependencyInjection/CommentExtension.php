@@ -16,8 +16,6 @@ class CommentExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-//        $container->setParameter('post.min_tags_limit', $config['min_tags_limit']);
-//        $container->setParameter('post.max_tags_limit', $config['max_tags_limit']);
-//        $container->setParameter('post.max_attachments_limit', $config['max_attachments_limit']);
+        $container->setParameter('comment.max_attachments_limit', $config['max_attachments_limit']);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace CommentBundle\Controller;
 
+use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use CommentBundle\Entity\Comment;
 use CommentBundle\Form\CommentFormType;
@@ -8,6 +9,7 @@ use CommentBundle\Response\SuccessCommentResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CommentController extends Controller
 {
@@ -28,19 +30,20 @@ class CommentController extends Controller
         try{
             $data = $this->get('app.validate_request')->getData($request, CommentFormType::class);
 
-            $comment = new Comment();
-
-            $comment->setPostId($data['post_id'])->setParentId($data['parent_id']);
+            $comment = $this->get('comment.form.handler.create_comment_data_handler')->handle($data);
 
             $account = $this->get('auth.service')->getAccount();
             $profile = $this->get('profile.repository')->getCurrentProfileByAccount($account);
 
             $comment->setProfile($profile);
 
-            $commentService = $this->get('comment.service.comment_service');
+            $this->get('comment.service.comment_service')->create($comment);
 
-            $commentService->create($comment);
-        }catch(\Exception $e){
+        } catch(BadRestRequestHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
         }
 
