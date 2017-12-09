@@ -1,6 +1,6 @@
 CommentBundle\Entity\Comment:
   type: entity
-  repositoryClass:
+  repositoryClass: CommentBundle\Repository\CommentRepository
   id:
     id:
       type: integer
@@ -12,6 +12,10 @@ CommentBundle\Entity\Comment:
       nullable: false
     updated:
       type: datetime
+      nullable: false
+    postId:
+      type: integer
+      column: post_id
       nullable: false
     parentId:
       column: parent_id

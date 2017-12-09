@@ -5,7 +5,7 @@ services:
     arguments:
       - CommentBundle\Entity\Comment
 
-  comment.service:
+  comment.service.comment_service:
     class: CommentBundle\Service\CommentService
     arguments:
       - '@comment.repository'

@@ -18,6 +18,9 @@ class Comment implements ModifyDateEntityInterface, RatingableEntity, Attachment
     use ModifyDateEntityTrait, RatingableEntityTrait, AttachmentableEntityTrait, VoteableEntityTrait;
 
     private $id;
+    private $postId;
+
+
     private $parentId;
     private $profile;
 
@@ -28,20 +31,39 @@ class Comment implements ModifyDateEntityInterface, RatingableEntity, Attachment
         $this->markUpdated();
     }
 
-    public function getParentId()
+
+    public function getPostId(): int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(int $postId): self
+    {
+        $this->postId = $postId;
+        return $this;
+    }
+
+    public function getParentId(): ?int
     {
         return $this->parentId;
     }
 
-    public function setParentId($parentId)
+    public function setParentId($parentId): self
     {
         $this->parentId = $parentId;
+        return $this;
     }
+
     public function getId()
     {
         return $this->id;
     }
 
+    public function setProfile(Profile $profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
     public function getProfile(): Profile
     {
         return $this->profile;
