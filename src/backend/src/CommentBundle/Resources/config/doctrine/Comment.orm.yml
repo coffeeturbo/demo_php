@@ -1,0 +1,34 @@
+CommentBundle\Entity\Comment:
+  type: entity
+  repositoryClass:
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    created:
+      type: datetime
+      nullable: false
+    updated:
+      type: datetime
+      nullable: false
+    parentId:
+      column: parent_id
+      type: integer
+      nullable: true
+    votesRating:
+      type: integer
+      nullable: false
+    votesPositive:
+      type: integer
+      nullable: false
+    votesNegative:
+      type: integer
+      nullable: false
+  manyToOne:
+    profile:
+      targetEntity: ProfileBundle\Entity\Profile
+  manyToMany:
+    attachments:
+      targetEntity: AttachmentBundle\Entity\Attachment

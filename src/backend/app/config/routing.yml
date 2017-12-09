@@ -57,3 +57,11 @@ vote:
 protected_vote:
   resource: '@VoteBundle/Resources/config/routing_protected.yml'
   prefix: '/protected/vote'
+
+comment:
+  resource: '@CommentBundle/Resources/config/routing.yml'
+  prefix: '/comment'
+
+protected_comment:
+  resource: '@CommentBundle/Resources/config/routing_protected.yml'
+  prefix: '/protected/comment'

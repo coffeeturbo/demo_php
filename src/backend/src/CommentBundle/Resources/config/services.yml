@@ -1,0 +1,18 @@
+services:
+  comment.repository:
+    class: CommentBundle\Repository\CommentRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - CommentBundle\Entity\Comment
+
+  comment.service:
+    class: CommentBundle\Service\CommentService
+    arguments:
+      - '@comment.repository'
+
+#  post.form.handler.create_post_data_handler:
+#    class: PostBundle\Form\Handler\CreatePostDataHandler
+#    arguments:
+#      - '%post.min_tags_limit%'
+#      - '%post.max_tags_limit%'
+#      - '%post.max_attachments_limit%'
