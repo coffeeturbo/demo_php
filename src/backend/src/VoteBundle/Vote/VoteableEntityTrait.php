@@ -51,13 +51,13 @@ trait VoteableEntityTrait
         $this->votesPositive--;
     }
 
-    public function getVote(): ?Vote
+    public function getVote(): ?VoteEntity
     {
         return $this->vote;
     }
 
 
-    public function setVote(Vote $vote)
+    public function setVote(VoteEntity $vote)
     {
         $this->vote = $vote;
     }
