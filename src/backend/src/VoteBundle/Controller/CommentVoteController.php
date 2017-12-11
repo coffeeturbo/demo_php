@@ -1,6 +1,7 @@
 <?php
 namespace VoteBundle\Controller;
 
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use AppBundle\Http\ErrorJsonResponse;
 use CommentBundle\Response\SuccessCommentResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
