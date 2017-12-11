@@ -19,6 +19,8 @@ vote_post_delete:
   requirements:
     postId: \d+
 
+
+
 vote_comment_positive:
   methods: [ POST ]
   path: /comment/{commentId}/positive
