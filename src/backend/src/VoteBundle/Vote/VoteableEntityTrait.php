@@ -2,9 +2,11 @@
 
 namespace VoteBundle\Vote;
 
+use CommentBundle\Entity\Comment;
 use PostBundle\Entity\Post;
 use VoteBundle\Entity\Vote;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
+use VoteBundle\Entity\VoteContentType\VoteContentTypeComment;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
 
 trait VoteableEntityTrait
@@ -27,9 +29,9 @@ trait VoteableEntityTrait
     public function getType(): VoteContentType
     {
         if($this instanceof Post) return new VoteContentTypePost();
+        if($this instanceof Comment) return new VoteContentTypeComment();
         throw new \Exception("unknown type votable entity type");
     }
-
 
     public function increaseVotesNegative()
     {

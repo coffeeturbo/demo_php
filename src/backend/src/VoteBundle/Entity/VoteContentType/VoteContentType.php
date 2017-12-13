@@ -1,6 +1,7 @@
 <?php
 namespace VoteBundle\Entity\VoteContentType;
 
+use CommentBundle\Entity\Comment;
 use PostBundle\Entity\Post;
 use VoteBundle\Vote\VoteableEntity;
 
@@ -38,6 +39,8 @@ abstract class VoteContentType
     {
         if($entity instanceof Post)
             return new VoteContentTypePost();
+        if($entity instanceof Comment)
+            return new VoteContentTypeComment();
 
         throw new \Exception(sprintf("unknown vote content type"));
     }

@@ -18,4 +18,9 @@ class CommentRepository extends EntityRepository
         $attachmentRep->saveAttachments($comment);
         $em->flush($comment);
     }
+
+    public function save(Comment $comment)
+    {
+        $this->create($comment);
+    }
 }
