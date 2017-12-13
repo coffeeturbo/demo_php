@@ -32,7 +32,7 @@ export class FeedRoute implements OnInit {
             .get(10, Object.assign({}, this.route.snapshot.data.feedRequest, {cursor: cursor}))
             .finally(() => this.isLoading = false)
             .subscribe((feed) => {
-                this.isFeedEnd = feed.length == 0;
+                this.isFeedEnd = feed.length < 10;
                 this.feed = this.feed.concat(feed)
             })
         ;
