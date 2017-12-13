@@ -2,72 +2,86 @@
 
 :host {
   width: 100%;
+  height: 40px;
   max-width: 900px;
   text-align: center;
-  cursor: pointer;
-  margin-top: -47px;
-  margin-bottom: -20px;
-  padding:0 20px 20px;
-  transition: margin 500ms, background 300ms;
-
-  small {
-    color: material-color($secondary_material, '500');
-    display: block;
-    line-height: 2px;
-    transition: color 300ms, opacity 300ms;
-    margin: 0;
-  }
+  margin: -20px;
+  padding: 0 20px;
+  position: relative;
 
 
   button {
-    margin-bottom: 20px;
+    color: material-color($secondary_material, '500');
+    transition: color 300ms, opacity 300ms, background 300ms;
+    margin: 0;
+    left: 0;
+    padding: 0;
+    font-size: $small_size;
+    width: 100%;
+    line-height: 40px;
+    position: absolute;
+  }
 
+  .spinner {
+    margin-bottom: 20px;
     color: material-color($secondary_material, '800');
-    transition: color 500ms, transform 300ms, margin 300ms;
+    transition: transform 300ms;
     border-radius: 50%;
-    padding: 5px;
+    transform: translateY(calc(-100% - 5px)) scale(1);
+    transform-origin: center;
+    padding: 10px;
 
     .fa {
       width: 1em;
-      display: block;
-      transition: transform 500ms;
+      height: 1em;
+    }
+  }
+
+  @include mq($until: tablet) {
+    height: 60px;
+    
+    button {
+      line-height: 60px;
+    }
+
+    .spinner {
+      //padding: $small_size;
+      font-size: $h2_size;
     }
   }
 
   &:hover {
-    background: material-color($secondary_material, '300');
-    
-    small {
+    button {
       color: material-color($secondary_material, '700');
+      background: material-color($secondary_material, '300');
     }
   }
 
   &.progress {
-    cursor: default;
-    background: none;
-    
-    small{
+    button {
+      cursor: default;
+      background: none;
       color: transparent;
     }
   }
 
   &.loading {
-    margin-top: 0;
-    
-    button {
-      margin-bottom: 0;
-    }
+    .spinner {
+      transform: translateY(22px) scale(1);
 
-    small {
-      opacity: 0;
-      line-height: 0;
+      @include mq($until: tablet) {
+        transform: translateY(37px) scale(1);
+      }
     }
   }
-  
+
   &.complete {
-    button {
-      transform: scale(0);
+    .spinner {
+      transform: translateY(22px) scale(0);
+
+      @include mq($until: tablet) {
+        transform: translateY(37px) scale(1);
+      }
     }
   }
-
 }

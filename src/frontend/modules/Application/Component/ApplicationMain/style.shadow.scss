@@ -9,7 +9,7 @@
   max-height: calc(100vh - 108px);
 
   @include mq($until: tablet) {
-    top: 58px;
+    top: 60px;
     max-height: calc(100vh - 98px);
   }
 
