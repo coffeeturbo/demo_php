@@ -10,7 +10,7 @@ import {NavigationEnd, Router} from "@angular/router";
     styleUrls: ['./style.shadow.scss']
 })
 
-export class ProfileTooltipComponent implements OnInit {
+export class ProfileDropdownComponent implements OnInit {
     @Output() onClose = new EventEmitter<void>();
     public profile: Profile;
     public subscriptions = 12;
