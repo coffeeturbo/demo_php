@@ -13,14 +13,10 @@ CommentBundle\Entity\Comment:
     updated:
       type: datetime
       nullable: false
-    postId:
-      type: integer
-      column: post_id
-      nullable: false
-    parentId:
-      column: parent_id
-      type: integer
-      nullable: true
+#    postId:
+#      type: integer
+#      column: post_id
+#      nullable: false
     votesRating:
       type: integer
       nullable: false
@@ -30,7 +26,19 @@ CommentBundle\Entity\Comment:
     votesNegative:
       type: integer
       nullable: false
+    commentsTotal:
+      column: comments_total
+      type: integer
+      nullable:
+
+  oneToMany:
+    childrenComments:
+      targetEntity: CommentBundle\Entity\Comment
+      mappedBy: parentComment
   manyToOne:
+    parentComment:
+      targetEntity: CommentBundle\Entity\Comment
+      inversedBy: childrenComments
     profile:
       targetEntity: ProfileBundle\Entity\Profile
   manyToMany:

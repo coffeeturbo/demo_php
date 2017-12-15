@@ -21,7 +21,12 @@ class CommentFormType extends AbstractType
             ->add('parent_id', IntegerType::class, [
                 'required' => false,
             ])
-            ->add('attachments', TextareaType::class)
+            ->add('attachments', TextareaType::class, [
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                ]
+            ])
         ;
     }
 }

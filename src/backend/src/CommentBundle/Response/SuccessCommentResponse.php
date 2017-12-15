@@ -24,8 +24,7 @@ class SuccessCommentResponse extends JsonResponse implements \JsonSerializable
 
         return [
             'id' => $comment->getId(),
-            'post_id' => $comment->getPostId(),
-            'parent_id' => $comment->getParentId(),
+            'parent_comment_id' => $comment->getParentCommentId(),
             'created' => $comment->getCreated()->format(\DateTime::W3C),
             'updated' => $comment->getUpdated()->format(\DateTime::W3C),
             'attachments' =>  (new SuccessAttachmentsResponse($comment->getAttachments()))->jsonSerialize(),
@@ -36,6 +35,9 @@ class SuccessCommentResponse extends JsonResponse implements \JsonSerializable
                 'positive' => $comment->getVotesPositive(),
                 'negative' => $comment->getVotesNegative()
             ],
+
+            'comments' => $comment->getComments(),
+            'comments_total' => $comment->getCommentsTotal()
         ];
     }
 
@@ -45,9 +47,7 @@ class SuccessCommentResponse extends JsonResponse implements \JsonSerializable
 
         $entity = new Comment();
         $entity
-            ->setPostId(12)
-            ->setParentId(122)
-
+            ->setParentCommentId(122)
         ;
 
         return $entity;

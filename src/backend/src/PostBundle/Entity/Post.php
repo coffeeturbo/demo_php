@@ -5,6 +5,8 @@ use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
 use AttachmentBundle\Entity\AttachmentableEntity;
 use AttachmentBundle\Entity\AttachmentableEntityTrait;
+use CommentBundle\Comment\CommentAbleEntity;
+use CommentBundle\Comment\CommentAbleEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use ProfileBundle\Entity\Profile;
 use TagBundle\Entity\AbstractTaggable;
@@ -18,14 +20,16 @@ class Post extends AbstractTaggable
                 ModifyDateEntityInterface,
                 AttachmentableEntity,
                 VoteableEntity,
-                RatingableEntity
+                RatingableEntity,
+                CommentAbleEntity
 
 {
     use
         ModifyDateEntityTrait,
         AttachmentableEntityTrait,
         VoteableEntityTrait,
-        RatingableEntityTrait
+        RatingableEntityTrait,
+        CommentAbleEntityTrait
         ;
 
     private $id;

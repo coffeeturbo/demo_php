@@ -5,6 +5,10 @@ use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
 use AttachmentBundle\Entity\AttachmentableEntity;
 use AttachmentBundle\Entity\AttachmentableEntityTrait;
+use CommentBundle\Comment\CommentAbleEntity;
+use CommentBundle\Comment\CommentAbleEntityTrait;
+use CommentBundle\Comment\ParentCommentAbleEntity;
+use CommentBundle\Comment\ParentCommentAbleEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use ProfileBundle\Entity\Profile;
 use VoteBundle\Rating\RatingableEntity;
@@ -12,46 +16,30 @@ use VoteBundle\Rating\RatingableEntityTrait;
 use VoteBundle\Vote\VoteableEntity;
 use VoteBundle\Vote\VoteableEntityTrait;
 
-class Comment implements ModifyDateEntityInterface, RatingableEntity, AttachmentableEntity, VoteableEntity
+class Comment implements ModifyDateEntityInterface, RatingableEntity,
+    AttachmentableEntity,
+    VoteableEntity,
+    CommentAbleEntity,
+    ParentCommentAbleEntity
 {
 
-    use ModifyDateEntityTrait, RatingableEntityTrait, AttachmentableEntityTrait, VoteableEntityTrait;
+    use ModifyDateEntityTrait,
+        RatingableEntityTrait,
+        AttachmentableEntityTrait,
+        VoteableEntityTrait,
+        CommentAbleEntityTrait,
+        ParentCommentAbleEntityTrait
+        ;
 
     private $id;
-    private $postId;
-
-
-    private $parentId;
     private $profile;
 
     public function __construct()
     {
         $this->attachments = new ArrayCollection();
+        $this->childrenComments = new ArrayCollection();
         $this->created = new \DateTime();
         $this->markUpdated();
-    }
-
-
-    public function getPostId(): int
-    {
-        return $this->postId;
-    }
-
-    public function setPostId(int $postId): self
-    {
-        $this->postId = $postId;
-        return $this;
-    }
-
-    public function getParentId(): ?int
-    {
-        return $this->parentId;
-    }
-
-    public function setParentId($parentId): self
-    {
-        $this->parentId = $parentId;
-        return $this;
     }
 
     public function getId()
