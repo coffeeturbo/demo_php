@@ -50,6 +50,7 @@ export const LocaleRU = {
   "Text":         "Текст",
   "Image":        "Изображение",
   "Map":          "Карта",
+  "Reply":        "Ответить",
   "Video":        "Видео",
   "Upload":       "Загрузить",
   "Download":     "Скачать",

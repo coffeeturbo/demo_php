@@ -1,0 +1,10 @@
+button(*ngIf="!attachments.length", (click)="addAttachment(AttachmentType.text)") Оставить комментарий!
+
+form.material-form([formGroup]="form")
+  .attachments(formArrayName="attachments")
+    div(*ngFor="let attachment of attachments.controls; index as i", [ngSwitch]="attachment.value.type")
+      .material-field
+        .input-box([formGroupName]="i")
+          attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value")
+          //attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
+          //attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")

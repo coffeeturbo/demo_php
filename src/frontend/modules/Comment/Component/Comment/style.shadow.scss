@@ -1,0 +1,98 @@
+@import '../../../../assets/styles/global';
+:host {
+  display: block;
+  margin-bottom: 2em;
+  
+  &.root {
+    & > comment {
+      margin: 1em;
+      margin-left: 1.5em;
+    }
+  }
+
+  a, button {
+    color: material-color($primary_material, "600");
+  }
+
+  .togglerChildComments {
+    position: absolute;
+    padding: 2px 5px;
+    font-size: 14px;
+  }
+  
+  .author {
+    display: flex;
+    align-items: center;
+    line-height: normal;
+    margin-bottom: .5rem;
+
+    a {
+      display: flex;
+      align-items: center;
+
+      .avatar {
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        margin-right: .5em;
+      }
+    }
+
+    .created {
+      color: #999;
+      position: relative;
+      margin-left: .5em;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+
+    * + * {
+      margin-left: .5em;
+
+      @include mq($until: tablet) {
+        margin-left: 1em;
+      }
+    }
+
+    
+    
+    button {
+      font-size: $small_size;
+      cursor: pointer;
+      color: material-color($primary_material, "600");
+      padding: 5px 0;
+      @include mq($until: tablet) {
+        padding: 10px 0;
+      }
+    }
+
+    .rate {
+      font-size: $small_size;
+      font-weight: 500;
+      
+      &.negative {
+        color: material-color($error_material, "500");
+      }
+    }
+  }
+
+  *:hover {
+    >tooltip {
+      visibility: visible!important;
+      transition-delay: 500ms;
+    }
+  }
+
+  tooltip {
+    visibility: hidden;
+    transition: visibility;
+    text-align: center;
+    font-size: $small_size;
+    left: calc(50% - 42px);
+    width: 70px;
+  }  
+}
