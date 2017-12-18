@@ -62,7 +62,7 @@ export class MockData {
             MockData.comment1
         ],
         profile: MockData.fakeProfile,
-        votes: {state: "positive", rating: 102, positive: 1, negative: 1}
+        votes: {state: "none", rating: 102, positive: 1, negative: 1}
     };
     
     public static comment: Comment = {
@@ -74,7 +74,7 @@ export class MockData {
             {id: 60, type: AttachmentType.text, content: {text: "33 года, аналогично с ростом, и надежды вырасти уже нет."}}
         ],
         profile: MockData.fakeProfile,
-        votes: {state: "positive", rating: -40, positive: 1, negative: 1},
+        votes: {state: "negative", rating: -40, positive: 1, negative: 1},
         comments: [
             MockData.comment1,
             MockData.comment1,

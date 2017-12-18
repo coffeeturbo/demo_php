@@ -15,10 +15,10 @@ section.content
 
 .actions
   button.reply((click)="toggleForm()") {{ "Reply" | translate }}
-  button
+  button.vote-up((click)="vote('positive')", [class.active]="comment.votes.state=='positive'")
     .fa.fa-chevron-up
   .rate(*ngIf="comment.votes.rating!=0", [class.negative]="comment.votes.rating < 0") {{ comment.votes.rating }}
-  button
+  button.vote-down((click)="vote('negative')", [class.active]="comment.votes.state=='negative'")
     .fa.fa-chevron-down
 
 comment-form(*ngIf="showForm")
