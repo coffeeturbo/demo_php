@@ -2,28 +2,49 @@
 :host {
   display: block;
   margin-bottom: 2em;
-  
+  animation: fade 600ms;
   &.root {
-    & > comment {
-      margin: 1em;
-      margin-left: 1.5em;
+    comment {
+      margin: 1em 0;
     }
+    
+    >comment {
+      margin-left: 1.5em;
 
-    .author .avatar {
-      width: 24px!important;
-      height: 24px!important;
+      .author .avatar {
+        width: 16px;
+        height: 16px;
+        margin-right: .5em;
+      }
     }
   }
 
   a, button {
     color: material-color($primary_material, "600");
+    
+    &.togglerChildComments {
+      //padding: 2px 5px;
+      padding: 0;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 150ms;
+      
+      &.expanded {
+        transition: margin 300ms 300ms, color 300ms;
+        position: absolute;
+        margin-top: 15px;
+        color: material-color($secondary_material, "400");
+      }
+
+      * + * {
+        margin-left: 1em;
+      }
+      span {
+        font-size: $small_size;
+      }
+    }
   }
 
-  .togglerChildComments {
-    position: absolute;
-    padding: 2px 5px;
-    font-size: 14px;
-  }
   
   .author {
     display: flex;
@@ -37,10 +58,10 @@
 
       .avatar {
         border-radius: 50%;
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
         vertical-align: middle;
-        margin-right: .5em;
+        margin-right: 1em;
       }
     }
 
@@ -55,23 +76,16 @@
     display: flex;
     align-items: center;
 
-
+    .reply {
+      margin-right: 1em;
+    }
+    
     .vote-up, .vote-down {
       .fa {
         transition: color 300ms, transform 300ms;
       }
     }
     
-    .vote-up:hover .fa {
-      transform: translateY(-1px);
-      color: material-color("green","500");
-    }
-
-    .vote-down:hover .fa {
-      transform: translateY(1px);
-      color: material-color("red","500");
-    }
-
     .vote-up:active .fa {
       transform: translateY(-3px);
     }

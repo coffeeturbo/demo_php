@@ -14,7 +14,7 @@ section.content
     //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
 .actions
-  button.reply((click)="toggleForm()") {{ "Reply" | translate }}
+  button.reply((click)="toggleForm()") {{ (showForm ? "Cancel" : "Reply") | translate }}
   button.vote-up((click)="vote('positive')", [class.active]="comment.votes.state=='positive'")
     .fa.fa-chevron-up
   .rate(*ngIf="comment.votes.rating!=0", [class.negative]="comment.votes.rating < 0") {{ comment.votes.rating }}
@@ -23,7 +23,7 @@ section.content
 
 comment-form(*ngIf="showForm")
 ng-container(*ngIf="comment.comments")
-  button.togglerChildComments(*ngIf="root", (click)="toggleChildComments()")
+  button.togglerChildComments(*ngIf="root", (click)="toggleChildComments()", [class.expanded]="showChildComments")
     .fa([class.fa-minus-square]="showChildComments", [class.fa-plus-square]="!showChildComments")
     span(*ngIf="!showChildComments") {{ "Show replies" | translate }}
   

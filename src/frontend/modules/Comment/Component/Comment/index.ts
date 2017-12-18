@@ -20,7 +20,7 @@ export class CommentComponent {
 
     @Input() comment: Comment = MockData.comment;
     
-    public showChildComments = true;
+    public showChildComments = false;
     public showForm = false;
     
     constructor(

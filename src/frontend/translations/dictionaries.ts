@@ -5,15 +5,17 @@ import {SettingsLocaleRU} from "../modules/Settings/Dictionaries/SettingsLocaleR
 import {ProfileLocaleRU} from "../modules/Profile/Dictionaries/ProfileLocaleRU";
 import {PostLocaleRU} from "../modules/Post/Dictionaries/PostLocaleRU";
 import {FeedLocaleRU} from "../modules/Feed/Dictionaries/FeedLocaleRU";
+import {CommentLocaleRU} from "../modules/Comment/Dictionaries/CommentLocaleRU";
 
 export const dictionaries: Dictionaries = {
     "RU": [
         LocaleRU,
         AuthLocaleRU,
-        SettingsLocaleRU,
+        CommentLocaleRU,
+        FeedLocaleRU,
         ProfileLocaleRU,
         PostLocaleRU,
-        FeedLocaleRU
+        SettingsLocaleRU
     ],
     "EN": [{
         "days1":    "days",
