@@ -1,3 +1,7 @@
 textarea {
   width:100%;
 }
+
+.fa + * {
+  margin-left: .5em;
+}

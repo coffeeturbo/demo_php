@@ -27,5 +27,5 @@ ng-container(*ngIf="comment.comments")
     .fa([class.fa-minus-square]="showChildComments", [class.fa-plus-square]="!showChildComments")
     span(*ngIf="!showChildComments") {{ "Show replies" | translate }}
   
-  ng-container(*ngIf="showChildComments")
+  ng-container(*ngIf="showChildComments || !root")
     comment(*ngFor="let childComment of comment.comments;", [comment]="childComment", [root]="false")

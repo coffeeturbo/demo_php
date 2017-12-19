@@ -40,6 +40,7 @@ export const LocaleRU = {
   "Save":         "Сохранить",
   "Saving":       "Сохраняем",
   "Settings":     "Настройки",
+  "Send":         "Отправить",
   "Share":        "Поделиться",
   "Sign in":      "Войти",
   "Sign out":     "Выйти",

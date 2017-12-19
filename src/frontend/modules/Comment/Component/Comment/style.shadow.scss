@@ -3,6 +3,8 @@
   display: block;
   margin-bottom: 2em;
   animation: fade 600ms;
+  line-height: 1.5em;
+  
   &.root {
     comment {
       margin: 1em 0;
@@ -95,11 +97,11 @@
     }
     
     .vote-up.active .fa {
-      color: material-color("green","500");
+      color: material-color("green","700");
     }
 
     .vote-down.active .fa {
-      color: material-color("red","500");
+      color: material-color("red","700");
     }
     
     * + * {
@@ -127,7 +129,7 @@
       font-weight: 500;
       
       &.negative {
-        color: material-color($error_material, "500");
+        color: material-color($error_material, "700");
       }
     }
   }

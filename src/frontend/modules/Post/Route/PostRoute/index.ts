@@ -13,7 +13,6 @@ export class PostRoute implements OnInit {
     
     public post: Post;
     public mockComment1: Comment = MockData.comment;
-    public mockComment2: Comment = MockData.comment;
 
     constructor(private route: ActivatedRoute){}
 

@@ -8,3 +8,9 @@ form.material-form([formGroup]="form")
           attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value")
           //attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
           //attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")
+            
+  .controls
+    button.btn-material.primary(type="submit")
+      .fa.fa-commenting
+      span {{"Send" | translate }}
+  
