@@ -22,7 +22,6 @@ class Post extends AbstractTaggable
                 VoteableEntity,
                 RatingableEntity,
                 CommentAbleEntity
-
 {
     use
         ModifyDateEntityTrait,
@@ -36,6 +35,7 @@ class Post extends AbstractTaggable
     private $title;
     private $attachments;
     private $profile;
+
 
     public function __construct()
     {

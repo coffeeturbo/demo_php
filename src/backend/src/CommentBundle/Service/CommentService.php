@@ -36,6 +36,17 @@ class CommentService
         $this->commentRepository->save($comment);
     }
 
+
+    public function delete(Comment $comment)
+    {
+        $this->commentRepository->delete($comment);
+
+        $this->eventDispatcher->dispatch(
+            CommentEvents::COMMENT_DELETED,
+            new CommentEvent($comment)
+        );
+    }
+
     public function getCommentRepository()
     {
         return $this->commentRepository;

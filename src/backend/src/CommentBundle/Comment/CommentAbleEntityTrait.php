@@ -2,12 +2,11 @@
 namespace CommentBundle\Comment;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use PostBundle\Entity\Post;
 
 trait CommentAbleEntityTrait
 {
 
-    private $post;
+
     private $childrenComments;
     private $commentsTotal = 0;
 
@@ -16,15 +15,7 @@ trait CommentAbleEntityTrait
         $this->childrenComments = new ArrayCollection();
     }
 
-    public function getPost(): Post
-    {
-        return $this->post;
-    }
 
-    public function setPost(Post $post)
-    {
-        $this->post = $post;
-    }
 
     public function getCommentsTotal(): int
     {

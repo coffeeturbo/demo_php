@@ -3,7 +3,6 @@ namespace CommentBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use CommentBundle\Entity\Comment;
 use CommentBundle\Form\CommentFormType;
 use CommentBundle\Response\SuccessCommentResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -52,6 +51,12 @@ class CommentController extends Controller
 
         return new SuccessCommentResponse($comment);
 
+
+    }
+
+
+    public function deleteAction(Request $request)
+    {
 
     }
 }

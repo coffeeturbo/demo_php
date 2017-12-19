@@ -25,6 +25,10 @@ PostBundle\Entity\Post:
     votesNegative:
       type: integer
       nullable: false
+    commentsTotal:
+      column: comments_total
+      type: integer
+      nullable: false
   manyToOne:
     profile:
       targetEntity: ProfileBundle\Entity\Profile

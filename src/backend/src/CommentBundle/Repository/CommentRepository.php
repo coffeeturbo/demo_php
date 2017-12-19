@@ -42,4 +42,10 @@ class CommentRepository extends EntityRepository
 
         return $result;
     }
+
+    public function delete(Comment $comment)
+    {
+        // todo set as deleted
+        // todo так же удалить все аттачменты
+    }
 }

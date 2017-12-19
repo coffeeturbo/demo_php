@@ -10,6 +10,7 @@ use CommentBundle\Comment\CommentAbleEntityTrait;
 use CommentBundle\Comment\ParentCommentAbleEntity;
 use CommentBundle\Comment\ParentCommentAbleEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use VoteBundle\Rating\RatingableEntity;
 use VoteBundle\Rating\RatingableEntityTrait;
@@ -33,6 +34,18 @@ class Comment implements ModifyDateEntityInterface, RatingableEntity,
 
     private $id;
     private $profile;
+
+
+    private $post;
+    public function getPost(): Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
+    }
 
     public function __construct()
     {

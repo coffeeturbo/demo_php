@@ -1,6 +1,7 @@
 <?php
 namespace CommentBundle\EventListener;
 
+use CommentBundle\Entity\Comment;
 use CommentBundle\Event\CommentEvent;
 use CommentBundle\Event\CommentEvents;
 use CommentBundle\Service\CommentService;
@@ -24,43 +25,68 @@ class UpdateCommentsTotalListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
        return [
-           CommentEvents::COMMENT_CREATED => 'onNewComment',
-           CommentEvents::COMMENT_DELETED => 'onDeleteComment'
+           CommentEvents::COMMENT_CREATED => [
+               ['updateIncreaseComment'],
+               ['updateIncreasePost'],
+
+           ],
+           CommentEvents::COMMENT_DELETED => [
+               ['onDeleteCommentDecrease'],
+               ['onDeletePostDecrease'],
+           ]
        ];
     }
 
-    public function onNewComment(CommentEvent $event)
+    public function updateIncreaseComment(CommentEvent $event)
     {
         $comment = $event->getComment();
 
-        $post = $this->postService->getPostRepository()->getPostById($comment->getPost()->getId());
 
         if($comment->getParentCommentId()){
             $parentComment = $comment->getParentComment();
 
-            dump($parentComment);
             $parentComment->increaseCommentsTotal();
-            dump($parentComment);
-            $this->commentService->save($parentComment);
-        }
 
-//        $this->postService->getPostRepository()->save($post);
+            if($parentComment instanceof Comment){
+                $this->commentService->save($parentComment);
+            }
+        }
 
     }
 
-    public function onDeleteComment(CommentEvent $event)
+    public function updateIncreasePost(CommentEvent $event)
     {
         $comment = $event->getComment();
 
-        $post = $this->postService->getPostRepository()->getPostById($comment->getPostId());
+        $post = $this->postService->getPostRepository()->getPostById($comment->getPost()->getId());
+        $post->increaseCommentsTotal();
+        $this->postService->getPostRepository()->save($post);
+    }
 
-        if($comment->getParentCommentId()){
-            $comment->decreaseCommentsTotal();
+    public function onDeleteCommentDecrease(CommentEvent $event)
+    {
+        $comment = $event->getComment();
+
+        if($parentComment = $comment->getParentComment()){
+            $parentComment->decreaseCommentsTotal();
+
+            if($parentComment instanceof Comment){
+                $this->commentService->save($parentComment);
+            }
+
+            $this->commentService->save($parentComment);
         }
 
-//        $this->postService->getPostRepository()->save($post);
-        $this->commentService->save($comment);
+    }
 
+    public function onDeletePostDecrease(CommentEvent $event)
+    {
+        $comment = $event->getComment();
+        $post = $this->postService->getPostRepository()->getPostById($comment->getPost()->getId());
+
+        $post->decreaseCommentsTotal();
+
+        $this->postService->getPostRepository()->save($post);
     }
 
 }
