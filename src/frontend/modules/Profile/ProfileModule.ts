@@ -16,7 +16,7 @@ import {ProfileAvatarCropperHelper} from "./Component/ProfileAvatarCropper/helpe
 import {ProfileBirthdayPipe} from "./Pipe/ProfileBirthdayPipe";
 import {ProfileBackdropCropperComponent} from "./Component/ProfileBackdropCropper/index";
 import {ProfileBackdropCropperHelper} from "./Component/ProfileBackdropCropper/helper";
-import {ProfileTooltipComponent} from "./Component/ProfileTooltip/index";
+import {ProfileDropdownComponent} from "./Component/ProfileDropdown/index";
 import {ProfileBackdropActionsHelper} from "./Component/ProfileBackdropActions/helper";
 import {ProfileBackdropActionsComponent} from "./Component/ProfileBackdropActions/index";
 import {ProfileFeedResolver} from "./Service/ProfileFeedResolver";
@@ -36,7 +36,7 @@ import {ProfileAvatarComponent} from "./Component/ProfileAvatar/index";
         ProfileAvatarCropperComponent,
         ProfileBackdropCropperComponent,
         ProfileBackdropActionsComponent,
-        ProfileTooltipComponent,
+        ProfileDropdownComponent,
         ProfileAvatarComponent,
         ProfileRoute,
         ProfileSettingsRoute,
@@ -58,7 +58,7 @@ import {ProfileAvatarComponent} from "./Component/ProfileAvatar/index";
         ProfileBackdropActionsHelper
     ],
     exports: [
-        ProfileTooltipComponent
+        ProfileDropdownComponent
     ]
 })
 export class ProfileModule {

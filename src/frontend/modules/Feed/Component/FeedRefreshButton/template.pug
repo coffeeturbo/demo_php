@@ -1,5 +1,3 @@
-doctype html
-button.btn-material(#refreshButton, (click)="feedComponent.onRefresh.emit()")
+.spinner.btn-material
   .fa.fa-repeat([class.fa-spin]="inProgress")
-
-small(#panText) {{ "Click here to refresh" | translate }}     
+button.btn-material.secondary {{ "Click here to refresh" | translate }}     

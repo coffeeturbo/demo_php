@@ -17,6 +17,7 @@ import {PostCreatedPipe} from "./Pipe/PostCreatedPipe";
 import {PostService} from "./Service/PostService";
 import {PostTextFormat} from "./Pipe/PostTextFormat";
 import {PostFormLoadingComponent} from "./Component/PostFormLoading/index";
+import {CommentModule} from "../Comment/CommentModule";
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import {PostFormLoadingComponent} from "./Component/PostFormLoading/index";
         DndModule.forRoot(),
         LinkyModule,
         AttachmentModule,
+        CommentModule,
         CommonModule,
         RouterModule
     ],

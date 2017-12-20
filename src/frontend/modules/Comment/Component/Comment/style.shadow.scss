@@ -1,0 +1,175 @@
+@import '../../../../assets/styles/global';
+:host {
+  display: block;
+  margin-bottom: 2em;
+  animation: fade 600ms;
+  line-height: 1.5em;
+  
+  &.root {
+    comment {
+      margin: 1em 0;
+    }
+    
+    >comment {
+      margin-left: 1.5em;
+
+      .author .avatar {
+        width: 16px;
+        height: 16px;
+        margin-right: .5em;
+      }
+    }
+  }
+
+  a, button {
+    color: material-color($primary_material, "600");
+    
+    &.togglerChildComments {
+      //padding: 2px 5px;
+      padding: 0;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 150ms;
+      
+      &.expanded {
+        transition: margin 300ms 300ms, color 300ms;
+        position: absolute;
+        margin-top: 15px;
+        color: material-color($secondary_material, "400");
+      }
+
+      * + * {
+        margin-left: 1em;
+      }
+      span {
+        font-size: $small_size;
+      }
+    }
+  }
+
+  
+  .author {
+    display: flex;
+    align-items: center;
+    line-height: normal;
+    margin-bottom: .5rem;
+
+    a {
+      display: flex;
+      align-items: center;
+
+      .avatar {
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+        margin-right: 1em;
+      }
+    }
+
+    .created {
+      color: #999;
+      position: relative;
+      margin-left: .5em;
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+
+    .reply {
+      margin-right: 1em;
+    }
+    
+    .vote-up, .vote-down {
+      .fa {
+        transition: color 300ms, transform 300ms;
+      }
+    }
+    
+    .vote-up:active .fa {
+      transform: translateY(-3px);
+    }
+
+    .vote-down:active .fa {
+      transform: translateY(3px);
+    }
+    
+    .vote-up.active .fa {
+      color: material-color("green","700");
+    }
+
+    .vote-down.active .fa {
+      color: material-color("red","700");
+    }
+    
+    * + * {
+      margin-left: .5em;
+
+      @include mq($until: tablet) {
+        margin-left: 1em;
+      }
+    }
+
+    
+    
+    button {
+      font-size: $small_size;
+      cursor: pointer;
+      color: material-color($primary_material, "600");
+      padding: 5px 0;
+      @include mq($until: tablet) {
+        padding: 10px 0;
+      }
+    }
+
+    .rate {
+      font-size: $small_size;
+      font-weight: 500;
+      
+      &.negative {
+        color: material-color($error_material, "700");
+      }
+    }
+  }
+
+
+  &.root {
+    & > comment {
+      margin: 1em;
+      margin-left: 1.5em;
+    }
+
+    .author .avatar {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  *:hover {
+    >tooltip {
+      visibility: visible!important;
+      transition-delay: 500ms;
+    }
+  }
+
+  tooltip {
+    visibility: hidden;
+    transition: visibility;
+    text-align: center;
+    font-size: $small_size;
+    left: calc(50% - 42px);
+    width: 70px;
+  }  
+}
+
+
+@keyframes vote-up {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-3px);
+  }
+}

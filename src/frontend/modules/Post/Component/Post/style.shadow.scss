@@ -96,6 +96,10 @@
     font-size: $h1_size;
     line-height: normal;
 
+    @include mq($until: tablet) {
+      font-size: $h3_size;
+    }
+    
     a {
       color: material-color($primary_material, "800");
     }

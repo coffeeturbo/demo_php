@@ -35,7 +35,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
           .drag
             i.fa.fa-bars(dnd-sortable-handle)
           .input-box([formGroupName]="i")
-            attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value")
+            attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value", [focus]="true")
             attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
             attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")
             tooltip(*ngIf="attachment.controls.value.invalid && submitted")
