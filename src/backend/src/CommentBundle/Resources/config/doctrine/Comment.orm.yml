@@ -29,13 +29,19 @@ CommentBundle\Entity\Comment:
     commentsTotal:
       column: comments_total
       type: integer
-      nullable:
+      nullable: false
+    isDeleted:
+      column: is_deleted
+      type: boolean
+      nullable: false
 
   oneToMany:
     childrenComments:
       targetEntity: CommentBundle\Entity\Comment
       mappedBy: parentComment
   manyToOne:
+    post:
+      targetEntity: PostBundle\Entity\Post
     parentComment:
       targetEntity: CommentBundle\Entity\Comment
       inversedBy: childrenComments

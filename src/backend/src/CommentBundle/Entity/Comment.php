@@ -1,6 +1,8 @@
 <?php
 namespace CommentBundle\Entity;
 
+use AppBundle\Delete\DeleteAble;
+use AppBundle\Delete\DeleteTrait;
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
 use AttachmentBundle\Entity\AttachmentableEntity;
@@ -21,7 +23,8 @@ class Comment implements ModifyDateEntityInterface, RatingableEntity,
     AttachmentableEntity,
     VoteableEntity,
     CommentAbleEntity,
-    ParentCommentAbleEntity
+    ParentCommentAbleEntity,
+    DeleteAble
 {
 
     use ModifyDateEntityTrait,
@@ -29,7 +32,8 @@ class Comment implements ModifyDateEntityInterface, RatingableEntity,
         AttachmentableEntityTrait,
         VoteableEntityTrait,
         CommentAbleEntityTrait,
-        ParentCommentAbleEntityTrait
+        ParentCommentAbleEntityTrait,
+        DeleteTrait
         ;
 
     private $id;

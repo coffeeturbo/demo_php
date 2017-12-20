@@ -55,8 +55,67 @@ class CommentController extends Controller
     }
 
 
-    public function deleteAction(Request $request)
+    /**
+     * @ApiDoc(
+     *  section="Comment",
+     *  description="Удаляем комментарий комментарии",
+     *  authentication=true,
+     * )
+     *
+     * @param Request $request
+     */
+    public function deleteAction($comment_id)
     {
+        try{
 
+            $commentService = $this->get('comment.service.comment_service');
+
+            $comment = $commentService->getCommentRepository()->getById($comment_id);
+
+
+            $commentService->markAsDeleted($comment);
+
+        } catch(BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        } catch(\Exception $e) {
+            return new ErrorJsonResponse($e->getMessage());
+        }
+
+        return new SuccessCommentResponse($comment);
+    }
+
+
+    /**
+     * @ApiDoc(
+     *  section="Comment",
+     *  description="Удаляем комментарий комментарии",
+     *  authentication=false,
+     * )
+     *
+     * @param Request $request
+     */
+    public function getByPostAction($post_id)
+    {
+        try{
+
+            $commentService = $this->get('comment.service.comment_service');
+
+            $comments = $commentService->getCommentRepository()->getCommentsByPost($post_id);
+
+            dump($comments);
+
+//            $commentService->markAsDeleted($comment);
+
+        } catch(BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        } catch(\Exception $e) {
+            return new ErrorJsonResponse($e->getMessage());
+        }
+
+        return new SuccessCommentResponse();
     }
 }

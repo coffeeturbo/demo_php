@@ -65,6 +65,8 @@ class UpdateCommentsTotalListener implements EventSubscriberInterface
 
     public function onDeleteCommentDecrease(CommentEvent $event)
     {
+        // проверять на дочерние комментарии и удалять их
+
         $comment = $event->getComment();
 
         if($parentComment = $comment->getParentComment()){

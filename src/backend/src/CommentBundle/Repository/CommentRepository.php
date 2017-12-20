@@ -43,9 +43,38 @@ class CommentRepository extends EntityRepository
         return $result;
     }
 
-    public function delete(Comment $comment)
+
+    public function markAsDeleted(Comment $comment)
     {
         // todo set as deleted
+        $comment->markAsDeleted();
+        $comment->markUpdated();
+
+        $em = $this->getEntityManager();
+        $em->persist($comment);
+        $em->flush();
         // todo так же удалить все аттачменты
+    }
+
+    public function delete(){}
+
+    public function getCommentsByPost(int $postId)
+    {
+        try {
+            $qb = $this->createQueryBuilder('c')
+                ->select('c')
+                ->where('c.post = :id')
+                ->setParameter('id', $postId)
+                ->andWhere('c')
+
+                ->getQuery()
+            ;
+
+            $result = $qb->getResult();
+        } catch(NoResultException $e){
+            throw new NotFoundHttpException(sprintf("comment with id= %s not found", $postId));
+        }
+
+        return $result;
     }
 }

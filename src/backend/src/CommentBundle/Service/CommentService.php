@@ -37,14 +37,26 @@ class CommentService
     }
 
 
-    public function delete(Comment $comment)
+    public function markAsDeleted(Comment $comment)
     {
-        $this->commentRepository->delete($comment);
+
+        $this->commentRepository->markAsDeleted($comment);
+
+        // удаляем дочерние коменты
+        if($comment->getComments()){
+            foreach($comment->getComments() as $nestedComment){
+                $this->markAsDeleted($nestedComment);
+            }
+        }
 
         $this->eventDispatcher->dispatch(
             CommentEvents::COMMENT_DELETED,
             new CommentEvent($comment)
         );
+    }
+
+    public function delete(){
+        $this->commentRepository->delete();
     }
 
     public function getCommentRepository()

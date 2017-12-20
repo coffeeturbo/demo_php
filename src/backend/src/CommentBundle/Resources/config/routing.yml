@@ -1,0 +1,6 @@
+comment_get_by_post_id:
+  path: '{post_id}/get-by-post'
+  methods:  [ GET ]
+  defaults: { _controller: CommentBundle:Comment:getByPost }
+  requirements:
+    post_id: \d+
