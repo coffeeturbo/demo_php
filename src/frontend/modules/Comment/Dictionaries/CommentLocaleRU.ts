@@ -1,3 +1,4 @@
 export const CommentLocaleRU = {
-    "Show replies": "Раскрыть ветку"
+    "Show replies": "Раскрыть ветку",
+    "Add comment": "Добавить комментарий"
 };

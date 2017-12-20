@@ -21,7 +21,7 @@ section.content
   button.vote-down((click)="vote('negative')", [class.active]="comment.votes.state=='negative'")
     .fa.fa-chevron-down
 
-comment-form(*ngIf="showForm")
+comment-form(*ngIf="showForm", [focus]="true")
 ng-container(*ngIf="comment.comments")
   button.togglerChildComments(*ngIf="root", (click)="toggleChildComments()", [class.expanded]="showChildComments")
     .fa([class.fa-minus-square]="showChildComments", [class.fa-plus-square]="!showChildComments")

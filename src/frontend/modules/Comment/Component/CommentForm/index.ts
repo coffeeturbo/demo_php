@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 
@@ -9,7 +9,9 @@ import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 })
 
 export class CommentFormComponent {
-
+    
+    
+    @Input() focus: boolean = false;
     public AttachmentType = AttachmentType;
     
     public attachments = new FormArray([], Validators.required);
@@ -18,6 +20,11 @@ export class CommentFormComponent {
         attachments: this.attachments
     });
 
+    
+    ngOnInit() {
+        this.addAttachment(AttachmentType.text);
+    }
+    
     public addAttachment(type: AttachmentType, value?: any) {
         let attachment = new FormGroup({
             type: new FormControl(type || AttachmentType.text),
@@ -26,6 +33,23 @@ export class CommentFormComponent {
 
         this.attachments.push(attachment);
         this.form.controls.attachments.markAsDirty();
-    }    
+    }
 
+    _attachmentDeleteConfirmed:boolean[] = [];
+    isAttachmentDeleteConfirmed(i) {
+        return this._attachmentDeleteConfirmed[i];
+    }
+    
+    confirmDeleteAttachment(i) {
+        this._attachmentDeleteConfirmed[i] = true;
+    }
+    
+    cancelDeleteAttachment(i) {
+        delete this._attachmentDeleteConfirmed[i];
+    }
+
+    deleteAttachment(i) {
+        this.attachments.removeAt(i);
+        delete this._attachmentDeleteConfirmed[i];
+    }
 }

@@ -1,16 +1,33 @@
-button(*ngIf="!attachments.length", (click)="addAttachment(AttachmentType.text)") Оставить комментарий!
-
 form.material-form([formGroup]="form")
   .attachments(formArrayName="attachments")
     div(*ngFor="let attachment of attachments.controls; index as i", [ngSwitch]="attachment.value.type")
       .material-field
         .input-box([formGroupName]="i")
-          attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value")
-          //attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
-          //attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")
+          attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value", [placeholder]="'Add comment'", [focus]="focus")
+          .preview(*ngSwitchCase="AttachmentType.image || AttachmentType.video")
+            //attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
+            .overflow-hidden
+              attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value", [class.blur]="isAttachmentDeleteConfirmed(i)")
             
+            .removeAttachment([class.confirm]="isAttachmentDeleteConfirmed(i)")
+              button.btn-material.secondary(*ngIf="!isAttachmentDeleteConfirmed(i)", (click)="confirmDeleteAttachment(i)")
+                i.fa.fa-trash-o
+              .confirmDialog(*ngIf="isAttachmentDeleteConfirmed(i)")
+                div
+                  h3 {{ "Are you sure?" | translate }}
+                  button.btn-material.secondary((click)="cancelDeleteAttachment(i)") {{ "No" | translate }}
+                  button.btn-material.secondary((click)="deleteAttachment(i)") {{ "Yes" | translate }}
+
   .controls
-    button.btn-material.primary(type="submit")
-      .fa.fa-commenting
-      span {{"Send" | translate }}
+    .attachment-button-container
+      button.btn-material.secondary(type="button", (onChange)="addAttachment(AttachmentType.video)")
+        i.fa.fa-plus.fa-hover.fa-fw
+        i.fa.fa-video-camera.fa-fw
   
+      button.btn-material.secondary(type="button", (onChange)="addAttachment(AttachmentType.image, $event)", cropper-browse)
+        i.fa.fa-plus.fa-hover.fa-fw
+        i.fa.fa-camera.fa-fw
+
+    button.btn-material.primary(type="submit")
+      i.fa.fa-commenting.fa-fw
+      span {{"Send" | translate }}
