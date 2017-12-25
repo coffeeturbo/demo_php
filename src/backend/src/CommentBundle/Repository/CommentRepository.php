@@ -62,11 +62,12 @@ class CommentRepository extends EntityRepository
     {
         try {
             $qb = $this->createQueryBuilder('c')
-                ->select('c')
+                ->select('c', 'p', 'childrenComments', 'parentComment')
+                ->join('c.profile', 'p')
+                ->leftJoin('c.childrenComments', 'childrenComments')
+                ->leftJoin('c.parentComment', 'parentComment')
                 ->where('c.post = :id')
                 ->setParameter('id', $postId)
-                ->andWhere('c')
-
                 ->getQuery()
             ;
 
