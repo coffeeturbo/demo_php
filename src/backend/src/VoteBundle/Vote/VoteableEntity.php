@@ -25,7 +25,7 @@ interface VoteableEntity
     public function increaseVotesPositive();
     public function decreaseVotesPositive();
 
-    public function getVote(): ?Vote;
-    public function setVote(Vote $vote);
+    public function getVote(): ?VoteEntity;
+    public function setVote(VoteEntity $vote);
 
 }

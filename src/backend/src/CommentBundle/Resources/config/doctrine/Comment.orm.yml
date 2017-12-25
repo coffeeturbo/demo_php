@@ -1,6 +1,6 @@
-PostBundle\Entity\Post:
+CommentBundle\Entity\Comment:
   type: entity
-  repositoryClass: PostBundle\Repository\PostRepository
+  repositoryClass: CommentBundle\Repository\CommentRepository
   id:
     id:
       type: integer
@@ -13,9 +13,10 @@ PostBundle\Entity\Post:
     updated:
       type: datetime
       nullable: false
-    title:
-      type: string
-      nullable: false
+#    postId:
+#      type: integer
+#      column: post_id
+#      nullable: false
     votesRating:
       type: integer
       nullable: false
@@ -29,11 +30,23 @@ PostBundle\Entity\Post:
       column: comments_total
       type: integer
       nullable: false
+    isDeleted:
+      column: is_deleted
+      type: boolean
+      nullable: false
+
+  oneToMany:
+    childrenComments:
+      targetEntity: CommentBundle\Entity\Comment
+      mappedBy: parentComment
   manyToOne:
+    post:
+      targetEntity: PostBundle\Entity\Post
+    parentComment:
+      targetEntity: CommentBundle\Entity\Comment
+      inversedBy: childrenComments
     profile:
       targetEntity: ProfileBundle\Entity\Profile
   manyToMany:
-    tags:
-      targetEntity: TagBundle\Entity\Tag
     attachments:
       targetEntity: AttachmentBundle\Entity\Attachment

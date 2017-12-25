@@ -1,46 +1,60 @@
 <?php
-namespace PostBundle\Entity;
+namespace CommentBundle\Entity;
 
+use AppBundle\Delete\DeleteAble;
+use AppBundle\Delete\DeleteTrait;
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
 use AttachmentBundle\Entity\AttachmentableEntity;
 use AttachmentBundle\Entity\AttachmentableEntityTrait;
 use CommentBundle\Comment\CommentAbleEntity;
 use CommentBundle\Comment\CommentAbleEntityTrait;
+use CommentBundle\Comment\ParentCommentAbleEntity;
+use CommentBundle\Comment\ParentCommentAbleEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
-use TagBundle\Entity\AbstractTaggable;
 use VoteBundle\Rating\RatingableEntity;
 use VoteBundle\Rating\RatingableEntityTrait;
 use VoteBundle\Vote\VoteableEntity;
 use VoteBundle\Vote\VoteableEntityTrait;
 
-class Post extends AbstractTaggable
-            implements
-                ModifyDateEntityInterface,
-                AttachmentableEntity,
-                VoteableEntity,
-                RatingableEntity,
-                CommentAbleEntity
+class Comment implements ModifyDateEntityInterface, RatingableEntity,
+    AttachmentableEntity,
+    VoteableEntity,
+    CommentAbleEntity,
+    ParentCommentAbleEntity,
+    DeleteAble
 {
-    use
-        ModifyDateEntityTrait,
+
+    use ModifyDateEntityTrait,
+        RatingableEntityTrait,
         AttachmentableEntityTrait,
         VoteableEntityTrait,
-        RatingableEntityTrait,
-        CommentAbleEntityTrait
+        CommentAbleEntityTrait,
+        ParentCommentAbleEntityTrait,
+        DeleteTrait
         ;
 
     private $id;
-    private $title;
-    private $attachments;
     private $profile;
 
 
+    private $post;
+    public function getPost(): Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
+    }
+
     public function __construct()
     {
-        parent::__construct();
         $this->attachments = new ArrayCollection();
+        $this->childrenComments = new ArrayCollection();
         $this->created = new \DateTime();
         $this->markUpdated();
     }
@@ -50,24 +64,13 @@ class Post extends AbstractTaggable
         return $this->id;
     }
 
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    public function getProfile(): Profile
-    {
-        return $this->profile;
-    }
-
     public function setProfile(Profile $profile)
     {
         $this->profile = $profile;
+        return $this;
+    }
+    public function getProfile(): Profile
+    {
+        return $this->profile;
     }
 }

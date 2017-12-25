@@ -1,0 +1,28 @@
+services:
+  comment.repository:
+    class: CommentBundle\Repository\CommentRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - CommentBundle\Entity\Comment
+
+  comment.service.comment_service:
+    class: CommentBundle\Service\CommentService
+    arguments:
+      - '@comment.repository'
+      - '@event_dispatcher'
+
+  comment.event_listener.update_comments_total_listener:
+      class: CommentBundle\EventListener\UpdateCommentsTotalListener
+      tags:
+        - { name: kernel.event_subscriber }
+      arguments:
+        - "@post.service"
+        - "@comment.service.comment_service"
+
+  comment.form.handler.create_comment_data_handler:
+    class: CommentBundle\Form\Handler\CreateCommentDataHandler
+    arguments:
+      - '%comment.max_attachments_limit%'
+      - '@attachment.service.attachment_service'
+      - '@post.service'
+      - '@comment.service.comment_service'

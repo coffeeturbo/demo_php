@@ -1,0 +1,11 @@
+comment_create:
+  path: 'create'
+  methods:  [ PUT ]
+  defaults: { _controller: CommentBundle:Comment:create }
+
+comment_delete:
+  path: '{comment_id}/delete'
+  methods:  [ DELETE ]
+  defaults: { _controller: CommentBundle:Comment:delete }
+  requirements:
+    comment_id: \d+

@@ -2,14 +2,16 @@
 namespace AttachmentBundle\Service;
 
 use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Entity\AttachmentableEntity;
 use AttachmentBundle\Entity\AttachmentType\AttachmentType;
 use AttachmentBundle\Entity\AttachmentType\AttachmentTypeImage;
 use AttachmentBundle\LinkMetadata\LinkMetadataFactory;
 use AttachmentBundle\Parser\OpenGraphParser;
 use AttachmentBundle\Repository\AttachmentRepository;
+use AttachmentBundle\Service\AttachmentHandler\AttachmentHandler;
 use AttachmentBundle\Service\FetchResource\Result;
 use ImageBundle\Image\Image;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class AttachmentService
 {
@@ -54,17 +56,30 @@ class AttachmentService
         return $attachment;
     }
 
-    public function fetchAttachmentFromJson(string $json): Attachment
+    static public function setAttachmentsFromJson(
+        AttachmentableEntity $entity,
+        string $jsonAttachmString,
+        $maxAttachmentsLimit)
     {
-        $attachmentJson = json_decode($json);
 
-        switch($attachmentJson['type']){
+        $jsonAttachs = json_decode($jsonAttachmString, true);
+
+        if($maxAttachmentsLimit < count($jsonAttachs)) {
+            throw new AccessDeniedHttpException(
+                sprintf("you have exceed attachments limit: %s", $maxAttachmentsLimit));
         }
 
+
+        foreach($jsonAttachs as $attachmentJson) {
+
+            $handler = new AttachmentHandler($attachmentJson);
+
+            $attachment = $handler->getAttachment();
+
+            if(!$entity->hasAttachment($attachment)){
+                $entity->addAttachment($attachment);
+            }
+        }
     }
-
-
-
-
 
 }
