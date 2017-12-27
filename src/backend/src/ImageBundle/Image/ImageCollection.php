@@ -9,7 +9,7 @@ class ImageCollection implements \JsonSerializable
     {
         $collection = new ImageCollection();
 
-        if(count($json) > 0){
+        if((!is_null($json)) && (count($json) > 0)){
             foreach($json as $item => $value)
             {
                 $collection->addImage(new Image($value['storage_path'], $value['public_path'], $item ));
