@@ -3,7 +3,7 @@ namespace AppBundle\Delete;
 
 trait DeleteTrait
 {
-    private $isDeleted;
+    private $isDeleted = 0;
 
     public function getIsDeleted()
     {

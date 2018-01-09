@@ -90,7 +90,7 @@ class CommentController extends Controller
     /**
      * @ApiDoc(
      *  section="Comment",
-     *  description="Удаляем комментарий комментарии",
+     *  description="Получаем коментарии к посту",
      *  authentication=false,
      * )
      *
@@ -117,5 +117,19 @@ class CommentController extends Controller
         }
 
         return new SuccessCommentResponse();
+    }
+
+    /**
+     * @ApiDoc(
+     *  section="Comment",
+     *  description="Получаем коментарии профиля",
+     *  authentication=false,
+     * )
+     *
+     * @param Request $request
+     */
+    public function getByProfileAction($profileId)
+    {
+
     }
 }
