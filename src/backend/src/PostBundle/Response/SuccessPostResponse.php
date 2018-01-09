@@ -33,6 +33,8 @@ class SuccessPostResponse extends JsonResponse implements \JsonSerializable
             'attachments' =>  (new SuccessAttachmentsResponse($post->getAttachments()))->jsonSerialize(),
             'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
 
+            'comments_total' => $post->getCommentsTotal(),
+
             'votes' => [
                 'state' =>  $post->getVote() ? $post->getVote()->getType()->getStringCode() :'none',
                 'rating' => $post->getVotesRating(),

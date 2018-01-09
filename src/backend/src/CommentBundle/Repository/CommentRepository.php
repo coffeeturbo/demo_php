@@ -78,4 +78,25 @@ class CommentRepository extends EntityRepository
 
         return $result;
     }
+
+    public function getPostCommentsByProfile(int $profileId)
+    {
+        try {
+            $qb = $this->createQueryBuilder('c')
+                ->select('c', 'p', 'childrenComments', 'parentComment')
+                ->join('c.profile', 'p')
+                ->leftJoin('c.childrenComments', 'childrenComments')
+                ->leftJoin('c.parentComment', 'parentComment')
+                ->where('c.profile = :id')
+                ->setParameter('id', $profileId)
+                ->getQuery()
+            ;
+
+            $result = $qb->getResult();
+        } catch(NoResultException $e){
+            throw new NotFoundHttpException(sprintf("comments with profileId = %s not found", $profileId));
+        }
+
+        return $result;
+    }
 }
