@@ -72,6 +72,7 @@ export class MockData {
     };
 
     public static comment1: Comment = {
+        id: 11,
         parent_id: null,
         post_id: 1,
         created: "2017-11-10T13:12:32+00:00",
@@ -81,6 +82,7 @@ export class MockData {
         ],
         comments: [
             {
+                id:41,
                 parent_id: null,
                 post_id: 1,
                 created: "2017-11-10T13:12:32+00:00",
@@ -101,6 +103,7 @@ export class MockData {
     };
     
     public static comment2: Comment = {
+        id: 31,
         parent_id: null,
         post_id: 1,
         created: "2017-11-10T13:12:32+00:00",
@@ -118,6 +121,7 @@ export class MockData {
     };
     
     public static comment3: Comment = {
+        id: 12,
         parent_id: null,
         post_id: 1,
         created: "2017-11-10T13:12:32+00:00",
@@ -134,6 +138,7 @@ export class MockData {
     };
     
     public static comment: Comment = {
+        id: 13,
         parent_id: null,
         post_id: 1,
         created: "2017-11-10T13:12:32+00:00",

@@ -95,6 +95,8 @@ small { font-size: $small_size; }
   }
 }
 
+.fa-spin { -webkit-filter: blur(0); }
+
 .debug {
   font: 12px "Courier New";
   white-space: pre;

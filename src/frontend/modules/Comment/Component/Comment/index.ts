@@ -1,10 +1,11 @@
 import {Component, HostBinding, Input} from '@angular/core';
 import {Comment} from "../../Entity/Comment";
-import {MockData} from "../../Mock/MockData";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {VoteState} from "../../../Vote/Entity/Vote";
 import {Router} from "@angular/router";
+import {Post} from "../../../Post/Entity/Post";
+import {CommentService} from "../../Service/CommentService";
 
 @Component({
     selector: 'comment',
@@ -18,13 +19,15 @@ export class CommentComponent {
     @HostBinding('class.root')
     @Input() root: boolean = true;
 
-    @Input() comment: Comment = MockData.comment;
+    @Input() comment: Comment;
+    @Input() post: Post;
     
     public showChildComments = false;
     public showForm = false;
     
     constructor(
         private authService: AuthService,
+        private commentService: CommentService,
         private router: Router
     ){}
     
@@ -54,12 +57,11 @@ export class CommentComponent {
             this.comment.votes.state = state;
 
 
-            // this.commentService
-            //     .vote(this.post, state)
-            //     .finally(() => this.voteInProgress = false)
-            this.voteInProgress = false;
-            //     .subscribe()
-            // ;
+            this.commentService
+                .vote(this.comment, state)
+                .finally(() => this.voteInProgress = false)
+                .subscribe()
+            ;
         }
     }
     

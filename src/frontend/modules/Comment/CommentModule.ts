@@ -5,6 +5,8 @@ import {CommonModule} from "../Common/CommonModule";
 import {CommentCreatedPipe} from "./Pipe/CommentCreatedPipe";
 import {CommentFormComponent} from "./Component/CommentForm/index";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
+import {CommentRESTService} from "./Service/CommentRESTService";
+import {CommentService} from "./Service/CommentService";
 
 @NgModule({
     imports: [
@@ -16,6 +18,10 @@ import {AttachmentModule} from "../Attachment/AttachmentModule";
         CommentCreatedPipe,
         CommentFormComponent,
         CommentComponent
+    ],
+    providers: [
+        CommentRESTService,
+        CommentService
     ],
     exports: [
         CommentComponent,

@@ -6,7 +6,7 @@ import {AttachmentText} from "../../Attachment/Entity/AttachmentText";
 import {AttachmentVideo} from "../../Attachment/Entity/AttachmentVideo";
 
 export interface Comment {
-    id?: number;
+    id: number;
     parent_id: number | null;
     post_id: number;
     created: string;

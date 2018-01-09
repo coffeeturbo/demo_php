@@ -1,4 +1,4 @@
 post([post]="post")
 .comments
-  comment([comment]="mockComment1")
-  comment-form
+  comment([comment]="mockComment1", [post]="post")
+  comment-form([post]="post")

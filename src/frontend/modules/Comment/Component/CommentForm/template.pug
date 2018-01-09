@@ -1,13 +1,13 @@
-form.material-form([formGroup]="form")
+form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)", [class.loading]='isLoading')
   .attachments(formArrayName="attachments")
     div(*ngFor="let attachment of attachments.controls; index as i", [ngSwitch]="attachment.value.type")
       .material-field
         .input-box([formGroupName]="i")
-          attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value", [placeholder]="'Add comment'", [focus]="focus")
+          attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'commentFormAttachment' + i", formControlName="value", [placeholder]="'Add comment'", [focus]="focus")
           .preview(*ngSwitchCase="AttachmentType.image || AttachmentType.video")
-            //attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
+            //attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'commentFormAttachment' + i", formControlName="value")
             .overflow-hidden
-              attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value", [class.blur]="isAttachmentDeleteConfirmed(i)")
+              attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'commentFormAttachment' + i", formControlName="value", [class.blur]="isAttachmentDeleteConfirmed(i)")
             
             .removeAttachment([class.confirm]="isAttachmentDeleteConfirmed(i)")
               button.btn-material.secondary(*ngIf="!isAttachmentDeleteConfirmed(i)", (click)="confirmDeleteAttachment(i)")
@@ -28,6 +28,7 @@ form.material-form([formGroup]="form")
         i.fa.fa-plus.fa-hover.fa-fw
         i.fa.fa-camera.fa-fw
 
-    button.btn-material.primary(type="submit")
+    button.btn-material.primary(type="submit", [disabled]="isLoading")
       i.fa.fa-commenting.fa-fw
-      span {{"Send" | translate }}
+      span(*ngIf="!isLoading") {{"Send" | translate }}
+      span(*ngIf="isLoading") {{"Loading" | translate }}

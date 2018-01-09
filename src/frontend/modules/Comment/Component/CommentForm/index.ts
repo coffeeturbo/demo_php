@@ -1,6 +1,10 @@
 import {Component, Input} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
+import {Post} from "../../../Post/Entity/Post";
+import {Comment} from "../../Entity/Comment";
+import {CommentCreateRequest} from "../../Http/Request/CommentCreateRequest";
+import {CommentService} from "../../Service/CommentService";
 
 @Component({
     selector: 'comment-form',
@@ -10,19 +14,22 @@ import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 
 export class CommentFormComponent {
     
-    
     @Input() focus: boolean = false;
+    @Input() post: Post;
+    @Input() parent: Comment;
     public AttachmentType = AttachmentType;
-    
     public attachments = new FormArray([], Validators.required);
-
-    public form: FormGroup = new FormGroup({
+    public isLoading: boolean = false;
+    public form: FormGroup  = new FormGroup({
         attachments: this.attachments
     });
-
     
+    constructor(private commentService: CommentService) {}
+
     ngOnInit() {
         this.addAttachment(AttachmentType.text);
+        if(this.post) this.form.addControl("post_id", new FormControl(this.post.id));
+        if(this.parent) this.form.addControl("parent_id", new FormControl(this.parent.id));
     }
     
     public addAttachment(type: AttachmentType, value?: any) {
@@ -36,20 +43,40 @@ export class CommentFormComponent {
     }
 
     _attachmentDeleteConfirmed:boolean[] = [];
-    isAttachmentDeleteConfirmed(i) {
+    public isAttachmentDeleteConfirmed(i) {
         return this._attachmentDeleteConfirmed[i];
     }
     
-    confirmDeleteAttachment(i) {
+    public confirmDeleteAttachment(i) {
         this._attachmentDeleteConfirmed[i] = true;
     }
-    
-    cancelDeleteAttachment(i) {
+
+    public cancelDeleteAttachment(i) {
         delete this._attachmentDeleteConfirmed[i];
     }
 
-    deleteAttachment(i) {
+    public deleteAttachment(i) {
         this.attachments.removeAt(i);
         delete this._attachmentDeleteConfirmed[i];
+    }
+
+    public handleEnterButton(e) {
+        // @DOTO! implement
+        console.log(e);
+    }
+
+    submit() {
+        this.isLoading = true;
+        let postCreateRequest: CommentCreateRequest = this.form.value; 
+
+        // Fck nelmio
+        postCreateRequest.attachments = JSON.stringify(postCreateRequest.attachments);
+
+        this.commentService.create(postCreateRequest)
+            .finally(() => this.isLoading = false)
+            .subscribe(() => {
+                this.attachments.controls = [];
+                this.addAttachment(AttachmentType.text);
+            });
     }
 }
