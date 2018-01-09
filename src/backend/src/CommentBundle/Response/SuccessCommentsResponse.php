@@ -7,29 +7,31 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SuccessCommentsResponse extends JsonResponse implements \JsonSerializable
 {
-    private $entity;
+    private $entities;
 
-    function __construct(Comment $entity = null, bool $isCreated = false)
+    function __construct(array $entity = null, bool $isCreated = false)
     {
-        $this->entity = $entity;
+        $this->entities = $entity;
         parent::__construct(self::jsonSerialize(), $isCreated ? Response::HTTP_CREATED : Response::HTTP_OK);
     }
 
 
     function jsonSerialize()
     {
-        // TODO: Implement jsonSerialize() method.
+        $comments = $this->entities ?? $this->createMockEntity();
+
+        $entities = array_values(array_map(function (Comment $comment) {
+            return (new SuccessCommentResponse($comment))->jsonSerialize();
+        }, $comments));
+
+        return $entities;
     }
 
-    public function createMockEntity(): Comment
+    public function createMockEntity()
     {
 
-        $entity = new Comment();
-        $entity
-            ->setParentCommentId(122)
-        ;
 
-        return $entity;
+        return [];
     }
 
 }

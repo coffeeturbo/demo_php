@@ -5,6 +5,7 @@ use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use CommentBundle\Form\CommentFormType;
 use CommentBundle\Response\SuccessCommentResponse;
+use CommentBundle\Response\SuccessCommentsResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -104,9 +105,6 @@ class CommentController extends Controller
 
             $comments = $commentService->getCommentRepository()->getCommentsByPost($post_id);
 
-            dump($comments);
-
-//            $commentService->markAsDeleted($comment);
 
         } catch(BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
@@ -116,7 +114,7 @@ class CommentController extends Controller
             return new ErrorJsonResponse($e->getMessage());
         }
 
-        return new SuccessCommentResponse();
+        return new SuccessCommentsResponse($comments);
     }
 
     /**
@@ -128,8 +126,23 @@ class CommentController extends Controller
      *
      * @param Request $request
      */
-    public function getByProfileAction($profileId)
+    public function getByProfileAction($profile_id)
     {
+        try{
 
+            $commentService = $this->get('comment.service.comment_service');
+
+            $comments = $commentService->getCommentRepository()->getPostCommentsByProfile($profile_id);
+
+
+        } catch(BadRestRequestHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e) {
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        } catch(\Exception $e) {
+            return new ErrorJsonResponse($e->getMessage());
+        }
+
+        return new SuccessCommentsResponse($comments);
     }
 }

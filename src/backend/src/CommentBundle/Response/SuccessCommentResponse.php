@@ -27,17 +27,16 @@ class SuccessCommentResponse extends JsonResponse implements \JsonSerializable
             'parent_comment_id' => $comment->getParentCommentId(),
             'created' => $comment->getCreated()->format(\DateTime::W3C),
             'updated' => $comment->getUpdated()->format(\DateTime::W3C),
-            'attachments' =>  (new SuccessAttachmentsResponse($comment->getAttachments()))->jsonSerialize(),
-            'profile' =>  (new SuccessProfileResponse($comment->getProfile()))->jsonSerialize()['entity'],
+            'attachments' => (new SuccessAttachmentsResponse($comment->getAttachments()))->jsonSerialize(),
+            'profile' => (new SuccessProfileResponse($comment->getProfile()))->jsonSerialize()['entity'],
             'votes' => [
                 'state' =>  $comment->getVote() ? $comment->getVote()->getType()->getStringCode() :'none',
                 'rating' => $comment->getVotesRating(),
                 'positive' => $comment->getVotesPositive(),
                 'negative' => $comment->getVotesNegative()
             ],
-
-            'comments' => $comment->getComments(),
-            'comments_total' => $comment->getCommentsTotal()
+            'comments_total' => $comment->getCommentsTotal(),
+            'comments' => (new SuccessCommentsResponse($comment->getComments()))->jsonSerialize(),
         ];
     }
 
