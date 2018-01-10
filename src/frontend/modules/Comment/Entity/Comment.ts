@@ -15,4 +15,5 @@ export interface Comment {
     profile: Profile;
     votes: Vote;
     comments?: Comment[];
+    comments_total: number;
 }

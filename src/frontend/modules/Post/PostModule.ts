@@ -18,6 +18,7 @@ import {PostService} from "./Service/PostService";
 import {PostTextFormat} from "./Pipe/PostTextFormat";
 import {PostFormLoadingComponent} from "./Component/PostFormLoading/index";
 import {CommentModule} from "../Comment/CommentModule";
+import {PostCommentsResolver} from "./Service/PostCommentsResolver";
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {CommentModule} from "../Comment/CommentModule";
         PostRESTService,
         PostService,
         PostResolver,
+        PostCommentsResolver,
         PostTitleResolver
     ],
     exports: [

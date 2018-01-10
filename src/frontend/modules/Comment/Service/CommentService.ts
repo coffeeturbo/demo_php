@@ -11,7 +11,7 @@ export class CommentService
 {
     constructor(private rest: CommentRESTService, private voteRest: VoteRESTService) {}
 
-    public getByPostId(postId: number): Observable<Comment>
+    public getByPostId(postId: number): Observable<Comment[]>
     {
         return this.rest.getByPostId(postId);
     }

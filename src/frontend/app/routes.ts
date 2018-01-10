@@ -21,6 +21,7 @@ import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
 import {FeedResolver} from "../modules/Feed/Service/FeedResolver";
 import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
 import {ProfileFeedRequestResolver} from "../modules/Profile/Service/ProfileFeedRequestResolver";
+import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -74,6 +75,7 @@ export const appRoutes: JetRoutes = [
                 component: PostRoute,
                 resolve: {
                     post: PostResolver,
+                    comments: PostCommentsResolver,
                     title: PostTitleResolver,
                 }
             }

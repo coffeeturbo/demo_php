@@ -38,7 +38,7 @@
         color: material-color($secondary_material, "400");
       }
 
-      * + * {
+      >* + * {
         margin-left: 1em;
       }
       span {

@@ -17,15 +17,15 @@ section.content
   button.reply((click)="toggleForm()") {{ (showForm ? "Cancel" : "Reply") | translate }}
   button.vote-up((click)="vote('positive')", [class.active]="comment.votes.state=='positive'")
     .fa.fa-chevron-up
-  .rate(*ngIf="comment.votes.rating != 0", [class.negative]="comment.votes.rating < 0") {{ comment.votes.rating }}
+  .rate([class.negative]="comment.votes.rating < 0") {{ comment.votes.rating }}
   button.vote-down((click)="vote('negative')", [class.active]="comment.votes.state=='negative'")
     .fa.fa-chevron-down
 
 comment-form(*ngIf="showForm", [focus]="true", [parent]="comment", [post]="post")
-ng-container(*ngIf="comment.comments")
+ng-container(*ngIf="comment.comments.length > 0")
   button.togglerChildComments(*ngIf="root", (click)="toggleChildComments()", [class.expanded]="showChildComments")
     .fa([class.fa-minus-square]="showChildComments", [class.fa-plus-square]="!showChildComments")
-    span(*ngIf="!showChildComments") {{ "Show replies" | translate }}
+    span(*ngIf="!showChildComments") {{ "Show replies" | translate }} ({{ comment.comments_total }})
   
   ng-container(*ngIf="showChildComments || !root")
-    comment(*ngFor="let childComment of comment.comments;", [comment]="childComment", [root]="false")
+    comment(*ngFor="let childComment of comment.comments;", [comment]="childComment", [post]="post", [root]="false")

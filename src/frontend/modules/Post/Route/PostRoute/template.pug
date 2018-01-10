@@ -1,4 +1,4 @@
 post([post]="post")
 .comments
-  comment([comment]="mockComment1", [post]="post")
+  comment(*ngFor="let comment of comments;", [comment]="comment", [post]="post")
   comment-form([post]="post")
