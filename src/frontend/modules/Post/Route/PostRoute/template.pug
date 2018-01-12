@@ -1,4 +1,5 @@
+doctype html
 post([post]="post")
-.comments
+.comments(#commentsEl)
   comment(*ngFor="let comment of comments;", [comment]="comment", [post]="post")
   comment-form([post]="post")
