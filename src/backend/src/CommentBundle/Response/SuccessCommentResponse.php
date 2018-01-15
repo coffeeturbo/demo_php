@@ -22,9 +22,15 @@ class SuccessCommentResponse extends JsonResponse implements \JsonSerializable
     {
         $comment = $this->entity ?? $this->createMockEntity();
 
+
+
         return [
             'id' => $comment->getId(),
-            'parent_comment_id' => $comment->getParentCommentId(),
+            'post_id' => $comment->getPost()->getId(),
+            'parent_comment_id' => $comment->getParentComment() ? $comment->getParentComment()->getId() : null,
+//            'parent_comment' => $comment->getParentComment() !== null ? (new self($comment->getParentComment()))->jsonSerialize() : null,
+
+            'level' => $comment->getLevel(),
             'created' => $comment->getCreated()->format(\DateTime::W3C),
             'updated' => $comment->getUpdated()->format(\DateTime::W3C),
             'attachments' => (new SuccessAttachmentsResponse($comment->getAttachments()))->jsonSerialize(),

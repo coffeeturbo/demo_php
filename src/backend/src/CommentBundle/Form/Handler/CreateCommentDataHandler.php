@@ -37,6 +37,7 @@ class CreateCommentDataHandler
             $this->setPostByPostId($data['post_id'], $comment);
         }
 
+        // добавляем родительский пост
         if($data['parent_id']){
             $this->setParentCommentById($data['parent_id'], $comment);
         }
@@ -70,6 +71,7 @@ class CreateCommentDataHandler
     {
         $comment = $this->commentService->getCommentRepository()->getById($id);
         $entity->setParentComment($comment);
+        $entity->setLevel( $comment->getLevel() + 1 );
         return $this;
     }
 }

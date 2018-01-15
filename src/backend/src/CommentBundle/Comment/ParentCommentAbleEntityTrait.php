@@ -5,6 +5,7 @@ trait ParentCommentAbleEntityTrait
 {
     private $parentCommentId;
     private $parentComment;
+    private $level = 0;
 
     public function getParentCommentId(): ?int
     {
@@ -25,6 +26,17 @@ trait ParentCommentAbleEntityTrait
     public function setParentComment(?CommentAbleEntity $parentComment)
     {
         $this->parentComment = $parentComment;
+        return $this;
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level)
+    {
+        $this->level = $level;
         return $this;
     }
 }

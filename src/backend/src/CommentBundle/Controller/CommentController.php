@@ -3,6 +3,7 @@ namespace CommentBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
+use CommentBundle\Entity\Comment;
 use CommentBundle\Form\CommentFormType;
 use CommentBundle\Response\SuccessCommentResponse;
 use CommentBundle\Response\SuccessCommentsResponse;
@@ -47,12 +48,7 @@ class CommentController extends Controller
             return new ErrorJsonResponse($e->getMessage());
         }
 
-
-
-
         return new SuccessCommentResponse($comment);
-
-
     }
 
 
@@ -106,6 +102,25 @@ class CommentController extends Controller
             $comments = $commentService->getCommentRepository()->getCommentsByPost($post_id);
 
 
+            foreach($comments as $id => $comment){
+                /** @var $comment Comment */
+
+                foreach($comments as $y => $nestedCommend){
+                    /** @var $nestedCommend Comment */
+
+
+                    if($nestedCommend->getParentComment()){
+                        if($nestedCommend->getParentComment()->getId() === $comment->getId()){
+                            $nestedCommend->setParentComment($comment);
+
+                            $comment->addComment($nestedCommend);
+                            unset($comments[$y]);
+                            continue(2);
+                        }
+                    }
+                }
+            }
+
         } catch(BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch(AccessDeniedHttpException $e) {
@@ -113,7 +128,6 @@ class CommentController extends Controller
         } catch(\Exception $e) {
             return new ErrorJsonResponse($e->getMessage());
         }
-
         return new SuccessCommentsResponse($comments);
     }
 
@@ -133,7 +147,6 @@ class CommentController extends Controller
             $commentService = $this->get('comment.service.comment_service');
 
             $comments = $commentService->getCommentRepository()->getPostCommentsByProfile($profile_id);
-
 
         } catch(BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());

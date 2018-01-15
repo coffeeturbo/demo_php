@@ -13,10 +13,7 @@ CommentBundle\Entity\Comment:
     updated:
       type: datetime
       nullable: false
-#    postId:
-#      type: integer
-#      column: post_id
-#      nullable: false
+
     votesRating:
       type: integer
       nullable: false
@@ -28,6 +25,9 @@ CommentBundle\Entity\Comment:
       nullable: false
     commentsTotal:
       column: comments_total
+      type: integer
+      nullable: false
+    level:
       type: integer
       nullable: false
     isDeleted:

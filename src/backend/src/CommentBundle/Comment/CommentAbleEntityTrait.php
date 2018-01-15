@@ -1,6 +1,7 @@
 <?php
 namespace CommentBundle\Comment;
 
+use CommentBundle\Entity\Comment;
 use Doctrine\Common\Collections\ArrayCollection;
 
 trait CommentAbleEntityTrait
@@ -35,6 +36,15 @@ trait CommentAbleEntityTrait
     public function setCommentsTotal(int $total)
     {
         $this->commentsTotal = $total;
+        return $this;
+    }
+
+    public function addComment(Comment $comment)
+    {
+
+        $idx = $this->childrenComments->indexOf($comment);
+
+        if($idx === false) $this->childrenComments->add($comment);
         return $this;
     }
 
