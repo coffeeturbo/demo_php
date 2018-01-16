@@ -1,6 +1,7 @@
 <?php
 namespace VoteBundle\Service;
 
+use CommentBundle\Entity\Comment;
 use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Repository\ProfileRepository;
@@ -198,4 +199,22 @@ class VoteService
         if($vote) $post->setVote($vote);
     }
 
+    public function getVotesToComments(array $comments, $profile)
+    {
+        $commentIds = array_map(function(Comment $comment){
+            return $comment->getId();
+        }, $comments);
+
+        $votes = $this->voteRepository->getVotesByCommentIds($commentIds, $profile);
+
+        array_walk($comments, function(Comment $comment) use ($votes){
+            /** @var Vote $vote */
+            foreach($votes as $vote) {
+                if($comment->getId() === $vote->getContentId()){
+                    $comment->setVote($vote);
+                    break;
+                }
+            }
+        });
+    }
 }

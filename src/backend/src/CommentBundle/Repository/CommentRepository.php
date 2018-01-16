@@ -74,6 +74,9 @@ class CommentRepository extends EntityRepository
             ;
 
             $result = $qb->getResult();
+
+
+
         } catch(NoResultException $e){
             throw new NotFoundHttpException(sprintf("comment with id= %s not found", $postId));
         }

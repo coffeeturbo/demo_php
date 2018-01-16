@@ -101,6 +101,12 @@ class CommentController extends Controller
 
             $comments = $commentService->getCommentRepository()->getCommentsByPost($post_id);
 
+
+            if($account = $this->get('auth.service')->getAccount()){
+                $profile = $this->get('profile.service')->getCurrentProfile();
+                $this->get('vote.service.vote_service')->getVotesToComments($comments, $profile);
+            }
+
             foreach($comments as $id => $comment){
                 /** @var $comment Comment */
 

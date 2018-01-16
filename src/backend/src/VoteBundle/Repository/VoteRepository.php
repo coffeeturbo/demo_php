@@ -7,6 +7,7 @@ use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use VoteBundle\Entity\Vote;
+use VoteBundle\Entity\VoteContentType\VoteContentTypeComment;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
 
 class VoteRepository extends EntityRepository
@@ -50,6 +51,21 @@ class VoteRepository extends EntityRepository
         ]);
 
         return $vote instanceof Vote ? $vote : null;
+    }
+
+    public function getVotesByCommentIds(array $commentIds, Profile $profile)
+    {
+        try{
+            $votes = $this->findBy([
+                'profile' => $profile->getId(),
+                'contentType' => VoteContentTypeComment::INT_CODE,
+                'contentId' => $commentIds,
+            ]);
+        } catch(NoResultException $e){
+            return new NotFoundHttpException();
+        }
+
+        return $votes;
     }
 
 
