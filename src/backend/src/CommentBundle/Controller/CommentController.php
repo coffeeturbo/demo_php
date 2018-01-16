@@ -101,23 +101,12 @@ class CommentController extends Controller
 
             $comments = $commentService->getCommentRepository()->getCommentsByPost($post_id);
 
-
             foreach($comments as $id => $comment){
                 /** @var $comment Comment */
 
-                foreach($comments as $y => $nestedCommend){
-                    /** @var $nestedCommend Comment */
-
-
-                    if($nestedCommend->getParentComment()){
-                        if($nestedCommend->getParentComment()->getId() === $comment->getId()){
-                            $nestedCommend->setParentComment($comment);
-
-                            $comment->addComment($nestedCommend);
-                            unset($comments[$y]);
-                            continue(2);
-                        }
-                    }
+                if($comment->getLevel() !== 0){
+                    unset($comments[$id]);
+                    continue;
                 }
             }
 
