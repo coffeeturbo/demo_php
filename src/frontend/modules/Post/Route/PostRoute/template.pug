@@ -1,5 +1,5 @@
 doctype html
-post([post]="post")
+post([post]="route.snapshot.data.post")
 .comments(#commentsEl)
-  comment(*ngFor="let comment of comments;", [comment]="comment", [post]="post")
-  comment-form([post]="post")
+  comment(*ngFor="let comment of route.snapshot.data.comments;", [comment]="comment", [post]="route.snapshot.data.post")
+  comment-form([post]="route.snapshot.data.post")

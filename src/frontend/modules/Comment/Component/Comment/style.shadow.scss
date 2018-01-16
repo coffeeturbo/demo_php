@@ -4,22 +4,6 @@
   margin-bottom: 2em;
   animation: fade 600ms;
   line-height: 1.5em;
-  
-  &.root {
-    comment {
-      margin: 1em 0;
-    }
-    
-    >comment {
-      margin-left: 1.5em;
-
-      .author .avatar {
-        width: 16px;
-        height: 16px;
-        margin-right: .5em;
-      }
-    }
-  }
 
   a, button {
     color: material-color($primary_material, "600");
@@ -74,6 +58,13 @@
     }
   }
 
+  .content {
+    .attachment-image {
+      max-width:100%;
+      max-height: 250px;
+    }
+  }
+  
   .actions {
     display: flex;
     align-items: center;
@@ -136,15 +127,24 @@
 
 
   &.root {
-    & > comment {
+    > comment {
       margin: 1em;
       margin-left: 1.5em;
+      .author .avatar {
+        width: 16px;
+        height: 16px;
+        margin-right: .5em;
+      }
     }
-
+    
     .author .avatar {
       width: 24px;
       height: 24px;
     }
+  }
+
+  comment {
+    margin-left: 1.5em;
   }
 
   *:hover {

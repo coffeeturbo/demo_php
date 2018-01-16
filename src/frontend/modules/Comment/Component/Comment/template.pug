@@ -9,7 +9,8 @@ small.author
 section.content
   ng-container(*ngFor="let attachment of comment.attachments", [ngSwitch]="attachment.type")
     p.attachment-text(*ngSwitchCase="AttachmentType.text", [innerHTML]="attachment.content.text")
-    //img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
+    img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path", (click)="preview($event)")
+    //img.attachment-image-full(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
     //attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [attachment]="attachment.content")
     //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
@@ -21,7 +22,7 @@ section.content
   button.vote-down((click)="vote('negative')", [class.active]="comment.votes.state=='negative'")
     .fa.fa-chevron-down
 
-comment-form(*ngIf="showForm", [focus]="true", [parent]="comment", [post]="post")
+comment-form(*ngIf="showForm", [focus]="true", [parent]="comment", [post]="post", (onSubmit)="showForm = false; showChildComments = true; comment = $event")
 ng-container(*ngIf="comment.comments.length > 0")
   button.togglerChildComments(*ngIf="root", (click)="toggleChildComments()", [class.expanded]="showChildComments")
     .fa([class.fa-minus-square]="showChildComments", [class.fa-plus-square]="!showChildComments")
