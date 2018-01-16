@@ -3,7 +3,6 @@ namespace CommentBundle\Controller;
 
 use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
-use CommentBundle\Entity\Comment;
 use CommentBundle\Form\CommentFormType;
 use CommentBundle\Response\SuccessCommentResponse;
 use CommentBundle\Response\SuccessCommentsResponse;
@@ -101,20 +100,13 @@ class CommentController extends Controller
 
             $comments = $commentService->getCommentRepository()->getCommentsByPost($post_id);
 
-
+            // получаем лайки профиля для комментариев
             if($account = $this->get('auth.service')->getAccount()){
                 $profile = $this->get('profile.service')->getCurrentProfile();
                 $this->get('vote.service.vote_service')->getVotesToComments($comments, $profile);
             }
 
-            foreach($comments as $id => $comment){
-                /** @var $comment Comment */
-
-                if($comment->getLevel() !== 0){
-                    unset($comments[$id]);
-                    continue;
-                }
-            }
+            $commentService->clearDuplicateCommentsFromTree($comments);
 
         } catch(BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());

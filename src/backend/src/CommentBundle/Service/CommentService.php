@@ -64,4 +64,18 @@ class CommentService
         return $this->commentRepository;
     }
 
+
+    public function clearDuplicateCommentsFromTree(array $comments)
+    {
+        // убираем дубли комментариев из основного дерева
+        foreach($comments as $id => $comment){
+            /** @var $comment Comment */
+
+            if($comment->getLevel() !== 0){
+                unset($comments[$id]);
+                continue;
+            }
+        }
+    }
+
 }
