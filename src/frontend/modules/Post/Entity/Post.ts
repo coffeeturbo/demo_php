@@ -15,4 +15,5 @@ export interface Post {
     attachments: Attachment<AttachmentImage | AttachmentText | AttachmentVideo>[];
     profile: Profile;
     votes: Vote;
+    comments_total: number;
 }

@@ -48,8 +48,8 @@ div
   .flex-space
   .btn-material.secondary([routerLink]="getPostUrl()", fragment="comments")
     .fa.fa-comments-o
-    span.for-mobile 249 
-    span.for-desktop {{ 249 | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
+    span.for-mobile {{ post.comments_total }} 
+    span.for-desktop {{ post.comments_total | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
   .btn-material.secondary.for-desktop
     .fa.fa-bullhorn
     span {{"Share" | translate}}
