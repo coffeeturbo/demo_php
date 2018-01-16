@@ -32,6 +32,19 @@ export class FeedCacheService {
         cache.scroll = scroll;
     }
     
+    public addToFeed(feedRequest: GetFeedRequest, feed: Feed) 
+    {
+        delete feedRequest.cursor;
+        
+        let cache = this.cache.find(
+            item => JSON.stringify(item.feedRequest) == JSON.stringify(feedRequest)
+        );
+
+        if(cache) {
+            cache.observable = cache.observable.flatMap(oldFeed => [oldFeed.concat(feed)])
+        }
+    }
+    
     public getScroll(feedRequest: GetFeedRequest): number
     {
         let scroll = this.get(feedRequest).scroll;

@@ -4,9 +4,6 @@ import {Observable} from "rxjs";
 import 'rxjs/add/operator/publishReplay';
 
 import {ProfileService} from "./ProfileService";
-import {Feed} from "../../Feed/Entity/Feed";
-import {FeedService} from "../../Feed/Service/FeedService";
-import {FeedCacheService} from "../../Feed/Service/FeedCacheService";
 import {GetFeedRequest} from "../../Feed/Http/Request/GetFeedRequest";
 
 @Injectable()
