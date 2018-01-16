@@ -124,11 +124,13 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         this.visited = true;
     }
 
-    @HostListener('window:keyup', ['$event.keyCode'])
-    onKeydown(keyCode: number) {
-        if (this.current === false) return;
-
-        switch (keyCode) {
+    @HostListener('window:keyup', ['$event'])
+    onKeydown(e: KeyboardEvent) {
+        if(this.current === false || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+            return;
+        }
+        
+        switch (e.keyCode) {
             case PostHotkeys.VotePositive:
                 this.vote("positive");
                 break;

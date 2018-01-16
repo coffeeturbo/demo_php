@@ -71,17 +71,25 @@ export class FeedComponent implements AfterViewInit, OnDestroy {
     ngOnDestroy() {
         this.scrollSubscription.unsubscribe();
     }
+    
+    @HostListener('window:keyup', ['$event'])
+    onKeydown(e: KeyboardEvent) {
 
-    @HostListener('window:keyup', ['$event.keyCode'])
-    onKeydown(keyCode: number) {
-        if (keyCode == PostHotkeys.NextPost || keyCode == PostHotkeys.PreviousPost) {
+        if(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+            return;
+        }
+        
+        let keyCode: number = e.keyCode;
+        
+        
+        if (e.keyCode == PostHotkeys.NextPost || e.keyCode == PostHotkeys.PreviousPost) {
             let postComponents: PostComponent[] = this.postComponents.toArray();
             let index = 0;
 
             if (this.currentPostComponent) {
                 index = this.postComponents.toArray().indexOf(this.currentPostComponent);
 
-                switch (keyCode) {
+                switch (e.keyCode) {
                     case PostHotkeys.NextPost:
                         index++;
                         break;
