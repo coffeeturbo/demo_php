@@ -1,15 +1,18 @@
 <?php
 namespace CommentBundle\Comment;
 
+use CommentBundle\Entity\Comment;
+
 trait ParentCommentAbleEntityTrait
 {
-    private $parentCommentId;
+//    private $parentCommentId;
+    /** @var  Comment */
     private $parentComment;
     private $level = 0;
 
     public function getParentCommentId(): ?int
     {
-        return $this->parentCommentId;
+        return $this->parentComment !==null ? $this->parentComment->getId(): null;
     }
 
     public function setParentCommentId(?int $parentCommentId)

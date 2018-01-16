@@ -104,4 +104,13 @@ class CommentRepository extends EntityRepository
 
         return $result;
     }
+
+    public function updateComments(array $comments)
+    {
+        $em = $this->getEntityManager();
+        foreach($comments as $comment){
+            $em->persist($comment);
+        }
+        $em->flush();
+    }
 }

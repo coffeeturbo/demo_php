@@ -78,4 +78,57 @@ class CommentService
         }
     }
 
+    public function increaseCommentsTotalTree(Comment $comment)
+    {
+
+        $parentComments = $this->getParentCommentsByComment($comment);
+
+
+        // увеличиваем в этом дереве количество комментариев
+        array_walk($parentComments, function(Comment $comment){
+            $comment->increaseCommentsTotal();
+        });
+
+
+        // сохраняем в базе
+        $this->updateComments($parentComments);
+
+
+    }
+
+    public function decreaseCommentsTotalTree(Comment $comment)
+    {
+        $parentComments = $this->getParentCommentsByComment($comment);
+
+
+        // уменьшаем в этом дереве количество комментариев
+        array_walk($parentComments, function(Comment $comment){
+            $comment->decreaseCommentsTotal();
+        });
+
+
+        // сохраняем в базе
+        $this->updateComments($parentComments);
+    }
+
+    private function getParentCommentsByComment(Comment $comment){
+        // получаем дерево комментариев
+        $parentComments = [];
+        do {
+            if($comment->getParentCommentId()){
+                $comment = $this->commentRepository->getById($comment->getParentCommentId());
+                $parentComments[] = $comment;
+            }
+
+        } while($comment->getParentCommentId());
+
+        return$parentComments;
+    }
+
+
+    public function updateComments(array $comments)
+    {
+        $this->getCommentRepository()->updateComments($comments);
+    }
+
 }

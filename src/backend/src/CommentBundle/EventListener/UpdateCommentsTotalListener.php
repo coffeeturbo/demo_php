@@ -1,7 +1,6 @@
 <?php
 namespace CommentBundle\EventListener;
 
-use CommentBundle\Entity\Comment;
 use CommentBundle\Event\CommentEvent;
 use CommentBundle\Event\CommentEvents;
 use CommentBundle\Service\CommentService;
@@ -26,32 +25,22 @@ class UpdateCommentsTotalListener implements EventSubscriberInterface
     {
        return [
            CommentEvents::COMMENT_CREATED => [
-               ['updateIncreaseComment'],
+               ['updateIncreaseCommentsTotal'],
                ['updateIncreasePost'],
 
            ],
            CommentEvents::COMMENT_DELETED => [
-               ['onDeleteCommentDecrease'],
+               ['onDeleteCommentDecreaseCommentsTotal'],
                ['onDeletePostDecrease'],
            ]
        ];
     }
 
-    public function updateIncreaseComment(CommentEvent $event)
+    public function updateIncreaseCommentsTotal(CommentEvent $event)
     {
         $comment = $event->getComment();
 
-
-        if($comment->getParentCommentId()){
-            $parentComment = $comment->getParentComment();
-
-            $parentComment->increaseCommentsTotal();
-
-            if($parentComment instanceof Comment){
-                $this->commentService->save($parentComment);
-            }
-        }
-
+        $this->commentService->increaseCommentsTotalTree($comment);
     }
 
     public function updateIncreasePost(CommentEvent $event)
@@ -63,21 +52,13 @@ class UpdateCommentsTotalListener implements EventSubscriberInterface
         $this->postService->getPostRepository()->save($post);
     }
 
-    public function onDeleteCommentDecrease(CommentEvent $event)
+    public function onDeleteCommentDecreaseCommentsTotal(CommentEvent $event)
     {
         // проверять на дочерние комментарии и удалять их
 
         $comment = $event->getComment();
 
-        if($parentComment = $comment->getParentComment()){
-            $parentComment->decreaseCommentsTotal();
-
-            if($parentComment instanceof Comment){
-                $this->commentService->save($parentComment);
-            }
-
-            $this->commentService->save($parentComment);
-        }
+        $this->commentService->decreaseCommentsTotalTree($comment);
 
     }
 
