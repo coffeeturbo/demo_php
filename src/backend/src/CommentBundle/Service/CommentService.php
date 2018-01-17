@@ -65,7 +65,7 @@ class CommentService
     }
 
 
-    public function clearDuplicateCommentsFromTree(array $comments)
+    public function clearDuplicateCommentsFromTree(array &$comments)
     {
         // убираем дубли комментариев из основного дерева
         foreach($comments as $id => $comment){
@@ -83,7 +83,7 @@ class CommentService
 
         $parentComments = $this->getParentCommentsByComment($comment);
 
-
+        dump($parentComments);
         // увеличиваем в этом дереве количество комментариев
         array_walk($parentComments, function(Comment $comment){
             $comment->increaseCommentsTotal();
@@ -92,8 +92,6 @@ class CommentService
 
         // сохраняем в базе
         $this->updateComments($parentComments);
-
-
     }
 
     public function decreaseCommentsTotalTree(Comment $comment)
@@ -115,14 +113,14 @@ class CommentService
         // получаем дерево комментариев
         $parentComments = [];
         do {
-            if($comment->getParentCommentId()){
-                $comment = $this->commentRepository->getById($comment->getParentCommentId());
+            if($parentComment = $comment->getParentComment()){
+                $comment = $this->commentRepository->getById($parentComment->getId());
                 $parentComments[] = $comment;
             }
 
-        } while($comment->getParentCommentId());
+        } while($comment->getParentComment());
 
-        return$parentComments;
+        return $parentComments;
     }
 
 

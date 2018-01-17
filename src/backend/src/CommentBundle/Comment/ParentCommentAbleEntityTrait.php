@@ -5,14 +5,14 @@ use CommentBundle\Entity\Comment;
 
 trait ParentCommentAbleEntityTrait
 {
-//    private $parentCommentId;
+    private $parentCommentId;
     /** @var  Comment */
     private $parentComment;
     private $level = 0;
 
     public function getParentCommentId(): ?int
     {
-        return $this->parentComment !==null ? $this->parentComment->getId(): null;
+        return $this->parentCommentId ;
     }
 
     public function setParentCommentId(?int $parentCommentId)
