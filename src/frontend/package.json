@@ -11,7 +11,7 @@
     "start": "webpack --config webpack/webpack.server.js --env.server --progress --hide-modules && webpack --config webpack/webpack.prod.js --env.prod --progress --hide-modules",
     "universal:watch": "webpack --config webpack/webpack.server.js --env.server --progress --hide-modules --watch",
     "prerender": "npm run clean",
-    "server": "test -f ../web/dist/server.js && nodemon ../web/dist/server.js || echo Project is not rendered! Please run `npm start` before run server",
+    "server": "test -f ../web/dist/server.js && nodemon ../web/dist/server.js || echo Project is not rendered! Please run ``npm start`` before run server",
     "clean": "rimraf ../web/dist"
   },
   "engines": {
