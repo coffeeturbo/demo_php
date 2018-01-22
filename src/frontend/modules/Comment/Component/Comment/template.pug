@@ -1,10 +1,19 @@
 small.author
+  .rate([class.negative]="comment.votes.rating < 0") 
+    ng-container(*ngIf="comment.votes.rating > 0") +
+    | {{ comment.votes.rating }}
+    button.vote-up((click)="vote('positive')", [class.active]="comment.votes.state=='positive'")
+      .fa.fa-chevron-up
+    button.vote-down((click)="vote('negative')", [class.active]="comment.votes.state=='negative'")
+      .fa.fa-chevron-down
+
   a([routerLink]="['/profile', comment.profile.alias || comment.profile.id]")
     img.avatar(*ngIf="comment.profile.avatar", [src]="comment.profile.avatar?.small?.public_path")
     .name {{ comment.profile.name }}
   .created(*ngIf='comment.created')
     span {{ comment.created | comment_created }}
     tooltip {{ comment.created | date }}
+  i.fa.fa-link
 
 section.content
   ng-container(*ngFor="let attachment of comment.attachments", [ngSwitch]="attachment.type")
@@ -15,18 +24,22 @@ section.content
     //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
 .actions
-  button.reply((click)="toggleForm()") {{ (showForm ? "Cancel" : "Reply") | translate }}
-  button.vote-up((click)="vote('positive')", [class.active]="comment.votes.state=='positive'")
-    .fa.fa-chevron-up
-  .rate([class.negative]="comment.votes.rating < 0") {{ comment.votes.rating }}
-  button.vote-down((click)="vote('negative')", [class.active]="comment.votes.state=='negative'")
-    .fa.fa-chevron-down
+  button.reply(*ngIf="!showForm", (click)="toggleForm()")
+    | {{ "Reply" | translate }}
+  button.reply(*ngIf="showForm", (click)="toggleForm()") 
+    | {{ "Cancel" | translate }}
+  button
+    i.fa.fa-floppy-o
+  button
+    i.fa.fa-bullhorn
+  button
+    i.fa.fa-flag
 
 comment-form(*ngIf="showForm", [focus]="true", [parent]="comment", [post]="post", (onSubmit)="showForm = false; showChildComments = true; comment = $event")
 ng-container(*ngIf="comment.comments.length > 0")
-  button.togglerChildComments(*ngIf="root", (click)="toggleChildComments()", [class.expanded]="showChildComments")
+  button.togglerChildComments((click)="toggleChildComments()", [class.expanded]="showChildComments")
     .fa([class.fa-minus-square]="showChildComments", [class.fa-plus-square]="!showChildComments")
     span(*ngIf="!showChildComments") {{ "Show replies" | translate }} ({{ comment.comments_total }})
   
-  ng-container(*ngIf="showChildComments || !root")
+  ng-container(*ngIf="showChildComments")
     comment(*ngFor="let childComment of comment.comments;", [comment]="childComment", [post]="post", [root]="false")

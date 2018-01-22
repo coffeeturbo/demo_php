@@ -19,6 +19,7 @@ import {PostTextFormat} from "./Pipe/PostTextFormat";
 import {PostFormLoadingComponent} from "./Component/PostFormLoading/index";
 import {CommentModule} from "../Comment/CommentModule";
 import {PostCommentsResolver} from "./Service/PostCommentsResolver";
+import {ShareModule} from "../Share/ShareModule";
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import {PostCommentsResolver} from "./Service/PostCommentsResolver";
         AttachmentModule,
         CommentModule,
         CommonModule,
+        ShareModule,
         RouterModule
     ],
     declarations: [

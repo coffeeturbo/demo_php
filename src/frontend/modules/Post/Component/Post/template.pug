@@ -50,7 +50,7 @@ div
     .fa.fa-comments-o
     span.for-mobile {{ post.comments_total }} 
     span.for-desktop {{ post.comments_total | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
-  .btn-material.secondary.for-desktop
+  .btn-material.secondary.for-desktop((click)="isShareModalVisible = true")
     .fa.fa-bullhorn
     span {{"Share" | translate}}
   button.btn-material.secondary.actions((click)='render.addClass(actions, "active")', (focusout)='render.removeClass(actions, "active")')
@@ -72,3 +72,7 @@ div
         a
           .fa.fa-fw.fa-bullhorn
           | {{"Share" | translate }}
+modal(*ngIf="isShareModalVisible", [backdrop]="true", (on-close)="isShareModalVisible = false", [close-mode]="1")
+  modal-header Поделиться постом
+  modal-body
+    share([link]="getPostUrl({short: true})")

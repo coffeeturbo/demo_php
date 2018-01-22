@@ -22,6 +22,11 @@ export const Config: ConfigInterface = {
         "token_key": "token",
         "refresh_token_key": "refresh_token"
     },
+    "applications" : {
+        "facebook" : {
+            "app_id" : 145634995501895 // ToDo: register app and insert code here!
+        }
+    },
     "account": {
         "constraints": {
             "username": {
@@ -96,6 +101,11 @@ interface ConfigInterface {
                 match: string,
                 invalid_message: string
             },
+        }
+    };
+    applications : {
+        facebook : {
+            app_id : number
         }
     };
     profile: {

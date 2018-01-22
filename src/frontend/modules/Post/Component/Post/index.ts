@@ -29,6 +29,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
 
     private markAsVisitedSubscription: Subscription;
     private isIntoViewSubscription: Subscription;
+    private isShareModalVisible: boolean = false;
 
     @HostBinding('class.visited')
     public visited: boolean = false; // прочитал ли пользователь пост
@@ -115,8 +116,8 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    getPostUrl() {
-        return `/post/${getSlug(this.post.title)}-${this.post.id}`;
+    getPostUrl(params: {short: boolean} = {short: false}) {
+        return `/post/${(params.short ? "" : getSlug(this.post.title + "-")) + this.post.id}`;
     }
 
     @HostListener('click')

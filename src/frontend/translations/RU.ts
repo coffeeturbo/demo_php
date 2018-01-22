@@ -7,6 +7,8 @@ export const LocaleRU = {
   "Are you sure?": "Вы уверены?",
   "Best":         "Лучшее",
   "Birthday":     "День рождения",
+  "Copy":         "Скопировать",
+  "Copied":       "Скопировано",
   "Cancel":       "Отмена",
   "Change":       "Изменить",
   "Close":        "Закрыть",

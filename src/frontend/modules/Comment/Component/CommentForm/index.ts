@@ -79,7 +79,9 @@ export class CommentFormComponent {
     submit() {
         this.isLoading = true;
 
-        if(this.form.invalid) return;
+        if(this.form.value.attachments.length > 1 && this.form.value.attachments[0].value == "") {
+            (<FormArray>this.form.controls.attachments).removeAt(0);
+        }
         
         let commentCreateRequest: CommentCreateRequest = this.form.value;
 

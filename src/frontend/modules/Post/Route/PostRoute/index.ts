@@ -10,7 +10,8 @@ import {ApplicationScrollService} from "../../../Application/Service/Application
 export class PostRoute {
 
     @ViewChild('commentsEl') commentsEl: ElementRef;
-
+    public orderCommentsBy: "rate" | "date" = "date";
+    
     constructor(
         public route: ActivatedRoute, 
         private applicationScrollService: ApplicationScrollService
@@ -25,6 +26,6 @@ export class PostRoute {
                         this.applicationScrollService.scrollTo(0);
                 }
             });
-        }, 0);
+        }, 10);
     }
 }

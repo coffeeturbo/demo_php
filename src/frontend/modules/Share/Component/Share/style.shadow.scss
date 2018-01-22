@@ -1,0 +1,41 @@
+@import '../../../../assets/styles/global';
+:host{
+  min-width: 300px;
+  display: block;
+
+  h4 {
+    margin-bottom: .5em;
+  }
+  ul {
+    font-size: $h1_size;
+    display: flex;
+    align-items: center;
+    margin-bottom: .5em;
+    
+    li {
+      & + li {
+        margin-left: .5em;
+      }
+      
+      .fa.fa-telegram {
+        color: #32afed;
+      }
+  
+      .fa.fa-vk {
+        color: #4a76a8;
+      }
+  
+      .fa.fa-facebook-square {
+        color: #4267b2;
+      }
+      
+      .fa-whatsapp {
+        background: #00e676;
+        color: #fff;
+        padding: 0 2px;
+        border-radius: 2px;
+      }
+    }
+  }
+
+}

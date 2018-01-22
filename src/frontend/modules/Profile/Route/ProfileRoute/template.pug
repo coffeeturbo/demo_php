@@ -36,6 +36,7 @@ ng-container(*ngIf="profile")
         ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:translate("day"):translate("days"):translate("days1")}} 
         | {{"Ago" | translate | lowercase}}
     
+    button.btn-material(*ngIf="profileService.isOwn(profile)", routerLink="/post/add") Добавить пост
   feed(*ngIf="feed", [feed]="feed", (onFeedLoad)="loadFeed($event)", [isLoading]="isLoading")
 profile-avatar-cropper((onCrop)="uploadAvatar($event)", [disabled]="disabled")
 backdrop-actions(*ngIf="backdropActionsHelper.isVisible", (onChange)="profile = route.snapshot.data.profile")
