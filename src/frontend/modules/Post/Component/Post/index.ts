@@ -29,7 +29,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
 
     private markAsVisitedSubscription: Subscription;
     private isIntoViewSubscription: Subscription;
-    private isShareModalVisible: boolean = false;
+    public isShareModalVisible: boolean = false;
 
     @HostBinding('class.visited')
     public visited: boolean = false; // прочитал ли пользователь пост
