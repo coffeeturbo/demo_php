@@ -2,6 +2,7 @@
 namespace CommentBundle\Repository;
 
 use AttachmentBundle\Entity\Attachment;
+use AttachmentBundle\Service\FetchResource\Result;
 use CommentBundle\Entity\Comment;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
@@ -73,7 +74,7 @@ class CommentRepository extends EntityRepository
                 ->getQuery()
             ;
 
-            $result = $qb->getResult();
+            $result = $qb->getArrayResult();
 
         } catch(NoResultException $e){
             throw new NotFoundHttpException(sprintf("comment with id= %s not found", $postId));

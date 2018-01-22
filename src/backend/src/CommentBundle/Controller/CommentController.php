@@ -103,10 +103,10 @@ class CommentController extends Controller
             // получаем лайки профиля для комментариев
             if($account = $this->get('auth.service')->getAccount()){
                 $profile = $this->get('profile.service')->getCurrentProfile();
-                $this->get('vote.service.vote_service')->getVotesToComments($comments, $profile);
+//                $this->get('vote.service.vote_service')->getVotesToComments($comments, $profile);
             }
 
-            $commentService->clearDuplicateCommentsFromTree($comments);
+//            $commentService->clearDuplicateCommentsFromTree($comments);
 
         } catch(BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
@@ -115,7 +115,7 @@ class CommentController extends Controller
         } catch(\Exception $e) {
             return new ErrorJsonResponse($e->getMessage());
         }
-        return new SuccessCommentsResponse($comments);
+        return new \CommentBundle\Response\AssocArray\SuccessCommentsResponse($comments);
     }
 
     /**
