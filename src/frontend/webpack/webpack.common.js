@@ -6,6 +6,7 @@ const helpers = require('./helpers');
 const ngtools = require('@ngtools/webpack');
 
 const ENV = process.env.ENV = process.env.ENV = helpers.isDev ? 'development' : 'production';
+const IS_NODE = process.env.IS_NODE = helpers.isServer;
 
 module.exports = {
     entry: {
@@ -88,12 +89,13 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                'ENV': JSON.stringify(ENV)
+                'ENV': JSON.stringify(ENV),
+                'IS_NODE': JSON.stringify(IS_NODE)
             }
         }),
         new ngtools.AngularCompilerPlugin({
             tsConfigPath: helpers.root("tsconfig.json"),
-            skipCodeGeneration: helpers.isDev, 
+            skipCodeGeneration: helpers.isDev || helpers.isServer, 
             entryModule: helpers.root(
                 "modules",
                 "Application",

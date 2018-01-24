@@ -46,7 +46,7 @@ export class ApplicationComponent {
     }
 
     @HostListener('window:keydown', ['$event'])
-    onKeydown(e: KeyboardEvent) {
+    onKeydown(e) {
         if(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
             return;
         }

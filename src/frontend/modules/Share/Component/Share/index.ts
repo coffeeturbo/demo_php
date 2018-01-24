@@ -22,7 +22,7 @@ export class ShareComponent implements AfterViewInit {
     public isCopied = false;
     
     
-    constructor(@Inject(DOCUMENT) private dom: Document, private sanitizer: DomSanitizer) {}
+    constructor(@Inject(DOCUMENT) private dom, private sanitizer: DomSanitizer) {}
 
     ngOnInit() {
         this.uri = this.getOrigin() + this.link;

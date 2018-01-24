@@ -126,7 +126,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     }
 
     @HostListener('window:keyup', ['$event'])
-    onKeydown(e: KeyboardEvent) {
+    onKeydown(e) {
         if(this.current === false || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
             return;
         }
