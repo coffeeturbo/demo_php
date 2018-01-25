@@ -6,6 +6,7 @@ import {VoteState} from "../../../Vote/Entity/Vote";
 import {Router} from "@angular/router";
 import {Post} from "../../../Post/Entity/Post";
 import {CommentService} from "../../Service/CommentService";
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
     selector: 'comment',
@@ -26,6 +27,7 @@ export class CommentComponent implements OnInit {
     public showForm = false;
     
     constructor(
+        public pl: PlatformService,
         private authService: AuthService,
         private commentService: CommentService,
         private router: Router

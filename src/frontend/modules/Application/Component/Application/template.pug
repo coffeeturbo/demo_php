@@ -2,7 +2,7 @@
   header
     button.sidebar((click)="sidebar.toggle()")
       i.fa.fa-bars
-    .logo(*ngIf="pl.isPlatformBrowser()")
+    .logo
       a(routerLink="/")
         application-logo
     .search(*ngIf="!device.isMobile()")
