@@ -14,14 +14,15 @@ export class AutoSizeDirective implements OnInit, AfterViewInit {
     constructor(private el: ElementRef, private renderer: Renderer2) {}
     
     ngOnInit() {
-        this.el.nativeElement.parentElement.appendChild(this.divNode);
-
-        this.divNode.style.cssText = window.getComputedStyle(this.el.nativeElement).cssText;
-        this.divNode.style.overflow = "visible";
-        this.divNode.style.height = "auto";
-        this.divNode.style.position = "absolute";
-        this.divNode.style.left = "-9999px";
-        this.divNode.style.transition = "none";
+        if(typeof window != 'undefined') {
+            this.el.nativeElement.parentElement.appendChild(this.divNode);
+            this.divNode.style.cssText = window.getComputedStyle(this.el.nativeElement).cssText;
+            this.divNode.style.overflow = "visible";
+            this.divNode.style.height = "auto";
+            this.divNode.style.position = "absolute";
+            this.divNode.style.left = "-9999px";
+            this.divNode.style.transition = "none";
+        }
     }
     
     ngAfterViewInit() {
