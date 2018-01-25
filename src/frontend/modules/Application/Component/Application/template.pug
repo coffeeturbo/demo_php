@@ -2,7 +2,7 @@
   header
     button.sidebar((click)="sidebar.toggle()")
       i.fa.fa-bars
-    .logo
+    .logo(*ngIf="pl.isPlatformBrowser()")
       a(routerLink="/")
         application-logo
     .search(*ngIf="!device.isMobile()")
@@ -32,6 +32,6 @@ application-main
   router-outlet
 
 post-create-button(*ngIf="auth.isSignedIn()", routerLink="/post/add", routerLinkActive="hidden")  
-application-loading-bar
+application-loading-bar(*ngIf="pl.isPlatformBrowser()")
 application-scroll-button(*ngIf="!device.isMobile()")
-settings-modal
+settings-modal(*ngIf="pl.isPlatformBrowser()")

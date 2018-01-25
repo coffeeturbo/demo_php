@@ -16,6 +16,7 @@ import {VoteState} from "../../../Vote/Entity/Vote";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Subscription} from "rxjs/Subscription";
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
     selector: 'post',
@@ -51,6 +52,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         public render: Renderer2,
         public el: ElementRef,
         public appScrollService: ApplicationScrollService,
+        public pl: PlatformService,
         public translationService: TranslationService,
         public profileService: ProfileService,
         public postService: PostService,

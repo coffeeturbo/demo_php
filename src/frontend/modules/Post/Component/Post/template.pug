@@ -1,7 +1,7 @@
 doctype html
 // этот div необходим для корректного position:sticky у .actions (что б не заезжал на .footer)
 div
-  .sticky
+  .sticky(*ngIf="pl.isPlatformBrowser()")
     button.btn-material.secondary((click)="toggleView();")
       .fa.fa-fw.fa-expand([ngClass]='{"fa-expand": minimized, "fa-compress": !minimized}')
       
@@ -20,7 +20,7 @@ div
         small.name {{ post.profile.name }} 
           .created(*ngIf='post.created')
             span {{ post.created | post_created }}
-            tooltip {{ post.created | date }}
+            tooltip(*ngIf="pl.isPlatformBrowser()") {{ post.created | date }}
 
   h2.title
     a([routerLink]="getPostUrl()") {{ post.title }} 
@@ -53,7 +53,11 @@ div
   .btn-material.secondary.for-desktop((click)="isShareModalVisible = true")
     .fa.fa-bullhorn
     span {{"Share" | translate}}
-  button.btn-material.secondary.actions((click)='render.addClass(actions, "active")', (focusout)='render.removeClass(actions, "active")')
+  button.btn-material.secondary.actions(
+    *ngIf="pl.isPlatformBrowser()",
+    (click)='render.addClass(actions, "active")',
+    (focusout)='render.removeClass(actions, "active")'
+  )
     .fa.fa-ellipsis-v
     ul(#actions)
       li

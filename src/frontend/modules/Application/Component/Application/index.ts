@@ -8,6 +8,7 @@ import {Device} from "../../Service/DeviceService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {AppHotkeys} from "./hotkeys";
 import {ApplicationScrollService} from "../../Service/ApplicationScrollService";
+import {PlatformService} from "../../Service/PlatformService";
 
 @Component({
     selector: "application",
@@ -32,6 +33,7 @@ export class ApplicationComponent {
         public sidebar: SidebarService,
         public auth: AuthService,
         public profile: ProfileService,
+        public pl: PlatformService,
         private appScrollService: ApplicationScrollService,
         private routeHelper: RouteHelperService,
         private loadingBarEvents: LoadingBarEvents
