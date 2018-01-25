@@ -14,21 +14,26 @@ class ArrayCommentFormatter extends Formatter
             'id'            => $this->resource['id'],
             'isDeleted'     => $this->resource['isDeleted'],
             'profile'       => isset( $this->resource['profile'])
-                ?(new ProfileFormatter( $this->resource['profile']))->format():null,
-            'votesRating'   => $this->resource['votesRating'],
-            'votesPositive' => $this->resource['votesPositive'],
-            'votesNegative' => $this->resource['votesNegative'],
+                ?(new ProfileFormatter( $this->resource['profile']))->format() : null,
+
+            'votes' => [
+//                'state' =>  $comment->getVote() ? $comment->getVote()->getType()->getStringCode() :'none',
+                'state' =>  'none',
+                'rating' => $this->resource['votesRating'],
+                'positive' => $this->resource['votesPositive'],
+                'negative' => $this->resource['votesNegative']
+            ],
             'created'       => $this->resource['created']->format(\DateTime::W3C),
             'updated'       => $this->resource['updated']->format(\DateTime::W3C),
 
             'level'         => $this->resource['level'],
-            'commentsTotal' => $this->resource['commentsTotal'],
+            'comments_total' => $this->resource['commentsTotal'],
 
-            'parentComment' => isset($this->resource['parentComment']) ? (new ArrayCommentFormatter($this->resource['parentComment']))->format() : null,
+            'parent_comment_id' => isset($this->resource['parentComment']) ? (new ArrayCommentFormatter($this->resource['parentComment']))->format()['id'] : [],
 
-            'childrenComments' => isset($this->resource['childrenComments']) ? (new CommentsFormatter($this->resource['childrenComments']))->format() : null,
+            'comments' => isset($this->resource['childrenComments']) ? (new CommentsFormatter($this->resource['childrenComments']))->format() : [],
 
-            'attachments' => isset($this->resource['attachments']) ? (new AttachmentsFormatter($this->resource['attachments']))->format() : null,
+            'attachments' => isset($this->resource['attachments']) ? (new AttachmentsFormatter($this->resource['attachments']))->format() : [],
         ];
     }
 

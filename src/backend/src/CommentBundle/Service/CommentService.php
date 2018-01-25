@@ -65,17 +65,78 @@ class CommentService
     }
 
 
-    public function clearDuplicateCommentsFromTree(array &$comments)
-    {
-        // убираем дубли комментариев из основного дерева
-        foreach($comments as $id => $comment){
-            /** @var $comment Comment */
+    private function addChildrenComment (&$comments, $children ){
 
-            if($comment->getLevel() !== 0){
-                unset($comments[$id]);
-                continue;
+        if(count($comments)==0){
+            $comments[] = $children;
+        } else{
+            foreach($comments as $idx => $comment){
+                if($comment['id'] === $children['id']) {
+                    $comments[$idx] = $children;
+                    break;
+                }
             }
         }
+
+
+    }
+
+
+    public function addChildComment($parent, $child){
+        if(isset($child['parentComment']) && !is_null($child['parentComment']['id'])){
+            if($parent['id'] == $child['parentComment']['id']){
+
+                $this->addChildrenComment($parent['childrenComments'], $child);
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    public function clearDuplicateCommentsFromTree(array &$comments): ?array
+    {
+
+
+        return (new ChainBuilder($comments))->buildChain();
+
+
+//        foreach($comments as  $comment){
+//            foreach($comments as $idx => $childComment){
+//                if($this->addChildComment($childComment, $comment )){
+//
+//
+//                    unset($comments[$idx]);
+//                    continue(2);
+//                }
+//
+//            }
+//        }
+
+
+
+
+
+
+        // убираем дубли комментариев из основного дерева
+//        foreach($comments as $id => $comment){
+//            /** @var $comment Comment */
+//
+//            if(is_array($comment)){
+//
+//                if($comment['level']!== 0){
+//                    unset($comments[$id]);
+//                    continue;
+//                }
+//
+//            } elseif($comment instanceof Comment){
+//                if($comment->getLevel() !== 0){
+//                    unset($comments[$id]);
+//                    continue;
+//                }
+//            }
+//        }
     }
 
     public function increaseCommentsTotalTree(Comment $comment)

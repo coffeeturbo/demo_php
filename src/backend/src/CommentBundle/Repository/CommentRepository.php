@@ -6,6 +6,7 @@ use AttachmentBundle\Service\FetchResource\Result;
 use CommentBundle\Entity\Comment;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentRepository extends EntityRepository
@@ -63,8 +64,9 @@ class CommentRepository extends EntityRepository
     {
         try {
             $qb = $this->createQueryBuilder('c')
-                ->select('c', 'p', 'childrenComments', 'parentComment', 'attachments')
+                ->select('c', 'p', 'childrenComments', 'parentComment', 'attachments', 'account')
                 ->join('c.profile', 'p')
+                ->leftJoin('p.account', 'account')
                 ->leftJoin('c.childrenComments', 'childrenComments')
                 ->leftJoin('c.parentComment', 'parentComment')
                 ->leftJoin('c.attachments', 'attachments')
@@ -74,7 +76,7 @@ class CommentRepository extends EntityRepository
                 ->getQuery()
             ;
 
-            $result = $qb->getArrayResult();
+            $result = $qb->getResult(Query::HYDRATE_ARRAY);
 
         } catch(NoResultException $e){
             throw new NotFoundHttpException(sprintf("comment with id= %s not found", $postId));
