@@ -201,6 +201,24 @@ class VoteService
 
     public function getVotesToComments(array $comments, $profile)
     {
+
+        $object = null;
+        foreach($comments as $comment){
+            $object = $comment;
+        }
+
+        if(is_array($object)){
+            $this->arrayCommentDecorator($comments, $profile);
+        }else {
+            $this->objectsCommentDecorator($comments, $profile);
+        }
+
+
+    }
+
+
+    private function objectsCommentDecorator(array $comments, $profile)
+    {
         $commentIds = array_map(function(Comment $comment){
             return $comment->getId();
         }, $comments);
@@ -212,6 +230,36 @@ class VoteService
             foreach($votes as $vote) {
                 if($comment->getId() === $vote->getContentId()){
                     $comment->setVote($vote);
+                    break;
+                }
+            }
+        });
+    }
+
+    private function arrayCommentDecorator(array $comments, $profile)
+    {
+
+
+        $commentIds = array_map(function($comment){
+            return $comment['id'];
+        }, $comments);
+
+
+
+        $votes = $this->voteRepository->getVotesByCommentIds($commentIds, $profile);
+
+
+        array_walk($comments, function(array $comment) use ($votes){
+            /** @var Vote $vote */
+            foreach($votes as $vote){
+                if($comment['id'] === $vote->getContentId()){
+
+
+                    // todo написать форматер войта
+                    $comment['vote'] = $vote;
+
+//                    print_r($votes);
+//                    die;
                     break;
                 }
             }

@@ -18,7 +18,7 @@ class ArrayCommentFormatter extends Formatter
 
             'votes' => [
 //                'state' =>  $comment->getVote() ? $comment->getVote()->getType()->getStringCode() :'none',
-                'state' =>  'none',
+//                'state' =>  isset($this->resource['vote'])? $this->resource['vote'] : 'none',
                 'rating' => $this->resource['votesRating'],
                 'positive' => $this->resource['votesPositive'],
                 'negative' => $this->resource['votesNegative']

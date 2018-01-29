@@ -11,8 +11,6 @@ class ArrayProfileFormatter extends Formatter
 {
     function format()
     {
-
-
         return [
             'id'         => $this->resource['id'],
             'account_id' => isset($this->resource['account']) ? $this->resource['account']['id']: null,

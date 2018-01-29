@@ -106,8 +106,7 @@ class CommentController extends Controller
 //                $this->get('vote.service.vote_service')->getVotesToComments($comments, $profile);
             }
 
-            $tree = $commentService->clearDuplicateCommentsFromTree($comments);
-
+            $tree = $commentService->buildChainedTree($comments);
         } catch(BadRestRequestHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch(AccessDeniedHttpException $e) {

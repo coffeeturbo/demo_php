@@ -34,105 +34,46 @@ class ChainBuilder
     public function buildChain()
     {
 
-        // находим уровень
-        while( count($this->comments) > $this->getChainsTotal()){
-            $level = $this->getLowLevelComment();
-            // подбираем для этого уровня родительский комментарий а родительскому дочерний
+        while(count($this->comments) > $this->getChainsTotal()){
+            foreach($this->comments as $idx => &$comment) {
+                if($comment['level'] == $this->getLowLevelComment()){
 
-
-            foreach($this->comments as $idx => &$comment){
-                if($comment['level'] == $level){
-
-                    if($this->addToAChain($comment)) {
+                    if($this->addToChain($comment))
                         unset($this->comments[$idx]);
-                    }
-//                    print_r($comment);
-//                    die;
                 }
             }
 
-//            print_r($this->comments);
-//            die;
 
         }
-
-
-
-        // удаляем из массива
-
-//        print_r($this->comments);
-
 
         return $this->comments;
-
     }
 
-
-    public function addToAChain( &$comment): bool
+    public function addToChain($childComment)
     {
-        $isAdded = false;
-
-        $parentComment = $this->findParentComment($comment);
-
-        if($parentComment){
-            $this->attachComments($parentComment, $comment);
-
-            print_r($this->comments);
-            die;
-            $isAdded = true;
-        }
-
-        return $isAdded;
-    }
+        // находим родительский комментарий
+        foreach($this->comments as &$comment) {
+            if(isset($childComment['parentComment'])
+                && $childComment['parentComment']['id'] == $comment['id']){
 
 
-    public function findParentComment(&$comment){
-        foreach($this->comments as $idx => &$parentComment){
-
-            if((isset($comment['parentComment']))&&($parentComment['id'] == $comment['parentComment']['id'])){
-                return $parentComment;
-            }
-        }
-        return null;
-    }
-
-    public function attachComments(&$parentComment, &$childrenComment){
-        $childrenComment['parentComment'] = $parentComment;
-
-        $this->attachChildrenComment($parentComment, $childrenComment);
-
-    }
-
-
-    public function attachChildrenComment(&$parentComment, &$childrenComment){
-
-        if(count($parentComment['childrenComments']) == 0){
-            $parentComment['childrenComments'][] = $childrenComment;
-        } else {
-
-            if(count($parentComment['childrenComments'])>0){
-                foreach($parentComment['childrenComments'] as $idx => &$comment){
-                    if($comment['id'] == $childrenComment['id']){
-
-                        unset($parentComment['childrenComments'][$idx]);
-
-                        $parentComment['childrenComments'][] = $childrenComment;
-
-                        $parentComment['childrenComments'] = array_values($parentComment['childrenComments']);
-                        break;
-//                        print_r( $parentComment['childrenComments']);
-//                        die;
+                if(count($comment['childrenComments']) !== 0){
+                    foreach($comment['childrenComments'] as $idx => $childCom){
+                        $comment['childrenComments'][$idx] = $childComment;
                     }
+                }else {
+                    $comment['childrenComments'][] = $childComment;
                 }
 
-
+                return true;
             }
-
-//            print_r($parentComment);
-//            die;
         }
-//        print_r($parentComment);
-//        die;
+        // добавляем
+
+        return false;
     }
+
+
+
 
 }

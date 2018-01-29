@@ -69,7 +69,7 @@ class CommentService
 
         if(count($comments)==0){
             $comments[] = $children;
-        } else{
+        } else {
             foreach($comments as $idx => $comment){
                 if($comment['id'] === $children['id']) {
                     $comments[$idx] = $children;
@@ -77,8 +77,6 @@ class CommentService
                 }
             }
         }
-
-
     }
 
 
@@ -95,48 +93,9 @@ class CommentService
         return false;
     }
 
-    public function clearDuplicateCommentsFromTree(array &$comments): ?array
+    public function buildChainedTree(array &$comments): ?array
     {
-
-
         return (new ChainBuilder($comments))->buildChain();
-
-
-//        foreach($comments as  $comment){
-//            foreach($comments as $idx => $childComment){
-//                if($this->addChildComment($childComment, $comment )){
-//
-//
-//                    unset($comments[$idx]);
-//                    continue(2);
-//                }
-//
-//            }
-//        }
-
-
-
-
-
-
-        // убираем дубли комментариев из основного дерева
-//        foreach($comments as $id => $comment){
-//            /** @var $comment Comment */
-//
-//            if(is_array($comment)){
-//
-//                if($comment['level']!== 0){
-//                    unset($comments[$id]);
-//                    continue;
-//                }
-//
-//            } elseif($comment instanceof Comment){
-//                if($comment->getLevel() !== 0){
-//                    unset($comments[$id]);
-//                    continue;
-//                }
-//            }
-//        }
     }
 
     public function increaseCommentsTotalTree(Comment $comment)
