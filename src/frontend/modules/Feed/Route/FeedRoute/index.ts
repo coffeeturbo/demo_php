@@ -20,7 +20,7 @@ export class FeedRoute implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.feed = this.route.snapshot.data.feed;
+        this.feed = this.route.snapshot.data.feed || [];
     }
 
     public loadFeed(cursor: number) {

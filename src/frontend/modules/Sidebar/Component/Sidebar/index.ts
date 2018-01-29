@@ -6,6 +6,7 @@ import {SettingsModalService} from "../../../Settings/Service/SettingsModalServi
 import {Config} from "../../../../app/config";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Device} from "../../../Application/Service/DeviceService";
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
     selector: "sidebar",
@@ -22,6 +23,7 @@ export class SidebarComponent implements AfterViewInit {
     public backdropOpatity: number = 0.7;
 
     constructor(
+        public pl: PlatformService,
         public service: SidebarService,
         public auth: AuthService,
         public profile: ProfileService,

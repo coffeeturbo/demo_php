@@ -6,6 +6,7 @@ import { Request, Response } from 'express';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { enableProdMode } from '@angular/core';
 import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
+import {APP_BASE_HREF} from "@angular/common";
 
 enableProdMode();
 const app = express();
@@ -19,20 +20,27 @@ app.engine('html', ngExpressEngine({
 app.set('view engine', 'html');
 app.set('views', 'modules');
 
-[
-    "/", 
-    "/new"
-]
-.forEach((route: string) => {
-app.get(route, (req: Request, res: Response) => {
+// [
+//     "/", 
+//     "/new"
+// ]
+// .forEach((route: string) => {
+// app.get(route, (req: Request, res: Response) => {
+app.get("*", (req: Request, res: Response) => {
     console.time(`GET: ${req.originalUrl}`);
     res.render('../../web/dist/index', {
         req: req,
-        res: res
+        res: res,
+        provirders: [
+            {
+                provide: APP_BASE_HREF,  
+                useValue: baseUrl
+            }
+        ]
     });
     console.timeEnd(`GET: ${req.originalUrl}`);
 });
-});
+//});
 
 app.listen(port, () => {
     console.log(`Listening at ${baseUrl}`);

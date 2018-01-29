@@ -16,6 +16,7 @@ import {VoteState} from "../../../Vote/Entity/Vote";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Subscription} from "rxjs/Subscription";
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
     selector: 'post',
@@ -29,6 +30,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
 
     private markAsVisitedSubscription: Subscription;
     private isIntoViewSubscription: Subscription;
+    public isShareModalVisible: boolean = false;
 
     @HostBinding('class.visited')
     public visited: boolean = false; // прочитал ли пользователь пост
@@ -50,6 +52,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         public render: Renderer2,
         public el: ElementRef,
         public appScrollService: ApplicationScrollService,
+        public pl: PlatformService,
         public translationService: TranslationService,
         public profileService: ProfileService,
         public postService: PostService,
@@ -115,8 +118,8 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    getPostUrl() {
-        return `/post/${getSlug(this.post.title)}-${this.post.id}`;
+    getPostUrl(params: {short: boolean} = {short: false}) {
+        return `/post/${(params.short ? "" : getSlug(this.post.title + "-")) + this.post.id}`;
     }
 
     @HostListener('click')
@@ -125,7 +128,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     }
 
     @HostListener('window:keyup', ['$event'])
-    onKeydown(e: KeyboardEvent) {
+    onKeydown(e) {
         if(this.current === false || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
             return;
         }

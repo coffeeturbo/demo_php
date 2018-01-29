@@ -1,4 +1,4 @@
-import {Component, HostBinding, Input} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {Comment} from "../../Entity/Comment";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 import {AuthService} from "../../../Auth/Service/AuthService";
@@ -6,6 +6,7 @@ import {VoteState} from "../../../Vote/Entity/Vote";
 import {Router} from "@angular/router";
 import {Post} from "../../../Post/Entity/Post";
 import {CommentService} from "../../Service/CommentService";
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
     selector: 'comment',
@@ -13,7 +14,7 @@ import {CommentService} from "../../Service/CommentService";
     styleUrls: ['./style.shadow.scss']
 })
 
-export class CommentComponent {
+export class CommentComponent implements OnInit {
     public AttachmentType = AttachmentType;
 
     @HostBinding('class.root')
@@ -22,23 +23,29 @@ export class CommentComponent {
     @Input() comment: Comment;
     @Input() post: Post;
     
-    public showChildComments = false;
+    public showChildComments = true;
     public showForm = false;
     
     constructor(
+        public pl: PlatformService,
         private authService: AuthService,
         private commentService: CommentService,
         private router: Router
     ){}
-    
-    toggleChildComments() {
-        this.showChildComments = !this.showChildComments;
-    }
-    
-    toggleForm() {
-        this.showForm = !this.showForm;
+
+    ngOnInit() {
+        if(this.comment.level == 2) {
+            this.showChildComments = false;
+        }
     }
 
+    public toggleChildComments() {
+        this.showChildComments = !this.showChildComments;
+    }
+
+    public toggleForm() {
+        this.showForm = !this.showForm;
+    }
 
     private voteInProgress = false;
 

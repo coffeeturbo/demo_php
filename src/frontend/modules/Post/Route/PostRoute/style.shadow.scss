@@ -1,3 +1,5 @@
+@import '../../../../assets/styles/global';
+
 :host {
   display: flex;
   flex-direction: column;
@@ -10,5 +12,29 @@
     padding: 20px;
     margin-top: -20px;
     box-shadow: 0 1px 4px 0 #ccc;
+  }
+
+  header{
+    display: flex;
+    margin-bottom: 1em;
+    
+    .rate {
+      display: flex;
+      align-items: center;
+      color: material-color($secondary_material, "500");
+
+      button {
+        border-bottom: 1px dashed;
+        padding: 0;
+        margin: 0 .25em;
+        color: material-color($secondary_material, "500");
+        cursor: pointer;
+        
+        &.active {
+          color: $font_color_dark;
+          cursor: default;
+        }
+      }
+    }
   }
 }

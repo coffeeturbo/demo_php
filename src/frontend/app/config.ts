@@ -3,6 +3,7 @@ import {DictionariesNavigatorAliases} from "@angular-addons/translate";
 export const Config: ConfigInterface = {
     "product_name": "Socilite",
     "short_product_name": "SoL",
+    "platform": process.env.IS_NODE ? "node" : "browser",
     "locale": {
         "default": "RU",
         "aliases": {
@@ -16,11 +17,16 @@ export const Config: ConfigInterface = {
     },
     "uri": {
         "websocket": "/ws",
-        "api": (process.env.ENV === "development" ? "/api/app_dev.php" : "/api") // @TODO ВРЕМЕННО! убрал пока не работает Universal
+        "api": (process.env.IS_NODE ? "http://nginx:8080" : "") + (process.env.ENV === "development" ? "/api/app_dev.php" : "/api") // @TODO ВРЕМЕННО! убрал пока не работает Universal
     },
     "auth": {
         "token_key": "token",
         "refresh_token_key": "refresh_token"
+    },
+    "applications" : {
+        "facebook" : {
+            "app_id" : 145634995501895 // ToDo: register app and insert code here!
+        }
     },
     "account": {
         "constraints": {
@@ -75,6 +81,7 @@ export const Config: ConfigInterface = {
 interface ConfigInterface {
     product_name: string;
     short_product_name: string;
+    platform: string;
     locale: {
         default : string,
         aliases : DictionariesNavigatorAliases
@@ -96,6 +103,11 @@ interface ConfigInterface {
                 match: string,
                 invalid_message: string
             },
+        }
+    };
+    applications : {
+        facebook : {
+            app_id : number
         }
     };
     profile: {

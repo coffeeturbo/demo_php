@@ -1,0 +1,26 @@
+doctype html
+h4 В соцсетях и мессенджерах
+ul
+  li
+    a([href]="telegramLink", target="_blank")
+      i.fa.fa-telegram
+  li
+    a([href]="vkLink", target="_blank")
+      i.fa.fa-vk
+  li
+    a([href]="facebookLink", target="_blank")
+      i.fa.fa-facebook-square
+  li
+    a([href]="whatsappLink", target="_blank")
+      i.fa.fa-whatsapp
+
+.material-form
+  .material-field
+    .input-box
+      input#uriInput(#input, type="text", [value]="uri", (click)="input.select()")
+      hr
+      label.material-label(for="uriInput") {{'Link' | translate }}
+      
+.controls
+  button.btn-material.primary((click)="toClipboard()", [disabled]="isCopied") {{(isCopied ? "Copied" : "Copy") | translate }}
+  

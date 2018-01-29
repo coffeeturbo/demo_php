@@ -1,7 +1,7 @@
 doctype html
 // этот div необходим для корректного position:sticky у .actions (что б не заезжал на .footer)
 div
-  .sticky
+  .sticky(*ngIf="pl.isPlatformBrowser()")
     button.btn-material.secondary((click)="toggleView();")
       .fa.fa-fw.fa-expand([ngClass]='{"fa-expand": minimized, "fa-compress": !minimized}')
       
@@ -20,7 +20,7 @@ div
         small.name {{ post.profile.name }} 
           .created(*ngIf='post.created')
             span {{ post.created | post_created }}
-            tooltip {{ post.created | date }}
+            tooltip(*ngIf="pl.isPlatformBrowser()") {{ post.created | date }}
 
   h2.title
     a([routerLink]="getPostUrl()") {{ post.title }} 
@@ -33,7 +33,7 @@ div
 
   .content(*ngIf="!minimized", #content)
     ng-container(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
-      p.attachment-text(*ngSwitchCase="AttachmentType.text", [innerHTML]="attachment.content.text | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
+      attachment-text(*ngSwitchCase="AttachmentType.text", [text]="attachment.content.text | linky:{truncate:{length: 60}, stripPrefix: false}")
       img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
       attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [attachment]="attachment.content")
       //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
@@ -48,12 +48,16 @@ div
   .flex-space
   .btn-material.secondary([routerLink]="getPostUrl()", fragment="comments")
     .fa.fa-comments-o
-    span.for-mobile {{ post.comments_total }} 
+    span.for-mobile(*ngIf="pl.isPlatformBrowser()") {{ post.comments_total }} 
     span.for-desktop {{ post.comments_total | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
-  .btn-material.secondary.for-desktop
+  .btn-material.secondary.for-desktop(*ngIf="pl.isPlatformBrowser()", (click)="isShareModalVisible = true")
     .fa.fa-bullhorn
     span {{"Share" | translate}}
-  button.btn-material.secondary.actions((click)='render.addClass(actions, "active")', (focusout)='render.removeClass(actions, "active")')
+  button.btn-material.secondary.actions(
+    *ngIf="pl.isPlatformBrowser()",
+    (click)='render.addClass(actions, "active")',
+    (focusout)='render.removeClass(actions, "active")'
+  )
     .fa.fa-ellipsis-v
     ul(#actions)
       li
@@ -72,3 +76,7 @@ div
         a
           .fa.fa-fw.fa-bullhorn
           | {{"Share" | translate }}
+modal(*ngIf="isShareModalVisible", [backdrop]="true", (on-close)="isShareModalVisible = false", [close-mode]="1")
+  modal-header Поделиться постом
+  modal-body
+    share([link]="getPostUrl({short: true})")

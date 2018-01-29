@@ -34,6 +34,8 @@ import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
 import {VoteModule} from "../Vote/VoteModule";
 import {TagModule} from "../Tag/TagModule";
+import {ShareModule} from "../Share/ShareModule";
+import {PlatformService} from "./Service/PlatformService";
 
 registerLocaleData(localeRu);
 
@@ -77,6 +79,7 @@ export class HammerConfig extends HammerGestureConfig  {
         TagModule,
         VoteModule,
         CommonModule,
+        ShareModule,
         RESTModule.init(Config.uri.api, Config.auth.token_key)
     ],
     declarations: [
@@ -92,6 +95,7 @@ export class HammerConfig extends HammerGestureConfig  {
         StartupService,
         RouteHelperService,
         ApplicationScrollService,
+        PlatformService,
         {
             provide: LOCALE_ID,
             useFactory: LocaleFactory,

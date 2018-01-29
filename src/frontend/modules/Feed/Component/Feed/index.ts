@@ -50,7 +50,11 @@ export class FeedComponent implements AfterViewInit, OnDestroy {
             .delay(10)
             .subscribe(scroll => {
 
-                this.feedCacheService.saveScroll(this.route.snapshot.data.feedRequest, scroll);
+                try {
+                    this.feedCacheService.saveScroll(this.route.snapshot.data.feedRequest, scroll);
+                } catch (e) {
+                    console.log("Can't save scroll. Feed not cached.")
+                }
 
                 this.currentPostComponent = this.postComponents.find(post => post.isIntoView == true);
 
@@ -73,9 +77,9 @@ export class FeedComponent implements AfterViewInit, OnDestroy {
     }
     
     @HostListener('window:keyup', ['$event'])
-    onKeydown(e: KeyboardEvent) {
+    onKeydown(e) {
 
-        if(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        if(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.ctrlKey) {
             return;
         }
         

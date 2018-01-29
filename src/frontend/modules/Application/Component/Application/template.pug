@@ -31,7 +31,8 @@
 application-main
   router-outlet
 
-post-create-button(*ngIf="auth.isSignedIn()", routerLink="/post/add", routerLinkActive="hidden")  
-application-loading-bar
-application-scroll-button(*ngIf="!device.isMobile()")
-settings-modal
+ng-container(*ngIf="pl.isPlatformBrowser()")
+  post-create-button(*ngIf="auth.isSignedIn()", routerLink="/post/add", routerLinkActive="hidden")  
+  application-loading-bar
+  application-scroll-button(*ngIf="!device.isMobile()")
+  settings-modal

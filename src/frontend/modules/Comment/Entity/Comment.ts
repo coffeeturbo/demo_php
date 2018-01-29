@@ -11,6 +11,7 @@ export interface Comment {
     post_id: number;
     created: string;
     updated: string;
+    level: number;
     attachments: Attachment<AttachmentImage | AttachmentText | AttachmentVideo>[];
     profile: Profile;
     votes: Vote;
