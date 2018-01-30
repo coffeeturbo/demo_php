@@ -19,7 +19,7 @@ class ArrayProfileFormatter extends Formatter
             'alias'      => $this->resource['alias'],
             'avatar'     => (new AvatarFormatter($this->resource['avatar']))->format(),
             'backdrop'   => (new ImageFormatter($this->resource['backdrop']))->format(),
-            'birth_date' => isset($this->resource['birthDate']) ? $this->resource['birth_date']->format(Profile::BIRTH_DATE_FORMAT) : null,
+            'birth_date' => isset($this->resource['birthDate']) ? $this->resource['birthDate']->format(Profile::BIRTH_DATE_FORMAT) : null,
             'verified'   => $this->resource['verified'],
             'created'    => $this->resource['created']->format(\DateTime::W3C),
             'rating'     => isset($this->resource['votesRating']) ? $this->resource['votesRating'] : null,
