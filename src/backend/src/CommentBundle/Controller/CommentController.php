@@ -103,7 +103,7 @@ class CommentController extends Controller
             // получаем лайки профиля для комментариев
             if($account = $this->get('auth.service')->getAccount()){
                 $profile = $this->get('profile.service')->getCurrentProfile();
-//                $this->get('vote.service.vote_service')->getVotesToComments($comments, $profile);
+                $this->get('vote.service.vote_service')->getVotesToComments($comments, $profile);
             }
 
             $tree = $commentService->buildChainedTree($comments);

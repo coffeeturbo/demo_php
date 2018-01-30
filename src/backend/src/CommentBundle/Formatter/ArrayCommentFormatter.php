@@ -12,13 +12,12 @@ class ArrayCommentFormatter extends Formatter
 
         return is_null($this->resource) ? null : [
             'id'            => $this->resource['id'],
-            'isDeleted'     => $this->resource['isDeleted'],
+            'is_deleted'     => $this->resource['isDeleted'],
             'profile'       => isset( $this->resource['profile'])
                 ?(new ProfileFormatter( $this->resource['profile']))->format() : null,
 
             'votes' => [
-//                'state' =>  $comment->getVote() ? $comment->getVote()->getType()->getStringCode() :'none',
-//                'state' =>  isset($this->resource['vote'])? $this->resource['vote'] : 'none',
+                'state' =>  isset($this->resource['vote'])? $this->resource['vote']['state'] : 'none',
                 'rating' => $this->resource['votesRating'],
                 'positive' => $this->resource['votesPositive'],
                 'negative' => $this->resource['votesNegative']

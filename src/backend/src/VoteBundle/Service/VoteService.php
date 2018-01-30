@@ -14,6 +14,7 @@ use VoteBundle\Entity\VoteType\VoteTypeNegative;
 use VoteBundle\Entity\VoteType\VoteTypePositive;
 use VoteBundle\Event\VoteEvent;
 use VoteBundle\Event\VoteEvents;
+use VoteBundle\Formatter\VoteFormatter;
 use VoteBundle\Repository\VoteRepository;
 use VoteBundle\Vote\VoteableEntity;
 use VoteBundle\Vote\VoteEntity;
@@ -199,7 +200,7 @@ class VoteService
         if($vote) $post->setVote($vote);
     }
 
-    public function getVotesToComments(array $comments, $profile)
+    public function getVotesToComments(array &$comments, $profile)
     {
 
         $object = null;
@@ -209,6 +210,7 @@ class VoteService
 
         if(is_array($object)){
             $this->arrayCommentDecorator($comments, $profile);
+
         }else {
             $this->objectsCommentDecorator($comments, $profile);
         }
@@ -217,7 +219,7 @@ class VoteService
     }
 
 
-    private function objectsCommentDecorator(array $comments, $profile)
+    private function objectsCommentDecorator(array &$comments, $profile)
     {
         $commentIds = array_map(function(Comment $comment){
             return $comment->getId();
@@ -236,7 +238,7 @@ class VoteService
         });
     }
 
-    private function arrayCommentDecorator(array $comments, $profile)
+    private function arrayCommentDecorator(array &$comments, $profile)
     {
 
 
@@ -249,20 +251,19 @@ class VoteService
         $votes = $this->voteRepository->getVotesByCommentIds($commentIds, $profile);
 
 
-        array_walk($comments, function(array $comment) use ($votes){
+        array_walk($comments, function(array &$comment) use ($votes){
             /** @var Vote $vote */
             foreach($votes as $vote){
                 if($comment['id'] === $vote->getContentId()){
 
 
                     // todo написать форматер войта
-                    $comment['vote'] = $vote;
-
-//                    print_r($votes);
-//                    die;
+                    $comment['vote'] = (new VoteFormatter($vote))->format() ;
                     break;
                 }
             }
         });
+
+
     }
 }
