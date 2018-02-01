@@ -1,14 +1,12 @@
 import {APP_INITIALIZER, Injectable, LOCALE_ID, NgModule} from "@angular/core";
 import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig} from "@angular/platform-browser";
 import {RouterModule} from "@angular/router";
-import {Http, RequestOptions} from "@angular/http";
 import {registerLocaleData} from "@angular/common";
 import {HttpClientModule} from "@angular/common/http";
 import localeRu from '@angular/common/locales/ru';
 
 import {RESTModule} from "../Common/REST/RESTModule";
 import {Locale, TranslationService} from "@angular-addons/translate";
-import {AuthConfig, AuthHttp} from "angular2-jwt";
 
 import {appRoutes} from "../../app/routes";
 import "../../assets/styles/index.scss";
@@ -38,10 +36,6 @@ import {ShareModule} from "../Share/ShareModule";
 import {PlatformService} from "./Service/PlatformService";
 
 registerLocaleData(localeRu);
-
-export function AuthHttpServiceFactory(http: Http, options: RequestOptions): AuthHttp {
-    return new AuthHttp(new AuthConfig(), http, options);
-}
 
 export function StartupServiceFactory(startupService: StartupService): Function {
     return () => startupService.init();
@@ -100,11 +94,6 @@ export class HammerConfig extends HammerGestureConfig  {
             provide: LOCALE_ID,
             useFactory: LocaleFactory,
             deps: [TranslationService]
-        },
-        {
-            provide: AuthHttp,
-            useFactory: AuthHttpServiceFactory,
-            deps: [Http, RequestOptions]
         },
         { 
             provide: HAMMER_GESTURE_CONFIG,
