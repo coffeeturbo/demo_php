@@ -3,6 +3,7 @@ import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse}
 import {Observable} from "rxjs/Observable";
 import {RESTConfig} from "../Config/RESTConfig";
 import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
+import {TokenService} from "../../../Auth/Service/TokenService";
 
 @Injectable()
 export class RESTInterceptor implements HttpInterceptor
@@ -10,7 +11,7 @@ export class RESTInterceptor implements HttpInterceptor
     private path: string = "";
     private tokenKey: string = "token";
 
-    constructor(@Optional() config: RESTConfig) {
+    constructor(@Optional() config: RESTConfig, private tokenService: TokenService) {
         this.path = config.path || "";
         this.tokenKey = config.tokenKey || this.tokenKey;
     }
@@ -18,9 +19,9 @@ export class RESTInterceptor implements HttpInterceptor
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         req = req.clone({url: this.path + req.url});
 
-        if (typeof localStorage != 'undefined' && req.withCredentials && localStorage.getItem(this.tokenKey)) {
+        if (req.withCredentials && this.tokenService.isTokenExist()) {
             req = req.clone({
-                headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem(this.tokenKey))
+                headers: req.headers.set('Authorization', 'Bearer ' + this.tokenService.getToken())
             });
         }
 

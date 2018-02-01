@@ -1,11 +1,11 @@
 ng-container(*ngIf="profile")
   header
     .backdrop
-      profile-backdrop-cropper(*ngIf="profileService.isOwn(profile)", (onCrop)="uploadBackdrop($event)", [disabled]="disabled")
+      profile-backdrop-cropper(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()", (onCrop)="uploadBackdrop($event)", [disabled]="disabled")
       ng-container(*ngIf="backdropHelper.disabled()")
         img(*ngIf="profile.backdrop", [src]="profile.backdrop?.public_path")
         
-        ng-container(*ngIf="profileService.isOwn(profile)")
+        ng-container(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()")
           button(*ngIf="profileService.hasBackdrop(profile)", (click)="backdropActionsHelper.show()") {{ "Change" | translate }}
           .add-new-backdrop(*ngIf="!profileService.hasBackdrop(profile)") 
             button((click)="backdropActionsHelper.show()") {{ "Add image" | translate}}
@@ -13,7 +13,7 @@ ng-container(*ngIf="profile")
       figure(*ngIf="backdropHelper.disabled()")
         .avatar
           profile-avatar([profile]="profile", [size]="'medium'", routerLink="avatar")
-          button(*ngIf="profileService.isOwn(profile)", (onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
+          button(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()", (onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
           h1
             | {{profile.name}}
@@ -36,8 +36,8 @@ ng-container(*ngIf="profile")
         ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:translate("day"):translate("days"):translate("days1")}} 
         | {{"Ago" | translate | lowercase}}
     
-    button.btn-material(*ngIf="profileService.isOwn(profile)", routerLink="/post/add") Добавить пост
+    button.btn-material(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()", routerLink="/post/add") Добавить пост
   feed(*ngIf="feed", [feed]="feed", (onFeedLoad)="loadFeed($event)", [isLoading]="isLoading")
-profile-avatar-cropper((onCrop)="uploadAvatar($event)", [disabled]="disabled")
-backdrop-actions(*ngIf="backdropActionsHelper.isVisible", (onChange)="profile = route.snapshot.data.profile")
+profile-avatar-cropper(*ngIf="pl.isPlatformBrowser()", (onCrop)="uploadAvatar($event)", [disabled]="disabled")
+backdrop-actions(*ngIf="backdropActionsHelper.isVisible && pl.isPlatformBrowser()", (onChange)="profile = route.snapshot.data.profile")
 router-outlet

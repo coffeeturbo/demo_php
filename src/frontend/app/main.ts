@@ -33,4 +33,7 @@ if (process.env.ENV === 'production') {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(ApplicationModuleBrowser);
+document.addEventListener('DOMContentLoaded', () => {
+  platformBrowserDynamic().bootstrapModule(ApplicationModuleBrowser)
+      .catch(err => console.log(err));
+});

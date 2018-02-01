@@ -14,6 +14,8 @@ import {AuthRESTService} from "./Service/AuthRESTService";
 import {AuthService} from "./Service/AuthService";
 import {CanActivateService} from "./Service/CanActivateService";
 import {OAuthService} from "./Service/OAuthService";
+import {TokenService, TokenServiceConfig} from "./Service/TokenService";
+import {Config} from "../../app/config";
 
 @NgModule({
     imports: [
@@ -31,7 +33,15 @@ import {OAuthService} from "./Service/OAuthService";
         AuthRESTService,
         AuthService,
         OAuthService,
-        CanActivateService
+        CanActivateService,
+        TokenService,
+        {
+            provide: TokenServiceConfig,
+            useValue: {
+                tokenKey: Config.auth.token_key,
+                refreshTokenKey: Config.auth.refresh_token_key
+            }
+        }
     ]
 })
 export class AuthModule {}

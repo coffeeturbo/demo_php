@@ -20,7 +20,7 @@ const localStorage = typeof window !='undefined' ? window.localStorage : { getIt
 
 @Component({
     templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss', './tags.scss']
+    styleUrls: ['./style.shadow.scss'/*, './tags.scss'*/]
 })
 
 export class PostFormRoute implements OnInit {
@@ -172,7 +172,7 @@ export class PostFormRoute implements OnInit {
         ;
     }
 
-    public handleEnterButton(e: KeyboardEvent) {
+    public handleEnterButton(e) {
         let element = <HTMLElement>e.target;
 
         if (element instanceof HTMLTextAreaElement === false && element.id !== "addPostTags") {

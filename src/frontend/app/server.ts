@@ -6,12 +6,13 @@ import { Request, Response } from 'express';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { enableProdMode } from '@angular/core';
 import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
-import {APP_BASE_HREF} from "@angular/common";
+import {CookieService} from "../modules/Application/Service/CookieService";
 
 enableProdMode();
 const app = express();
 const port = 8000;
 const baseUrl = `http://localhost:${port}`;
+const cookieParser = require('cookie-parser');
 
 app.engine('html', ngExpressEngine({
     bootstrap: ApplicationModuleServer
@@ -19,29 +20,23 @@ app.engine('html', ngExpressEngine({
 
 app.set('view engine', 'html');
 app.set('views', 'modules');
+app.use(cookieParser());
 
-// [
-//     "/", 
-//     "/new"
-// ]
-// .forEach((route: string) => {
-// app.get(route, (req: Request, res: Response) => {
+
 app.get("*", (req: Request, res: Response) => {
     console.time(`GET: ${req.originalUrl}`);
+
     res.render('../../web/dist/index', {
         req: req,
         res: res,
-        provirders: [
+        providers: [
             {
-                provide: APP_BASE_HREF,  
-                useValue: baseUrl
+                provide: CookieService,
+                useValue: new CookieService(req.headers.cookie)
             }
         ]
     });
     console.timeEnd(`GET: ${req.originalUrl}`);
 });
-//});
 
-app.listen(port, () => {
-    console.log(`Listening at ${baseUrl}`);
-});
+app.listen(port, () => console.log(`Listening at ${baseUrl}`));

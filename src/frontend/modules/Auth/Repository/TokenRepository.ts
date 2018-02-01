@@ -2,8 +2,10 @@ import {JwtHelper} from "angular2-jwt";
 
 import {Token} from "../Entity/Token";
 import {Config} from "../../../app/config";
+import {AuthService} from "../Service/AuthService";
 
 const localStorage = typeof window !='undefined' ? window.localStorage : { getItem(key: any): any { return null }, removeItem(key: any) {}, setItem(key: any, val: any) {} };
+
 
 export class TokenRepository
 {
@@ -28,11 +30,13 @@ export class TokenRepository
 
     public static saveToken(value: string): void
     {
+        document.cookie = `${this.tokenKey}=${value}`;
         localStorage.setItem(this.tokenKey, value);
     }
 
     public static saveRefreshToken(value: string): void
     {
+        document.cookie = `${this.refreshTokenKey}=${value}`;
         localStorage.setItem(this.refreshTokenKey, value);
     }
 

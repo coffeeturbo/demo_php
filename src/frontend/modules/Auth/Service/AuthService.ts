@@ -10,9 +10,9 @@ import {TokenResponse} from "../Http/Response/TokenResponse";
 import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 import {Token} from "../Entity/Token";
 import {Roles} from "../Entity/Role";
-import {TokenRepository} from "../Repository/TokenRepository";
 import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 import {OAuthService} from "./OAuthService";
+import {TokenService} from "./TokenService";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -38,14 +38,15 @@ export class AuthService implements AuthServiceInterface
         private router: Router,
         private route: ActivatedRoute,
         private rest: AuthRESTService,
-        private oAuth: OAuthService
+        private oAuth: OAuthService,
+        public tokenService: TokenService
     ) {
         this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
-                TokenRepository.saveToken(tokenResponse.token);
+                this.tokenService.saveToken(tokenResponse.token);
 
                 if(tokenResponse.refresh_token) {
-                    TokenRepository.saveRefreshToken(tokenResponse.refresh_token);
+                    this.tokenService.saveRefreshToken(tokenResponse.refresh_token);
                     this.addTokenExpirationSchedule();
                 }
 
@@ -59,12 +60,12 @@ export class AuthService implements AuthServiceInterface
 
     public isSignedIn(): boolean
     {
-        return typeof window !='undefined' && tokenNotExpired();
+        return this.tokenService.tokenNotExpired();
     }
 
     public getRoles(): Roles
     {
-        let tokenData: Token = TokenRepository.decodeToken();
+        let tokenData: Token = this.tokenService.decodeToken();
         return tokenData.roles;
     }
 
@@ -100,19 +101,19 @@ export class AuthService implements AuthServiceInterface
 
     public signOut(): void
     {
-        TokenRepository.removeTokens();
+        this.tokenService.removeTokens();
         this.tokenExpirationSchedule.unsubscribe();
     }
 
     public addTokenExpirationSchedule(): void
     {
-        if (TokenRepository.isTokenExist()) {
+        if (this.tokenService.isTokenExist()) {
             let offset: number = 5000;  // Make it 5 sec before token expired
-            let delay = TokenRepository.getTokenExpTime() - offset;
+            let delay = this.tokenService.getTokenExpTime() - offset;
             this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
 
             this.tokenExpirationSchedule = Scheduler.queue.schedule(() => {
-                this.refreshToken({"refresh_token": TokenRepository.getRefreshToken()});
+                this.refreshToken({"refresh_token": this.tokenService.getRefreshToken()});
             }, delay);
         }
     }

@@ -7,7 +7,6 @@ import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
 import {ProfileResponse} from "../Http/Response/ProfileResponse";
 import {Token} from "../../Auth/Entity/Token";
-import {TokenRepository} from "../../Auth/Repository/TokenRepository";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {AuthService} from "../../Auth/Service/AuthService";
 import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
@@ -15,6 +14,7 @@ import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
 import {BackdropPreset, BackdropPresets} from "../Entity/BackdropPreset";
 import {BackdropPresetsResponse} from "../Http/Response/BackdropPresetsResponse";
+import {TokenService} from "../../Auth/Service/TokenService";
 
 interface ProfileServiceInterface {
     get(path: string): Observable<Profile>;
@@ -32,7 +32,12 @@ export class ProfileService implements ProfileServiceInterface{
     private presets: BackdropPresets;
     public onProfileResolve = new EventEmitter<Profile>(true);
 
-    constructor(private rest: ProfileRESTService, private auth: AuthService) {}
+    constructor(
+        private rest: ProfileRESTService, 
+        private auth: AuthService, 
+        private tokenService: TokenService
+    ) {
+    }
 
     public get(path: string): Observable<Profile> 
     {
@@ -67,7 +72,7 @@ export class ProfileService implements ProfileServiceInterface{
             .flatMap(profile => {
                 if (oldProfile.alias != profile.alias) {
                     return this.auth.refreshToken({
-                        "refresh_token": TokenRepository.getRefreshToken()
+                        "refresh_token": this.tokenService.getRefreshToken()
                     }).map(() => profile);
                 } else {
                     return Observable.of(profile);
@@ -140,7 +145,7 @@ export class ProfileService implements ProfileServiceInterface{
 
     public getOwnProfilePath(): string
     {
-        let tokenData: Token = TokenRepository.decodeToken();
+        let tokenData: Token = this.tokenService.decodeToken();
         return tokenData.profile_alias || tokenData.profile_id.toString();
     }
 
@@ -155,7 +160,7 @@ export class ProfileService implements ProfileServiceInterface{
             return false;
         }
 
-        let tokenData: Token = TokenRepository.decodeToken();
+        let tokenData: Token = this.tokenService.decodeToken();
         return this.isOwnProfileExist() && tokenData.profile_id == profile.id;
     }
     
@@ -165,7 +170,7 @@ export class ProfileService implements ProfileServiceInterface{
             return false;
         }
         
-        let tokenData: Token = TokenRepository.decodeToken();
+        let tokenData: Token = this.tokenService.decodeToken();
         return !!tokenData.profile_alias || !!tokenData.profile_id;
     }
 

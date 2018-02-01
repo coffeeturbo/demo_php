@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ServerModule } from '@angular/platform-server';
+import {ServerModule, ServerTransferStateModule} from '@angular/platform-server';
 
 import {ApplicationModule} from "./ApplicationModule";
 import {ApplicationComponent} from "./Component/Application/index";
@@ -12,6 +12,7 @@ import {ApplicationComponent} from "./Component/Application/index";
             appId: 'application'
         }),
         ServerModule,
+        ServerTransferStateModule,
         ApplicationModule
     ]
 })

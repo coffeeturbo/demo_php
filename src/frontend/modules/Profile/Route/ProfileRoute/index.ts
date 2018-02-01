@@ -11,6 +11,7 @@ import {BackdropUploadRequest} from "../../Http/Request/BackdropUploadRequest";
 import {ProfileBackdropActionsHelper} from "../../Component/ProfileBackdropActions/helper";
 import {Feed} from "../../../Feed/Entity/Feed";
 import {FeedService} from "../../../Feed/Service/FeedService";
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
     templateUrl: "./template.pug",
@@ -30,14 +31,15 @@ export class ProfileRoute {
         public avatarHelper: ProfileAvatarCropperHelper,
         public backdropHelper: ProfileBackdropCropperHelper,
         public backdropActionsHelper: ProfileBackdropActionsHelper,
-        public feedService: FeedService
+        public feedService: FeedService,
+        public pl: PlatformService
     ) {
         this.route.data.subscribe(data => {
             this.profile = data.profile;
             this.feed = data.profileFeed;
 
             // Preload fullsize avatar
-            if(this.profile.avatar) {
+            if(this.profile.avatar && pl.isPlatformBrowser()) {
                 (new Image()).src = this.profile.avatar.origin.public_path;
             }
         });
