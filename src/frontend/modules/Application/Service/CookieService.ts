@@ -9,7 +9,6 @@ export class CookieService {
     }
     
     get(key: string) {
-        console.log(this.cookies.get(key));
         return this.cookies.get(key); 
     }
 

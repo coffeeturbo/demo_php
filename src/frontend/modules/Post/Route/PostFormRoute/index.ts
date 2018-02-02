@@ -15,8 +15,7 @@ import {Tag} from "../../../Tag/Entity/Tag";
 import {Router} from "@angular/router";
 import {TagRESTService} from "../../../Tag/Service/TagRESTService";
 import {Config} from "../../../../app/config";
-
-const localStorage = typeof window !='undefined' ? window.localStorage : { getItem(key: any): any { return null }, removeItem(key: any) {}, setItem(key: any, val: any) {} };
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
     templateUrl: './template.pug',
@@ -54,25 +53,28 @@ export class PostFormRoute implements OnInit {
         private attachmentRest: AttachmentRESTService,
         private tagRest: TagRESTService,
         private postService: PostService,
-        private router: Router
+        private router: Router,
+        private pl: PlatformService
     ) {}
 
     ngOnInit() {
         try {
-            let postForm = JSON.parse(localStorage.getItem("post-form"));
-            
-            if (postForm.attachments.length > 0) {
-                postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value));
-            }
+            if(this.pl.isPlatformBrowser()) {
+                let postForm = JSON.parse(localStorage.getItem("post-form"));
 
-            if (postForm.title) {
-                this.form.controls.title.setValue(postForm.title);
-                this.form.controls.title.markAsDirty();
-            }
-            
-            if (postForm.tags) {
-                this.form.controls.tags.setValue(postForm.tags);
-                this.form.controls.tags.markAsDirty();
+                if (postForm.attachments.length > 0) {
+                    postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value));
+                }
+
+                if (postForm.title) {
+                    this.form.controls.title.setValue(postForm.title);
+                    this.form.controls.title.markAsDirty();
+                }
+
+                if (postForm.tags) {
+                    this.form.controls.tags.setValue(postForm.tags);
+                    this.form.controls.tags.markAsDirty();
+                }
             }
         } catch (e) {}
 
@@ -81,8 +83,10 @@ export class PostFormRoute implements OnInit {
             .do(() => this.saved = false)
             .debounceTime(500) // Ohyenable feature 
             .subscribe((post: Post) => {
-                localStorage.setItem("post-form", JSON.stringify(post));
-                this.saved = true;
+                if(this.pl.isPlatformBrowser()) {
+                    localStorage.setItem("post-form", JSON.stringify(post));
+                    this.saved = true;
+                }
             })
         ;
     }
