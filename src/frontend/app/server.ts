@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { enableProdMode } from '@angular/core';
 import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
-import {CookieService} from "../modules/Application/Service/CookieService";
+import * as Cookies from 'universal-cookie';
 
 enableProdMode();
 const app = express();
@@ -31,8 +31,8 @@ app.get("*", (req: Request, res: Response) => {
         res: res,
         providers: [
             {
-                provide: CookieService,
-                useValue: new CookieService(req.headers.cookie)
+                provide: 'Cookies',
+                useValue: new Cookies(req.headers.cookie)
             }
         ]
     });

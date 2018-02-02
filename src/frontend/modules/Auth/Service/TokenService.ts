@@ -1,8 +1,7 @@
-import {Injectable, Optional} from "@angular/core";
+import {Inject, Injectable, Optional} from "@angular/core";
 import {Token} from "../Entity/Token";
 import {JwtHelper, tokenNotExpired} from "angular2-jwt";
 import * as Cookies from 'universal-cookie';
-import {CookieService} from "../../Application/Service/CookieService";
 
 export class TokenServiceConfig {
     tokenKey: string;
@@ -14,7 +13,7 @@ export class TokenService {
     private tokenKey: string;
     private refreshTokenKey: string;
     
-    constructor(@Optional() config: TokenServiceConfig = {refreshTokenKey: "refresh_token", tokenKey: "token"}, private cookies: CookieService){
+    constructor(@Optional() config: TokenServiceConfig = {refreshTokenKey: "refresh_token", tokenKey: "token"}, @Inject('Cookies') private cookies: Cookies){
         this.tokenKey = config.tokenKey;
         this.refreshTokenKey = config.refreshTokenKey;
     }

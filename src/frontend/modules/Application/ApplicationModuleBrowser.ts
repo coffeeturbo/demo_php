@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import * as Cookies from 'universal-cookie';
 
 import {ApplicationModule} from "./ApplicationModule";
 import {ApplicationComponent} from "./Component/Application/index";
-import {CookieService} from "./Service/CookieService";
 
 
 @NgModule({
@@ -19,9 +19,9 @@ import {CookieService} from "./Service/CookieService";
     ],
     providers: [
         {
-            provide: CookieService,
-            useValue: new CookieService(document.cookie)
-        }
+            provide: 'Cookies',
+            useValue: new Cookies(document.cookie)
+        },
     ]
 })
 export class ApplicationModuleBrowser {}
