@@ -2,8 +2,7 @@ feed-refresh-button(*ngIf="showRefresh")
 
 post(*ngFor="let post of feed;", [post]="post")
 
-// @TODO Скрвывать блок когда лента кончилась! 
-.loader
+.loader(*ngIf="!isFeedEnd")
   .dot
   .dot
   .dot

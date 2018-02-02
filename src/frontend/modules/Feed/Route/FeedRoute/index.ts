@@ -10,7 +10,7 @@ import {Observable} from "rxjs/Observable";
 })
 export class FeedRoute implements OnInit {
     public isLoading: boolean = false;
-    private isFeedEnd: boolean = false;
+    public isFeedEnd: boolean = false;
 
     public feed: Feed;
 

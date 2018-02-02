@@ -24,18 +24,9 @@
   40%, 60% { transform: translateX(8px); }
 }
 
-//@TODO remove, if redundant
-@keyframes shake2 {
-  0% { transform: translateX(0px);}
-  25% { transform: translateX(-10px);}
-  50% { transform: translateX(10px);}
-  100% { transform: translateX(0px);}
-}
-
 @keyframes autofill {
   to { background: none; }
 }
-
 
 @keyframes slideDown {
   from {

@@ -23,6 +23,7 @@ export class ProfileRoute {
     public feed: Feed;
     public disabled: boolean = false;
     public isLoading: boolean = false;
+    public isFeedEnd: boolean = false;
 
     constructor(
         private route: ActivatedRoute, 
@@ -74,8 +75,6 @@ export class ProfileRoute {
             })
         ;
     }
-    
-    private isFeedEnd: boolean = false;
     
     public loadFeed(cursor: number) {
         

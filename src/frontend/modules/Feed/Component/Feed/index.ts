@@ -18,6 +18,7 @@ export class FeedComponent implements AfterViewInit, OnDestroy {
     @Input() feed: Feed;
     @Input() isLoading: boolean;
     @Input() showRefresh: boolean = false;
+    @Input() isFeedEnd: boolean = false;
     @Output() onRefresh = new EventEmitter<void>();
     @Output() onFeedLoad = new EventEmitter<number>();
     @ViewChildren(PostComponent) postComponents: QueryList<PostComponent>;

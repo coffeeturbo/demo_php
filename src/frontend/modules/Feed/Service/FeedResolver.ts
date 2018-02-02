@@ -13,19 +13,16 @@ export class FeedResolver implements Resolve<Feed> {
     constructor(private feedService: FeedService, private feedCacheService: FeedCacheService, private transferState: TransferState) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Feed> | Feed {
-        let feedResolver: Observable<Feed> | Feed;
+        let feedResolver: Observable<Feed>;
         
         
         try {
             feedResolver = this.feedCacheService.getFeed(route.data.feedRequest).delay(1);
         } catch (e) {
             let feedStateKey: StateKey<Feed> = makeStateKey<Feed>("Feed " + JSON.stringify(route.data.feedRequest));
-            // feedResolver = this.transferState.get(feedStateKey, null as Feed);
-            // console.log(feedResolver);
             
             if(this.transferState.hasKey(feedStateKey)) {
-                feedResolver = this.transferState.get(feedStateKey, null as Feed);
-                // console.log(feedResolver);
+                feedResolver = Observable.of(this.transferState.get(feedStateKey, null as Feed)).delay(1);
             } else {
                 feedResolver = this.feedService
                     .get(10, route.data.feedRequest)
@@ -35,7 +32,7 @@ export class FeedResolver implements Resolve<Feed> {
                 ;
             }
 
-            this.feedCacheService.saveFeed(route.data.feedRequest, <Observable<Feed>>feedResolver)
+            this.feedCacheService.saveFeed(route.data.feedRequest, feedResolver)
         }
 
         return feedResolver;

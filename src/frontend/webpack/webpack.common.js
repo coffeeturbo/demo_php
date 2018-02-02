@@ -7,6 +7,7 @@ const ngtools = require('@ngtools/webpack');
 
 const ENV = process.env.ENV = process.env.ENV = helpers.isDev ? 'development' : 'production';
 const IS_NODE = process.env.IS_NODE = helpers.isServer;
+const HOST = helpers.isServer ? "http://nginx:8080" : "";
 
 module.exports = {
     entry: {
@@ -90,7 +91,8 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
                 'ENV': JSON.stringify(ENV),
-                'IS_NODE': JSON.stringify(IS_NODE)
+                'IS_NODE': JSON.stringify(IS_NODE),
+                'HOST': JSON.stringify(HOST)
             }
         }),
         new ngtools.AngularCompilerPlugin({
