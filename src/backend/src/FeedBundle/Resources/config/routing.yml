@@ -10,3 +10,8 @@ feed:
     profile: \d+
     sort: "id|rating"
     direction: ASC|DESC
+
+feed_hot:
+  path: '/hot'
+  methods: [ GET ]
+  defaults: { _controller: FeedBundle:Feed:hotFeed }

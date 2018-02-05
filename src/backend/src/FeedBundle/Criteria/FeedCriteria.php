@@ -15,7 +15,7 @@ class FeedCriteria extends Criteria
     private $endDate;
     private $profileId;
 
-    public function __construct(int $limit, $cursor, string $order, string $direction, $dateFrom = null, $dateTo = null, $profileId)
+    public function __construct(int $limit, $cursor, string $order, string $direction, $dateFrom = null, $dateTo = null, $profileId = null)
     {
         parent::__construct($limit, $cursor);
 
@@ -61,7 +61,6 @@ class FeedCriteria extends Criteria
 
     public function setOrder(string $order)
     {
-
         if(strcmp($order, 'votes_rating') == 0
             | strcmp($order, 'rating') == 0
         ){

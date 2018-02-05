@@ -117,9 +117,41 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
+    private function getHotPosts(FeedCriteria $criteria)
+    {
+        try {
+
+            $q = sprintf("SELECT
+                            p,
+                        (
+                              (p.votesPositive + p.votesNegative) 
+                              / (CURRENT_TIMESTAMP() - (p.created))*3600
+                        ) AS rating_speed
+                        
+                        FROM %s p
+                        ORDER BY rating_speed DESC
+                        "
+                , Post::class );
+
+            $q = $this->getEntityManager()->createQuery($q);
+
+
+
+        } catch(NoResultException $e){
+            throw new NotFoundHttpException(sprintf("no posts founded"));
+        }
+
+
+        // получаем из смешанного массива не смешанный
+
+        return array_map(function(array $post){
+            return $post[0];
+        }, $q->getResult());
+
+    }
+
     private function getPostsByCriteria(FeedCriteria $criteria)
     {
-
         try {
             $qb = $this->createQueryBuilder('p')
                 ->select('p');
@@ -146,10 +178,17 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
             $qb->setMaxResults($criteria->getLimit());
 
+
             $q = $qb->getQuery();
+
+
+
         } catch(NoResultException $e){
             throw new NotFoundHttpException(sprintf("no posts founded"));
         }
+
+
+
 
         return $q->getResult();
     }
@@ -184,6 +223,36 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $posts = $this->getPostsByCriteria($criteria);
+
+        $postIds = array_map(function(Post $post){
+            return $post->getId();
+        }, $posts);
+
+        $qb = $this->createQueryBuilder('p')
+            ->select('p', 'tags', 'attachments')
+            ->leftJoin('p.tags', 'tags')
+            ->leftJoin('p.attachments', 'attachments')
+            ->where('p.id IN (:postIds)')
+            ->setParameter('postIds', $postIds)
+            ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
+            ->addOrderBy('attachments.position', 'ASC')
+            ->getQuery();
+
+
+        return $qb->getResult();
+    }
+
+    public function getHotPostsWithTagsAndAttachments()
+    {
+
+        $startDate = new \DateTime();
+        $startDate->sub(new \DateInterval('P900D'));
+
+        $criteria = new FeedCriteria(100, 0, 'id', 'DESC', $startDate);
+
+
+        $posts = $this->getHotPosts($criteria);
+
 
         $postIds = array_map(function(Post $post){
             return $post->getId();
