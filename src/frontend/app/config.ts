@@ -15,7 +15,7 @@ export const Config: ConfigInterface = {
     },
     "uri": {
         "websocket": "/ws",
-        "api": process.env.HOST  + (process.env.ENV === "development" ? "/api/app_dev.php" : "/api")
+        "api": (process.env.HOST || "") + (process.env.ENV === "development" ? "/api/app_dev.php" : "/api")
     },
     "auth": {
         "token_key": "token",

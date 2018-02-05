@@ -37,13 +37,13 @@ export class TokenService {
     public saveToken(value: string): void
     {
         let expires: Date = new Date(new Date().getTime() + 60 * 60 * 24 * 365 * 1000);
-        this.cookies.put(this.tokenKey, value, {expires: expires});
+        this.cookies.set(this.tokenKey, value, {expires: expires});
     }
 
     public saveRefreshToken(value: string): void
     {
         let expires: Date = new Date(new Date().getTime() + 60 * 60 * 24 * 365 * 1000);
-        this.cookies.put(this.refreshTokenKey, value, {expires: expires});
+        this.cookies.set(this.refreshTokenKey, value, {expires: expires});
     }
 
     public getTokenExpTime(): number
