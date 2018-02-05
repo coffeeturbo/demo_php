@@ -1,4 +1,5 @@
 import {DictionariesNavigatorAliases} from "@angular-addons/translate";
+import {CounterConfig} from "ng-yandex-metrika";
 
 export const Config: ConfigInterface = {
     "product_name": "Socilite",
@@ -22,6 +23,10 @@ export const Config: ConfigInterface = {
         "refresh_token_key": "refresh_token"
     },
     "applications" : {
+        "metrika" : {
+            "id": 47572324,
+            "webvisor": true
+        },
         "facebook" : {
             "app_id" : 145634995501895 // ToDo: register app and insert code here!
         }
@@ -102,6 +107,7 @@ interface ConfigInterface {
         }
     };
     applications : {
+        metrika : CounterConfig,
         facebook : {
             app_id : number
         }
