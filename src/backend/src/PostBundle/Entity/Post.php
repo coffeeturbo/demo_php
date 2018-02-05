@@ -36,7 +36,6 @@ class Post extends AbstractTaggable
     private $attachments;
     private $profile;
 
-
     public function __construct()
     {
         parent::__construct();
