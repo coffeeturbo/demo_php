@@ -63,6 +63,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             }
 
 
+
             $q = sprintf("SELECT
                             p,
                         (
