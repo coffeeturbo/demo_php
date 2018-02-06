@@ -21,14 +21,27 @@ class FeedHandler
         $profile = $request->get('profile') ?? null;
         $direction = $request->get('direction') ?? 'DESC';
 
+        $tags = $this->getTags($request) !== null ? $this->getTags($request) : null ;
+
         $dateFrom = $request->get('dateFrom') ? new \DateTime($request->get('dateFrom')) : null;
         $dateTo = $request->get('dateTo')? new \DateTime($request->get('dateTo')) : null;
 
-        $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction, $dateFrom, $dateTo, $profile);
+        $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction, $dateFrom, $dateTo, $profile, $tags);
     }
 
     public function getCriteria(): FeedCriteria
     {
         return $this->criteria;
+    }
+
+    public function getTags(Request $request) {
+        $tags = null;
+
+        if($request->get('tags') !== null)
+        {
+            $tags = json_decode($request->get('tags'));
+        }
+
+        return $tags;
     }
 }

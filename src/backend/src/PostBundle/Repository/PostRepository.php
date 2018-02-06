@@ -7,6 +7,7 @@ use Doctrine\ORM\NoResultException;
 use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\Command\AddOrder;
+use PostBundle\Repository\Command\AddTags;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TagBundle\Entity\Tag;
 
@@ -62,8 +63,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                 $cursorWhere = sprintf("WHERE p.id < %s", $cursor);
             }
 
-
-
             $q = sprintf("SELECT
                             p,
                         (
@@ -98,9 +97,12 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
         try {
             $qb = $this->createQueryBuilder('p')
-                ->select('p');
+                ->select('p', 'tags')
+                ->leftJoin('p.tags', 'tags')
+            ;
 
             AddOrder::addOrder($qb, $criteria);
+            AddTags::addOrder($qb,$criteria);
 
             if($startDate = $criteria->getStartDate()){
                 $qb->andWhere('p.created > :start')
@@ -151,11 +153,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $result;
     }
 
-    public function getPostWithTagsAndAttachmentsByAlias(string $alias)
-    {
-        // todo написать метод getWithTagsAndAttachmentsByAlias
-    }
-
     public function getPostsWithTagsAndAttachments(FeedCriteria $criteria)
     {
 
@@ -180,13 +177,17 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.attachments', 'attachments')
             ->where('p.id IN (:postIds)')
             ->setParameter('postIds', $postIds)
-            ->addOrderBy('attachments.position', 'ASC')
-            ->getQuery();
+            ->addOrderBy('attachments.position', 'ASC');
 
 
-        $postsWithAttachments = $qb->getResult();
 
-        array_merge_recursive($posts, $postsWithAttachments);
+
+          $query =  $qb->getQuery();
+
+        $postsWithAttachments = $query->getResult();
+
+        array_merge_recursive( $posts, $postsWithAttachments);
+
 
         return $posts;
     }
