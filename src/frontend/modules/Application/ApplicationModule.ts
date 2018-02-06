@@ -34,6 +34,7 @@ import {VoteModule} from "../Vote/VoteModule";
 import {TagModule} from "../Tag/TagModule";
 import {ShareModule} from "../Share/ShareModule";
 import {PlatformService} from "./Service/PlatformService";
+import {MetrikaModule} from "ng-yandex-metrika";
 
 registerLocaleData(localeRu);
 
@@ -74,7 +75,10 @@ export class HammerConfig extends HammerGestureConfig  {
         VoteModule,
         CommonModule,
         ShareModule,
-        RESTModule.init(Config.uri.api, Config.auth.token_key)
+        RESTModule.init(Config.uri.api, Config.auth.token_key),
+        MetrikaModule.forRoot(
+            Config.applications.metrika,
+        ),        
     ],
     declarations: [
         ApplicationComponent,
