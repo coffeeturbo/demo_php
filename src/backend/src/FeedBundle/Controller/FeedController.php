@@ -44,35 +44,4 @@ class FeedController extends Controller
         return new SuccessPostsResponse($posts);
     }
 
-    /**
-     * @ApiDoc(
-     *  section="Feed",
-     *  description="Получаем посты",
-     *  authentication=true,
-     * )
-     *
-     */
-    public function hotFeedAction(Request $request)
-    {
-        try {
-//            $handler = new FeedHandler($request);
-
-            $posts = $this->get('post.repository')
-                ->getHotPostsWithTagsAndAttachments();
-
-            if($account = $this->get('auth.service')->getAccount()){
-
-                $profile = $this->get('profile.service')->getCurrentProfile();
-                $this->get('vote.service.vote_service')->getVotesToPosts($posts, $profile);
-            }
-
-        } catch(NotFoundHttpException $e){
-            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
-        } catch(\Exception $e){
-            return new ErrorJsonResponse($e->getMessage(), []);
-        }
-
-        return new SuccessPostsResponse($posts);
-    }
-
 }

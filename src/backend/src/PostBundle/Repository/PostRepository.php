@@ -4,9 +4,9 @@ namespace PostBundle\Repository;
 
 use AttachmentBundle\Entity\Attachment;
 use Doctrine\ORM\NoResultException;
-use Doctrine\ORM\QueryBuilder;
 use FeedBundle\Criteria\FeedCriteria;
 use PostBundle\Entity\Post;
+use PostBundle\Repository\Command\AddOrder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TagBundle\Entity\Tag;
 
@@ -48,78 +48,20 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    private function createIdOrderQB(QueryBuilder $builder, FeedCriteria $criteria)
-    {
-        $builder->orderBy('p.id', $criteria->getDirection());
-
-        if($cursor = $criteria->getCursor()){
-            // desc
-            switch(strtolower($criteria->getDirection())){
-                case 'desc':
-                    $builder->andWhere('p.id < :cursor');
-                    break;
-                case 'asc':
-                    $builder->andWhere('p.id > :cursor');
-                    break;
-
-                default:
-                    $builder->andWhere('p.id < :cursor');
-
-            }
-            $builder->setParameter('cursor', $cursor);
-        }
-    }
-
-    private function createRatingOrderQB(QueryBuilder $builder, FeedCriteria $criteria)
-    {
-        $builder->orderBy('p.votesRating', $criteria->getDirection());
-
-        if($postId = $criteria->getCursor()){
-
-            $post = $this->getPostById($postId);
-
-
-            // desc
-            switch(strtolower($criteria->getDirection())){
-                case 'desc':
-                    $builder->andWhere('p.votesRating < :rating');
-                    $builder->andWhere('p.id < :id');
-
-                break;
-                case 'asc':
-                    $builder->andWhere('p.votesRating > :rating');
-                    $builder->andWhere('p.id > :id');
-                break;
-
-                default: {
-                    $builder->andWhere('p.votesRating < :rating');
-                    $builder->andWhere('p.id < :id');
-                }
-
-
-            }
-            $builder->setParameter('rating', $post->getVotesRating())
-                ->setParameter('id', $postId);
-        }
-    }
-
-    private function addOrder(QueryBuilder $builder, FeedCriteria $criteria)
-    {
-        switch(strtolower($criteria->getOrder())){
-            case  'id':
-                $this->createIdOrderQB($builder, $criteria);
-            break;
-            case 'votesrating':
-                $this->createRatingOrderQB($builder, $criteria);
-            break;
-            default: throw new NotFoundHttpException(sprintf('unknown order %s', $criteria->getOrder()));
-        }
-    }
-
-
     private function getHotPosts(FeedCriteria $criteria)
     {
         try {
+
+            $startDate = new \DateTime();
+            $startDate->sub(new \DateInterval('P900D'));
+            $criteria->setStartDate($startDate);
+
+
+            $cursorWhere='';
+            if($cursor = $criteria->getCursor()){
+                $cursorWhere = sprintf("WHERE p.id < %s", $cursor);
+            }
+
 
             $q = sprintf("SELECT
                             p,
@@ -129,25 +71,26 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                         ) AS rating_speed
                         
                         FROM %s p
+                        %s
                         ORDER BY rating_speed DESC
                         "
-                , Post::class );
+                , Post::class, $cursorWhere);
 
             $q = $this->getEntityManager()->createQuery($q);
 
+
+            $q->setMaxResults($criteria->getLimit());
 
 
         } catch(NoResultException $e){
             throw new NotFoundHttpException(sprintf("no posts founded"));
         }
 
-
         // получаем из смешанного массива не смешанный
 
         return array_map(function(array $post){
             return $post[0];
         }, $q->getResult());
-
     }
 
     private function getPostsByCriteria(FeedCriteria $criteria)
@@ -156,7 +99,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             $qb = $this->createQueryBuilder('p')
                 ->select('p');
 
-            $this->addOrder($qb, $criteria);
+            AddOrder::addOrder($qb, $criteria);
 
             if($startDate = $criteria->getStartDate()){
                 $qb->andWhere('p.created > :start')
@@ -178,17 +121,10 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
             $qb->setMaxResults($criteria->getLimit());
 
-
             $q = $qb->getQuery();
-
-
-
         } catch(NoResultException $e){
             throw new NotFoundHttpException(sprintf("no posts founded"));
         }
-
-
-
 
         return $q->getResult();
     }
@@ -222,36 +158,15 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getPostsWithTagsAndAttachments(FeedCriteria $criteria)
     {
 
-        $posts = $this->getPostsByCriteria($criteria);
+        $posts = [];
 
-        $postIds = array_map(function(Post $post){
-            return $post->getId();
-        }, $posts);
-
-        $qb = $this->createQueryBuilder('p')
-            ->select('p', 'tags', 'attachments')
-            ->leftJoin('p.tags', 'tags')
-            ->leftJoin('p.attachments', 'attachments')
-            ->where('p.id IN (:postIds)')
-            ->setParameter('postIds', $postIds)
-            ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
-            ->addOrderBy('attachments.position', 'ASC')
-            ->getQuery();
-
-
-        return $qb->getResult();
-    }
-
-    public function getHotPostsWithTagsAndAttachments()
-    {
-
-        $startDate = new \DateTime();
-        $startDate->sub(new \DateInterval('P900D'));
-
-        $criteria = new FeedCriteria(100, 0, 'id', 'DESC', $startDate);
-
-
-        $posts = $this->getHotPosts($criteria);
+        switch($criteria->getOrder()){
+            case 'hot':
+                $posts =  $this->getHotPosts($criteria);
+                break;
+            default:
+                $posts = $this->getPostsByCriteria($criteria);
+        }
 
 
         $postIds = array_map(function(Post $post){
@@ -264,12 +179,14 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.attachments', 'attachments')
             ->where('p.id IN (:postIds)')
             ->setParameter('postIds', $postIds)
-            ->orderBy('p.'.$criteria->getOrder(), $criteria->getDirection())
             ->addOrderBy('attachments.position', 'ASC')
             ->getQuery();
 
 
-        return $qb->getResult();
-    }
+        $postsWithAttachments = $qb->getResult();
 
+        array_merge_recursive($posts, $postsWithAttachments);
+
+        return $posts;
+    }
 }

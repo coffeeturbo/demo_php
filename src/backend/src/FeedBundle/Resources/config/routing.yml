@@ -8,10 +8,5 @@ feed:
     dateFrom: "*"
     dateTo: "*"
     profile: \d+
-    sort: "id|rating"
+    sort: "id|rating|hot"
     direction: ASC|DESC
-
-feed_hot:
-  path: '/hot'
-  methods: [ GET ]
-  defaults: { _controller: FeedBundle:Feed:hotFeed }
