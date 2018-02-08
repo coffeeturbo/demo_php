@@ -10,3 +10,4 @@ feed:
     profile: \d+
     sort: "id|rating|hot"
     direction: ASC|DESC
+    tags: "*"
