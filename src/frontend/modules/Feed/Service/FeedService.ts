@@ -13,9 +13,8 @@ export class FeedService {
 
     public get(limit: number, getFeedRequest?: GetFeedRequest): Observable<Feed>
     {
-        
         return this.rest.get(limit, getFeedRequest).do((feed)=>{
-            if(getFeedRequest.cursor) {
+            if(getFeedRequest && getFeedRequest.cursor) {
                 this.feedCacheService.addToFeed(getFeedRequest, feed)
             }
         });

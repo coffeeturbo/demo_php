@@ -11,6 +11,7 @@ import {PostModule} from "../Post/PostModule";
 import {FeedResolver} from "./Service/FeedResolver";
 import {FeedCacheService} from "./Service/FeedCacheService";
 import {FeedRefreshButtonComponent} from "./Component/FeedRefreshButton/index";
+import {FeedRequestService} from "./Service/FeedRequestService";
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import {FeedRefreshButtonComponent} from "./Component/FeedRefreshButton/index";
         FeedService,
         FeedRESTService,
         FeedCacheService,
+        FeedRequestService,
         FeedResolver
     ],
     exports: [

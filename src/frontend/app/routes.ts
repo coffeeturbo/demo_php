@@ -15,20 +15,18 @@ import {FeedRoute} from "../modules/Feed/Route/FeedRoute/index";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute/index";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute/index";
 import {PostFormRoute} from "../modules/Post/Route/PostFormRoute/index";
-import {ProfileFeedResolver} from "../modules/Profile/Service/ProfileFeedResolver";
-import {TagRoute} from "../modules/Tag/Route/TagRoute/index";
 import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
 import {FeedResolver} from "../modules/Feed/Service/FeedResolver";
 import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
 import {ProfileFeedRequestResolver} from "../modules/Profile/Service/ProfileFeedRequestResolver";
 import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver";
+import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResolver";
 
 export const appRoutes: JetRoutes = [
     {
         path: '',
         component: FeedRoute,
         data: {
-            cacheId: 0,
             title: 'Hot',
             feedRequest: <GetFeedRequest>{sort: "id", direction: "ASC"}
         },
@@ -40,7 +38,6 @@ export const appRoutes: JetRoutes = [
         path: 'new',
         component: FeedRoute,
         data: {
-            cacheId: 1,
             title: 'New',
             feedRequest: <GetFeedRequest>{sort: "id"}
         },
@@ -52,7 +49,6 @@ export const appRoutes: JetRoutes = [
         path: 'best',
         component: FeedRoute,
         data: {
-            cacheId: 2,
             title: 'Best',
             feedRequest: <GetFeedRequest>{sort: "rating"}
         },
@@ -83,9 +79,11 @@ export const appRoutes: JetRoutes = [
     },
     {
         path: 'tag/:path',
-        component: TagRoute,
+        component: FeedRoute,
         resolve: {
-            title: TagTitleResolver
+            feed: FeedResolver,
+            feedRequest: TagFeedRequestResolver,
+            title: TagTitleResolver,
         }
     },
     { // Страница авторизации
@@ -124,7 +122,7 @@ export const appRoutes: JetRoutes = [
                 resolve: { 
                     profile: ProfileResolver,
                     title: ProfileTitleResolver,
-                    profileFeed: ProfileFeedResolver,
+                    profileFeed: FeedResolver,
                     feedRequest: ProfileFeedRequestResolver
                 }
             }

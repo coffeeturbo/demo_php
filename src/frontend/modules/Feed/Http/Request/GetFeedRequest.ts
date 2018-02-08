@@ -7,6 +7,6 @@ export interface GetFeedRequest
     profile?: number;
     sort?: "id" | "rating";
     direction?: "ASC" | "DESC";
-
+    tags?: string;
     [key: string]: any;
 }

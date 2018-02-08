@@ -19,7 +19,6 @@ import {ProfileBackdropCropperHelper} from "./Component/ProfileBackdropCropper/h
 import {ProfileDropdownComponent} from "./Component/ProfileDropdown/index";
 import {ProfileBackdropActionsHelper} from "./Component/ProfileBackdropActions/helper";
 import {ProfileBackdropActionsComponent} from "./Component/ProfileBackdropActions/index";
-import {ProfileFeedResolver} from "./Service/ProfileFeedResolver";
 import {FeedModule} from "../Feed/FeedModule";
 import {ProfileFeedRequestResolver} from "./Service/ProfileFeedRequestResolver";
 import {ProfileAvatarComponent} from "./Component/ProfileAvatar/index";
@@ -50,7 +49,6 @@ import {ProfileAvatarComponent} from "./Component/ProfileAvatar/index";
         
         ProfileResolver,
         ProfileTitleResolver,
-        ProfileFeedResolver,
         ProfileFeedRequestResolver,
         
         ProfileAvatarCropperHelper,

@@ -6,6 +6,7 @@ import {PostModule} from "../Post/PostModule";
 import {CommonModule} from "../Common/CommonModule";
 import {TagTitleResolver} from "./Service/TagTitleResolver";
 import {TagRESTService} from "./Service/TagRESTService";
+import {TagFeedRequestResolver} from "./Service/TagFeedRequestResolver";
 
 @NgModule({
     imports:[
@@ -18,6 +19,7 @@ import {TagRESTService} from "./Service/TagRESTService";
     ],
     providers: [
         TagTitleResolver,
+        TagFeedRequestResolver,
         TagRESTService
     ]
 })
