@@ -5,7 +5,7 @@ export interface GetFeedRequest
     dateTo?: string;
     // profile_id?: number; 
     profile?: number;
-    sort?: "id" | "rating";
+    sort?: "id" | "rating" | "hot";
     direction?: "ASC" | "DESC";
     tags?: string;
     [key: string]: any;

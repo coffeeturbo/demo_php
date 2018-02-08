@@ -28,7 +28,7 @@ export const appRoutes: JetRoutes = [
         component: FeedRoute,
         data: {
             title: 'Hot',
-            feedRequest: <GetFeedRequest>{sort: "id", direction: "ASC"}
+            feedRequest: <GetFeedRequest>{sort: "hot"}
         },
         resolve: {
             feed: FeedResolver,
