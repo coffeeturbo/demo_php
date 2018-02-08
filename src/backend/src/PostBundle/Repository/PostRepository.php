@@ -190,18 +190,60 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $posts;
     }
 
+    public function getAttachmentsAndTagsByPosts(array $posts)
+    {
+        $postIds = array_map(function(Post $post){
+            return $post->getId();
+        }, $posts);
+
+        $qb = $this->createQueryBuilder('p')
+            ->select('p', 'tags', 'attachments')
+            ->leftJoin('p.tags', 'tags')
+            ->leftJoin('p.attachments', 'attachments')
+            ->where('p.id IN (:postIds)')
+            ->setParameter('postIds', $postIds)
+            ->addOrderBy('attachments.position', 'ASC');
+
+
+        $query =  $qb->getQuery();
+
+        $postsWithAttachments = $query->getResult();
+
+        array_merge_recursive( $posts, $postsWithAttachments);
+
+
+        return $posts;
+    }
+
     public function searchAdditions($query){
         return  $this->createQueryBuilder('p')
             ->select('p.id, p.title')
             ->where('p.title LIKE :query')
             ->setParameter('query', '%'.$query.'%')
+            ->orderBy('p.votesRating','DESC')
             ->setMaxResults(5)
             ->getQuery()->getArrayResult()
             ;
     }
 
-    public function search($query){
+    public function searchFull($query, $cursor = null){
+        $qb = $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.title LIKE :query')
+            ->setParameter('query', '%'.$query.'%')
+            ->orderBy('p.votesRating','DESC')
+            ->setMaxResults(20);
 
+            if($cursor) {
+                $qb->andWhere('p.id > :cursor')
+                ->setParameter('cursor', $cursor)
+                ;
+
+            }
+
+            $posts = $qb->getQuery()->getResult();
+
+        return $this->getAttachmentsAndTagsByPosts($posts);
     }
 
 }
