@@ -11,11 +11,11 @@ import {Locale, TranslationService} from "@angular-addons/translate";
 import {appRoutes} from "../../app/routes";
 import "../../assets/styles/index.scss";
 
-import {ApplicationComponent} from "./Component/Application/index";
-import {ApplicationMainFrameComponent} from "./Component/ApplicationMain/index";
-import {ApplicationScrollButtonComponent} from "./Component/ApplicationScrollButton/index";
-import {ForbiddenRoute} from "./Route/ForbiddenRoute/index";
-import {PageNotFoundRoute} from "./Route/PageNotFoundRoute/index";
+import {ApplicationComponent} from "./Component/Application";
+import {ApplicationMainFrameComponent} from "./Component/ApplicationMain";
+import {ApplicationScrollButtonComponent} from "./Component/ApplicationScrollButton";
+import {ForbiddenRoute} from "./Route/ForbiddenRoute";
+import {PageNotFoundRoute} from "./Route/PageNotFoundRoute";
 import {StartupService} from "./Service/StartupService";
 import {AuthModule} from "../Auth/AuthModule";
 import {CommonModule} from "../Common/CommonModule";
@@ -25,8 +25,8 @@ import {FeedModule} from "../Feed/FeedModule";
 import {ProfileModule} from "../Profile/ProfileModule";
 import {ApplicationScrollService} from "./Service/ApplicationScrollService";
 import {RouteHelperService} from "./Service/RouteHelperService";
-import {ApplicationLogoComponent} from "./Component/ApplicationLogo/index";
-import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar/index";
+import {ApplicationLogoComponent} from "./Component/ApplicationLogo";
+import {ApplicationLoadingBarComponent} from "./Component/ApplicationLoadingBar";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
 import {PostModule} from "../Post/PostModule";
 import {Config} from "../../app/config";
@@ -34,7 +34,6 @@ import {VoteModule} from "../Vote/VoteModule";
 import {TagModule} from "../Tag/TagModule";
 import {ShareModule} from "../Share/ShareModule";
 import {PlatformService} from "./Service/PlatformService";
-import {MetrikaModule} from "ng-yandex-metrika";
 
 registerLocaleData(localeRu);
 
@@ -75,10 +74,7 @@ export class HammerConfig extends HammerGestureConfig  {
         VoteModule,
         CommonModule,
         ShareModule,
-        RESTModule.init(Config.uri.api, Config.auth.token_key),
-        MetrikaModule.forRoot(
-            Config.applications.metrika,
-        ),        
+        RESTModule.init(Config.uri.api, Config.auth.token_key)
     ],
     declarations: [
         ApplicationComponent,
