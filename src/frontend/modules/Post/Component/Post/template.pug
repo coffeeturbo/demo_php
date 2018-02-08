@@ -38,7 +38,8 @@ div
       attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [attachment]="attachment.content")
       //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
-.expand(*ngIf="pl.isPlatformBrowser() && isShorten", (click)="isExpand = true") 
+// @TODO: Translate
+.expand(*ngIf="!minimized && pl.isPlatformBrowser() && isShorten", (click)="isExpand = true") 
   small Читать далее...
 
 .footer

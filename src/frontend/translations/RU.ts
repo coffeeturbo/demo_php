@@ -38,7 +38,7 @@ export const LocaleRU = {
   "Profile":      "Профиль",
   "Publish":      "Опубликовать",
   "Registration": "Регистрация",
-  "Registered":   "Загерестрирован",
+  "Registered":   "Зарегестрирован",
   "Report":       "Пожаловаться",
   "Russian":      "Русский",
   "Save":         "Сохранить",

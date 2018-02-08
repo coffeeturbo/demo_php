@@ -12,4 +12,13 @@ section.comments(#commentsEl)
       button([class.active]="orderCommentsBy == 'rate'", (click)="orderCommentsBy = 'rate'") {{"rating" | translate }}
     
   comment(*ngFor="let comment of route.snapshot.data.comments;", [comment]="comment", [post]="route.snapshot.data.post")
-  comment-form([post]="route.snapshot.data.post")
+  comment-form(*ngIf="auth.isSignedIn()", [post]="route.snapshot.data.post")
+  ng-container(*ngIf="!auth.isSignedIn()") 
+    h3 Только авторизованные пользователи могут оставлять комментарии 
+    br
+    a.btn-material.primary(routerLink="/register")
+      span {{"Registration" | translate }}
+
+    a.btn-material.primary(routerLink="/login")
+      span Войти
+  

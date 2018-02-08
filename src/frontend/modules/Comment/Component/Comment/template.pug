@@ -25,17 +25,17 @@ section.content
     //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
 ng-container(*ngIf="pl.isPlatformBrowser()")
-  .actions
-    button.reply(*ngIf="!showForm", (click)="toggleForm()")
-      | {{ "Reply" | translate }}
-    button.reply(*ngIf="showForm", (click)="toggleForm()") 
-      | {{ "Cancel" | translate }}
-    button
-      i.fa.fa-floppy-o
-    button
-      i.fa.fa-bullhorn
-    button
-      i.fa.fa-flag
+  .actions(*ngIf="auth.isSignedIn()")
+      button.reply(*ngIf="!showForm", (click)="toggleForm()")
+        | {{ "Reply" | translate }}
+      button.reply(*ngIf="showForm", (click)="toggleForm()") 
+        | {{ "Cancel" | translate }}
+      button
+        i.fa.fa-floppy-o
+      button
+        i.fa.fa-bullhorn
+      button
+        i.fa.fa-flag
   
   comment-form(*ngIf="showForm", [focus]="true", [parent]="comment", [post]="post", (onSubmit)="showForm = false; showChildComments = true; comment = $event")
 

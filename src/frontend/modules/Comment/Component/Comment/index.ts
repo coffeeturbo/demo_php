@@ -28,6 +28,7 @@ export class CommentComponent implements OnInit {
     
     constructor(
         public pl: PlatformService,
+        public auth: AuthService,
         private authService: AuthService,
         private commentService: CommentService,
         private router: Router

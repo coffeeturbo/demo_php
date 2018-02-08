@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
+import {AuthService} from "../../../Auth/Service/AuthService";
 
 @Component({
     templateUrl: './template.pug',
@@ -14,8 +15,10 @@ export class PostRoute {
     
     constructor(
         public route: ActivatedRoute, 
-        private applicationScrollService: ApplicationScrollService
+        private applicationScrollService: ApplicationScrollService,
+        public auth: AuthService
     ) {
+        
         setTimeout(() => {
             this.route.fragment.subscribe(fragment => {
                 switch (fragment) {
