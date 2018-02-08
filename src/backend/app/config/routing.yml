@@ -65,3 +65,7 @@ comment:
 protected_comment:
   resource: '@CommentBundle/Resources/config/routing_protected.yml'
   prefix: '/protected/comment'
+
+search:
+  resource: '@SearchBundle/Resources/config/routing.yml'
+  prefix: '/search'

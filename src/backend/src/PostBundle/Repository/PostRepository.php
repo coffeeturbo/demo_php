@@ -180,9 +180,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->addOrderBy('attachments.position', 'ASC');
 
 
-
-
-          $query =  $qb->getQuery();
+        $query =  $qb->getQuery();
 
         $postsWithAttachments = $query->getResult();
 
@@ -191,4 +189,19 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
         return $posts;
     }
+
+    public function searchAdditions($query){
+        return  $this->createQueryBuilder('p')
+            ->select('p.id, p.title')
+            ->where('p.title LIKE :query')
+            ->setParameter('query', '%'.$query.'%')
+            ->setMaxResults(5)
+            ->getQuery()->getArrayResult()
+            ;
+    }
+
+    public function search($query){
+
+    }
+
 }
