@@ -12,7 +12,7 @@ export class TagFeedRequestResolver {
     }
     
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GetFeedRequest> {
-        let tagId = route.params["path"].replace(/^.*?(\d+)$/g, '$1');
+        let tagId: number = +route.params["path"].replace(/^.*?(\d+)$/g, '$1');
 
         return Observable.of({tags: JSON.stringify([tagId])})
             .do(feedRequest => this.feedRequestService.onFeedRequestResolve.emit(feedRequest))
