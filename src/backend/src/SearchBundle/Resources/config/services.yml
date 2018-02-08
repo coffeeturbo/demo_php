@@ -1,0 +1,7 @@
+services:
+  post.repository:
+    class: PostBundle\Repository\PostRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - PostBundle\Entity\Post
+

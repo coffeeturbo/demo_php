@@ -1,0 +1,4 @@
+post_get_by_id:
+  path: '/addition/{query}'
+  methods: [ GET ]
+  defaults: { _controller: SearchBundle:Search:searchAddition }
