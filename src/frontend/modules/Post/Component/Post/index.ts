@@ -17,6 +17,7 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Subscription} from "rxjs/Subscription";
 import {PlatformService} from "../../../Application/Service/PlatformService";
+import {PostRoute} from "../../Route/PostRoute/index";
 
 @Component({
     selector: 'post',
@@ -38,14 +39,13 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     @Input('current') current: boolean = true; // Cчитаем что пользователь в feed'e сейчас смотрит этот пост
     @Input() post: Post;
 
-    // @DOTO Доделать развернуть длиннопост!
+    public isExpand: boolean = false;
+    public isLongpost: boolean = false;
     // @ViewChild("content") content: ElementRef;
-    // @HostBinding('class.long-post')
-    // get isLongPost () {
-    //     if(this.content) {
-    //         return this.content.nativeElement.offsetHeight > 200;
-    //     }
-    // }    
+    @HostBinding('class.shorten')
+    get isShorten () {
+        return !this.isExpand && !this.isPostRoute() && this.isLongpost
+    }
 
     constructor(
         private authService: AuthService,
@@ -60,6 +60,8 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     ) {}
 
     ngAfterViewInit() {
+        this.isLongpost = this.el.nativeElement.querySelector(".content").offsetHeight > 400;
+
         this.markAsVisitedSubscription = this.appScrollService
             .onScroll
             .debounceTime(50)
@@ -119,7 +121,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     }
 
     getPostUrl(params: {short: boolean} = {short: false}) {
-        return `/post/${(params.short ? "" : getSlug(this.post.title + "-")) + this.post.id}`;
+        return `/post/${(params.short ? "" : getSlug(this.post.title + "-")) + "-" + this.post.id}`;
     }
 
     @HostListener('click')
@@ -151,4 +153,8 @@ export class PostComponent implements AfterViewInit, OnDestroy {
                 break;
         }
     }
+    
+    isPostRoute(): boolean {
+        return this.router.isActive("/post", false)
+    } 
 }

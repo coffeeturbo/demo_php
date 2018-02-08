@@ -16,15 +16,16 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     a(routerLink="/new", routerLinkActive="active")
       i.fa.fa-fw.fa-lg.fa-newspaper-o
       span {{ "New" | translate }} 
-  
-    a(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()", routerLink="/feed", routerLinkActive="active")
-      i.fa.fa-fw.fa-lg.fa-list-alt
-      span {{ "Feed" | translate }} 
+
+    // @TODO: Implemt SubscribersFeed
+    //a(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()", routerLink="/feed", routerLinkActive="active")
+    //  i.fa.fa-fw.fa-lg.fa-list-alt
+    //  span {{ "Feed" | translate }} 
     
-  ng-container(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
-    hr
-    section
-      h4 {{"Subscriptions" | translate }}
+  //ng-container(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
+  //  hr
+  //  section
+  //    h4 {{"Subscriptions" | translate }}
   
   .flex-space
 

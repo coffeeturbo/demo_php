@@ -8,10 +8,11 @@
         li
           i.fa.fa-fw.fa-bar-chart
           span {{ profile.rating | number}} 
-        li
-          i.fa.fa-fw.fa-user
-          span {{ subscriptions | number}} 
-      br
+        // @TODO: Implemt SubscribersFeed
+        //li
+        //  i.fa.fa-fw.fa-user
+        //  span {{ subscriptions | number}} 
+      //br
       br
       nav
         a.btn-material.primary([routerLink]="['profile', profileService.getOwnProfilePath()]") Моя Страница

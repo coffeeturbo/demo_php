@@ -30,6 +30,11 @@
     }
   }
 
+  &.shorten .content {
+    max-height: 100vh; // questionably solution. Watch behavior.
+    overflow: hidden;
+  }
+
   .sticky {
     float: right;
     position: sticky;
@@ -156,10 +161,24 @@
     }
   }
 
-  .footer {
+  .expand {
     margin: 20px -20px -20px;
     padding: 10px;
     border-top: 1px #e0e0e0 solid;
+    color: #777;
+    cursor: pointer;
+    transition: color 200ms, background 200ms;
+    
+    &:hover{
+      background: material-color($secondary_material, '100');
+      color: $font_color_dark;
+      
+    }
+  }
+  
+  .footer {
+    margin: 20px -20px -20px;
+    padding: 10px;
     display: flex;
     align-items: center;
     background: material-color($secondary_material, '100');

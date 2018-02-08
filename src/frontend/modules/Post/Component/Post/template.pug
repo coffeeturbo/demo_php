@@ -29,7 +29,7 @@ div
     .fa.fa-tags
     ul
       li(*ngFor="let tag of post.tags;")
-        a([routerLink]='["/tag", tag.name]') {{ tag.name }}
+        a([routerLink]='["/tag", tag.name + "-" + tag?.id]') {{ tag.name }}
 
   .content(*ngIf="!minimized", #content)
     ng-container(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
@@ -37,6 +37,9 @@ div
       img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
       attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [attachment]="attachment.content")
       //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
+
+.expand(*ngIf="pl.isPlatformBrowser() && isShorten", (click)="isExpand = true") 
+  small Читать далее...
 
 .footer
   .btn-material.secondary.vote.positive([class.active]="post.votes.state=='positive'", (click)='vote("positive")')

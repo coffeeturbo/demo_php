@@ -22,7 +22,7 @@ export const LocaleRU = {
   "Error":        "Ошибка",
   "Feed":         "Лента",
   "Gender":       "Пол",
-  "Hot":          "Горячее",
+  "Hot":          "В тренде",
   "Like":         "Мне нравится",
   "Loading":      "Загрузка",
   "Locale":       "Язык",
