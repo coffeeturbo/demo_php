@@ -17,7 +17,7 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Subscription} from "rxjs/Subscription";
 import {PlatformService} from "../../../Application/Service/PlatformService";
-import {PostRoute} from "../../Route/PostRoute/index";
+import {PostRoute} from "../../Route/PostRoute";
 
 @Component({
     selector: 'post',

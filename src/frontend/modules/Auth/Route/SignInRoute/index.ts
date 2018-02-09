@@ -1,6 +1,6 @@
 import {Component, ViewChild} from "@angular/core";
 
-import {SignInFormComponent} from "../../Component/SignInForm/index";
+import {SignInFormComponent} from "../../Component/SignInForm";
 
 @Component({
     templateUrl: "./template.pug",

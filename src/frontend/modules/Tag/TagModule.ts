@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
-import {TagRoute} from "./Route/TagRoute/index";
+import {TagRoute} from "./Route/TagRoute";
 import {PostModule} from "../Post/PostModule";
 import {CommonModule} from "../Common/CommonModule";
 import {TagTitleResolver} from "./Service/TagTitleResolver";

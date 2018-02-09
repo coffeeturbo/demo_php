@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
 
-import {SidebarComponent} from "./Component/Sidebar/index";
+import {SidebarComponent} from "./Component/Sidebar";
 import {SidebarService} from "./Service/SidebarService";
 import {CommonModule} from "../Common/CommonModule";
 

@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
-import {PostComponent} from "../../../Post/Component/Post/index";
+import {PostComponent} from "../../../Post/Component/Post";
 import {PostHotkeys} from "../../../Post/Component/Post/hotkeys";
 import {FeedCacheService} from "../../Service/FeedCacheService";
 import {Feed} from "../../Entity/Feed";

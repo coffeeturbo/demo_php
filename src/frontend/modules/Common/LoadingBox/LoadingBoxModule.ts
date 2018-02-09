@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 
-import {LoaderComponent} from "./Component/Loader/index";
+import {LoaderComponent} from "./Component/Loader";
 
 @NgModule({
     declarations: [

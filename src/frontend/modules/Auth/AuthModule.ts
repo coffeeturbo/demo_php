@@ -3,12 +3,12 @@ import {RouterModule} from "@angular/router";
 
 import {CommonModule} from "../Common/CommonModule";
 
-import {SignInFormComponent} from "./Component/SignInForm/index";
-import {SignUpFormComponent} from "./Component/SignUpForm/index";
-import {SocialButtonsComponent} from "./Component/SocialButtons/index";
+import {SignInFormComponent} from "./Component/SignInForm";
+import {SignUpFormComponent} from "./Component/SignUpForm";
+import {SocialButtonsComponent} from "./Component/SocialButtons";
 
-import {SignInRoute} from "./Route/SignInRoute/index";
-import {SignUpRoute} from "./Route/SignUpRoute/index";
+import {SignInRoute} from "./Route/SignInRoute";
+import {SignUpRoute} from "./Route/SignUpRoute";
 
 import {AuthRESTService} from "./Service/AuthRESTService";
 import {AuthService} from "./Service/AuthService";

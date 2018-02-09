@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 
-import {NotImplementedComponent} from "./Component/NotImplemented/index";
+import {NotImplementedComponent} from "./Component/NotImplemented";
 
 @NgModule({
     declarations: [

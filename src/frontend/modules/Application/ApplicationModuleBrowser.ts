@@ -5,7 +5,7 @@ import * as Cookies from 'universal-cookie';
 import {MetrikaModule} from "ng-yandex-metrika";
 
 import {ApplicationModule} from "./ApplicationModule";
-import {ApplicationComponent} from "./Component/Application/index";
+import {ApplicationComponent} from "./Component/Application";
 import {Config} from "../../app/config";
 
 

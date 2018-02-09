@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 
-import {TooltipComponent} from "./Component/Tooltip/index";
+import {TooltipComponent} from "./Component/Tooltip";
 
 @NgModule({
     declarations: [

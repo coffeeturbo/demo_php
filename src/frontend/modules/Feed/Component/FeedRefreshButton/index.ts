@@ -1,7 +1,7 @@
 import {Component, Host, HostBinding, HostListener} from '@angular/core';
 import {Observable} from "rxjs";
 
-import {FeedComponent} from "../Feed/index";
+import {FeedComponent} from "../Feed";
 
 @Component({
     selector: 'feed-refresh-button',
