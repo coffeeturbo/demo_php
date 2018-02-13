@@ -103,7 +103,6 @@ class CommentService
 
         $parentComments = $this->getParentCommentsByComment($comment);
 
-        dump($parentComments);
         // увеличиваем в этом дереве количество комментариев
         array_walk($parentComments, function(Comment $comment){
             $comment->increaseCommentsTotal();
