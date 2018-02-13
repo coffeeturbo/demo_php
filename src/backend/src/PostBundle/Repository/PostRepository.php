@@ -226,16 +226,17 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ;
     }
 
+
     public function searchFull($query, $cursor = null){
         $qb = $this->createQueryBuilder('p')
             ->select('p')
             ->where('p.title LIKE :query')
             ->setParameter('query', '%'.$query.'%')
-            ->orderBy('p.votesRating','DESC')
+            ->orderBy('p.id','DESC')
             ->setMaxResults(20);
 
             if($cursor) {
-                $qb->andWhere('p.id > :cursor')
+                $qb->andWhere('p.id < :cursor')
                 ->setParameter('cursor', $cursor)
                 ;
 
