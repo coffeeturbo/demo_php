@@ -82,6 +82,7 @@ export class PostFormRoute implements OnInit {
             .debounceTime(500) // Ohyenable feature 
             .do(() => this.saved = false)
             .debounceTime(500) // Ohyenable feature 
+            .distinctUntilChanged()
             .subscribe((post: Post) => {
                 if(this.pl.isPlatformBrowser()) {
                     localStorage.setItem("post-form", JSON.stringify(post));

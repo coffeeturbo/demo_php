@@ -7,6 +7,7 @@ import {VoteState} from "../../Vote/Entity/Vote";
 import {VoteRESTService} from "../../Vote/Service/VoteRESTService";
 import {AttachmentRESTService} from "../../Attachment/Service/AttachmentRESTService";
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
+import * as getSlug from "speakingurl";
 
 @Injectable()
 export class PostService {
@@ -62,6 +63,10 @@ export class PostService {
         ;
     }
 
+    public getUrl(id: number, title?: string): string
+    {
+        return `/post/${(!title ? "" : getSlug(title + "-")) + "-" + id}`;
+    }
 
     private getFromCache(postId: number): Observable<Post>
     {

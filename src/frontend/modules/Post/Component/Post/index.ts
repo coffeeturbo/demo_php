@@ -129,30 +129,30 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         this.visited = true;
     }
 
-    @HostListener('window:keyup', ['$event'])
-    onKeydown(e) {
-        if(this.current === false || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
-            return;
-        }
-        
-        switch (e.keyCode) {
-            case PostHotkeys.VotePositive:
-                this.vote("positive");
-                break;
-            case PostHotkeys.VoteNegative:
-                this.vote("negative");
-                break;
-            case PostHotkeys.OpenPost:
-                typeof window != 'undefined' && window.open(this.getPostUrl());
-                break;
-            case PostHotkeys.StartPost:
-                scrollIntoView(this.el.nativeElement, {
-                    time: 100,
-                    align: {top: 0, topOffset: 20}
-                });
-                break;
-        }
-    }
+    // @HostListener('window:keyup', ['$event'])
+    // onKeydown(e) {
+    //     if(this.current === false || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+    //         return;
+    //     }
+    //    
+    //     switch (e.keyCode) {
+    //         case PostHotkeys.VotePositive:
+    //             this.vote("positive");
+    //             break;
+    //         case PostHotkeys.VoteNegative:
+    //             this.vote("negative");
+    //             break;
+    //         case PostHotkeys.OpenPost:
+    //             typeof window != 'undefined' && window.open(this.getPostUrl());
+    //             break;
+    //         case PostHotkeys.StartPost:
+    //             scrollIntoView(this.el.nativeElement, {
+    //                 time: 100,
+    //                 align: {top: 0, topOffset: 20}
+    //             });
+    //             break;
+    //     }
+    // }
     
     isPostRoute(): boolean {
         return this.router.isActive("/post", false)

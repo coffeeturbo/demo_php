@@ -50,7 +50,7 @@ div
     .fa.fa-thumbs-o-down
     | {{ post.votes.negative }}
   .flex-space
-  .btn-material.secondary([routerLink]="getPostUrl()", fragment="comments")
+  .btn-material.secondary([routerLink]="postService.getUrl(post.id, post.title)", fragment="comments")
     .fa.fa-comments-o
     span.for-mobile(*ngIf="pl.isPlatformBrowser()") {{ post.comments_total }} 
     span.for-desktop {{ post.comments_total | pluralize:translationService.translate("comment"):translationService.translate("сomments"):translationService.translate("comments1") }}
@@ -83,4 +83,4 @@ div
 modal(*ngIf="isShareModalVisible", [backdrop]="true", (on-close)="isShareModalVisible = false", [close-mode]="1")
   modal-header Поделиться постом
   modal-body
-    share([link]="getPostUrl({short: true})")
+    share([link]="postService.getUrl(post.id)")

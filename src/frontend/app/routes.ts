@@ -21,6 +21,8 @@ import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
 import {ProfileFeedRequestResolver} from "../modules/Profile/Service/ProfileFeedRequestResolver";
 import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver";
 import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResolver";
+import {SearchFeedResolver} from "../modules/Search/Service/SearchFeedResolver";
+import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequestResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -84,6 +86,14 @@ export const appRoutes: JetRoutes = [
             feed: FeedResolver,
             feedRequest: TagFeedRequestResolver,
             title: TagTitleResolver,
+        }
+    },
+    {
+        path: 'search/:path',
+        component: FeedRoute,
+        resolve: {
+            feed: SearchFeedResolver,
+            feedRequest: SearchRequestResolver
         }
     },
     { // Страница авторизации

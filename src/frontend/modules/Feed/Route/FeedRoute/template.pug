@@ -1,1 +1,2 @@
-feed([feed]="feed", (onFeedLoad)="loadFeed($event)", (onRefresh)="refresh()", [isLoading]="isLoading", [showRefresh]="true", [isFeedEnd]="isFeedEnd")
+feed(*ngIf="feed.length > 0", [feed]="feed", (onFeedLoad)="loadFeed($event)", (onRefresh)="refresh()", [isLoading]="isLoading", [showRefresh]="true", [isFeedEnd]="isFeedEnd")
+h1(*ngIf="feed.length == 0") Posts not found

@@ -1,4 +1,5 @@
 import {Component, HostBinding, HostListener} from "@angular/core";
+import {Router} from "@angular/router";
 import {LoadingBar, LoadingBarState, LoadingBarEvents} from "@angular-addons/loading-bar";
 
 import {SidebarService} from "../../../Sidebar/Service/SidebarService";
@@ -9,6 +10,10 @@ import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {AppHotkeys} from "./hotkeys";
 import {ApplicationScrollService} from "../../Service/ApplicationScrollService";
 import {PlatformService} from "../../Service/PlatformService";
+import {SearchRESTService} from "../../../Search/Service/SearchRESTService";
+import {FormControl, Validators} from "@angular/forms";
+import {Autocomplete} from "../../../Search/Entity/Autocomplete";
+import {PostService} from "../../../Post/Service/PostService";
 
 @Component({
     selector: "application",
@@ -18,25 +23,21 @@ import {PlatformService} from "../../Service/PlatformService";
 export class ApplicationComponent {
     @HostBinding("class") className: string = "";
     public device = Device;
-    public isSearchResultsVisible = false;
     public isProfileTooltipVisible = false;
-    public searchResults = [
-        "РЫБАЛКА С БРАТЬЯМИ ТАЙМАСОВЫМИ",
-        "Рыбалка в ОАЭ, аренда яхт в Дубай",
-        "Рыбалка -Карлсон Дорогой",
-        "Рыбалка Fishing -Alex B",
-        "Клуб рыбаков. Рыбалка. Club fishermen. fishing",
-        "Рыбалка на видео"
-    ];
+    public autocomplete: Autocomplete[] = [];
+    public searchInputControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
     constructor(
+        public router: Router,
         public sidebar: SidebarService,
         public auth: AuthService,
         public profile: ProfileService,
         public pl: PlatformService,
         private appScrollService: ApplicationScrollService,
         private routeHelper: RouteHelperService,
-        private loadingBarEvents: LoadingBarEvents
+        private loadingBarEvents: LoadingBarEvents,
+        private searchService: SearchRESTService,
+        private postService: PostService
     ) {
         loadingBarEvents.onChangeState
             .map((loadingBar: LoadingBar) => loadingBar.state)
@@ -61,5 +62,14 @@ export class ApplicationComponent {
                 this.appScrollService.scrollTo(this.appScrollService.getScroll() + 100);
                 break;
         }
+    }
+
+    ngOnInit() {
+        this.searchInputControl.valueChanges
+            .debounceTime(300)
+            .distinctUntilChanged()
+            .filter(() => this.searchInputControl.valid)
+            .flatMap(query => this.searchService.autocomplete(query))
+            .subscribe(autocomplete => this.autocomplete = autocomplete);
     }
 }

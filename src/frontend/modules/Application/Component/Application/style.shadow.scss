@@ -134,8 +134,10 @@ header {
       &.active {
         background: material-color($primary_material, '500');
       }
+      
       .fa {
         vertical-align: middle;
+        
         & + * {
           margin-left: 8px;
         }
@@ -160,8 +162,9 @@ header {
   box-shadow: 0 0 6px material-color($primary_material, '400');
   z-index: 1;
 
-  li {
+  li a {
     padding: 15px;
+    display: block;
 
     &:hover {
       background: material-color($secondary_material, '100');

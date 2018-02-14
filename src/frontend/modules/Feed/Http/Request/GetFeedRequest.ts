@@ -8,5 +8,6 @@ export interface GetFeedRequest
     sort?: "id" | "rating" | "hot";
     direction?: "ASC" | "DESC";
     tags?: string;
+    query?: string;
     [key: string]: any;
 }

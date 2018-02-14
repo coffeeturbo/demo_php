@@ -6,7 +6,12 @@
       a(routerLink="/")
         application-logo
     .search(*ngIf="!device.isMobile()")
-        input.input(type="text", size="1", (focus)="isSearchResultsVisible = true", (blur)="isSearchResultsVisible = false")
+        input.input(
+          type="text", size="1",
+          [formControl] = "searchInputControl",
+          (keydown.esc) = "searchInputControl.patchValue(null)",
+          (keydown.enter) = "router.navigate(['/search', searchInputControl.value]); autocomplete = []"
+        )
         .fa.fa-search
     .flex-space
     nav.menu
@@ -22,10 +27,10 @@
       a(*ngIf="!auth.isSignedIn()", routerLink="/login")
         i.fa.fa-2x.fa-sign-in
         span {{"Sign in" | translate}}  
-  .search-results(*ngIf="isSearchResultsVisible")
+  .search-results(*ngIf="autocomplete.length > 0 && searchInputControl.valid")
       ul
-        li(*ngFor="let result of searchResults")
-          a(href="") {{ result }}
+        li(*ngFor="let result of autocomplete")
+          a([routerLink]="postService.getUrl(result.id, result.title)", (click)="autocomplete = []; searchInputControl.reset() ") {{ result.title }}
   sidebar
 
 application-main

@@ -1,4 +1,6 @@
-export interface SerachRequest {
-    cursor?: number;
-    [key: string]: any;
+import {GetFeedRequest} from "../../../Feed/Http/Request/GetFeedRequest";
+
+export interface SearchRequest {
+    query: string;
+    params?: GetFeedRequest
 }
