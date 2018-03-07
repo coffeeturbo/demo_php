@@ -1,5 +1,6 @@
 services:
     avatar.service:
+        public: true
         class:  AvatarBundle\Service\AvatarService
         arguments:
           - '@image.service'

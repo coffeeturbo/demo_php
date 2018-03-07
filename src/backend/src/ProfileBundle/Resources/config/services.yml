@@ -6,6 +6,7 @@ services:
       - ProfileBundle\Entity\Profile
 
   profile.service:
+    public: true
     class: ProfileBundle\Service\ProfileService
     calls:
       - [ setContainer, ['@service_container'] ]
@@ -16,6 +17,7 @@ services:
       - '%profile.limit%'
 
   profile.service.strategy.avatar_strategy:
+    public: true
     class: ProfileBundle\Service\Strategy\ProfileAvatarStrategy
     calls:
       - [ setImageService, ['@image.service']]
@@ -24,6 +26,7 @@ services:
       - '%profile.avatar.web_path%'
 
   profile.service.strategy.backdrop_strategy:
+    public: true
     class: ProfileBundle\Service\Strategy\BackdropStrategy
     calls:
       - [ setImageService, ['@image.service']]
@@ -34,6 +37,7 @@ services:
       - '%profile.backdrop.min_height%'
 
   profile.backdrop.service:
+    public: true
     class: ProfileBundle\Service\BackdropService
     arguments:
       - '@image.service'
