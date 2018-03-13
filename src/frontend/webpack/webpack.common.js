@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const AppCachePlugin = require('appcache-webpack-plugin');
 const helpers = require('./helpers');
 const ngtools = require('@ngtools/webpack');
+const dotenv = require('dotenv').config().parsed;
 
 const ENV = process.env.ENV = process.env.ENV = helpers.isDev ? 'development' : 'production';
 const IS_NODE = process.env.IS_NODE = helpers.isServer;
@@ -92,7 +93,8 @@ module.exports = {
             'process.env': {
                 'ENV': JSON.stringify(ENV),
                 'IS_NODE': JSON.stringify(IS_NODE),
-                'HOST': JSON.stringify(HOST)
+                'HOST': JSON.stringify(HOST),
+                'dotenv': JSON.stringify(dotenv)
             }
         }),
         new ngtools.AngularCompilerPlugin({

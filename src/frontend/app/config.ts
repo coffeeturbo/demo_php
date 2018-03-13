@@ -1,10 +1,14 @@
 import {DictionariesNavigatorAliases} from "@angular-addons/translate";
 import {CounterConfig} from "ng-yandex-metrika";
 
+if(!process.env.dotenv) {
+    throw new Error("process.env.dotenv is not defined. It looks like .env does not exist. Use .env.dist to make .env file in project sourse.");
+}
+
 export const Config: ConfigInterface = {
-    "product_name": "Socilite",
+    "product_name": "Topicoff",
     "locale": {
-        "default": "RU",
+        "default": process.env.dotenv.DEFAULT_LOCALE || "RU",
         "aliases": {
             'RU': [
                 'ru', 'ru-RU',  // Russian 
@@ -24,11 +28,11 @@ export const Config: ConfigInterface = {
     },
     "applications" : {
         "metrika" : {
-            "id": 47572324,
+            "id": process.env.dotenv.METIKA_ID || 0,
             "webvisor": true
         },
         "facebook" : {
-            "app_id" : 145634995501895 // ToDo: register app and insert code here!
+            "app_id" : process.env.dotenv.FACEBOOK_ID | 0 // ToDo: register app and insert code in .env!
         }
     },
     "account": {
