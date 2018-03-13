@@ -1,3 +1,4 @@
+import {Location} from "@angular/common";
 import {Injectable} from "@angular/core";
 import {Title} from "@angular/platform-browser";
 import {
@@ -12,6 +13,7 @@ import {
 import {Observable, Subscription} from "rxjs";
 import {LoadingBarService, LoadingBarState} from "@angular-addons/loading-bar";
 import {TranslationService} from "@angular-addons/translate";
+import {Metrika} from "ng-yandex-metrika";
 
 @Injectable()
 export class RouteHelperService {
@@ -23,10 +25,12 @@ export class RouteHelperService {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private translationService: TranslationService,
-        private loadingBar: LoadingBarService
+        private loadingBar: LoadingBarService,
+        private metrika: Metrika,
+        private location: Location
     ) {}
 
-    loadingIndicatorWatcher(): void {
+    public loadingIndicatorWatcher(): void {
         this.router.events.subscribe((event: Event) => {
 
             switch (event.constructor) {
@@ -48,7 +52,7 @@ export class RouteHelperService {
         });
     }
 
-    titleWatcher(): void {
+    public titleWatcher(): void {
         this.router.events
             .filter(event => event instanceof NavigationEnd)
             .map(() => this.activatedRoute)
@@ -63,5 +67,18 @@ export class RouteHelperService {
             .map(title => this.translationService.translate(title))
             .subscribe((title) => this.titleService.setTitle(title))
         ;
+    }
+    
+    public yandexMetrikaWatcher(): void {
+        let prevPath = this.location.path();
+        this.router.events
+            .filter(event => event instanceof NavigationEnd)
+            .subscribe(() => {
+                let newPath = this.location.path() || "/";
+                this.metrika.hit(newPath, {
+                    referer: prevPath,
+                });
+                prevPath = newPath;                
+            })
     }
 }
