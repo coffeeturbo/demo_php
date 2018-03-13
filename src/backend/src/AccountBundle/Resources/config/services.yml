@@ -6,6 +6,7 @@ services:
           - AccountBundle\Entity\Account
 
     account.service:
+        public: true
         class: AccountBundle\Service\AccountService
         arguments:
           - '@fos_user.user_manager'

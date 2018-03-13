@@ -42,8 +42,6 @@ class ChainBuilder
                         unset($this->comments[$idx]);
                 }
             }
-
-
         }
 
         return $this->comments;
@@ -54,12 +52,14 @@ class ChainBuilder
         // находим родительский комментарий
         foreach($this->comments as &$comment) {
             if(isset($childComment['parentComment'])
-                && $childComment['parentComment']['id'] == $comment['id']){
-
+                && ($childComment['parentComment']['id'] == $comment['id'])){
 
                 if(count($comment['childrenComments']) !== 0){
                     foreach($comment['childrenComments'] as $idx => $childCom){
-                        $comment['childrenComments'][$idx] = $childComment;
+                        if($childCom['id'] === $childComment['id']){
+                            $comment['childrenComments'][$idx] = $childComment;
+                        }
+
                     }
                 }else {
                     $comment['childrenComments'][] = $childComment;
@@ -72,6 +72,8 @@ class ChainBuilder
 
         return false;
     }
+
+
 
 
 
