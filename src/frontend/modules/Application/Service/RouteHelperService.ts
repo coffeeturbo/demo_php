@@ -19,6 +19,8 @@ import {Metrika} from "ng-yandex-metrika";
 export class RouteHelperService {
 
     private showProgressBarSubscription: Subscription = new Subscription();
+    private previousUrl: string;
+    private currentUrl: string = this.location.path();
 
     constructor(
         private titleService: Title,
@@ -70,15 +72,29 @@ export class RouteHelperService {
     }
     
     public yandexMetrikaWatcher(): void {
-        let prevPath = this.location.path();
         this.router.events
             .filter(event => event instanceof NavigationEnd)
             .subscribe(() => {
-                let newPath = this.location.path() || "/";
-                this.metrika.hit(newPath, {
-                    referer: prevPath,
+                this.metrika.hit(this.currentUrl, {
+                    referer: this.previousUrl,
                 });
-                prevPath = newPath;                
             })
+        ;
+    }
+    
+    public historyWatcher(): void {
+        this.router.events
+            .filter(event => event instanceof NavigationStart)
+            .subscribe((event: NavigationStart) => {
+                if(this.currentUrl != event.url) {
+                    this.previousUrl = this.currentUrl;
+                    this.currentUrl = event.url;
+                }
+            })
+        ;
+    }
+    
+    public getPrevUrl(): string {
+        return this.previousUrl;
     }
 }

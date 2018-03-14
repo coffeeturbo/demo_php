@@ -129,6 +129,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         this.visited = true;
     }
 
+    // @TODO: Лютый тупняк в лентах (отрабатывает сразу на каждый пост в ленте!
     // @HostListener('window:keyup', ['$event'])
     // onKeydown(e) {
     //     if(this.current === false || e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
