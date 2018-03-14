@@ -1,5 +1,9 @@
-# www.robotstxt.org/
-# www.google.com/support/webmasters/bin/answer.py?hl=en&answer=156449
-
 User-agent: *
-Disallow:
+Disallow: /profile/
+Disallow: /tag/
+Disallow: /settings
+Disallow: /search
+Disallow: /login
+Disallow: /register
+Host: topicoff.com
+Sitemap: http://topicoff.com/sitemap.xml

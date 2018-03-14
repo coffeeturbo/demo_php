@@ -4,7 +4,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
     .input-box
       input#signInUsername(ng-detect-empty-input, type="text", formControlName="username")
       hr
-      label.material-label(for="signInUsername") {{'Username or email' | translate }}
+      label.material-label(for="signInUsername") {{ 'Email' | translate }}
   .material-field
     i.fa.fa-lock.fa-lg.fa-fw
     .input-box
