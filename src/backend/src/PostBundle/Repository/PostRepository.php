@@ -97,12 +97,10 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
         try {
             $qb = $this->createQueryBuilder('p')
-                ->select('p', 'tags')
-                ->leftJoin('p.tags', 'tags')
+                ->select('p')
             ;
 
             AddOrder::addOrder($qb, $criteria);
-            AddTags::addOrder($qb,$criteria);
 
             if($startDate = $criteria->getStartDate()){
                 $qb->andWhere('p.created > :start')
@@ -121,6 +119,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                     ->setParameter('profile', $profileId)
                 ;
             }
+
 
             $qb->setMaxResults($criteria->getLimit());
 
@@ -166,7 +165,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                 $posts = $this->getPostsByCriteria($criteria);
         }
 
-
         $postIds = array_map(function(Post $post){
             return $post->getId();
         }, $posts);
@@ -179,6 +177,8 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->setParameter('postIds', $postIds)
             ->addOrderBy('attachments.position', 'ASC');
 
+
+        AddTags::addOrder($qb, $criteria);
 
         $query =  $qb->getQuery();
 
