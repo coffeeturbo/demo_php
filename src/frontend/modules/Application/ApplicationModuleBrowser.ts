@@ -20,6 +20,7 @@ import {Config} from "../../app/config";
         ApplicationModule,
         MetrikaModule.forRoot(
             Config.applications.metrika,
+            Config.applications.metrika.id
         )
     ],
     providers: [

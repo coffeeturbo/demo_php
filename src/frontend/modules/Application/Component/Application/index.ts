@@ -46,6 +46,11 @@ export class ApplicationComponent {
 
         this.routeHelper.titleWatcher();
         this.routeHelper.loadingIndicatorWatcher();
+        this.routeHelper.historyWatcher();
+        
+        if(this.pl.isPlatformBrowser()) {
+            this.routeHelper.yandexMetrikaWatcher();
+        }
     }
 
     @HostListener('window:keydown', ['$event'])

@@ -1,5 +1,4 @@
 export const AuthLocaleRU = {
-    "Username or email": "Имя пользователя или почта",
     "Auto sign out after 1 hour": "Система автоматически выйдет через 1 час",
     "or sign in with": "или войти с помощью",
     "Not my PC": "Чужой компьютер",

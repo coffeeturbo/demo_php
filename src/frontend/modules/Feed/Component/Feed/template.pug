@@ -2,7 +2,7 @@ feed-refresh-button(*ngIf="showRefresh")
 
 post(*ngFor="let post of feed;", [post]="post")
 
-.loader(*ngIf="!isFeedEnd")
+.loader(*ngIf="!isFeedEnd && feed.length > 0")
   .dot
   .dot
   .dot

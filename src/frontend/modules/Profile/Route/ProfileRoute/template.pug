@@ -12,7 +12,7 @@ ng-container(*ngIf="profile")
 
       figure(*ngIf="backdropHelper.disabled()")
         .avatar
-          profile-avatar([profile]="profile", [size]="'medium'", routerLink="avatar")
+          profile-avatar([profile]="profile", [size]="'medium'", href="avatar")
           button(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()", (onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
           h1

@@ -10,7 +10,7 @@ import {ProfileService} from "../../Service/ProfileService";
 })
 export class ProfileAvatarComponent {
     @Input() profile: Profile;
-    @Input() routerLink: string;
+    @Input() href: string;
     @Input() size: ProfileAvatarSizes = "medium";
     @Input() showMock: boolean = true;
     
