@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import {enableProdMode} from '@angular/core';
 import * as Cookies from 'universal-cookie';
-import {RESPONSE} from "@nguniversal/express-engine";
+import {RESPONSE} from "@nguniversal/express-engine/tokens";
 
 import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
 
