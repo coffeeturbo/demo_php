@@ -1,5 +1,5 @@
 import {Location} from "@angular/common";
-import {Injectable} from "@angular/core";
+import {Injectable, Injector} from "@angular/core";
 import {Title} from "@angular/platform-browser";
 import {
     ActivatedRoute,
@@ -14,6 +14,7 @@ import {Observable, Subscription} from "rxjs";
 import {LoadingBarService, LoadingBarState} from "@angular-addons/loading-bar";
 import {TranslationService} from "@angular-addons/translate";
 import {Metrika} from "ng-yandex-metrika";
+import {PlatformService} from "./PlatformService";
 
 @Injectable()
 export class RouteHelperService {
@@ -28,8 +29,9 @@ export class RouteHelperService {
         private activatedRoute: ActivatedRoute,
         private translationService: TranslationService,
         private loadingBar: LoadingBarService,
-        private metrika: Metrika,
-        private location: Location
+        private location: Location,
+        private injector: Injector,
+        private pl: PlatformService
     ) {}
 
     public loadingIndicatorWatcher(): void {
@@ -72,14 +74,17 @@ export class RouteHelperService {
     }
     
     public yandexMetrikaWatcher(): void {
-        this.router.events
-            .filter(event => event instanceof NavigationEnd)
-            .subscribe(() => {
-                this.metrika.hit(this.currentUrl, {
-                    referer: this.previousUrl,
-                });
-            })
-        ;
+        if(this.pl.isPlatformBrowser()) {
+            let metrika = this.injector.get(Metrika);
+            this.router.events
+                .filter(event => event instanceof NavigationEnd)
+                .subscribe(() => {
+                    metrika.hit(this.currentUrl, {
+                        referer: this.previousUrl,
+                    });
+                })
+            ;
+        }
     }
     
     public historyWatcher(): void {

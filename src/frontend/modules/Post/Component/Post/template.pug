@@ -57,30 +57,31 @@ div
   .btn-material.secondary.for-desktop(*ngIf="pl.isPlatformBrowser()", (click)="isShareModalVisible = true")
     .fa.fa-bullhorn
     span {{"Share" | translate}}
-  button.btn-material.secondary.actions(
-    *ngIf="pl.isPlatformBrowser()",
-    (click)='render.addClass(actions, "active")',
-    (focusout)='render.removeClass(actions, "active")'
-  )
-    .fa.fa-ellipsis-v
-    ul(#actions)
-      li
-        a
-          .fa.fa-fw.fa-floppy-o
-          | {{"Save" | translate }}
-      li
-        a
-          .fa.fa-fw.fa-pencil
-          | {{"Edit" | translate }}
-      li
-        a
-          .fa.fa-fw.fa-flag
-          | {{"Report" | translate }}
-      li
-        a
-          .fa.fa-fw.fa-bullhorn
+  // @TODO Implement
+  //button.btn-material.secondary.actions(
+  //  *ngIf="pl.isPlatformBrowser()",
+  //  (click)='render.addClass(actions, "active")',
+  //  (focusout)='render.removeClass(actions, "active")'
+  //)
+  //  .fa.fa-ellipsis-v
+  //  ul(#actions)
+      //li
+      //  a
+      //    .fa.fa-fw.fa-floppy-o
+      //    | {{"Save" | translate }}
+      //li
+      //  a
+      //    .fa.fa-fw.fa-pencil
+      //    | {{"Edit" | translate }}
+      //li
+      //  a
+      //    .fa.fa-fw.fa-flag
+      //    | {{"Report" | translate }}
+      //li
+      //  a
+      //    .fa.fa-fw.fa-bullhorn
           | {{"Share" | translate }}
 modal(*ngIf="isShareModalVisible", [backdrop]="true", (on-close)="isShareModalVisible = false", [close-mode]="1")
   modal-header Поделиться постом
   modal-body
-    share([link]="postService.getUrl(post.id)")
+    share([link]="postService.getUrl(post.id, post.title)")

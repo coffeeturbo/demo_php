@@ -4,9 +4,10 @@ import 'rxjs/Rx';
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { ngExpressEngine } from '@nguniversal/express-engine';
-import { enableProdMode } from '@angular/core';
+import {enableProdMode, ValueProvider} from '@angular/core';
 import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
 import * as Cookies from 'universal-cookie';
+import {RESPONSE} from "@nguniversal/express-engine/tokens";
 
 enableProdMode();
 const app = express();
@@ -25,7 +26,6 @@ app.use(cookieParser());
 
 app.get("*", (req: Request, res: Response) => {
     console.time(`GET: ${req.originalUrl}`);
-
     res.render('../../web/dist/index', {
         req: req,
         res: res,
@@ -33,9 +33,14 @@ app.get("*", (req: Request, res: Response) => {
             {
                 provide: 'Cookies',
                 useValue: new Cookies(req.headers.cookie)
+            },
+            {
+                provide: RESPONSE,
+                useValue: res
             }
         ]
     });
+
     console.timeEnd(`GET: ${req.originalUrl}`);
 });
 

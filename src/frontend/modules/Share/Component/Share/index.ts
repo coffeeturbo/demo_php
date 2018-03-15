@@ -16,17 +16,19 @@ export class ShareComponent implements AfterViewInit {
     public applications = Config.applications;
     public uri: string;
     public whatsappLink: SafeResourceUrl;
-    public facebookLink: string = 'https://www.facebook.com/dialog/share?app_id='+this.applications.facebook.app_id+'&display=popup&href=' + this.uri;
-    public vkLink: string = 'https://vk.com/share.php?url=' + this.uri;
-    public telegramLink: string = 'https://t.me/share/url?url=' + this.uri;
+    public facebookLink: SafeResourceUrl;
+    public vkLink: SafeResourceUrl;
+    public telegramLink: SafeResourceUrl;
     public isCopied = false;
-    
     
     constructor(@Inject(DOCUMENT) private dom, private sanitizer: DomSanitizer) {}
 
     ngOnInit() {
         this.uri = this.getOrigin() + this.link;
         this.whatsappLink = this.sanitizer.bypassSecurityTrustUrl('whatsapp://send?text=' + this.uri);
+        this.facebookLink = this.sanitizer.bypassSecurityTrustUrl('https://www.facebook.com/dialog/share?app_id='+this.applications.facebook.app_id+'&display=popup&href=' + this.uri);
+        this.vkLink = this.sanitizer.bypassSecurityTrustUrl('https://vk.com/share.php?url=' + this.uri);
+        this.telegramLink = this.sanitizer.bypassSecurityTrustUrl('https://t.me/share/url?url=' + this.uri);
     }
 
     ngAfterViewInit() {
@@ -44,7 +46,7 @@ export class ShareComponent implements AfterViewInit {
         this.isCopied = true;
 
         setTimeout(() => {
-            this.isCopied= false;
+            this.isCopied = false;
         }, 1000);
         
         this.dom.execCommand("copy");

@@ -26,7 +26,15 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
   //  hr
   //  section
   //    h4 {{"Subscriptions" | translate }}
-  
+  ng-container(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
+    hr
+    section
+      h4 {{"Actions" | translate }}
+      a(routerLink="/post/add", routerLinkActive="active")
+        i.fa.fa-fw.fa-lg.fa-pencil
+        span {{ "Add post" | translate }} 
+
+
   .flex-space
 
   footer

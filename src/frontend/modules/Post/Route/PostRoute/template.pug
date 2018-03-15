@@ -6,10 +6,11 @@ section.comments(#commentsEl)
     button
       i.fa.fa-refresh
     .flex-space
-    .rate
-      span {{"Order by" | translate }}
-      button([class.active]="orderCommentsBy == 'date'", (click)="orderCommentsBy = 'date'") {{"date" | translate }}
-      button([class.active]="orderCommentsBy == 'rate'", (click)="orderCommentsBy = 'rate'") {{"rating" | translate }}
+    // @TODO Implement!
+    //.rate
+    //  span {{"Order by" | translate }}
+    //  button([class.active]="orderCommentsBy == 'date'", (click)="orderCommentsBy = 'date'") {{"date" | translate }}
+    //  button([class.active]="orderCommentsBy == 'rate'", (click)="orderCommentsBy = 'rate'") {{"rating" | translate }}
     
   comment(*ngFor="let comment of route.snapshot.data.comments;", [comment]="comment", [post]="route.snapshot.data.post")
   comment-form(*ngIf="auth.isSignedIn()", [post]="route.snapshot.data.post")

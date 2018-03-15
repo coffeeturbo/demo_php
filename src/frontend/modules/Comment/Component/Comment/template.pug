@@ -14,12 +14,12 @@ small.author
   .created(*ngIf='comment.created')
     span {{ comment.created | comment_created }}
     tooltip(*ngIf="pl.isPlatformBrowser()") {{ comment.created | date }}
-  i.fa.fa-link(*ngIf="pl.isPlatformBrowser()")
 
 section.content
   ng-container(*ngFor="let attachment of comment.attachments", [ngSwitch]="attachment.type")
     attachment-text(*ngSwitchCase="AttachmentType.text", [text]="attachment.content.text")
     img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path", (click)="preview($event)")
+    // @TODO Implement
     //img.attachment-image-full(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
     //attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [attachment]="attachment.content")
     //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
@@ -30,12 +30,13 @@ ng-container(*ngIf="pl.isPlatformBrowser()")
         | {{ "Reply" | translate }}
       button.reply(*ngIf="showForm", (click)="toggleForm()") 
         | {{ "Cancel" | translate }}
-      button
-        i.fa.fa-floppy-o
-      button
-        i.fa.fa-bullhorn
-      button
-        i.fa.fa-flag
+      // @TODO Implement
+      //button
+      //  i.fa.fa-floppy-o
+      //button
+      //  i.fa.fa-bullhorn
+      //button
+      //  i.fa.fa-flag
   
   comment-form(*ngIf="showForm", [focus]="true", [parent]="comment", [post]="post", (onSubmit)="showForm = false; showChildComments = true; comment = $event")
 
