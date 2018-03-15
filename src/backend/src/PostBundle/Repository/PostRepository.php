@@ -102,7 +102,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
             AddOrder::addOrder($qb, $criteria);
 
-
             if($startDate = $criteria->getStartDate()){
                 $qb->andWhere('p.created > :start')
                     ->setParameter('start', $startDate)
@@ -177,6 +176,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->where('p.id IN (:postIds)')
             ->setParameter('postIds', $postIds)
             ->addOrderBy('attachments.position', 'ASC');
+
 
         AddTags::addOrder($qb, $criteria);
 
