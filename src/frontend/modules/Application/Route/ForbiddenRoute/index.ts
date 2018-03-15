@@ -1,7 +1,8 @@
 import {Component, Inject, Injector, Optional} from "@angular/core";
-import {PlatformService} from "../../Service/PlatformService";
-import {RESPONSE} from "@nguniversal/express-engine/tokens";
+import {RESPONSE} from "@nguniversal/express-engine";
 import {Response} from "express";
+
+import {PlatformService} from "../../Service/PlatformService";
 
 @Component({
     templateUrl: "./template.pug",

@@ -1,6 +1,6 @@
 import {Component, Inject, Injector, Optional} from "@angular/core";
+import {RESPONSE} from "@nguniversal/express-engine";
 import {Response} from "express";
-import {RESPONSE} from "@nguniversal/express-engine/tokens";
 
 import {PlatformService} from "../../Service/PlatformService";
 

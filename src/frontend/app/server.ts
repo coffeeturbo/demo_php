@@ -4,10 +4,11 @@ import 'rxjs/Rx';
 import * as express from 'express';
 import { Request, Response } from 'express';
 import { ngExpressEngine } from '@nguniversal/express-engine';
-import {enableProdMode, ValueProvider} from '@angular/core';
-import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
+import {enableProdMode} from '@angular/core';
 import * as Cookies from 'universal-cookie';
-import {RESPONSE} from "@nguniversal/express-engine/tokens";
+import {RESPONSE} from "@nguniversal/express-engine";
+
+import {ApplicationModuleServer} from "../modules/Application/ApplicationModuleServer";
 
 enableProdMode();
 const app = express();
