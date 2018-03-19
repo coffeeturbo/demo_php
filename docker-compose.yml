@@ -17,6 +17,7 @@ services:
     volumes:
       - ./src:/opt/jet
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/nginx/ssl
     depends_on: [php, node]
 
   php:

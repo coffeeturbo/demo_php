@@ -5,5 +5,5 @@ Disallow: /settings
 Disallow: /search
 Disallow: /login
 Disallow: /register
-Host: topicoff.com
-Sitemap: http://topicoff.com/sitemap.xml
+Host: https://topicoff.com
+Sitemap: https://topicoff.com/sitemap.xml
