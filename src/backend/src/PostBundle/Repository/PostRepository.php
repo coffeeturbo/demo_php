@@ -17,6 +17,13 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function save(Post $post)
     {
         $em = $this->getEntityManager();
+        $em->flush($post);
+    }
+
+
+    public function saveWithTagsAndAttachments(Post $post)
+    {
+        $em = $this->getEntityManager();
         $tagRep = $em->getRepository(Tag::class);
 
         $em->persist($post);
