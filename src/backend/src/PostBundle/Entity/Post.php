@@ -1,6 +1,8 @@
 <?php
 namespace PostBundle\Entity;
 
+use AppBundle\Delete\DeleteAble;
+use AppBundle\Delete\DeleteTrait;
 use AppBundle\Entity\ModifyDateEntityInterface;
 use AppBundle\Entity\ModifyDateEntityTrait;
 use AttachmentBundle\Entity\AttachmentableEntity;
@@ -21,14 +23,16 @@ class Post extends AbstractTaggable
                 AttachmentableEntity,
                 VoteableEntity,
                 RatingableEntity,
-                CommentAbleEntity
+                CommentAbleEntity,
+                DeleteAble
 {
     use
         ModifyDateEntityTrait,
         AttachmentableEntityTrait,
         VoteableEntityTrait,
         RatingableEntityTrait,
-        CommentAbleEntityTrait
+        CommentAbleEntityTrait,
+        DeleteTrait
         ;
 
     private $id;

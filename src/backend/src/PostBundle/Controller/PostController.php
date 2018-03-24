@@ -90,8 +90,22 @@ class PostController extends Controller
 
     }
 
-    public function deleteAction()
+    /**
+     * @ApiDoc(
+     *  section="Post",
+     *  description="Удаляем пост по id",
+     * )
+     *
+     * @param Request $request
+     */
+    public function deleteAction($id)
     {
+        try{
+            $post= $this->get('post.service')->deletePostById($id);
+        }catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
+        }
 
+        return new SuccessPostResponse($post);
     }
 }

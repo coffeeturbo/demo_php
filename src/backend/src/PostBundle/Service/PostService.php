@@ -33,5 +33,18 @@ class PostService
         return $post;
     }
 
+    public function deletePostById(int $id)
+    {
+        // тут нужна проверка
+
+        $postRepo = $this->getPostRepository();
+
+        $post = $postRepo->getPostById($id);
+
+        $postRepo->delete($post);
+
+        return $post;
+    }
+
 
 }

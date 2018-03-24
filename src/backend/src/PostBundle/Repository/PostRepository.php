@@ -58,9 +58,10 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             $criteria->setStartDate($startDate);
 
 
-            $cursorWhere='';
+            $where ='WHERE p.isDeleted = 0';
+
             if($cursor = $criteria->getCursor()){
-                $cursorWhere = sprintf("WHERE p.id < %s", $cursor);
+                $where .= sprintf("AND p.id < %s", $cursor);
             }
 
             $q = sprintf("SELECT
@@ -74,10 +75,9 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                         %s
                         ORDER BY rating_speed DESC
                         "
-                , Post::class, $cursorWhere);
+                , Post::class, $where);
 
             $q = $this->getEntityManager()->createQuery($q);
-
 
             $q->setMaxResults($criteria->getLimit());
 
@@ -101,6 +101,8 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ;
 
             AddOrder::addOrder($qb, $criteria);
+
+//            $qb->andWhere('p.isDeleted = 0');
 
             if($startDate = $criteria->getStartDate()){
                 $qb->andWhere('p.created > :start')
@@ -245,6 +247,21 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             $posts = $qb->getQuery()->getResult();
 
         return $this->getAttachmentsAndTagsByPosts($posts);
+    }
+
+    public function delete(Post $post)
+    {
+        $em = $this->getEntityManager();
+
+        // тут удаляем комментарии и аттачменты
+        $post->markAsDeleted();
+
+
+
+//        $em->persist($post);
+//        $em->remove($post);
+
+        $em->flush($post);
     }
 
 }

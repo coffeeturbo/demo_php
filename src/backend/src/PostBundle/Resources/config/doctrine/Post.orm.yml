@@ -29,6 +29,9 @@ PostBundle\Entity\Post:
       column: comments_total
       type: integer
       nullable: false
+    isDeleted:
+      column: is_deleted
+      type: boolean
   manyToOne:
     profile:
       targetEntity: ProfileBundle\Entity\Profile
