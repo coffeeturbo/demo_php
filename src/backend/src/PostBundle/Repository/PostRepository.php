@@ -109,7 +109,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
             AddOrder::addOrder($qb, $criteria);
 
-//            $qb->andWhere('p.isDeleted = 0');
+            $qb->andWhere('p.isDeleted = 0');
 
             if($startDate = $criteria->getStartDate()){
                 $qb->andWhere('p.created > :start')
@@ -261,14 +261,11 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         $em = $this->getEntityManager();
 
         // тут удаляем комментарии и аттачменты
-        $post->markAsDeleted();
+        if($post->getIsDeleted() == 0){
+            $post->markAsDeleted();
 
-
-
-//        $em->persist($post);
-//        $em->remove($post);
-
-        $em->flush($post);
+            $em->flush($post);
+        }
     }
 
 }

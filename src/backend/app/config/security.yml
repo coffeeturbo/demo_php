@@ -8,6 +8,7 @@ security:
         ROLE_PHONE_VERIFED: ROLE_CREATED
         ROLE_EMAIL_VERIFED: ROLE_CREATED
         ROLE_VERIFED: ROLE_CREATED
+        ROLE_ADMIN: ROLE_ADMIN
 
     providers:
         fos_userbundle:

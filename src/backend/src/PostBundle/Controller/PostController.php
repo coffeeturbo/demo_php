@@ -101,8 +101,13 @@ class PostController extends Controller
     public function deleteAction($id)
     {
         try{
-            $post= $this->get('post.service')->deletePostById($id);
-        }catch(\Exception $e){
+
+            if(!$this->isGranted('ROLE_ADMIN')){
+                throw new AccessDeniedHttpException("У вас нет доступа к данному пути");
+            }
+
+            $post = $this->get('post.service')->deletePostById($id);
+        }catch(AccessDeniedHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
 
