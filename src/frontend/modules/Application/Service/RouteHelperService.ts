@@ -1,5 +1,5 @@
-import {Location} from "@angular/common";
-import {Injectable, Injector} from "@angular/core";
+import {DOCUMENT, Location} from "@angular/common";
+import {Inject, Injectable, Injector} from "@angular/core";
 import {Title} from "@angular/platform-browser";
 import {
     ActivatedRoute,
@@ -31,7 +31,8 @@ export class RouteHelperService {
         private loadingBar: LoadingBarService,
         private location: Location,
         private injector: Injector,
-        private pl: PlatformService
+        private pl: PlatformService,
+        @Inject(DOCUMENT) private document
     ) {}
 
     public loadingIndicatorWatcher(): void {
@@ -69,7 +70,14 @@ export class RouteHelperService {
             .filter(event => event["title"] !== undefined)
             .map(event => event["title"])
             .map(title => this.translationService.translate(title))
-            .subscribe((title) => this.titleService.setTitle(title))
+            .subscribe((title) => {
+                
+                if(this.pl.isPlatformServer()) {
+                    this.document.title = title;
+                }
+                
+                this.titleService.setTitle(title);
+            })
         ;
     }
     
