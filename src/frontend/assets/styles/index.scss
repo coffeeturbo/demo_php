@@ -27,6 +27,26 @@ a {
 }
 
 b { font-weight: bold; }
+i { font-style: italic; }
+
+blockquote {
+  display: block;
+  background: #eee;
+  padding: 8px;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  
+  &:after {
+    color:#ccc;
+    font: normal normal normal 14px/1 FontAwesome;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: block;
+    content: "\F10E";
+  }
+}
 
 button, input, textarea {
   font-size: $font_size;
@@ -99,7 +119,7 @@ small { font-size: $small_size; }
 
 .debug {
   font: 12px "Courier New";
-  white-space: pre;
+  white-space: pre-wrap;
   padding: 5px;
   border: 1px #ccc solid;
   background: #eee;

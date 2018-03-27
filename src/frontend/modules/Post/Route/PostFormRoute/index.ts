@@ -180,8 +180,8 @@ export class PostFormRoute implements OnInit {
     public handleEnterButton(e) {
         let element = <HTMLElement>e.target;
 
-        if (element instanceof HTMLTextAreaElement === false && element.id !== "addPostTags") {
-            e.preventDefault()
+        if (element instanceof HTMLTextAreaElement === false && element.id !== "addPostTags" && !element.classList.contains("contenteditable")) {
+            e.preventDefault();
         }
     }
 

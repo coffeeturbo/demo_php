@@ -33,8 +33,11 @@
     opacity: 0;
     transform: translateY(-280px);
   }
-  to {
+  99% {
     opacity: 1;
     transform: translateX(0);
+  }
+  to {
+    transform: none;
   }
 }

@@ -1,11 +1,35 @@
-textarea(
-  ng-detect-empty-input,
-  autosize,
-  [id] = "id",
-  [value]="value",
-  rows="1",
-  [style.max-height.px]="150",
-  (input)="onInput($event.target.value)"
+doctype html
+.actions(
+  #actions, 
+  [ngStyle]="editorPosition", 
+  *ngIf="showEditor"
 )
-hr
-label.material-label([for]="id") {{ placeholder | translate }}
+  button(type="button", (click)="exec('bold')", [class.active]="state('bold')") 
+    .fa.fa-fw.fa-bold
+  button(type="button", (click)="exec('italic')", [class.active]="state('italic')")
+    .fa.fa-fw.fa-italic
+  button(type="button", (click)="exec('strikeThrough')", [class.active]="state('strikeThrough')")
+    .fa.fa-fw.fa-strikethrough
+  button(type="button", (click)="exec('formatBlock', 'blockquote')", [class.active]="state('formatBlock', 'blockquote')")
+    .fa.fa-fw.fa-quote-right
+  button(type="button", (click)="exec('formatBlock', 'h2')", [class.active]="state('formatBlock', 'h2')")
+    .fa.fa-fw.fa-header
+
+.relative
+  .input-text.contenteditable(
+    #textarea,
+    ng-detect-empty-input,
+    contenteditable="true",
+    [id] = "id",
+    [style.max-height.px]="250",
+    (input)="onInput($event.target.innerHTML)",
+    (paste)="paste($event)",
+    (mousedown)="prepareSelection()"
+  )
+  hr
+  label.material-label((click)="textarea.focus()" ) {{ placeholder | translate }}
+  
+label.material-field.clickable
+  .input-box
+    input(type="checkbox", [checked]="isPasteFormatted", (change)="isPasteFormatted = !isPasteFormatted")
+    .checkbox {{ "Paste formatted" | translate }}

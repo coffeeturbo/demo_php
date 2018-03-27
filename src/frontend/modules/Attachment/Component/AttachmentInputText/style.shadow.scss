@@ -1,0 +1,51 @@
+@import '../../../../assets/styles/global';
+
+$bg: rgba(0,0,0,0.6);
+$arrow_size: 7;
+
+.input-text {
+  display: inline-block; // This line prevent extra wrap <div><b/></div> on new lines. https://stackoverflow.com/questions/18552336/prevent-contenteditable-adding-div-on-enter-chrome
+  white-space: pre-wrap;
+  outline: none;
+  cursor: text;
+  padding: 5px 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid #bdbdbd;  
+}
+
+.actions .active {
+  background: rgba(0,0,0,0.3);
+}
+
+.actions {
+  position: fixed;
+  background: rgba(0,0,0,0.6);
+  border-radius: 2px;
+  //overflow: hidden;
+  z-index: 1;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: $arrow_size + px solid $bg;
+    border-color: $bg transparent transparent transparent;
+    bottom: -($arrow_size*2) + px;
+    left: 50%;
+    margin-left: -$arrow_size + px;
+  }
+  
+  button {
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    width: 2.3em;
+    height: 2em;
+    text-align: center;
+    
+    .fa {
+      color:#fff;
+      vertical-align: baseline;
+    }
+  }
+}
