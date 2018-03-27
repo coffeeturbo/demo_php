@@ -16,6 +16,7 @@ import {Router} from "@angular/router";
 import {TagRESTService} from "../../../Tag/Service/TagRESTService";
 import {Config} from "../../../../app/config";
 import {PlatformService} from "../../../Application/Service/PlatformService";
+import {Device} from "../../../Application/Service/DeviceService";
 
 @Component({
     templateUrl: './template.pug',
@@ -29,6 +30,7 @@ export class PostFormRoute implements OnInit {
     public submitted: boolean = false;
     public saved: boolean = true;
     public isLoading: boolean = false;
+    public device = Device;
 
     public form: FormGroup = new FormGroup({
         title: new FormControl(null, [

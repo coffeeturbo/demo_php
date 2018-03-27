@@ -29,10 +29,10 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       div.dnd-sortable-cursor-fix(
         *ngFor="let attachment of attachments.controls; index as i",
         [ngSwitch]="attachment.value.type",
-        dnd-sortable, [sortableIndex]="i"
+        dnd-sortable, [sortableIndex]="i", [draggable]="!device.isMobile()"
       )
         .material-field
-          .drag
+          .drag(*ngIf="!device.isMobile()")
             i.fa.fa-bars(dnd-sortable-handle)
           .input-box([formGroupName]="i")
             attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value", [focus]="true")
