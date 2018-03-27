@@ -30,6 +30,7 @@ export const appRoutes: JetRoutes = [
         component: FeedRoute,
         data: {
             title: 'Hot',
+            description: 'Hot',
             feedRequest: <GetFeedRequest>{sort: "hot"}
         },
         resolve: {
@@ -41,6 +42,7 @@ export const appRoutes: JetRoutes = [
         component: FeedRoute,
         data: {
             title: 'New',
+            description: 'New',
             feedRequest: <GetFeedRequest>{sort: "id"}
         },
         resolve: {
@@ -52,6 +54,7 @@ export const appRoutes: JetRoutes = [
         component: FeedRoute,
         data: {
             title: 'Best',
+            description: 'Best',
             feedRequest: <GetFeedRequest>{sort: "rating"}
         },
         resolve: {
@@ -75,6 +78,7 @@ export const appRoutes: JetRoutes = [
                     post: PostResolver,
                     comments: PostCommentsResolver,
                     title: PostTitleResolver,
+                    description: PostTitleResolver
                 }
             }
         ]

@@ -1,6 +1,6 @@
 import {DOCUMENT, Location} from "@angular/common";
 import {Inject, Injectable, Injector} from "@angular/core";
-import {Title} from "@angular/platform-browser";
+import {Meta, Title} from "@angular/platform-browser";
 import {
     ActivatedRoute,
     Event,
@@ -25,6 +25,7 @@ export class RouteHelperService {
 
     constructor(
         private titleService: Title,
+        private metaService: Meta,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private translationService: TranslationService,
@@ -71,13 +72,29 @@ export class RouteHelperService {
             .map(event => event["title"])
             .map(title => this.translationService.translate(title))
             .subscribe((title) => {
-                
                 if(this.pl.isPlatformServer()) {
                     this.document.title = title;
                 }
                 
                 this.titleService.setTitle(title);
             })
+        ;
+    }
+    
+    public descriptionWatcher(): void {
+        this.router.events
+            .filter(event => event instanceof NavigationEnd)
+            .map(() => this.activatedRoute)
+            .map(route => {
+                while (route.firstChild) route = route.firstChild;
+                return route;
+            })
+            .filter(route => route.outlet === "primary")
+            .mergeMap(route => route.data)
+            .filter(event => event["description"] !== undefined)
+            .map(event => event["description"])
+            .map(description => this.translationService.translate(description))
+            .subscribe((description) => this.metaService.addTag({"name": "description", "content": description}))
         ;
     }
     

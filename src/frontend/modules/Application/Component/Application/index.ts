@@ -45,6 +45,7 @@ export class ApplicationComponent {
             .subscribe((className: string) => this.className = className);
 
         this.routeHelper.titleWatcher();
+        this.routeHelper.descriptionWatcher();
         this.routeHelper.loadingIndicatorWatcher();
         this.routeHelper.historyWatcher();
         
