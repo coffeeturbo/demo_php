@@ -9,7 +9,7 @@ ng-container(*ngIf="!attachmentVideo")
     (input)="onInput($event.target.value)"
   )
   hr
-  label.material-label([for]="id") {{'Enter video link. Support Youtube, Coub' | translate }}
+  label.material-label([for]="id") {{'Enter youtube link.' | translate }}
 
 .preview(*ngIf="attachmentVideo")
   img(src="{{ attachmentVideo.content.image }}")

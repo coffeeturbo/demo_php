@@ -6,11 +6,13 @@ import {ProfileLocaleRU} from "../modules/Profile/Dictionaries/ProfileLocaleRU";
 import {PostLocaleRU} from "../modules/Post/Dictionaries/PostLocaleRU";
 import {FeedLocaleRU} from "../modules/Feed/Dictionaries/FeedLocaleRU";
 import {CommentLocaleRU} from "../modules/Comment/Dictionaries/CommentLocaleRU";
+import {AttachmentLocaleRU} from "../modules/Attachment/Dictionaries/AttachmentLocaleRU";
 
 export const dictionaries: Dictionaries = {
     "RU": [
         LocaleRU,
         AuthLocaleRU,
+        AttachmentLocaleRU,
         CommentLocaleRU,
         FeedLocaleRU,
         ProfileLocaleRU,
