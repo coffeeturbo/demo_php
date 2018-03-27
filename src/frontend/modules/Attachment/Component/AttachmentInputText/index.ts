@@ -21,7 +21,8 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
     @Input('value') _value = "";
     @Input() placeholder = "Enter text";
     @Input() focus: boolean = false;
-    isPasteFormatted: boolean = true;
+    public isPasteFormatted: boolean = true;
+    public allowedTags = ['a', 'b', 'em', 'strong', 'h2', 'h3', 'i', 'u', 'p', 'strike', 'blockquote'];
 
     constructor(
         private elementRef: ElementRef,
@@ -52,7 +53,7 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
 
     writeValue(value) {
         if (value) {
-            this.value = striptags(value, ['a', 'b', 'h2', 'i', 'u', 'p', 'strike', 'blockquote']);
+            this.value = striptags(value, this.allowedTags);
             // this.value = value;
         }
     }
@@ -127,15 +128,14 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
     }
 
     public paste(e) { // Remove unallowed tags from clipboard
-        let allowedTags = ['a', 'b', 'em', 'strong', 'h2', 'h3', 'i', 'u', 'p', 'strike', 'blockquote'];
-        let allowedAttributes = ['href'];
-        
         e.preventDefault();
+
+        let allowedAttributes = ['href'];
         let clipboardData = ((e.originalEvent || e).clipboardData);
         
         let data = clipboardData.getData(this.isPasteFormatted ? "text/html" : "text/plain");
         
-        data = striptags(data, allowedTags).trim();
+        data = striptags(data, this.allowedTags).trim();
         let htmlObject = this.renderer.createElement("div");
         htmlObject.innerHTML = data;
         

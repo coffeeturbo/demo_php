@@ -29,7 +29,8 @@ doctype html
   hr
   label.material-label((click)="textarea.focus()" ) {{ placeholder | translate }}
   
-label.material-field.clickable
-  .input-box
-    input(type="checkbox", [checked]="isPasteFormatted", (change)="isPasteFormatted = !isPasteFormatted")
-    .checkbox {{ "Paste formatted" | translate }}
+small
+  label.material-field.clickable
+    .input-box
+      input(type="checkbox", [checked]="isPasteFormatted", (change)="isPasteFormatted = !isPasteFormatted")
+      .checkbox {{ "Keep format on paste" | translate }}

@@ -7,6 +7,7 @@
     cursor: pointer;
     color: material-color($secondary_material, "600");
     user-select: none;
+    
     &:before {
       content: '';
       display: inline-block;
@@ -45,7 +46,7 @@
     }
 
     &:after {
-      left: 10px;
+      left: 0.7em;
     }
   }
 }
