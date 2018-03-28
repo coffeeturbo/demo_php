@@ -1,6 +1,6 @@
 feed-refresh-button(*ngIf="showRefresh")
 
-post(*ngFor="let post of feed;", [post]="post")
+post(*ngFor="let post of feed;", [post]="post", [hasSiblings]="true")
 
 .loader(*ngIf="!isFeedEnd && feed.length > 0")
   .dot

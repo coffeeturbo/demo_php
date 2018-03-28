@@ -22,7 +22,9 @@ div
             span {{ post.created | post_created }}
             tooltip(*ngIf="pl.isPlatformBrowser()") {{ post.created | date }}
 
-  h2.title
+  h1.title(*ngIf="!hasSiblings")
+    a([routerLink]="getPostUrl()") {{ post.title }} 
+  h2.title(*ngIf="hasSiblings")
     a([routerLink]="getPostUrl()") {{ post.title }} 
 
   nav.tags(*ngIf="post.tags.length > 0")

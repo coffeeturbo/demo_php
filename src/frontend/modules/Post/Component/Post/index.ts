@@ -38,6 +38,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
 
     @Input('current') current: boolean = true; // Cчитаем что пользователь в feed'e сейчас смотрит этот пост
     @Input() post: Post;
+    @Input() hasSiblings: boolean = false;
 
     public isExpand: boolean = false;
     public isLongpost: boolean = false;

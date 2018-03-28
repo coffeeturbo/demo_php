@@ -147,6 +147,17 @@
   .content {
     line-height: 1.5em;
 
+    attachment-text /deep/  {
+      h2, h3 {
+        margin: .8em 0 .2em;
+      }
+      
+      a {
+        text-decoration: underline;
+        color: material-color($primary_material, "600");
+      }
+    }
+    
     .attachment-image {
       width: 100%;
     }
