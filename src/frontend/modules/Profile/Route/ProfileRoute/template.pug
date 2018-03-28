@@ -35,7 +35,8 @@ ng-container(*ngIf="profile")
         ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:translate("month"):translate("months"):translate("months1")}} 
         ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:translate("day"):translate("days"):translate("days1")}} 
         | {{"Ago" | translate | lowercase}}
-    
+      p(*ngIf="profile.rating !== undefined") {{ "Рейтинг" | translate }}: {{ profile.rating | number}}
+
     button.btn-material(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()", routerLink="/post/add") Добавить пост
   feed(*ngIf="feed", [feed]="feed", (onFeedLoad)="loadFeed($event)", [isLoading]="isLoading", [isFeedEnd]="isFeedEnd")
 profile-avatar-cropper(*ngIf="pl.isPlatformBrowser()", (onCrop)="uploadAvatar($event)", [disabled]="disabled")

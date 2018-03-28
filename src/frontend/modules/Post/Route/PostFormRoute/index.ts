@@ -20,7 +20,7 @@ import {Device} from "../../../Application/Service/DeviceService";
 
 @Component({
     templateUrl: './template.pug',
-    styleUrls: ['./style.shadow.scss'/*, './tags.scss'*/]
+    styleUrls: ['./style.shadow.scss', './tags.scss']
 })
 
 export class PostFormRoute implements OnInit {

@@ -71,6 +71,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         formControlName="tags",
         placeholder=" ",
         secondaryPlaceholder="{{'Tags' | translate}}",
+        [addOnBlur]="true",
         maxItems="8",
         theme='material',
         displayBy='name',

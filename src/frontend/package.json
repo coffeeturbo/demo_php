@@ -54,7 +54,7 @@
     "moment": "^2.20.1",
     "ng-yandex-metrika": "^2.0.1",
     "ng2-dnd": "^4.2.0",
-    "ngx-chips": "^1.6.3",
+    "ngx-chips": "^1.6.7",
     "node-sass": "4.5.0",
     "pug": "^2.0.0-rc.4",
     "pug-html-loader": "^1.1.5",
