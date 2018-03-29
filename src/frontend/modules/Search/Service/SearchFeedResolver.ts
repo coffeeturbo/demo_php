@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, Resolve} from "@angular/router";
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/publishReplay';
-import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 import {Feed} from "../../Feed/Entity/Feed";
 import {FeedService} from "../../Feed/Service/FeedService";
 import {FeedCacheService} from "../../Feed/Service/FeedCacheService";
@@ -29,7 +28,6 @@ export class SearchFeedResolver implements Resolve<Feed> {
                         .search(serachRequest)
                         .publishReplay(1)
                         .refCount()
-                        .do(data => console.log(data))
                     ; 
                     this.feedCacheService.saveFeed(serachRequest, feedResolver);
                     

@@ -23,6 +23,7 @@ import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver
 import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResolver";
 import {SearchFeedResolver} from "../modules/Search/Service/SearchFeedResolver";
 import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequestResolver";
+import {SearchRoute} from "../modules/Search/Route/SerachRoute";
 
 export const appRoutes: JetRoutes = [
     {
@@ -94,7 +95,7 @@ export const appRoutes: JetRoutes = [
     },
     {
         path: 'search/:path',
-        component: FeedRoute,
+        component: SearchRoute,
         resolve: {
             feed: SearchFeedResolver,
             feedRequest: SearchRequestResolver

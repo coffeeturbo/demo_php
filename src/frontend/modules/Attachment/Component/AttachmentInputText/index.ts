@@ -110,13 +110,11 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
         setTimeout(()=>{
             let selection: Selection = window.getSelection();
             if(this.pl.isPlatformBrowser()) {
-                // console.log(selection.getRangeAt(0));
                 this.showEditor = this.selectionStart && !selection.getRangeAt(0).collapsed;
                 this.selectionStart = false;
                 if (this.showEditor) {
                     let selectionClientRect: ClientRect = selection.getRangeAt(0).getBoundingClientRect();
                     
-                    console.log(selectionClientRect);
                     let left = selectionClientRect.left  + (selectionClientRect.width/2) - 86.25;
                     this.editorPosition = {
                         left: left + "px",

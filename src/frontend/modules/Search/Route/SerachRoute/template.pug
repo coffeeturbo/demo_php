@@ -1,0 +1,16 @@
+.material-form(*ngIf="device.isMobile()")
+  .material-field
+    .input-box
+      input#searchInput(
+        ng-detect-empty-input,
+        type="text", size="1",
+        [formControl] = "searchInputControl",
+        (keydown.esc) = "searchInputControl.patchValue(null)",
+        (keydown.enter) = "router.navigate(['/search', searchInputControl.value]); autocomplete = []"
+      )
+      hr
+      label.material-label(for="searchInput") {{"Search" | translate }}
+
+
+feed(*ngIf="feed.length > 0", [feed]="feed", (onFeedLoad)="loadFeed($event)", (onRefresh)="refresh()", [isLoading]="isLoading", [showRefresh]="true", [isFeedEnd]="isFeedEnd")
+h1(*ngIf="feed.length == 0") Posts not found

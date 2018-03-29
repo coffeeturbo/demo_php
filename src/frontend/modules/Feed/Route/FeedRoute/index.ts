@@ -15,7 +15,7 @@ export class FeedRoute implements OnInit {
     public feed: Feed;
 
     constructor(
-        private route: ActivatedRoute,
+        protected route: ActivatedRoute,
         public feedService: FeedService
     ) {}
 
