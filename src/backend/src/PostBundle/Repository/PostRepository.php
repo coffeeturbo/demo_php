@@ -108,6 +108,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ;
 
             AddOrder::addOrder($qb, $criteria);
+            AddTags::addOrder($qb, $criteria);
 
             $qb->andWhere('p.isDeleted = 0');
 
@@ -185,9 +186,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->where('p.id IN (:postIds)')
             ->setParameter('postIds', $postIds)
             ->addOrderBy('attachments.position', 'ASC');
-
-
-        AddTags::addOrder($qb, $criteria);
 
         $query =  $qb->getQuery();
 
