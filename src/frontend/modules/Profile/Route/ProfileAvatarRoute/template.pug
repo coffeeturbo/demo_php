@@ -2,24 +2,23 @@ ng-container(*ngIf="profile.avatar.origin")
   modal((on-close)='goProfilePage()', [animation]="false")
     .avatar
       img(src="{{profile.avatar.origin.public_path}}")
-    modal-footer([padding]="0")
-      .overview
-        div
-          i.fa.fa-lg.fa-comments
-          i {{ "Comments" | translate }} 
-          | 14
-        .flex-space
-        a
-          i.fa.fa-lg.fa-share-alt
-          i {{ "Share" | translate }}
-            
-        a.likes((click)="toggleLike()", [ngClass]="{active:isActive}")
-          i.fa.fa-lg.fa-heart
-          i {{ "Like" | translate }} 
-          | {{ likeCount }}
-      #comments
-        i.fa.fa-comments-o
-        p {{ "Not implemented" | translate }}
-    a.close((click)="goProfilePage()")
-      i.fa.fa-times
-        
+    //modal-footer([padding]="0")
+    //  .overview
+    //    div
+    //      i.fa.fa-lg.fa-comments
+    //      i {{ "Comments" | translate }} 
+    //      | 14
+    //    .flex-space
+    //    a
+    //      i.fa.fa-lg.fa-share-alt
+    //      i {{ "Share" | translate }}
+    //        
+    //    a.likes((click)="toggleLike()", [ngClass]="{active:isActive}")
+    //      i.fa.fa-lg.fa-heart
+    //      i {{ "Like" | translate }} 
+    //      | {{ likeCount }}
+    //  #comments
+    //    i.fa.fa-comments-o
+    //    p {{ "Not implemented" | translate }}
+    //a.close((click)="goProfilePage()")
+    //  i.fa.fa-times
