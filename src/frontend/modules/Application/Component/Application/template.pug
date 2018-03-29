@@ -10,14 +10,13 @@
           type="text", size="1",
           [formControl] = "searchInputControl",
           (keydown.esc) = "searchInputControl.patchValue(null)",
-          (keydown.enter) = "router.navigate(['/search', searchInputControl.value]); autocomplete = []"
+          (keydown.enter) = "router.navigate(['/search', searchInputControl.value]); autocomplete = []; isSearching = true;"
         )
         .fa.fa-search
     .flex-space
     nav.menu
-      a(*ngIf="device.isMobile()", (click)="true")
+      a(*ngIf="device.isMobile()", routerLink="search")
         i.fa.fa-2x.fa-search
-        i {{"Search" | translate}}  
       ng-container(*ngIf="auth.isSignedIn()")
         .relative
           a((click)="isProfileTooltipVisible = !isProfileTooltipVisible", [ngClass]="{'active': isProfileTooltipVisible}")

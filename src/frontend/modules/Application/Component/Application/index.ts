@@ -70,12 +70,16 @@ export class ApplicationComponent {
         }
     }
 
+    public isSearching = false;
     ngOnInit() {
         this.searchInputControl.valueChanges
+            .do(() => this.isSearching = false)
             .debounceTime(300)
             .distinctUntilChanged()
             .filter(() => this.searchInputControl.valid)
+            .filter(()=> !this.isSearching)
             .flatMap(query => this.searchService.autocomplete(query))
-            .subscribe(autocomplete => this.autocomplete = autocomplete);
+            .subscribe(autocomplete => this.autocomplete = autocomplete)
+        ;
     }
 }
