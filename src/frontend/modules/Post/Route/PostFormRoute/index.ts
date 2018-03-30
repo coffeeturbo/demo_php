@@ -63,6 +63,12 @@ export class PostFormRoute implements OnInit {
         try {
             if(this.pl.isPlatformBrowser()) {
                 let postForm = JSON.parse(localStorage.getItem("post-form"));
+                postForm.attachments.map((attachment, i) => {
+                    if(attachment.type === AttachmentType.image) {
+                        attachment.value.image = this.base64ToFile(attachment.value.src, i);
+                    }
+                    return attachment;
+                });
 
                 if (postForm.attachments.length > 0) {
                     postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value));
@@ -190,5 +196,17 @@ export class PostFormRoute implements OnInit {
     public requestAutocompleteItems = (query: string): Observable<Tag[]> => {
         return this.tagRest.search(query);
     };
+
+    private base64ToFile(dataurl, filename) {
+        let arr = dataurl.split(','), 
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+        
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+
+        return new File([u8arr], filename, {type:mime});
+    }
 }   
  
