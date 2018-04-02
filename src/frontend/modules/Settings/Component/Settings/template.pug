@@ -5,14 +5,14 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
       select(formControlName="locale")
         option(value="RU") {{ 'Russian' | translate }}
         option(value="EN") {{ 'English' | translate }}
-  label.field
-    .input-box
-      input(type="checkbox", formControlName="show_porno")
-      .checkbox {{"Show 18+ content" | translate }} 
-  label.field(*ngIf="!device.isMobile()")
-    .input-box
-      input(type="checkbox", formControlName="show_pad")
-      .checkbox {{"Show pad" | translate }} 
+  //label.field
+  //  .input-box
+  //    input(type="checkbox", formControlName="show_porno")
+  //    .checkbox {{"Show 18+ content" | translate }} 
+  //label.field(*ngIf="!device.isMobile()")
+  //  .input-box
+  //    input(type="checkbox", formControlName="show_pad")
+  //    .checkbox {{"Show pad" | translate }} 
 
   .controls
     button.btn-material.primary(type="submit", [disabled]="form.invalid") {{"Save" | translate}}
