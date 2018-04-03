@@ -15,6 +15,7 @@ import {LoadingBarService, LoadingBarState} from "@angular-addons/loading-bar";
 import {TranslationService} from "@angular-addons/translate";
 import {Metrika} from "ng-yandex-metrika";
 import {PlatformService} from "./PlatformService";
+import {PopStateEvent} from "@angular/common/src/location/location";
 
 @Injectable()
 export class RouteHelperService {
@@ -22,6 +23,7 @@ export class RouteHelperService {
     private showProgressBarSubscription: Subscription = new Subscription();
     private previousUrl: string;
     private currentUrl: string = this.location.path();
+    public popState: PopStateEvent;
 
     constructor(
         private titleService: Title,
@@ -34,7 +36,22 @@ export class RouteHelperService {
         private injector: Injector,
         private pl: PlatformService,
         @Inject(DOCUMENT) private document
-    ) {}
+    ) {
+        Observable
+            .create((observer) => this.location.subscribe((data) => observer.next(data)))
+            .map((popState: PopStateEvent) => {
+                popState.url = popState.url || "/";
+                return popState;
+            })
+            .subscribe((popState: PopStateEvent) => this.popState = popState)
+        ;
+
+        this.router.events
+            .filter(event => event instanceof NavigationStart)
+            .filter((event: NavigationStart) => this.popState && this.popState.url != event.url)
+            .subscribe((event: NavigationStart) => this.popState = {url : event.url, pop : false, type : "pushstate"})
+        ;
+    }
 
     public loadingIndicatorWatcher(): void {
         this.router.events.subscribe((event: Event) => {

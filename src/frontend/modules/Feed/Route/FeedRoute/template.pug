@@ -1,2 +1,11 @@
-feed(*ngIf="feed.length > 0", [feed]="feed", (onFeedLoad)="loadFeed($event)", (onRefresh)="refresh()", [isLoading]="isLoading", [showRefresh]="true", [isFeedEnd]="isFeedEnd")
+feed(
+  *ngIf="feed.length > 0", 
+  [feed]="feed", 
+  [isLoading]="isLoading", 
+  [showRefresh]="true", 
+  [isFeedEnd]="isFeedEnd", 
+  [restoreScroll]="routeHelper.popState?.pop || false",
+  (onFeedLoad) = "loadFeed($event)",
+  (onRefresh)="refresh()"
+)
 h1(*ngIf="feed.length == 0") Posts not found

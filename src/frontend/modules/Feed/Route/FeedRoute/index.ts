@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Feed} from "../../Entity/Feed";
 import {FeedService} from "../../Service/FeedService";
 import {Observable} from "rxjs/Observable";
+import {RouteHelperService} from "../../../Application/Service/RouteHelperService";
 
 @Component({
     templateUrl: "./template.pug",
@@ -16,7 +17,8 @@ export class FeedRoute implements OnInit {
 
     constructor(
         protected route: ActivatedRoute,
-        public feedService: FeedService
+        public feedService: FeedService,
+        public routeHelper: RouteHelperService
     ) {}
 
     ngOnInit() {
