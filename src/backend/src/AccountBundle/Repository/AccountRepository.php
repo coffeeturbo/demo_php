@@ -14,4 +14,9 @@ class AccountRepository extends EntityRepository
         $em->persist($account);
         $em->flush($account);
     }
+
+    public function findOneByEmail(string $email): ?Account
+    {
+        return $this->findOneBy(['email' => $email]);
+    }
 }

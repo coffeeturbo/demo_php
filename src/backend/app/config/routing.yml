@@ -6,6 +6,10 @@ auth:
   resource: '@AuthBundle/Resources/config/routing.yml'
   prefix:   /auth
 
+protected_auth:
+  resource: '@AuthBundle/Resources/config/protected_routing.yml'
+  prefix: /protected/auth
+
 oAuth:
   resource: '@OAuthBundle/Resources/config/routing.yml'
   prefix:   /oAuth

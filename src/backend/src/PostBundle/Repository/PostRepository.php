@@ -164,7 +164,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
     public function getPostsWithTagsAndAttachments(FeedCriteria $criteria)
     {
-
+        // todo узкое место для рефакторинга
         $posts = [];
 
         switch($criteria->getOrder()){
