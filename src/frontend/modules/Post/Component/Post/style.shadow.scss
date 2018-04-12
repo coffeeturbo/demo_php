@@ -148,6 +148,8 @@
     line-height: 1.5em;
 
     attachment-text /deep/  {
+      display: block;
+      
       h2, h3 {
         margin: .8em 0 .2em;
       }
