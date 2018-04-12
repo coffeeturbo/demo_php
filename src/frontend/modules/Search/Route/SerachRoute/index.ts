@@ -18,7 +18,7 @@ export class SearchRoute extends FeedRoute {
     public device = Device;
     
     constructor(
-        protected route: ActivatedRoute, 
+        public route: ActivatedRoute, 
         public router: Router, 
         public feedService: FeedService,
         public routeHelper: RouteHelperService,
