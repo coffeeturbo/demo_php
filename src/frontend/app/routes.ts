@@ -24,6 +24,7 @@ import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResol
 import {SearchFeedResolver} from "../modules/Search/Service/SearchFeedResolver";
 import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequestResolver";
 import {SearchRoute} from "../modules/Search/Route/SerachRoute";
+import {CanDeactivatePostFormRoute} from "../modules/Post/Service/CanDeactivatePostFormRoute";
 
 export const appRoutes: JetRoutes = [
     {
@@ -70,6 +71,7 @@ export const appRoutes: JetRoutes = [
                 path: 'add',
                 component: PostFormRoute,
                 canActivate: [CanActivateService],
+                canDeactivate: [CanDeactivatePostFormRoute],
                 data: {title: 'Add post'}
             },
             {
@@ -94,8 +96,14 @@ export const appRoutes: JetRoutes = [
         }
     },
     {
+        path: 'search',
+        data: { title: 'Search' },
+        component: SearchRoute
+    },
+    {
         path: 'search/:path',
         component: SearchRoute,
+        data: { title: 'Search' },
         resolve: {
             feed: SearchFeedResolver,
             feedRequest: SearchRequestResolver

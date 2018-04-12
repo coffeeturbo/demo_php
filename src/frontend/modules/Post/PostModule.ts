@@ -20,6 +20,7 @@ import {PostFormLoadingComponent} from "./Component/PostFormLoading";
 import {CommentModule} from "../Comment/CommentModule";
 import {PostCommentsResolver} from "./Service/PostCommentsResolver";
 import {ShareModule} from "../Share/ShareModule";
+import {CanDeactivatePostFormRoute} from "./Service/CanDeactivatePostFormRoute";
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import {ShareModule} from "../Share/ShareModule";
         PostService,
         PostResolver,
         PostCommentsResolver,
-        PostTitleResolver
+        PostTitleResolver,
+        CanDeactivatePostFormRoute
     ],
     exports: [
         PostComponent,
