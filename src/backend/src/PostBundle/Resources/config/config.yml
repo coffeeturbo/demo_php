@@ -2,3 +2,10 @@ post:
   min_tags_limit: 2
   max_tags_limit: 8
   max_attachments_limit: 50
+
+  info:
+    posts:
+      1:
+        id: 2
+      2:
+        id: 3
