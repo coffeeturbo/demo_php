@@ -5,8 +5,8 @@ import {Device} from "../../../Application/Service/DeviceService";
 import {FeedRoute} from "../../../Feed/Route/FeedRoute";
 import {FeedService} from "../../../Feed/Service/FeedService";
 import {SearchRESTService} from "../../Service/SearchRESTService";
-import {SearchRequest} from "../../Http/Request/SerachRequest";
 import {Observable} from "rxjs/Observable";
+import {RouteHelperService} from "../../../Application/Service/RouteHelperService";
 
 @Component({
     templateUrl: './template.pug',
@@ -18,16 +18,15 @@ export class SearchRoute extends FeedRoute {
     public device = Device;
     
     constructor(
-        protected route: ActivatedRoute, 
+        public route: ActivatedRoute, 
         public router: Router, 
         public feedService: FeedService,
+        public routeHelper: RouteHelperService,
         public searchService: SearchRESTService
     ) {
-        super(route, feedService);
+        super(route, feedService, routeHelper);
         
-        if(this.route.firstChild) {
-            this.route.firstChild.params.subscribe(data => this.searchInputControl.patchValue(data["path"]))
-        }
+        this.route.params.subscribe(data => this.searchInputControl.patchValue(data["path"]))
     }
 
     public loadFeed(cursor: number) {
@@ -59,5 +58,4 @@ export class SearchRoute extends FeedRoute {
             .subscribe((feed) => this.feed = feed)
         ;
     }
-    
 }

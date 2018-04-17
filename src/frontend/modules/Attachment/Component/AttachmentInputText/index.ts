@@ -21,7 +21,7 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
     @Input('value') _value = "";
     @Input() placeholder = "Enter text";
     @Input() focus: boolean = false;
-    public isPasteFormatted: boolean = true;
+    public isPasteFormatted: boolean = false;
     public allowedTags = ['a', 'b', 'em', 'strong', 'h3', 'i', 'u', 'p', 'strike', 'blockquote'];
 
     constructor(

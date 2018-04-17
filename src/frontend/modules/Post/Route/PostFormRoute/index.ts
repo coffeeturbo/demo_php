@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
 import {TranslationService} from "@angular-addons/translate";
@@ -56,7 +56,8 @@ export class PostFormRoute implements OnInit {
         private tagRest: TagRESTService,
         private postService: PostService,
         private router: Router,
-        private pl: PlatformService
+        private pl: PlatformService,
+        private translateService: TranslationService
     ) {}
 
     ngOnInit() {
@@ -71,17 +72,17 @@ export class PostFormRoute implements OnInit {
                 });
 
                 if (postForm.attachments.length > 0) {
-                    postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value));
+                    postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value, false));
                 }
 
                 if (postForm.title) {
                     this.form.controls.title.setValue(postForm.title);
-                    this.form.controls.title.markAsDirty();
+                    this.form.controls.title.markAsPristine();
                 }
 
                 if (postForm.tags) {
                     this.form.controls.tags.setValue(postForm.tags);
-                    this.form.controls.tags.markAsDirty();
+                    this.form.controls.title.markAsPristine();
                 }
             }
         } catch (e) {}
@@ -93,25 +94,33 @@ export class PostFormRoute implements OnInit {
             .distinctUntilChanged()
             .subscribe((post: Post) => {
                 if(this.pl.isPlatformBrowser()) {
-                    localStorage.setItem("post-form", JSON.stringify(post));
+                    try {
+                        localStorage.setItem("post-form", JSON.stringify(post));
+                    } catch (e) {
+                        console.log("Слишком объемный пост. Невозможно сохранить в LocalStorage!");
+                    }
                     this.saved = true;
                 }
             })
         ;
     }
 
-    public addAttachment(type: AttachmentType, value?: any) {
+    public addAttachment(type: AttachmentType, value?: any, markAsDirty: boolean = true) {
         let attachment = new FormGroup({
             type: new FormControl(type || AttachmentType.text),
             value: new FormControl(value || null, Validators.required)
         });
 
         this.attachments.push(attachment);
-        this.form.controls.attachments.markAsDirty();
+        
+        if(markAsDirty) {
+            this.form.controls.attachments.markAsDirty();
+        }
     }
 
     public removeAttachment(i: number) {
         this.attachments.removeAt(i);
+        this.form.controls.attachments.markAsDirty();
     }
 
     public updateAuthorTag(isAuthor: boolean) {
@@ -207,6 +216,20 @@ export class PostFormRoute implements OnInit {
         }
 
         return new File([u8arr], filename, {type:mime});
+    }
+    
+    @HostListener("window:beforeunload", ["$event"]) 
+    unloadHandler(e: Event) {
+        if(this.form.dirty) {
+            e.returnValue = false;
+        }
+    }
+    
+    canDeactivate() : boolean {
+        if(this.form.dirty && !this.submitted) {
+            return confirm(this.translateService.translate("You created a post but did not publish it. Do you want to leave?"))
+        }
+        return true;
     }
 }   
  

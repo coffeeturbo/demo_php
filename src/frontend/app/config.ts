@@ -30,7 +30,7 @@ export const Config: ConfigInterface = {
     },
     "applications" : {
         "metrika" : {
-            "id": 47936753,
+            "id": process.env.ENV === "development" ? 0 : 47936753,
             "webvisor": true
         },
         "facebook" : {
