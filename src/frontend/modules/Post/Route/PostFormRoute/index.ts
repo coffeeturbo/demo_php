@@ -12,7 +12,7 @@ import {AttachmentText} from "../../../Attachment/Entity/AttachmentText";
 import {AttachmentVideo} from "../../../Attachment/Entity/AttachmentVideo";
 import {PostCreateRequest} from "../../Http/Request/PostCreateRequest";
 import {Tag} from "../../../Tag/Entity/Tag";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TagRESTService} from "../../../Tag/Service/TagRESTService";
 import {Config} from "../../../../app/config";
 import {PlatformService} from "../../../Application/Service/PlatformService";
@@ -31,6 +31,8 @@ export class PostFormRoute implements OnInit {
     public saved: boolean = true;
     public isLoading: boolean = false;
     public device = Device;
+    public isNew: boolean = !this.route.snapshot.data.post;
+    public storageKey = this.isNew ? "post-form" : this.route.snapshot.data.post.id;
 
     public form: FormGroup = new FormGroup({
         title: new FormControl(null, [
@@ -57,22 +59,29 @@ export class PostFormRoute implements OnInit {
         private postService: PostService,
         private router: Router,
         private pl: PlatformService,
-        private translateService: TranslationService
+        private translateService: TranslationService,
+        public route: ActivatedRoute
     ) {}
 
     ngOnInit() {
         try {
             if(this.pl.isPlatformBrowser()) {
-                let postForm = JSON.parse(localStorage.getItem("post-form"));
+                let postForm;
+                if(this.isNew) {
+                    postForm = JSON.parse(localStorage.getItem(this.storageKey));
+                } else {
+                    postForm = this.route.snapshot.data.post;
+                }
+                
                 postForm.attachments.map((attachment, i) => {
-                    if(attachment.type === AttachmentType.image) {
+                    if (attachment.type === AttachmentType.image && attachment.value) {
                         attachment.value.image = this.base64ToFile(attachment.value.src, i);
                     }
                     return attachment;
                 });
 
                 if (postForm.attachments.length > 0) {
-                    postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value, false));
+                    postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value, attachment, false));
                 }
 
                 if (postForm.title) {
@@ -95,7 +104,7 @@ export class PostFormRoute implements OnInit {
             .subscribe((post: Post) => {
                 if(this.pl.isPlatformBrowser()) {
                     try {
-                        localStorage.setItem("post-form", JSON.stringify(post));
+                        localStorage.setItem(this.storageKey, JSON.stringify(post));
                     } catch (e) {
                         console.log("Слишком объемный пост. Невозможно сохранить в LocalStorage!");
                     }
@@ -105,10 +114,26 @@ export class PostFormRoute implements OnInit {
         ;
     }
 
-    public addAttachment(type: AttachmentType, value?: any, markAsDirty: boolean = true) {
+    public addAttachment(type: AttachmentType, value?: any, entity?: Attachment<AttachmentImage | AttachmentText | AttachmentVideo>, markAsDirty: boolean = true) {
+        
+        if(!value && entity) {
+            switch (type) {
+                case AttachmentType.text :
+                    value = (<Attachment<AttachmentText>>entity).content.text;
+                    break;
+                case this.AttachmentType.image:
+                    value = { src: (<Attachment<AttachmentImage>>entity).content.public_path };
+                    break;
+                case this.AttachmentType.videoYoutube:
+                    value = (<Attachment<AttachmentVideo>>entity).content.url;
+                    break;
+            }
+        }
+        
         let attachment = new FormGroup({
             type: new FormControl(type || AttachmentType.text),
-            value: new FormControl(value || null, Validators.required)
+            value: new FormControl(value || null, Validators.required),
+            entity: new FormControl(entity || null)
         });
 
         this.attachments.push(attachment);
@@ -162,6 +187,10 @@ export class PostFormRoute implements OnInit {
         this.form.value.attachments.forEach(attachment => {
             let attachmentObservable: Observable<Attachment<AttachmentImage | AttachmentText | AttachmentVideo>>;
             
+            if(attachment.entity) {
+                return attachmentsObservable.push(Observable.of(attachment.entity)); 
+            }
+                
             switch(attachment.type) {
                 case AttachmentType.image:
                     attachmentObservable = this.attachmentRest.uploadImage({image: attachment.value.image});
@@ -169,7 +198,7 @@ export class PostFormRoute implements OnInit {
                 case AttachmentType.text:
                     attachmentObservable = Observable.of(attachment);
                     break;
-                case AttachmentType.video:
+                case AttachmentType.videoYoutube:
                     attachmentObservable = this.attachmentRest.parseVideoLink({url: attachment.value});
                     break;
             }
@@ -185,11 +214,15 @@ export class PostFormRoute implements OnInit {
                 // Fck nelmio
                 postCreateRequest.attachments = JSON.stringify(attachments);
                 postCreateRequest.tags = JSON.stringify(postCreateRequest.tags);
-                return this.postService.create(postCreateRequest)
+                if(this.isNew) {
+                    return this.postService.create(postCreateRequest)
+                } else {
+                    return Observable.of(<Post>this.route.snapshot.data.post);
+                }
             })
             .subscribe((post) => {
                 this.router.navigate(["/post", post.id]);
-                localStorage.removeItem("post-form");
+                localStorage.removeItem(this.storageKey);
             }, () => this.isLoading = false)
         ;
     }

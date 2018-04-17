@@ -19,6 +19,7 @@ export const LocaleRU = {
   "Create":       "Создать",
   "Delete":       "Удалить",
   "Edit":         "Редактировать",
+  "Edit post":    "Изменить пост",
   "English":      "Английский",
   "Error":        "Ошибка",
   "Feed":         "Лента",

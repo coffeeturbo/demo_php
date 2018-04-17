@@ -83,6 +83,18 @@ export const appRoutes: JetRoutes = [
                     title: PostTitleResolver,
                     description: PostTitleResolver
                 }
+            },
+            {
+                path: ':path/edit',
+                component: PostFormRoute,
+                canActivate: [CanActivateService],
+                canDeactivate: [CanDeactivatePostFormRoute],
+                data: {
+                    title: 'Edit post',
+                },
+                resolve: {
+                    post: PostResolver
+                }
             }
         ]
     },

@@ -5,7 +5,8 @@ loader(*ngIf="isLoading")
 
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)", [class.loading]='isLoading')
 
-  h2 {{ "Add post" | translate }} 
+  h2(*ngIf="isNew") {{ "Add post" | translate }} 
+  h2(*ngIf="!isNew") {{ "Edit post" | translate }} 
     span(*ngIf="!saved") - {{"Saving" | translate}}...
   
   br
@@ -35,8 +36,13 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
           .drag(*ngIf="!device.isMobile()")
             i.fa.fa-bars(dnd-sortable-handle)
           .input-box([formGroupName]="i")
-            attachment-input-text(*ngSwitchCase="AttachmentType.text", [id]="'postFormAttachment' + i", formControlName="value", [focus]="true")
-            attachment-input-video(*ngSwitchCase="AttachmentType.video", [id]="'postFormAttachment' + i", formControlName="value")
+            attachment-input-text(
+              *ngSwitchCase="AttachmentType.text",
+              [id]="'postFormAttachment' + i", formControlName="value", [focus]="true", 
+              (input)="attachment.value.entity && (attachment.value.entity.content.text = $event.target.textContent)"
+            )
+            
+            attachment-input-video(*ngSwitchCase="AttachmentType.videoYoutube", [id]="'postFormAttachment' + i", formControlName="value")
             attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")
             tooltip(*ngIf="attachment.controls.value.invalid && submitted")
               small(*ngIf="attachment.controls.value.hasError('invalidLink')") {{ "Can't parse video link" | translate }}
@@ -55,7 +61,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
       i.fa.fa-picture-o.fa-fw.fa-2x
       span {{"Image" | translate }}
-    button.btn-material.secondary(type="button", (click)="addAttachment(AttachmentType.video)")
+    button.btn-material.secondary(type="button", (click)="addAttachment(AttachmentType.videoYoutube)")
       i.fa.fa-plus.fa-hover.fa-fw.fa-2x
       i.fa.fa-video-camera.fa-fw.fa-2x
       span {{"Video" | translate }}
@@ -98,9 +104,10 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         input(type="checkbox", [checked]="hasAuthorTag()", (change)="updateAuthorTag($event.target.checked)")
         .checkbox {{ "author's" | translate | capitalize }}
 
-    button.btn-material(type="button", (click)="reset()", *ngIf="!form.pristine")
+    button.btn-material(*ngIf="isNew && !form.pristine", type="button", (click)="reset()")
       i.fa.fa-undo
       span {{ "Reset" | translate }}
     button.btn-material.primary(type="submit")
       i.fa.fa-bullhorn
-      span {{ "Publish" | translate }}
+      span(*ngIf="isNew") {{ "Publish" | translate }}
+      span(*ngIf="!isNew") {{ "Save" | translate }}
