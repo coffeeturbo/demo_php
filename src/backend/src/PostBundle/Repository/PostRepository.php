@@ -55,6 +55,18 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $result;
     }
 
+    public function getPostsByIds(array $ids)
+    {
+
+        $posts = $this->findBy(['id' => $ids]);
+
+
+        if(count($posts) < 1)
+            throw new NotFoundHttpException(sprintf("posts with ids= %s not found", implode(',',$ids)));
+
+        return $posts;
+    }
+
 
     private function getHotPosts(FeedCriteria $criteria)
     {

@@ -2,3 +2,8 @@ post_get_by_id:
   path: '{id}/get-by-id'
   methods: [ GET ]
   defaults: { _controller: PostBundle:Post:getById }
+
+post_info_posts:
+  path: 'info'
+  methods: [ GET ]
+  defaults: { _controller: PostBundle:InfoPosts:get }
