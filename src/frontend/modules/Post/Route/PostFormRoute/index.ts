@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Observable} from "rxjs";
 import {TranslationService} from "@angular-addons/translate";
@@ -17,13 +17,14 @@ import {TagRESTService} from "../../../Tag/Service/TagRESTService";
 import {Config} from "../../../../app/config";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {Device} from "../../../Application/Service/DeviceService";
+import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
 
 @Component({
     templateUrl: './template.pug',
     styleUrls: ['./style.shadow.scss', './tags.scss']
 })
 
-export class PostFormRoute implements OnInit {
+export class PostFormRoute implements OnInit, AfterViewInit {
     public config = Config.post;
     public AttachmentType = AttachmentType;
     public attachments = new FormArray([], Validators.required);
@@ -60,7 +61,8 @@ export class PostFormRoute implements OnInit {
         private router: Router,
         private pl: PlatformService,
         private translateService: TranslationService,
-        public route: ActivatedRoute
+        public route: ActivatedRoute,
+        public scrollService: ApplicationScrollService
     ) {}
 
     ngOnInit() {
@@ -112,6 +114,10 @@ export class PostFormRoute implements OnInit {
                 }
             })
         ;
+    }
+
+    ngAfterViewInit() {
+        this.scrollService.scrollTo(0);
     }
 
     public addAttachment(type: AttachmentType, value?: any, entity?: Attachment<AttachmentImage | AttachmentText | AttachmentVideo>, markAsDirty: boolean = true) {

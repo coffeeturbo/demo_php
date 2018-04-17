@@ -60,10 +60,10 @@ div
     .fa.fa-bullhorn
     span {{"Share" | translate}}
   // @TODO Implement
-  button.btn-material.secondary.actions(
+  .btn-material.secondary.actions(
     *ngIf="pl.isPlatformBrowser() && profileService.isOwn(post.profile)",
     (click)='render.addClass(actions, "active")',
-    (blur)='render.removeClass(actions, "active")'
+    (focusout)='render.removeClass(actions, "active")'
   )
     .fa.fa-ellipsis-v
     ul(#actions)

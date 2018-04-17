@@ -248,6 +248,7 @@
         li a {
           display: block;
           padding: 12px;
+          color: $font_color_dark;
 
           &:hover {
             background: material-color($secondary_material, '100');
