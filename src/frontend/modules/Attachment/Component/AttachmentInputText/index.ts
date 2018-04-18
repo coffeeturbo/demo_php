@@ -22,6 +22,7 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
     @Input() placeholder = "Enter text";
     @Input() focus: boolean = false;
     public isPasteFormatted: boolean = false;
+    public isLinkInputActive: boolean = false;
     public allowedTags = ['a', 'b', 'em', 'strong', 'h3', 'i', 'u', 'p', 'strike', 'blockquote'];
 
     constructor(
@@ -73,6 +74,10 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
     }
     
     state(command, value = null) {
+        if(command=="createLink") {
+            return window.getSelection().getRangeAt(0).commonAncestorContainer.parentNode.nodeName == "A";
+        }
+
         if(value) {
             return document.queryCommandValue(command) == value; 
         } else {
@@ -89,11 +94,50 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
                 this.showEditor = false;
                 return;
             } else {
-                document.execCommand(command, false, value)
+                document.execCommand(command, false, value);
             }
         }
     }
+    
+    activateLinkInput() {
+        if(!this.state("createLink")) { // Check that link does not exists
+            // Save selection in "sup" tag
+            let selection = window.getSelection().getRangeAt(0);
+            let sup = document.createElement("sup");
+            sup.appendChild(selection.extractContents());
+            selection.insertNode(sup);
+            // Show input
+            this.isLinkInputActive = true;
+        } else {
+            this.exec('unlink') // If exist remove it
+        }
+    }
+    
+    deactivateLinkInput() {
+        // Try restore selection
+        let sup = this.textarea.nativeElement.querySelector('sup');
+        
+        if(sup) {
+            let range = document.createRange();
+            range.setStartBefore(sup);
+            range.setEndAfter(sup);
+            
+            while (sup.firstChild) {
+                sup.parentNode.insertBefore(sup.firstChild, sup);
+            }
+            sup.parentNode.removeChild(sup);
 
+            let selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+        }
+
+        // Hide input
+        this.isLinkInputActive = false
+    }
+    
+    
     public selectionStart:boolean = false;
     public showEditor:boolean = false;
     public editorPosition: { left: string, top: string } = null;
@@ -112,13 +156,15 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
             if(this.pl.isPlatformBrowser()) {
                 this.showEditor = this.selectionStart && !selection.getRangeAt(0).collapsed;
                 this.selectionStart = false;
+                this.deactivateLinkInput();
+                
                 if (this.showEditor) {
                     let selectionClientRect: ClientRect = selection.getRangeAt(0).getBoundingClientRect();
                     
                     let left = selectionClientRect.left  + (selectionClientRect.width/2) - 86.25;
                     this.editorPosition = {
                         left: left + "px",
-                        top: (selectionClientRect.top - 37) + "px"
+                        top: (selectionClientRect.top - 47) + "px"
                     }
                 }
             }

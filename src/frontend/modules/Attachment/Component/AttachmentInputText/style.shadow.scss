@@ -9,8 +9,19 @@ $arrow_size: 7;
   outline: none;
   cursor: text;
   padding: 5px 0;
+  line-height: 1.5em;
   box-sizing: border-box;
-  border-bottom: 1px solid #bdbdbd;  
+  border-bottom: 1px solid #bdbdbd;
+
+  /deep/ a {
+    color: material-color($primary_material, '600');
+    text-decoration: underline;
+  }
+
+  /deep/ sup {
+    background: #3390ff;
+    color:#fff;
+  }
 }
 
 .actions .active {
@@ -40,12 +51,25 @@ $arrow_size: 7;
     display: inline-block;
     cursor: pointer;
     width: 2.3em;
-    height: 2em;
+    height: 2.3em;
     text-align: center;
     
     .fa {
       color:#fff;
       vertical-align: baseline;
+    }
+  }
+  
+  .linkInput {
+    display: flex;
+    input {
+      color: #fff;
+      padding:4px 10px;
+      border: none;
+      
+      &::placeholder {
+        color: #eee;
+      }
     }
   }
 }

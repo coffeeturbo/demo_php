@@ -4,16 +4,25 @@ doctype html
   [ngStyle]="editorPosition", 
   *ngIf="showEditor"
 )
-  button(type="button", (click)="exec('bold')", [class.active]="state('bold')") 
-    .fa.fa-fw.fa-bold
-  button(type="button", (click)="exec('italic')", [class.active]="state('italic')")
-    .fa.fa-fw.fa-italic
-  button(type="button", (click)="exec('strikeThrough')", [class.active]="state('strikeThrough')")
-    .fa.fa-fw.fa-strikethrough
-  button(type="button", (click)="exec('formatBlock', 'blockquote')", [class.active]="state('formatBlock', 'blockquote')")
-    .fa.fa-fw.fa-quote-right
-  button(type="button", (click)="exec('formatBlock', 'h3')", [class.active]="state('formatBlock', 'h3')")
-    .fa.fa-fw.fa-header
+  ng-container(*ngIf="!isLinkInputActive")
+    button(type="button", (click)="exec('bold')", [class.active]="state('bold')") 
+      .fa.fa-fw.fa-bold
+    button(type="button", (click)="exec('italic')", [class.active]="state('italic')")
+      .fa.fa-fw.fa-italic
+    button(type="button", (click)="exec('strikeThrough')", [class.active]="state('strikeThrough')")
+      .fa.fa-fw.fa-strikethrough
+    button(type="button", (click)='activateLinkInput()', [class.active]="state('createLink')")
+      .fa.fa-fw.fa-link
+    button(type="button", (click)="exec('formatBlock', 'blockquote')", [class.active]="state('formatBlock', 'blockquote')")
+      .fa.fa-fw.fa-quote-right
+    button(type="button", (click)="exec('formatBlock', 'h3')", [class.active]="state('formatBlock', 'h3')")
+      .fa.fa-fw.fa-header
+  .linkInput(*ngIf="isLinkInputActive")
+    // @TODO implement target="blank" !
+    input(#linkInput, ng-auto-focus, type="text", (keydown.enter)="deactivateLinkInput(); exec('createLink', $event.target.value)", placeholder="{{'Paste link and press enter' | translate}}")
+    button(type="button", (click)='deactivateLinkInput()')
+      .fa.fa-times
+      
 
 .relative
   .input-text.contenteditable(
