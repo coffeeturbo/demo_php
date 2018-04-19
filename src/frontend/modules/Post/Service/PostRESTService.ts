@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
 import {Post} from "../Entity/Post";
+import {PostUpdateRequest} from "../Http/Request/PostUpdateRequest";
 
 @Injectable()
 export class PostRESTService
@@ -25,6 +26,15 @@ export class PostRESTService
 
         return this.http
             .put<Post>(url, postCreateRequest, {withCredentials: true})
+        ;
+    }
+
+    public update(postUpdateRequest: PostUpdateRequest): Observable<Post>
+    {
+        let url = `/protected/post/update`;
+
+        return this.http
+            .post<Post>(url, postUpdateRequest, {withCredentials: true})
         ;
     }
 }

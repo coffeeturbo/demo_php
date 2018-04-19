@@ -18,6 +18,7 @@ import {Config} from "../../../../app/config";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {Device} from "../../../Application/Service/DeviceService";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
+import {PostUpdateRequest} from "../../Http/Request/PostUpdateRequest";
 
 @Component({
     templateUrl: './template.pug',
@@ -36,6 +37,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
     public storageKey = this.isNew ? "post-form" : this.route.snapshot.data.post.id;
 
     public form: FormGroup = new FormGroup({
+        id: new FormControl(null),
         title: new FormControl(null, [
             Validators.required, 
             Validators.minLength(this.config.title.constraints.min_length),
@@ -86,6 +88,11 @@ export class PostFormRoute implements OnInit, AfterViewInit {
                     postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value, attachment, false));
                 }
 
+                if (postForm.id) {
+                    this.form.controls.id.setValue(postForm.id);
+                    this.form.controls.id.markAsPristine();
+                }
+                
                 if (postForm.title) {
                     this.form.controls.title.setValue(postForm.title);
                     this.form.controls.title.markAsPristine();
@@ -212,18 +219,18 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             attachmentsObservable.push(attachmentObservable);
         });
 
-        let postCreateRequest: PostCreateRequest = this.form.value;
+        let postRequest: PostCreateRequest | PostUpdateRequest = this.form.value;
 
         Observable
             .combineLatest(attachmentsObservable)
             .flatMap((attachments) => {
                 // Fck nelmio
-                postCreateRequest.attachments = JSON.stringify(attachments);
-                postCreateRequest.tags = JSON.stringify(postCreateRequest.tags);
+                postRequest.attachments = JSON.stringify(attachments);
+                postRequest.tags = JSON.stringify(postRequest.tags);
                 if(this.isNew) {
-                    return this.postService.create(postCreateRequest)
+                    return this.postService.create(<PostCreateRequest>postRequest);
                 } else {
-                    return Observable.of(<Post>this.route.snapshot.data.post);
+                    return this.postService.update(<PostUpdateRequest>postRequest);
                 }
             })
             .subscribe((post) => {

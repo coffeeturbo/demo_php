@@ -8,6 +8,7 @@ import {VoteRESTService} from "../../Vote/Service/VoteRESTService";
 import {AttachmentRESTService} from "../../Attachment/Service/AttachmentRESTService";
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
 import * as getSlug from "speakingurl";
+import {PostUpdateRequest} from "../Http/Request/PostUpdateRequest";
 
 @Injectable()
 export class PostService {
@@ -39,6 +40,11 @@ export class PostService {
     public create(postCreateRequest: PostCreateRequest): Observable<Post>
     {
         return this.rest.create(postCreateRequest)
+    }
+
+    public update(postUpdateRequest: PostUpdateRequest): Observable<Post>
+    {
+        return this.rest.update(postUpdateRequest)
     }
 
     public vote(post: Post, state: VoteState): Observable<Post>
