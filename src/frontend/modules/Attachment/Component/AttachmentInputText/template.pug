@@ -19,7 +19,7 @@ doctype html
       .fa.fa-fw.fa-header
   .linkInput(*ngIf="isLinkInputActive")
     // @TODO implement target="blank" !
-    input(#linkInput, ng-auto-focus, type="text", (keydown.enter)="deactivateLinkInput(); exec('createLink', $event.target.value)", placeholder="{{'Paste link and press enter' | translate}}")
+    input(#linkInput, ng-auto-focus, type="text", (keydown.enter)="deactivateLinkInput(); execCreateLinkTargetBlank($event.target.value);", placeholder="{{'Paste link and press enter' | translate}}")
     button(type="button", (click)='deactivateLinkInput()')
       .fa.fa-times
       
