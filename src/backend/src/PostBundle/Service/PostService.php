@@ -36,8 +36,6 @@ class PostService
 
     public function update(Post $post): Post
     {
-        if(!$post->getId()) throw new AccessDeniedHttpException("post id required");
-
         $this->postRepository->saveWithTagsAndAttachments($post);
 
         return $post;

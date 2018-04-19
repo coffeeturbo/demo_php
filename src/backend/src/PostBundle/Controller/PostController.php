@@ -102,6 +102,8 @@ class PostController extends Controller
             $profile = $this->get('profile.repository')->getCurrentProfileByAccount($account);
 
             $post->setProfile($profile);
+
+            // todo тут проверка на время редактирование поста и администратора поста
             $this->get('post.service')->update($post);
 
         } catch(BadRestRequestHttpException $e){
