@@ -80,9 +80,39 @@ class PostController extends Controller
     }
 
 
-    public function updateAction()
+    /**
+     * @ApiDoc(
+     *  section="Post",
+     *  description="Обновляем пост",
+     *  authentication=true,
+     *  input= { "class"="PostBundle\Form\PostFormType", "name"=""}
+     * )
+     *
+     * @param Request $request
+     */
+    public function updateAction(Request $request)
     {
+        try {
+            $data = $this->get('app.validate_request')->getData($request, PostFormType::class);
 
+            $post = $this->get('post.form.handler.create_post_data_handler')->handle($data);
+
+            $account = $this->get('auth.service')->getAccount();
+
+            $profile = $this->get('profile.repository')->getCurrentProfileByAccount($account);
+
+            $post->setProfile($profile);
+            $this->get('post.service')->update($post);
+
+        } catch(BadRestRequestHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+        } catch(AccessDeniedHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
+        } catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage());
+        }
+
+        return new SuccessPostResponse($post);
     }
 
     public function getAction()

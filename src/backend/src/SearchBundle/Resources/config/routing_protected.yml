@@ -4,7 +4,7 @@ post_create:
   defaults: { _controller: PostBundle:Post:create }
 
 post_update:
-  path: '{id}/update'
+  path: 'update'
   methods: [ POST ]
   defaults: { _controller: PostBundle:Post:update }
 

@@ -1,6 +1,7 @@
 <?php
 namespace PostBundle\Service;
 
+use AppBundle\Exception\BadRestRequestHttpException;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\PostRepository;
 
@@ -28,6 +29,15 @@ class PostService
 
     public function create(Post $post): Post
     {
+        $this->postRepository->saveWithTagsAndAttachments($post);
+
+        return $post;
+    }
+
+    public function update(Post $post): Post
+    {
+        if(!$post->getId()) throw new BadRestRequestHttpException("post id required");
+
         $this->postRepository->saveWithTagsAndAttachments($post);
 
         return $post;
