@@ -1,9 +1,9 @@
 <?php
 namespace PostBundle\Service;
 
-use AppBundle\Exception\BadRestRequestHttpException;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\PostRepository;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class PostService
 {
@@ -36,7 +36,7 @@ class PostService
 
     public function update(Post $post): Post
     {
-        if(!$post->getId()) throw new BadRestRequestHttpException("post id required");
+        if(!$post->getId()) throw new AccessDeniedHttpException("post id required");
 
         $this->postRepository->saveWithTagsAndAttachments($post);
 
