@@ -33,7 +33,7 @@ div
       li(*ngFor="let tag of post.tags;")
         a([routerLink]='["/tag", tag.name + "-" + tag?.id]') {{ tag.name }}
 
-  .content(*ngIf="!minimized", #content)
+  .content(*ngIf="!minimized")
     ng-container(*ngFor="let attachment of post.attachments", [ngSwitch]="attachment.type")
       attachment-text(*ngSwitchCase="AttachmentType.text", [text]="attachment.content.text | linky:{truncate:{length: 60}, stripPrefix: false}")
       img.attachment-image(*ngSwitchCase="AttachmentType.image", [src]="attachment.content.public_path")
@@ -60,30 +60,31 @@ div
     .fa.fa-bullhorn
     span {{"Share" | translate}}
   // @TODO Implement
-  .btn-material.secondary.actions(
+  button.btn-material.secondary.actions(
     *ngIf="pl.isPlatformBrowser() && profileService.isOwn(post.profile)",
     (click)='render.addClass(actions, "active")',
-    (focusout)='render.removeClass(actions, "active")'
+    (blur)='render.removeClass(actions, "active")'
   )
     .fa.fa-ellipsis-v
     ul(#actions)
-      //li
-      //  a
-      //    .fa.fa-fw.fa-floppy-o
-      //    | {{"Save" | translate }}
       li
-        a([routerLink]="[postService.getUrl(post.id, post.title), 'edit']")
+        a((click)="favorite()")
+          .fa.fa-fw.fa-floppy-o(*ngIf="!post.favorite")
+          .fa.fa-fw.fa-check(*ngIf="post.favorite")
+          | {{(post.favorite ? "Saved" : "Save") | translate }}
+      li
+        a((click)="edit()")
           .fa.fa-fw.fa-pencil
           | {{"Edit" | translate }}
-      //li
-      //  a
-      //    .fa.fa-fw.fa-flag
-      //    | {{"Report" | translate }}
-      //li
-      //  a
-      //    .fa.fa-fw.fa-bullhorn
+      li
+        a.disabled(title="В процессе разработки")
+          .fa.fa-fw.fa-flag
+          | {{"Report" | translate }}
+      li
+        a.disabled(title="В процессе разработки")
+          .fa.fa-fw.fa-bullhorn
           | {{"Share" | translate }}
-modal(*ngIf="isShareModalVisible", [backdrop]="true", (on-close)="isShareModalVisible = false", [close-mode]="1")
+modal(*ngIf="isShareModalVisible", [backdrop]="true", (on-close)="isShareModalVisible = false", [close-mode]="1", [animation]="false")
   modal-header Поделиться постом
   modal-body
     share([link]="postService.getUrl(post.id, post.title)")

@@ -34,7 +34,6 @@ export class PostFormRoute implements OnInit, AfterViewInit {
     public isLoading: boolean = false;
     public device = Device;
     public isNew: boolean = !this.route.snapshot.data.post;
-    public storageKey = this.isNew ? "post-form" : this.route.snapshot.data.post.id;
 
     public form: FormGroup = new FormGroup({
         id: new FormControl(null),
@@ -72,7 +71,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             if(this.pl.isPlatformBrowser()) {
                 let postForm;
                 if(this.isNew) {
-                    postForm = JSON.parse(localStorage.getItem(this.storageKey));
+                    postForm = JSON.parse(localStorage.getItem("post-form"));
                 } else {
                     postForm = this.route.snapshot.data.post;
                 }
@@ -106,6 +105,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
         } catch (e) {}
 
         this.form.valueChanges
+            .filter(() => this.isNew)
             .debounceTime(500) // Ohyenable feature 
             .do(() => this.saved = false)
             .debounceTime(500) // Ohyenable feature 
@@ -113,7 +113,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             .subscribe((post: Post) => {
                 if(this.pl.isPlatformBrowser()) {
                     try {
-                        localStorage.setItem(this.storageKey, JSON.stringify(post));
+                        localStorage.setItem("post-form", JSON.stringify(post));
                     } catch (e) {
                         console.log("Слишком объемный пост. Невозможно сохранить в LocalStorage!");
                     }
@@ -235,7 +235,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             })
             .subscribe((post) => {
                 this.router.navigate(["/post", post.id]);
-                localStorage.removeItem(this.storageKey);
+                localStorage.removeItem("post-form");
             }, () => this.isLoading = false)
         ;
     }
@@ -273,7 +273,14 @@ export class PostFormRoute implements OnInit, AfterViewInit {
     
     canDeactivate() : boolean {
         if(this.form.dirty && !this.submitted) {
-            return confirm(this.translateService.translate("You created a post but did not publish it. Do you want to leave?"))
+            let message;
+            if(this.isNew) {
+                message = "You created a post but did not publish it. Do you want to leave?";
+            } else {
+                message = "Changes are not saved. Do you want to leave?"
+            }
+            
+            return confirm(this.translateService.translate(message))
         }
         return true;
     }

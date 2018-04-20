@@ -16,4 +16,5 @@ export interface Post {
     profile: Profile;
     votes: Vote;
     comments_total: number;
+    favorite?: boolean;
 }

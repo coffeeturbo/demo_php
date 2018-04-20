@@ -1,50 +1,95 @@
 .profile-settings
   loader(*ngIf="disabled")
   form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
+    //input(style="display:none", type="text", name="fakeusernameremembered")
+    //input(style="display:none", type="password", name="fakepasswordremembered")
     h2 {{ 'General settings' | translate }}
     br
-    .material-field
-      i.fa.fa-lg.fa-fw.fa-address-card-o
-      .input-box
-        input#name(ng-detect-empty-input, type="text", formControlName="name")
-        hr
-        label.material-label(for="name") {{ 'Name' | translate }}
-
-    .material-field
-      i.fa.fa-lg.fa-fw.fa-at
-      .input-box
-        input#alias(ng-detect-empty-input, type="text", formControlName="alias")
-        hr
-        label.material-label(for="alias") {{ 'Profile link' | translate }}
-        ng-container(*ngIf="form.controls['alias'].invalid")
-          .error
-            i.fa.fa-exclamation-circle
-            span(*ngIf="form.controls['alias'].hasError('alias_unavailable')") {{"Alias unavailable" | translate }} 
-            span(*ngIf="form.controls['alias'].hasError('minlength')") {{"Too short" | translate }}
-            span(*ngIf="form.controls['alias'].hasError('pattern')") {{"Invalid format" | translate }} 
-          tooltip(*ngIf="form.controls['alias'].hasError('pattern')")
-            small {{ "You can choose a profile link that is easier to memorize and looks better on business cards. Please use latin letters, numbers, or «_»" | translate }}.
-
-    label {{ 'Gender' | translate }}
-    .field
-      i.fa.fa-lg.fa-fw.fa-venus-mars
-      .input-box
-        select(formControlName="gender")
-          option(value="male") {{ "Male" | translate }}
-          option(value="female") {{ "Female" | translate }}
-          option(value="female") {{ "None" | translate }}
-    
-    label {{ 'Birth date' | translate }}
-    .field
-      i.fa.fa-lg.fa-fw.fa-birthday-cake
-      .input-box
-        input(type="date", formControlName="birth_date", placeholder="{{'Birthdate' | translate }}")
-        hr
+    ng-container(formGroupName="editProfileGroup")
+      .material-field 
+        i.fa.fa-lg.fa-fw.fa-address-card-o
+        .input-box
+          input#name(ng-detect-empty-input, type="text", formControlName="name")
+          hr
+          label.material-label(for="name") {{ 'Name' | translate }}
   
+      .material-field
+        i.fa.fa-lg.fa-fw.fa-at
+        .input-box
+          input#alias(ng-detect-empty-input, type="text", formControlName="alias", autocomplete="new-password")
+          hr
+          label.material-label(for="alias") {{ 'Profile link' | translate }}
+          ng-container(*ngIf="form.controls['editProfileGroup'].controls['alias'].invalid")
+            .error
+              i.fa.fa-exclamation-circle
+              span(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('alias_unavailable')") {{"Alias unavailable" | translate }} 
+              span(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('minlength')") {{"Too short" | translate }}
+              span(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('pattern')") {{"Invalid format" | translate }} 
+            tooltip(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('pattern')")
+              small {{ "You can choose a profile link that is easier to memorize and looks better on business cards. Please use latin letters, numbers, or «_»" | translate }}.
+  
+      label {{ 'Gender' | translate }}
+      .field
+        i.fa.fa-lg.fa-fw.fa-venus-mars
+        .input-box
+          select(formControlName="gender")
+            option(value="male") {{ "Male" | translate }}
+            option(value="female") {{ "Female" | translate }}
+            option(value="female") {{ "None" | translate }}
+      
+      label {{ 'Birth date' | translate }}
+      .field
+        i.fa.fa-lg.fa-fw.fa-birthday-cake
+        .input-box
+          input(type="date", formControlName="birth_date", placeholder="{{'Birthdate' | translate }}")
+          hr
+  
+    br
+    h2 {{ 'Change password' | translate }}
+    br
+    ng-container(formGroupName="changePasswordGroup")
+      .material-field
+        i.fa.fa-lg.fa-fw.fa-lock
+        .input-box
+          input#old_password(ng-detect-empty-input, type="password", formControlName="old_password", autocomplete="new-password")
+          hr
+          label.material-label(for="old_password") {{ 'Старый пароль' | translate }}
+          
+          tooltip.active(*ngIf="form.controls['changePasswordGroup'].controls['old_password'].hasError('invalid_password') && submitted")
+            small(*ngIf="form.controls['changePasswordGroup'].controls['old_password'].hasError('invalid_password')") {{ "Wrond password" | translate }}.
+
+
+      br
+      .material-field
+        i.fa.fa-lg.fa-fw
+        .input-box
+          input#password(ng-detect-empty-input, type="password", formControlName="password", autocomplete="new-password")
+          hr
+          label.material-label(for="password") {{ 'Новый пароль' | translate }}
+          tooltip(*ngIf="form.controls['changePasswordGroup'].controls['password'].touched && form.controls['changePasswordGroup'].hasError('invalid_password')")
+            small {{ config.account.constraints.password.invalid_message | translate }}
+
+
+      br
+      .material-field
+        i.fa.fa-lg.fa-fw
+        .input-box
+          input#password_confirm(ng-detect-empty-input, type="password", formControlName="password_confirm", autocomplete="new-password")
+          hr
+          label.material-label(for="password_confirm") {{ 'Повторите ввод' | translate }}
+          tooltip(*ngIf="form.controls['changePasswordGroup'].controls['password_confirm'].touched && form.controls['changePasswordGroup'].hasError('not_equal_passwords')")
+            small {{"Passwords do not match" | translate }}
+
+
     .controls
-        button.btn-material(*ngIf="!form.pristine", type="button", (click)="form.reset(defaultValues)")
-          .fa.fa-ban
-          span {{"Cancel" | translate }}
-        button.btn-material.primary(type="submit", [disabled]="form.invalid")
-          .fa.fa-sign-in
-          span {{"Save" | translate }}
+      button.btn-material(*ngIf="!form.pristine", type="button", (click)="reset();")
+        .fa.fa-ban
+        span {{"Cancel" | translate }}
+      button.btn-material.primary(type="submit", [disabled]="form.invalid")
+        .fa.fa-sign-in
+        span {{"Save" | translate }}
+
+//.debug changePasswordGroup: {{ form.controls.changePasswordGroup.errors | json }}
+//.debug password: {{ form.controls.changePasswordGroup.controls.password.errors | json }}
+//.debug old_password: {{ form.controls.changePasswordGroup.controls.old_password.errors | json }}
+//.debug password_confirm: {{ form.controls.changePasswordGroup.controls.password_confirm.errors | json }}

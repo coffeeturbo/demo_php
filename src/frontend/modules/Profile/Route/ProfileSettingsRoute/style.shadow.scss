@@ -49,3 +49,11 @@ input.ng-dirty.ng-invalid.ng-touched ~ .error{
     color: material-color("red", "800");
   }
 }
+
+*:focus ~ tooltip.active {
+  display: none;
+}
+
+tooltip.active {
+  display: block;
+}

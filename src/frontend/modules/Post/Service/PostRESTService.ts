@@ -37,4 +37,12 @@ export class PostRESTService
             .post<Post>(url, postUpdateRequest, {withCredentials: true})
         ;
     }
+    
+    public favorite(post: Post): Observable<Post>
+    {
+        let url = `/protected/post/save`;
+        post.favorite = !post.favorite;
+        
+        return Observable.of(post).timeout(2250)
+    }
 }

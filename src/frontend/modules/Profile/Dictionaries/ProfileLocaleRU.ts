@@ -8,6 +8,7 @@ export const ProfileLocaleRU = {
     "Too short": "Слишком короткий",
     "Alias unavailable": "Адрес занят",
     "General settings": "Основные настройки",
+    "Change password": "Смена пароля",
     "Image upload": "Загрузка изображения",
     "Choose other": "Выбрать другую",
     "Invalid format": "Неверный формат",

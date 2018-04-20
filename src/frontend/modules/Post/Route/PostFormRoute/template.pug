@@ -5,8 +5,7 @@ loader(*ngIf="isLoading")
 
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="handleEnterButton($event)", [class.loading]='isLoading')
 
-  h2(*ngIf="isNew") {{ "Add post" | translate }} 
-  h2(*ngIf="!isNew") {{ "Edit post" | translate }} 
+  h2 {{ (isNew ? "Add post" : "Edit post") | translate }} 
     span(*ngIf="!saved") - {{"Saving" | translate}}...
   
   br
@@ -39,7 +38,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
             attachment-input-text(
               *ngSwitchCase="AttachmentType.text",
               [id]="'postFormAttachment' + i", formControlName="value", [focus]="true", 
-              (input)="attachment.value && attachment.value.entity.content && (attachment.value.entity.content.text = $event.target.textContent)"
+              (input)="attachment.value.entity?.content && (attachment.value.entity.content.text = $event.target.textContent)"
             )
             
             attachment-input-video(*ngSwitchCase="AttachmentType.videoYoutube", [id]="'postFormAttachment' + i", formControlName="value")

@@ -1,13 +1,11 @@
 import {
-    AfterViewInit, Component, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit,
+    AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit,
     Renderer2
 } from '@angular/core';
 import {Router} from "@angular/router";
 import {TranslationService} from "@angular-addons/translate";
 import * as getSlug from "speakingurl";
-import * as scrollIntoView from 'scroll-into-view';
 
-import {PostHotkeys} from "./hotkeys";
 import {Post} from "../../Entity/Post";
 import {PostService} from "../../Service/PostService";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
@@ -17,7 +15,6 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Subscription} from "rxjs/Subscription";
 import {PlatformService} from "../../../Application/Service/PlatformService";
-import {PostRoute} from "../../Route/PostRoute";
 
 @Component({
     selector: 'post',
@@ -61,8 +58,10 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     ) {}
 
     ngAfterViewInit() {
-        this.isLongpost = this.el.nativeElement.querySelector(".content").offsetHeight > 400;
-
+        setTimeout(
+            () => this.isLongpost = this.el.nativeElement.querySelector(".content").offsetHeight > 400
+        );
+        
         this.markAsVisitedSubscription = this.appScrollService
             .onScroll
             .debounceTime(50)
@@ -121,7 +120,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    getPostUrl(params: {short: boolean} = {short: false}) {
+    public getPostUrl(params: {short: boolean} = {short: false}) {
         return `/post/${(params.short ? "" : getSlug(this.post.title + "-")) + "-" + this.post.id}`;
     }
 
@@ -155,8 +154,19 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     //             break;
     //     }
     // }
-    
-    isPostRoute(): boolean {
+
+    public isPostRoute(): boolean {
         return this.router.isActive("/post", false)
-    } 
+    }
+
+    public favorite() {
+        this.postService
+            .favorite(this.post)
+            .subscribe(post => this.post = post)
+        ;
+    }
+    
+    public edit() {
+        this.router.navigate([this.postService.getUrl(this.post.id, this.post.title), 'edit'])
+    }
 }

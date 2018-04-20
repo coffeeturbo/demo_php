@@ -13,6 +13,8 @@ import {Roles} from "../Entity/Role";
 import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 import {OAuthService} from "./OAuthService";
 import {TokenService} from "./TokenService";
+import {ChangePasswordRequest} from "../Http/Request/ChangePasswordRequest";
+import {ChangePasswordResponse} from "../Http/Response/ChangePasswordResponse";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -85,6 +87,11 @@ export class AuthService implements AuthServiceInterface
     {
         this.returnUrl = null;
         return this.handleTokenResponse(this.rest.refreshToken(body));
+    }
+    
+    public changePassword(body: ChangePasswordRequest): Observable<ChangePasswordResponse>
+    {
+        return this.rest.changePassword(body);
     }
 
     public connectVK(): Observable<TokenResponse>

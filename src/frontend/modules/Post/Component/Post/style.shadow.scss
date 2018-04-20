@@ -249,7 +249,11 @@
           display: block;
           padding: 12px;
           color: $font_color_dark;
-
+          
+          &.disabled {
+            opacity: .5;
+          }
+          
           &:hover {
             background: material-color($secondary_material, '100');
           }

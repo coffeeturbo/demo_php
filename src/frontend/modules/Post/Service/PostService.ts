@@ -47,6 +47,11 @@ export class PostService {
         return this.rest.update(postUpdateRequest)
     }
 
+    public favorite(post: Post): Observable<Post>
+    {
+        return this.rest.favorite(post);
+    }
+
     public vote(post: Post, state: VoteState): Observable<Post>
     {
         let oldPost = post;

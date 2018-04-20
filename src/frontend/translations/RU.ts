@@ -46,6 +46,7 @@ export const LocaleRU = {
   "Reset":        "Сбросить",
   "Russian":      "Русский",
   "Save":         "Сохранить",
+  "Saved":        "Сохранено",
   "Saving":       "Сохраняем",
   "Settings":     "Настройки",
   "Search":       "Поиск",

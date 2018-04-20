@@ -6,6 +6,8 @@ import {SignUpRequest} from "../Http/Request/SignUpRequest";
 import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 import {TokenResponse} from "../Http/Response/TokenResponse";
 import {HttpClient} from "@angular/common/http";
+import {ChangePasswordRequest} from "../Http/Request/ChangePasswordRequest";
+import {ChangePasswordResponse} from "../Http/Response/ChangePasswordResponse";
 
 @Injectable()
 export class AuthRESTService
@@ -36,6 +38,15 @@ export class AuthRESTService
 
         return this.http
             .post<TokenResponse>(url, refreshTokenRequest)
+        ;
+    }
+    
+    public changePassword(changePasswordRequest: ChangePasswordRequest): Observable<ChangePasswordResponse>   
+    {
+        let url = "/protected/auth/change-password";
+
+        return this.http
+            .post<TokenResponse>(url, changePasswordRequest, {withCredentials: true})
         ;
     }
 }
