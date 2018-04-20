@@ -50,9 +50,10 @@ class CreatePostDataHandler
             $this->setTagsFromJson($post, $data['tags']);
         }
 
-//        if($data['attachments']) {
-//            $this->attachmentService->setAttachmentsFromJson($post, $data['attachments'], $this->maxAttachmentsLimit);
-//        }
+        if($data['attachments']) {
+
+            $this->attachmentService->setAttachmentsFromJson($post, $data['attachments'], $this->maxAttachmentsLimit);
+        }
 
         return $post;
     }
@@ -95,11 +96,7 @@ class CreatePostDataHandler
         }
 
 
-        //
-
         $this->clearNotUsedTags($entity->getTags(), $jsonTags);
-
-
 
         foreach($jsonTags as $tagJson) {
             $tag = new Tag();
@@ -123,12 +120,25 @@ class CreatePostDataHandler
     public function clearNotUsedTags(PersistentCollection $entityTags, array $newTags)
     {
 
-        print_r($entityTags->toArray());
-
         // удаляем несовпадающие элементы
 
+        //  ищем совпадающие элементы
+        $matches = [];
+
         foreach($newTags as $newTag) {
-            
+            foreach($entityTags->toArray() as $id => $oldTag){
+                // ищим совпадения
+                /** @var $oldTag Tag */
+                if(strcmp(trim($newTag['name']), trim($oldTag->getName())) === 0){
+                    $matches[] = $id;
+                    continue;
+                }
+            }
+        }
+
+        // вычитаем несовпадающие элементы
+        foreach($entityTags->toArray() as $iId =>  $item){
+            if (!in_array($iId, $matches)) $entityTags->remove($iId);
         }
 
     }
