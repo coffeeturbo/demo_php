@@ -96,7 +96,7 @@ class PostController extends Controller
             $data = $this->get('app.validate_request')->getData($request, PostFormType::class);
 
             $post = $this->get('post.form.handler.create_post_data_handler')->handle($data);
-            return new SuccessPostResponse($post);
+
             $account = $this->get('auth.service')->getAccount();
 
             $profile = $this->get('profile.repository')->getCurrentProfileByAccount($account);

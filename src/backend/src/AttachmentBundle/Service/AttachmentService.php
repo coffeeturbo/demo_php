@@ -10,7 +10,6 @@ use AttachmentBundle\Parser\OpenGraphParser;
 use AttachmentBundle\Repository\AttachmentRepository;
 use AttachmentBundle\Service\AttachmentHandler\AttachmentHandler;
 use AttachmentBundle\Service\FetchResource\Result;
-use Doctrine\ORM\PersistentCollection;
 use ImageBundle\Image\Image;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -88,15 +87,12 @@ class AttachmentService
 
     static public function clearNotUsedAttachments(AttachmentableEntity $attachmentableEntity, array $newAttachments)
     {
-        var_dump('fdfdfd');
-        die;
-
         $matches = [];
 
         foreach($newAttachments as $newAttach){
             foreach($attachmentableEntity->getAttachments() as $attachId => $attachment) {
                 /** @var $attachment Attachment */
-                if($attachment->getId() === $newAttach['id']){
+                if((isset($newAttach['id'])) && ($attachment->getId() === $newAttach['id'])){
                     $matches[] = $attachId;
                 }
 
