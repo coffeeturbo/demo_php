@@ -19,3 +19,4 @@ services:
       - '%post.max_tags_limit%'
       - '%post.max_attachments_limit%'
       - '@attachment.service.attachment_service'
+      - '@post.repository'

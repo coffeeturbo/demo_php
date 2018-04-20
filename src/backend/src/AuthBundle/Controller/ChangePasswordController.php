@@ -66,7 +66,7 @@ class ChangePasswordController extends Controller
         }
 
         return new JsonResponse([
-            'password_changed' => 'success'
+            'password_changed' => true
         ]);
 
     }
