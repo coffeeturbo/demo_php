@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnChanges} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnChanges, ViewChild} from '@angular/core';
 import {AsyncValidator, ControlValueAccessor, FormControl, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {Attachment} from "../../Entity/Attachment";
@@ -24,10 +24,12 @@ import {AttachmentRESTService} from "../../Service/AttachmentRESTService";
     ]
 })
 
-export class AttachmentInputVideoComponent implements ControlValueAccessor, AsyncValidator, OnChanges {
+export class AttachmentInputVideoComponent implements ControlValueAccessor, AsyncValidator, OnChanges, AfterViewInit {
     propagateChange:any = () => {};
     @Input() id: string;
     @Input('value') _value = "";
+    @Input() focus: boolean = false;
+    @ViewChild('input') public input: ElementRef;
     public attachmentVideo: Attachment<AttachmentVideo>;
     public disabled: boolean = false;
     public linkHasError: boolean = false;
@@ -46,6 +48,12 @@ export class AttachmentInputVideoComponent implements ControlValueAccessor, Asyn
     writeValue(value) {
         if (value) {
             this.value = value;
+        }
+    }
+
+    ngAfterViewInit() {
+        if (this.focus) {
+            this.input.nativeElement.focus()
         }
     }
 

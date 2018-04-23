@@ -38,10 +38,10 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
             attachment-input-text(
               *ngSwitchCase="AttachmentType.text",
               [id]="'postFormAttachment' + i", formControlName="value", [focus]="true", 
-              (input)="attachment.value.entity?.content && (attachment.value.entity.content.text = $event.target.textContent)"
+              (input)="attachment.value.entity?.content && (attachment.value.entity.content.text = $event.target.innerHTML)"
             )
             
-            attachment-input-video(*ngSwitchCase="AttachmentType.videoYoutube", [id]="'postFormAttachment' + i", formControlName="value")
+            attachment-input-video(*ngSwitchCase="AttachmentType.videoYoutube", [focus]="true", [id]="'postFormAttachment' + i", formControlName="value")
             attachment-input-image(*ngSwitchCase="AttachmentType.image", [id]="'postFormAttachment' + i", formControlName="value")
             tooltip(*ngIf="attachment.controls.value.invalid && submitted")
               small(*ngIf="attachment.controls.value.hasError('invalidLink')") {{ "Can't parse video link" | translate }}

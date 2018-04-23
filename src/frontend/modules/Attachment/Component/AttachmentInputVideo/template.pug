@@ -1,5 +1,7 @@
+doctype html
 ng-container(*ngIf="!attachmentVideo")
   input(
+    #input
     ng-detect-empty-input,
     type="text",
     [id] = "id",
