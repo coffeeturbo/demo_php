@@ -57,3 +57,7 @@ input.ng-dirty.ng-invalid.ng-touched ~ .error{
 tooltip.active {
   display: block;
 }
+
+a {
+  color: material-color($primary_material, "600")
+}

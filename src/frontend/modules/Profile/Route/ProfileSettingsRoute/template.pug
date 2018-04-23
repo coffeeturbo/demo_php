@@ -19,13 +19,13 @@
           input#alias(ng-detect-empty-input, type="text", formControlName="alias", autocomplete="new-password")
           hr
           label.material-label(for="alias") {{ 'Profile link' | translate }}
-          ng-container(*ngIf="form.controls['editProfileGroup'].controls['alias'].invalid")
+          ng-container(*ngIf="form.get('editProfileGroup').get('alias').invalid")
             .error
               i.fa.fa-exclamation-circle
-              span(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('alias_unavailable')") {{"Alias unavailable" | translate }} 
-              span(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('minlength')") {{"Too short" | translate }}
-              span(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('pattern')") {{"Invalid format" | translate }} 
-            tooltip(*ngIf="form.controls['editProfileGroup'].controls['alias'].hasError('pattern')")
+              span(*ngIf="form.get('editProfileGroup').get('alias').hasError('alias_unavailable')") {{"Alias unavailable" | translate }} 
+              span(*ngIf="form.get('editProfileGroup').get('alias').hasError('minlength')") {{"Too short" | translate }}
+              span(*ngIf="form.get('editProfileGroup').get('alias').hasError('pattern')") {{"Invalid format" | translate }} 
+            tooltip(*ngIf="form.get('editProfileGroup').get('alias').hasError('pattern')")
               small {{ "You can choose a profile link that is easier to memorize and looks better on business cards. Please use latin letters, numbers, or «_»" | translate }}.
   
       label {{ 'Gender' | translate }}
@@ -45,9 +45,10 @@
           hr
   
     br
-    h2 {{ 'Change password' | translate }}
+    h2 
+      a((click)="showChangePasswordForm = !showChangePasswordForm") {{ 'Change password' | translate }}
     br
-    ng-container(formGroupName="changePasswordGroup")
+    ng-container(formGroupName="changePasswordGroup", *ngIf="showChangePasswordForm")
       .material-field
         i.fa.fa-lg.fa-fw.fa-lock
         .input-box
@@ -55,8 +56,8 @@
           hr
           label.material-label(for="old_password") {{ 'Старый пароль' | translate }}
           
-          tooltip.active(*ngIf="form.controls['changePasswordGroup'].controls['old_password'].hasError('invalid_password') && submitted")
-            small(*ngIf="form.controls['changePasswordGroup'].controls['old_password'].hasError('invalid_password')") {{ "Wrond password" | translate }}.
+          tooltip.active(*ngIf="form.get('changePasswordGroup').get('old_password').hasError('invalid_password') && submitted")
+            small(*ngIf="form.get('changePasswordGroup').get('old_password').hasError('invalid_password')") {{ "Wrond password" | translate }}.
 
 
       br
@@ -66,7 +67,7 @@
           input#password(ng-detect-empty-input, type="password", formControlName="password", autocomplete="new-password")
           hr
           label.material-label(for="password") {{ 'Новый пароль' | translate }}
-          tooltip(*ngIf="form.controls['changePasswordGroup'].controls['password'].touched && form.controls['changePasswordGroup'].hasError('invalid_password')")
+          tooltip(*ngIf="form.get('changePasswordGroup').get('password').touched && form.get('changePasswordGroup').hasError('invalid_password')")
             small {{ config.account.constraints.password.invalid_message | translate }}
 
 
@@ -77,7 +78,7 @@
           input#password_confirm(ng-detect-empty-input, type="password", formControlName="password_confirm", autocomplete="new-password")
           hr
           label.material-label(for="password_confirm") {{ 'Повторите ввод' | translate }}
-          tooltip(*ngIf="form.controls['changePasswordGroup'].controls['password_confirm'].touched && form.controls['changePasswordGroup'].hasError('not_equal_passwords')")
+          tooltip(*ngIf="form.get('changePasswordGroup').get('password_confirm').touched && form.get('changePasswordGroup').hasError('not_equal_passwords')")
             small {{"Passwords do not match" | translate }}
 
 
@@ -89,7 +90,7 @@
         .fa.fa-sign-in
         span {{"Save" | translate }}
 
-//.debug changePasswordGroup: {{ form.controls.changePasswordGroup.errors | json }}
-//.debug password: {{ form.controls.changePasswordGroup.controls.password.errors | json }}
-//.debug old_password: {{ form.controls.changePasswordGroup.controls.old_password.errors | json }}
-//.debug password_confirm: {{ form.controls.changePasswordGroup.controls.password_confirm.errors | json }}
+.debug changePasswordGroup: {{ form.controls.changePasswordGroup.errors | json }}
+.debug password: {{ form.controls.changePasswordGroup.controls.password.errors | json }}
+.debug old_password: {{ form.controls.changePasswordGroup.controls.old_password.errors | json }}
+.debug password_confirm: {{ form.controls.changePasswordGroup.controls.password_confirm.errors | json }}

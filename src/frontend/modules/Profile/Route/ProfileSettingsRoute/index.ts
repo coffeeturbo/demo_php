@@ -1,5 +1,5 @@
 import {Component, HostListener} from "@angular/core";
-import {AbstractControl, FormArray, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {ProfileService} from "../../Service/ProfileService";
@@ -18,6 +18,7 @@ export class ProfileSettingsRoute {
     public profile: Profile = this.route.snapshot.data["profile"];
     public constraints = Config.profile.constraints;
     public config = Config;
+    public showChangePasswordForm: boolean = false;
     public form: FormGroup = new FormGroup({
         editProfileGroup: new FormGroup({
             name: new FormControl(this.profile.name, Validators.required),
@@ -98,7 +99,7 @@ export class ProfileSettingsRoute {
 
             let changePasswordGroup: FormGroup = <FormGroup>this.form.controls.changePasswordGroup;
             
-            if (!changePasswordGroup.pristine) {
+            if (!changePasswordGroup.pristine && changePasswordGroup.value.password && changePasswordGroup.value.old_password && changePasswordGroup.value.password_confirm) {
                 observables.push(
                     this.authService.changePassword(changePasswordGroup.value).catch((e) => {
                         changePasswordGroup.controls["old_password"].setErrors({'invalid_password': true});
