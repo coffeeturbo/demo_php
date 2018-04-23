@@ -111,7 +111,7 @@ class PostController extends Controller
         } catch(AccessDeniedHttpException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
         } catch(\Exception $e){
-            return new ErrorJsonResponse($e->getMessage());
+            return new ErrorJsonResponse($e->getMessage().$e->getTraceAsString() );
         }
 
         return new SuccessPostResponse($post);

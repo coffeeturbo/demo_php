@@ -117,7 +117,7 @@ class CreatePostDataHandler
         return $this;
     }
 
-    public function clearNotUsedTags(PersistentCollection $entityTags, array $newTags)
+    public function clearNotUsedTags($entityTags, array $newTags)
     {
 
         // удаляем несовпадающие элементы
@@ -125,6 +125,7 @@ class CreatePostDataHandler
         //  ищем совпадающие элементы
         $matches = [];
 
+        /** @var ArrayCollection $entityTags */
         foreach($newTags as $newTag) {
             foreach($entityTags->toArray() as $id => $oldTag){
                 // ищим совпадения

@@ -61,8 +61,12 @@ class AttachmentHandler
 
     private function getTextAttachment()
     {
+
+        $value = isset($this->attachmentJson['value']) ?
+            $this->attachmentJson['value'] : $this->attachmentJson['content']['text'];
+
         $this->attachment->setContent([
-            'text' => \strip_tags($this->attachmentJson['value'], '<a><b><h2><h3><h4><i><u><p><strike><blockquote>')
+            'text' => \strip_tags($value, '<a><b><h2><h3><h4><i><u><p><strike><blockquote>')
         ]);
     }
 
