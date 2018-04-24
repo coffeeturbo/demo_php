@@ -265,7 +265,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
     }
     
     @HostListener("window:beforeunload", ["$event"]) 
-    unloadHandler(e: Event) {
+    unloadHandler(e) {
         if(this.form.dirty) {
             e.returnValue = false;
         }
