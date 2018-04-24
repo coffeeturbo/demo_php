@@ -63,7 +63,7 @@ module.exports = {
                     'to-string-loader',
                     {
                         "loader":"css-loader",
-                        "options": { "minimize": false}
+                        "options": { "minimize": !helpers.isDev}
                     },
                     'sass-loader'
                 ],
@@ -73,7 +73,13 @@ module.exports = {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader', 'sass-loader']
+                    use: [
+                        {
+                            "loader":"css-loader",
+                            "options": { "minimize": !helpers.isDev}
+                        },
+                        'sass-loader'
+                    ]
                 }),
                 include: helpers.root('assets')
             },
