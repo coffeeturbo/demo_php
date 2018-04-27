@@ -9,8 +9,8 @@ import {Observable} from "rxjs/Observable";
 import {AttachmentVideo} from "../../../Attachment/Entity/AttachmentVideo";
 import {AttachmentText} from "../../../Attachment/Entity/AttachmentText";
 import {AttachmentImage} from "../../../Attachment/Entity/AttachmentImage";
-import {AttachmentRESTService} from "../../../Attachment/Service/AttachmentRESTService";
 import {ActivatedRoute} from "@angular/router";
+import {AttachmentService} from "../../../Attachment/Service/AttachmentService";
 
 @Component({
     selector: 'comment-form',
@@ -33,7 +33,7 @@ export class CommentFormComponent {
     
     constructor(
         private route: ActivatedRoute,
-        private attachmentRest: AttachmentRESTService,
+        private attachmentService: AttachmentService,
         private commentService: CommentService
     ) {}
 
@@ -92,13 +92,13 @@ export class CommentFormComponent {
 
             switch(attachment.type) {
                 case AttachmentType.image:
-                    attachmentObservable = this.attachmentRest.uploadImage({image: attachment.value.image});
+                    attachmentObservable = this.attachmentService.uploadImage({image: attachment.value.image});
                     break;
                 case AttachmentType.text:
                     attachmentObservable = Observable.of(attachment);
                     break;
                 case AttachmentType.video:
-                    attachmentObservable = this.attachmentRest.parseVideoLink({url: attachment.value});
+                    attachmentObservable = this.attachmentService.parseVideoLink({url: attachment.value});
                     break;
             }
 

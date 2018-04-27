@@ -5,7 +5,7 @@ import {PostRESTService} from "./PostRESTService";
 import {Post} from "../Entity/Post";
 import {VoteState} from "../../Vote/Entity/Vote";
 import {VoteRESTService} from "../../Vote/Service/VoteRESTService";
-import {AttachmentRESTService} from "../../Attachment/Service/AttachmentRESTService";
+import {AttachmentService} from "../../Attachment/Service/AttachmentService";
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
 import * as getSlug from "speakingurl";
 import {PostUpdateRequest} from "../Http/Request/PostUpdateRequest";
@@ -19,7 +19,7 @@ export class PostService {
     constructor(
         private rest: PostRESTService, 
         private voteRest: VoteRESTService,
-        private attachmentRest: AttachmentRESTService
+        private attachmentService: AttachmentService
     ) {}
 
     public get(postId: number): Observable<Post> 

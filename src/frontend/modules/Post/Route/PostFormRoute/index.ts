@@ -6,7 +6,6 @@ import {TranslationService} from "@angular-addons/translate";
 import {Post} from "../../Entity/Post";
 import {PostService} from "../../Service/PostService";
 import {Attachment, AttachmentType} from "../../../Attachment/Entity/Attachment";
-import {AttachmentRESTService} from "../../../Attachment/Service/AttachmentRESTService";
 import {AttachmentImage} from "../../../Attachment/Entity/AttachmentImage";
 import {AttachmentText} from "../../../Attachment/Entity/AttachmentText";
 import {AttachmentVideo} from "../../../Attachment/Entity/AttachmentVideo";
@@ -19,6 +18,7 @@ import {PlatformService} from "../../../Application/Service/PlatformService";
 import {Device} from "../../../Application/Service/DeviceService";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
 import {PostUpdateRequest} from "../../Http/Request/PostUpdateRequest";
+import {AttachmentService} from "../../../Attachment/Service/AttachmentService";
 
 @Component({
     templateUrl: './template.pug',
@@ -56,7 +56,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
 
     constructor(
         private translationService: TranslationService,
-        private attachmentRest: AttachmentRESTService,
+        private attachmentService: AttachmentService,
         private tagRest: TagRESTService,
         private postService: PostService,
         private router: Router,
@@ -202,17 +202,19 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             
             if(attachment.entity) {
                 return attachmentsObservable.push(Observable.of(attachment.entity)); 
+            } else {
+                delete attachment.entity;
             }
                 
             switch(attachment.type) {
                 case AttachmentType.image:
-                    attachmentObservable = this.attachmentRest.uploadImage({image: attachment.value.image});
+                    attachmentObservable = this.attachmentService.uploadImage({image: attachment.value.image});
                     break;
                 case AttachmentType.text:
                     attachmentObservable = Observable.of(attachment);
                     break;
                 case AttachmentType.videoYoutube:
-                    attachmentObservable = this.attachmentRest.parseVideoLink({url: attachment.value});
+                    attachmentObservable = this.attachmentService.parseVideoLink({url: attachment.value});
                     break;
             }
 
@@ -233,6 +235,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
                     return this.postService.update(<PostUpdateRequest>postRequest);
                 }
             })
+            .finally(() => this.submitted = true)
             .subscribe((post) => {
                 this.router.navigate(["/post", post.id]);
                 localStorage.removeItem("post-form");

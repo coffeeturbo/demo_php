@@ -7,6 +7,7 @@ import {AttachmentInputImageComponent} from "./Component/AttachmentInputImage";
 import {AttachmentRESTService} from "./Service/AttachmentRESTService";
 import {AttachmentVideoYoutubeComponent} from "./Component/AttachmentVideoYoutube";
 import {AttachmentTextComponent} from "./Component/AttachmentText";
+import {AttachmentService} from "./Service/AttachmentService";
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import {AttachmentTextComponent} from "./Component/AttachmentText";
         AttachmentTextComponent
     ],
     providers: [
+        AttachmentService,
         AttachmentRESTService
     ],
     exports: [

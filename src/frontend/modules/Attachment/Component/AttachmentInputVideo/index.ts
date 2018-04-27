@@ -1,10 +1,16 @@
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnChanges, ViewChild} from '@angular/core';
+import {
+    AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, Output,
+    ViewChild
+} from '@angular/core';
 import {AsyncValidator, ControlValueAccessor, FormControl, NG_ASYNC_VALIDATORS, NG_VALUE_ACCESSOR} from "@angular/forms";
 
 import {Attachment} from "../../Entity/Attachment";
 import {AttachmentVideo} from "../../Entity/AttachmentVideo";
 import {AttachmentGetVideoLinkRequest} from "../../Http/Request/AttachmentGetVideoLinkRequest";
-import {AttachmentRESTService} from "../../Service/AttachmentRESTService";
+import {Observable} from "rxjs/Observable";
+import {Observer} from "rxjs/Observer";
+import {ValidationErrors} from "@angular/forms/src/directives/validators";
+import {AttachmentService} from "../../Service/AttachmentService";
 
 @Component({
     selector: 'attachment-input-video',
@@ -29,12 +35,12 @@ export class AttachmentInputVideoComponent implements ControlValueAccessor, Asyn
     @Input() id: string;
     @Input('value') _value = "";
     @Input() focus: boolean = false;
+    @Output() onParseVideoLink = new EventEmitter<Attachment<AttachmentVideo>>();
     @ViewChild('input') public input: ElementRef;
     public attachmentVideo: Attachment<AttachmentVideo>;
     public disabled: boolean = false;
-    public linkHasError: boolean = false;
     
-    constructor(private attachmentRESTService: AttachmentRESTService) {}
+    constructor(private attachmentService: AttachmentService) {}
 
     get value() {
         return this._value;
@@ -71,25 +77,18 @@ export class AttachmentInputVideoComponent implements ControlValueAccessor, Asyn
         this.value = value;
     }
 
-    validate(control: FormControl) {
-        return new Promise((resolve) => {
-            if(/https?:\/\/.*/.test(control.value)) {
-                this.linkHasError = false;
-                this.disabled = true;
-                this.attachmentRESTService
-                    .parseVideoLink(<AttachmentGetVideoLinkRequest>{url: this.value})
-                    .finally(() => this.disabled = false)
-                    .subscribe(
-                        attachmentGetVideoLinkResponse => {
-                            this.attachmentVideo = attachmentGetVideoLinkResponse;
-                            resolve(null)
-                        },
-                        () => resolve({invalidLink: true})
-                    )
-                ;
-            } else {
-                resolve({invalidLink: true});
-            }
-        });
+    validate(control: FormControl): Observable<ValidationErrors | null> {
+        this.disabled = true;
+        
+        return this.attachmentService
+            .parseVideoLink(<AttachmentGetVideoLinkRequest>{url: this.value})
+            .do(attachmentVideo => {
+                this.attachmentVideo = attachmentVideo;
+                this.onParseVideoLink.emit(this.attachmentVideo);
+            })
+            .map(() => null)
+            .finally(() => this.disabled = false)
+            .catch(() => Observable.of(<ValidationErrors>{invalidLink: true}))
+        ;
     }
 }
