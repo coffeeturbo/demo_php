@@ -12,9 +12,9 @@ modal([width]="'500px'", *ngIf="helper.ready() && form.valid", [close-mode]="1",
           [options]="cropperOptions",
           (onChange)="form.controls['data'].setValue($event)", 
         )
-      .preview-area
-        .preview.medium
-        .preview.small
+      .avatar-preview-area
+        .avatar-preview.medium
+        .avatar-preview.small
   modal-footer
     button.btn-material(*ngIf="!disabled", (click)="helper.destroy()") {{ "Cancel" | translate }}
     button.btn-material.primary((click)="submit(form.value.data)", [disabled]="disabled || form.invalid") 

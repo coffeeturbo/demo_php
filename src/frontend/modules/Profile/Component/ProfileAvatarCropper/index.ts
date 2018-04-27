@@ -30,7 +30,7 @@ export class ProfileAvatarCropperComponent {
         background: false,
         zoomOnWheel: false,
         toggleDragModeOnDblclick: false,
-        preview: '.preview-area>.preview',
+        preview: '.avatar-preview',
         minCropBoxWidth: 100,
         minCropBoxHeight: 100,
         aspectRatio: 1,
