@@ -8,7 +8,7 @@ const dotenv = require('dotenv').config().parsed;
 
 const ENV = process.env.ENV = process.env.ENV = helpers.isDev ? 'development' : 'production';
 const IS_NODE = process.env.IS_NODE = helpers.isServer;
-const HOST = helpers.isServer ? "nginx:8080" : "";
+const HOST = helpers.isServer ? "http://nginx:8080" : "";
 
 module.exports = {
     entry: {
@@ -105,7 +105,7 @@ module.exports = {
         }),
         new ngtools.AngularCompilerPlugin({
             tsConfigPath: helpers.root("tsconfig.json"),
-            skipCodeGeneration: helpers.isDev || helpers.isServer, 
+            skipCodeGeneration: helpers.isDev || helpers.isServer,
             entryModule: helpers.root(
                 "modules",
                 "Application",
