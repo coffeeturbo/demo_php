@@ -7,6 +7,7 @@ import {FeedService} from "./FeedService";
 import {FeedCacheService} from "./FeedCacheService";
 import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 import {FeedRequestService} from "./FeedRequestService";
+import * as objectHash from "object-hash";
 
 @Injectable()
 export class FeedResolver implements Resolve<Feed> {
@@ -23,7 +24,7 @@ export class FeedResolver implements Resolve<Feed> {
                 try {
                     feedResolver = this.feedCacheService.getFeed(feedRequest).delay(1);
                 } catch (e) {
-                    let feedStateKey: StateKey<Feed> = makeStateKey<Feed>("Feed " + JSON.stringify(feedRequest));
+                    let feedStateKey: StateKey<Feed> = makeStateKey<Feed>(objectHash(feedRequest));
                     
                     if(this.transferState.hasKey(feedStateKey)) {
                         feedResolver = Observable.of(this.transferState.get(feedStateKey, null as Feed)).delay(1);
