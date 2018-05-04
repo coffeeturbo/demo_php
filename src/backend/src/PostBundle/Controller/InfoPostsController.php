@@ -24,10 +24,16 @@ class InfoPostsController extends Controller
     public function getAction()
     {
         try {
+
+            // проеряем есть ли в контейнере данный аргумент
+            $postsIds = $this->container->hasParameter('post_info_posts')
+                ? $postsIds = $this->container->getParameter('post_info_posts')
+                : $this->getParameter('post.info.posts') ;
+
             $posts = [];
             $ids = array_map(function(array $infoPost){
                 return $infoPost['id'];
-            }, $this->getParameter('post.info.posts'));
+            }, $postsIds);
 
             if(count($ids)>1) {
                 $posts = $this->get('post.service')->getPostRepository()->getPostsByIds($ids);
