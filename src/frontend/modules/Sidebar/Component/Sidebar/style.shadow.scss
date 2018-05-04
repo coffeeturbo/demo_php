@@ -103,12 +103,12 @@ aside {
         color: material-color($secondary_material, '600');
       }
 
-      &.active {
-        background: material-color($secondary_material, '50');
+      &:hover {
+        background: material-color($secondary_material, '100');
       }
 
-      &:hover {
-        background: material-color($secondary_material, '200');
+      &.active {
+        background: material-color($primary_material, '50');
       }
     }
   }

@@ -105,7 +105,7 @@ module.exports = {
         }),
         new ngtools.AngularCompilerPlugin({
             tsConfigPath: helpers.root("tsconfig.json"),
-            skipCodeGeneration: helpers.isDev || helpers.isServer, 
+            skipCodeGeneration: helpers.isDev || helpers.isServer,
             entryModule: helpers.root(
                 "modules",
                 "Application",
