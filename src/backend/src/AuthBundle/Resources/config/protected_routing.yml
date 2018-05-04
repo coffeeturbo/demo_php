@@ -3,3 +3,15 @@ change_password:
   defaults:
    _controller: AuthBundle:ChangePassword:changePassword
   methods: [ POST ]
+
+send_mail:
+  path: /send-mail
+  defaults:
+    _controller: AuthBundle:SendMail:sendMail
+  methods: [ POST ]
+
+send_confirm:
+  path: /send-confirm
+  defaults:
+    _controller: AuthBundle:SendMail:sendMail
+  methods: [ POST ]
