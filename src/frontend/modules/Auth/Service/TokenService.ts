@@ -59,7 +59,7 @@ export class TokenService {
     public decodeToken(): Token
     {
         let jwtHelper: JwtHelper = new JwtHelper();
-        return jwtHelper.decodeToken(this.getToken());
+        return this.getToken() && jwtHelper.decodeToken(this.getToken());
     }
     
     public isTokenExpired() : boolean
