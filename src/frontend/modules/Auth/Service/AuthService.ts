@@ -66,7 +66,7 @@ export class AuthService implements AuthServiceInterface
 
     public isSignedIn(): boolean
     {
-        return this.tokenService.tokenNotExpired();
+        return !this.tokenService.isTokenExpired();
     }
 
     public getRoles(): Roles

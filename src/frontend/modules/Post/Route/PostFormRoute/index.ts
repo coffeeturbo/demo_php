@@ -238,7 +238,9 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             .finally(() => this.submitted = true)
             .subscribe((post) => {
                 this.router.navigate(["/post", post.id]);
-                localStorage.removeItem("post-form");
+                if(this.pl.isPlatformBrowser()) {
+                    localStorage.removeItem("post-form");
+                }
             }, () => this.isLoading = false)
         ;
     }

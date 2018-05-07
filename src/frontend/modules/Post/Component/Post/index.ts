@@ -82,8 +82,8 @@ export class PostComponent implements AfterViewInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.markAsVisitedSubscription.unsubscribe();
-        this.isIntoViewSubscription.unsubscribe();
+        if(this.markAsVisitedSubscription) this.markAsVisitedSubscription.unsubscribe();
+        if(this.isIntoViewSubscription) this.isIntoViewSubscription.unsubscribe();
     }
 
     public toggleView() {

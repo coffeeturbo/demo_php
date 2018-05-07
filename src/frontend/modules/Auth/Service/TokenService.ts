@@ -1,6 +1,6 @@
 import {Inject, Injectable, Optional} from "@angular/core";
 import {Token} from "../Entity/Token";
-import {JwtHelper, tokenNotExpired} from "angular2-jwt";
+import {JwtHelper} from "angular2-jwt";
 import * as Cookies from 'universal-cookie';
 
 export class TokenServiceConfig {
@@ -62,8 +62,9 @@ export class TokenService {
         return jwtHelper.decodeToken(this.getToken());
     }
     
-    public tokenNotExpired() : boolean
+    public isTokenExpired() : boolean
     {
-        return tokenNotExpired(null, this.getToken());
+        let jwtHelper: JwtHelper = new JwtHelper();
+        return jwtHelper.isTokenExpired(this.getToken());
     }
 }
