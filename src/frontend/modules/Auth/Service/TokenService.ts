@@ -65,6 +65,6 @@ export class TokenService {
     public isTokenExpired() : boolean
     {
         let jwtHelper: JwtHelper = new JwtHelper();
-        return this.getToken() != null && jwtHelper.isTokenExpired(this.getToken());
+        return !!this.getToken() && jwtHelper.isTokenExpired(this.getToken());
     }
 }
