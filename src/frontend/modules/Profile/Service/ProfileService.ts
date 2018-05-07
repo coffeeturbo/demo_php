@@ -15,6 +15,7 @@ import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
 import {BackdropPreset, BackdropPresets} from "../Entity/BackdropPreset";
 import {BackdropPresetsResponse} from "../Http/Response/BackdropPresetsResponse";
 import {TokenService} from "../../Auth/Service/TokenService";
+import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 
 interface ProfileServiceInterface {
     get(path: string): Observable<Profile>;
@@ -35,7 +36,8 @@ export class ProfileService implements ProfileServiceInterface{
     constructor(
         private rest: ProfileRESTService, 
         private auth: AuthService, 
-        private tokenService: TokenService
+        private tokenService: TokenService,
+        private transferState: TransferState
     ) {
     }
 
@@ -58,7 +60,7 @@ export class ProfileService implements ProfileServiceInterface{
 
             profileObservable = profileResponseObservable
                 .map(profileResponse => profileResponse.entity)
-                .do(profile => this.saveToCache(profile))
+                .do(profile => this.saveToCache(profile, path))
             ;
         }
 
@@ -156,22 +158,30 @@ export class ProfileService implements ProfileServiceInterface{
     
     public isOwn(profile: Profile): boolean
     {
-        if(!this.auth.isSignedIn()) {
-            return false;
-        }
+        // if(!this.auth.isSignedIn()) {
+        //     return false;
+        // }
 
-        let tokenData: Token = this.tokenService.decodeToken();
-        return this.isOwnProfileExist() && tokenData.profile_id == profile.id;
+        try {
+            let tokenData: Token = this.tokenService.decodeToken();
+            return this.isOwnProfileExist() && tokenData.profile_id == profile.id;
+        } catch (e) {
+            return false;
+        } 
     }
     
     public isOwnProfileExist(): boolean
     {
-        if(!this.auth.isSignedIn()) {
+        // if(!this.auth.isSignedIn()) {
+        //     return false;
+        // }
+        
+        try {
+            let tokenData: Token = this.tokenService.decodeToken();
+            return !!tokenData.profile_alias || !!tokenData.profile_id;
+        } catch (e) {
             return false;
         }
-        
-        let tokenData: Token = this.tokenService.decodeToken();
-        return !!tokenData.profile_alias || !!tokenData.profile_id;
     }
 
     public getProfileFirstLetters(profile: Profile) {
@@ -186,6 +196,13 @@ export class ProfileService implements ProfileServiceInterface{
     private getFromCache(path: number | string): Observable<Profile> 
     {
         let profile: Profile = this.profiles.filter((profile) => profile.id == path || profile.alias == path).shift();
+
+        let profileStateKey: StateKey<Profile> = makeStateKey<Profile>("profile-" + path);
+
+        if(this.transferState.hasKey(profileStateKey)) {
+            profile = this.transferState.get(profileStateKey, null as Profile);
+        }
+        
         if (!profile) {
             throw new Error(`Profile with path "${path}" is not cached`);
         }
@@ -193,9 +210,12 @@ export class ProfileService implements ProfileServiceInterface{
         return Observable.of(profile).delay(1); // delay kostil' for angular resolver...
     }
 
-    private saveToCache(profile: Profile): void
+    public saveToCache(profile: Profile, path: string): void
     {
         this.profiles.push(profile);
+
+        let profileStateKey: StateKey<Profile> = makeStateKey<Profile>("profile-" + path);
+        this.transferState.set(profileStateKey, profile as Profile)
     }
 
     private replaceInCache(oldProfile: Profile, newProfile: Profile): void
