@@ -1,7 +1,6 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Scheduler, Subscription} from "rxjs";
-import {tokenNotExpired} from "angular2-jwt";
 
 import {AuthRESTService} from "./AuthRESTService";
 import {SignInRequest} from "../Http/Request/SignInRequest";
@@ -15,6 +14,7 @@ import {OAuthService} from "./OAuthService";
 import {TokenService} from "./TokenService";
 import {ChangePasswordRequest} from "../Http/Request/ChangePasswordRequest";
 import {ChangePasswordResponse} from "../Http/Response/ChangePasswordResponse";
+import {PlatformService} from "../../Application/Service/PlatformService";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -41,7 +41,8 @@ export class AuthService implements AuthServiceInterface
         private route: ActivatedRoute,
         private rest: AuthRESTService,
         private oAuth: OAuthService,
-        public tokenService: TokenService
+        public tokenService: TokenService,
+        public pl: PlatformService
     ) {
         this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
@@ -49,7 +50,10 @@ export class AuthService implements AuthServiceInterface
 
                 if(tokenResponse.refresh_token) {
                     this.tokenService.saveRefreshToken(tokenResponse.refresh_token);
-                    this.addTokenExpirationSchedule();
+                    
+                    if(pl.isPlatformBrowser()) {
+                        this.addTokenExpirationSchedule();
+                    }
                 }
 
                 if (this.returnUrl) {

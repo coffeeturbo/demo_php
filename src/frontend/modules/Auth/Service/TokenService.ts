@@ -64,6 +64,6 @@ export class TokenService {
     
     public tokenNotExpired() : boolean
     {
-        return typeof document !== "undefined" && tokenNotExpired(null, this.getToken());
+        return tokenNotExpired(null, this.getToken());
     }
 }
