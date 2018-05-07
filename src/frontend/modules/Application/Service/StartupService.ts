@@ -32,7 +32,9 @@ export class StartupService {
             this.promises.push(onAuthSuccess.toPromise());
         }
 
-        authService.addTokenExpirationSchedule();
+        if(pl.isPlatformBrowser()) {
+            authService.addTokenExpirationSchedule();
+        }
 
         return Promise.all(this.promises);
     }
