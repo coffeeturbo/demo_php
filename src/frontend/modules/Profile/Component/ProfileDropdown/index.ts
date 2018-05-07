@@ -13,7 +13,6 @@ import {NavigationEnd, Router} from "@angular/router";
 export class ProfileDropdownComponent implements OnInit {
     @Output() onClose = new EventEmitter<void>();
     public profile: Profile;
-    public subscriptions = 12;
 
     constructor(
         public elRef: ElementRef,
