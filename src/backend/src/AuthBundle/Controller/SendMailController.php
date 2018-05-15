@@ -2,6 +2,8 @@
 namespace AuthBundle\Controller;
 
 use AppBundle\Http\ErrorJsonResponse;
+use AuthBundle\Entity\Confirmation;
+use AuthBundle\Entity\EmailConfirmationType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,19 +37,45 @@ class SendMailController extends Controller
 
             $code = rand(1000,9999);
 
+            $sended = $this->get('auth.service.email_confirmation_service')->send($code);
 
 
 
+            if($sended){
 
-            $r = mail("coffeeturbo@mail.ru", "My Subject", "Line 1\nLine 2\nLine 3");
+
+                $confirmation = new Confirmation($this->getUser());
+
+                dump($this->getUser());
 
 
-            dump($r);
+                $confirmation
+                    ->setType(new EmailConfirmationType())
+                    ->setExpires(new \DateTime())
+                    ->setIsConfirmed(false)
+                    ->setUpdated(new \DateTime())
+                ;
+
+
+//                $em = $this->getDoctrine()->getManagerForClass(Confirmation::class);
+//                $em->persist($confirmation);
+//                $em->flush();
+
+                $this->get('auth.repository.confirmation_repository')->save($confirmation);
+
+                // сохраняем в базу код
+                // expiredDate
+                // accountId
+
+            }
+
 
         } catch(AccessDeniedHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
-        }catch(\Exception $e){
-            return new ErrorJsonResponse($e->getMessage());
+        }
+
+        catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage(), $e->getTrace());
         }
 
         return new JsonResponse([
