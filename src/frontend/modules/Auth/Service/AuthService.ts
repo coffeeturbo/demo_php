@@ -56,7 +56,7 @@ export class AuthService implements AuthServiceInterface
                     }
                 }
 
-                if (this.returnUrl) {
+                if (pl.isPlatformBrowser() && this.returnUrl) {
                     this.router.navigateByUrl(this.returnUrl);
                 }
             }
@@ -118,14 +118,20 @@ export class AuthService implements AuthServiceInterface
 
     public addTokenExpirationSchedule(): void
     {
-        if (this.tokenService.isTokenExist()) {
-            let offset: number = 5000;  // Make it 5 sec before token expired
-            let delay = this.tokenService.getTokenExpTime() - offset;
-            this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
-
+        if(!this.tokenService.isTokenExist()) return;  
+        
+        let offset: number = 5000;  // Make it 5 sec before token expired
+        let delay = this.tokenService.getTokenExpTime() - offset;
+        this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
+        
+        if(this.pl.isPlatformBrowser()) {
             this.tokenExpirationSchedule = Scheduler.queue.schedule(() => {
                 this.refreshToken({"refresh_token": this.tokenService.getRefreshToken()});
             }, delay);
+        }
+        
+        if(this.pl.isPlatformServer() && this.tokenService.getTokenExpTime() < 0) {
+            this.refreshToken({"refresh_token": this.tokenService.getRefreshToken()});
         }
     }
 

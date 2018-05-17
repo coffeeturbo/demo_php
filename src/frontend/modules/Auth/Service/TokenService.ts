@@ -2,6 +2,8 @@ import {Inject, Injectable, Optional} from "@angular/core";
 import {Token} from "../Entity/Token";
 import {JwtHelper} from "angular2-jwt";
 import * as Cookies from 'universal-cookie';
+import {RESPONSE} from "@nguniversal/express-engine/tokens";
+import {Response} from "express";
 
 export class TokenServiceConfig {
     tokenKey: string;
@@ -13,7 +15,7 @@ export class TokenService {
     private tokenKey: string;
     private refreshTokenKey: string;
     
-    constructor(@Optional() config: TokenServiceConfig = {refreshTokenKey: "refresh_token", tokenKey: "token"}, @Inject('Cookies') private cookies: Cookies){
+    constructor(@Optional() config: TokenServiceConfig = {refreshTokenKey: "refresh_token", tokenKey: "token"}, @Inject('Cookies') private cookies: Cookies, @Optional() @Inject(RESPONSE) private res: Response){
         this.tokenKey = config.tokenKey;
         this.refreshTokenKey = config.refreshTokenKey;
     }
@@ -37,12 +39,22 @@ export class TokenService {
     public saveToken(value: string): void
     {
         let expires: Date = new Date(new Date().getTime() + 60 * 60 * 24 * 365 * 1000);
+        
+        if(this.res) {
+            this.res.cookie(this.tokenKey, value, {expires: expires});
+        }
+        
         this.cookies.set(this.tokenKey, value, {expires: expires});
     }
 
     public saveRefreshToken(value: string): void
     {
         let expires: Date = new Date(new Date().getTime() + 60 * 60 * 24 * 365 * 1000);
+
+        if(this.res) {
+            this.res.cookie(this.refreshTokenKey, value, {expires: expires});
+        }
+
         this.cookies.set(this.refreshTokenKey, value, {expires: expires});
     }
 
