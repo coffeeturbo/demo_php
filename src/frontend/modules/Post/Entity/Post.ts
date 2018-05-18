@@ -7,7 +7,7 @@ import {AttachmentText} from "../../Attachment/Entity/AttachmentText";
 import {AttachmentVideo} from "../../Attachment/Entity/AttachmentVideo";
 
 export interface Post {
-    id?: number;
+    id: number;
     title: string;
     created: string;
     updated: string;
