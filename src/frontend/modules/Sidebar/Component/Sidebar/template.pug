@@ -7,7 +7,7 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     i.fa.fa-chevron-left
   section
     h4 {{"Collections" | translate }}
-    a(routerLink="/", routerLinkActive="active", [routerLinkActiveOptions]="{ exact: true }")
+    a(routerLink="/hot", routerLinkActive="active", [routerLinkActiveOptions]="{ exact: true }")
       i.fa.fa-fw.fa-lg.fa-fire
       span {{ "Hot" | translate }} 
     a(routerLink="/best", routerLinkActive="active")
