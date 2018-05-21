@@ -12,10 +12,13 @@ class Confirmation
     private $updated;
     private $isConfirmed;
     private $account;
+    private $code;
 
-    public function __construct(Account $account)
+    public function __construct(Account $account, int $code)
     {
         $this->account = $account;
+        $this->code = $code;
+        $this->isConfirmed = false;
     }
 
     public function getId()
@@ -48,10 +51,14 @@ class Confirmation
         return $this->updated;
     }
 
-    public function setIsConfirmed($isConfirmed)
+    public function setConfirmed()
     {
-        $this->isConfirmed = $isConfirmed;
-
+        $this->isConfirmed = true;
+        return $this;
+    }
+    public function setNotConfirmed()
+    {
+        $this->isConfirmed = false;
         return $this;
     }
 
@@ -80,6 +87,19 @@ class Confirmation
     public function setType(ConfirmationType $confirmationType)
     {
         $this->type = $confirmationType->getIntCode();
+        return $this;
+    }
+
+
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+
+    public function setCode(int $code)
+    {
+        $this->code = $code;
         return $this;
     }
 }

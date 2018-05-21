@@ -53,5 +53,20 @@ class AuthService
             throw new UnauthorizedHttpException(null, "Wrong password");
 
         return $account;
-    }    
+    }
+
+    public function confirmAccountByEmail(Account $account)
+    {
+
+        $account->addRole($account::ROLE_EMAIL_VERIFED);
+
+        $this->accountRepository->save($account);
+    }
+
+    public function confirmAccountByPhone(Account $account)
+    {
+        $account->addRole($account::ROLE_PHONE_VERIFED);
+
+        $this->accountRepository->save($account);
+    }
 }

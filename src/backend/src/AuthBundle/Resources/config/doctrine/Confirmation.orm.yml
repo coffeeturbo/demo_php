@@ -20,6 +20,9 @@ AuthBundle\Entity\Confirmation:
       column: is_confirmed
       type: boolean
       nullable: false
+    code:
+      type: integer
+      nullable: false
 
   manyToOne:
     account:
