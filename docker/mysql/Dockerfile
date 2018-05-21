@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:5.7
 
 ADD init.sh /docker-entrypoint-initdb.d/
 ADD jet.cnf /etc/mysql/conf.d/

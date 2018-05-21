@@ -1,0 +1,2 @@
+auth:
+  email_code_life_time: 50
