@@ -43,4 +43,14 @@ RUN \
 
 RUN echo "upload_max_filesize = 20M\n" > /usr/local/etc/php/conf.d/jet.ini
 
+# setup mailer
+RUN apt-get update && apt-get install -q -y ssmtp mailutils && rm -rf /var/lib/apt/lists/*
+RUN echo "hostname=php" > /etc/ssmtp/ssmtp.conf
+RUN echo "root=info@topicoff.com" >> /etc/ssmtp/ssmtp.conf
+RUN echo "mailhub=maildev" >> /etc/ssmtp/ssmtp.conf
+
+RUN echo "sendmail_path=sendmail -i -t" >> /usr/local/etc/php/conf.d/php-sendmail.ini
+
+RUN echo "localhost localhost.localdomain" >> /etc/hosts
+
 USER jet

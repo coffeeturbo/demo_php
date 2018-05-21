@@ -12,3 +12,13 @@ services:
         arguments: ['@profile.service']
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+
+    auth.service.email_confirmation_service:
+        class: AuthBundle\Service\EmailConfirmationService
+        arguments: ['@auth.service', '@app.mailer.default', '@auth.repository.confirmation_repository']
+
+    auth.repository.confirmation_repository:
+        class: AuthBundle\Repository\ConfirmationRepository
+        factory: ['@doctrine.orm.entity_manager', 'getRepository']
+        arguments:
+          - AuthBundle\Entity\Confirmation
