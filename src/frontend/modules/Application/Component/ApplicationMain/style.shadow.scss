@@ -6,6 +6,7 @@
   top: 68px;
   padding: 20px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   max-height: calc(100vh - 108px);
 
   @include mq($until: tablet) {
