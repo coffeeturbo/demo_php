@@ -4,21 +4,26 @@ namespace AuthBundle\Service;
 use AuthBundle\Entity\Confirmation;
 use AuthBundle\Entity\EmailConfirmationType;
 use AuthBundle\Repository\ConfirmationRepository;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EmailConfirmationService
 {
     private $authService;
     private $mailer;
     private $confirmationRepository;
+    private $emailCodeLifeTimeMin;
 
     public function __construct(
         AuthService $authService,
         \Swift_Mailer $mailer,
-        ConfirmationRepository $confirmationRepository
+        ConfirmationRepository $confirmationRepository,
+        int $emailCodeliifeTimeMin
     ){
         $this->authService = $authService;
         $this->mailer = $mailer;
         $this->confirmationRepository = $confirmationRepository;
+        $this->emailCodeLifeTimeMin = $emailCodeliifeTimeMin;
     }
 
     public function send($code)
@@ -44,10 +49,9 @@ class EmailConfirmationService
     {
         $confirmation = new Confirmation($this->authService->getAccount(), $code);
 
-
         // один день todo брать это число из конфига
-        $emailCodeLifeTime = 24*60;
-        $expires = (new \DateTime())->add(new \DateInterval('PT'.$emailCodeLifeTime.'M'));
+        $emailCodeLifeTime = sprintf('PT%sM', $this->emailCodeLifeTimeMin);
+        $expires = (new \DateTime())->add(new \DateInterval($emailCodeLifeTime));
         $confirmation
             ->setType(new EmailConfirmationType())
             ->setExpires($expires)
@@ -67,14 +71,18 @@ class EmailConfirmationService
            'isConfirmed' => false
        ]);
 
-       if($confirmation) {
-           $confirmation->setConfirmed();
-           $this->confirmationRepository->save($confirmation);
+        if($confirmation->isExpired()) {
+            throw new AccessDeniedHttpException("code has expired");
+        }
 
-           $this->authService->confirmAccountByEmail($this->authService->getAccount());
-           return true;
-       }
+        if(!$confirmation) {
+            throw new NotFoundHttpException("no code was found");
+        }
+        $confirmation->setConfirmed();
+        $this->confirmationRepository->save($confirmation);
 
-       return false;
+        $this->authService->confirmAccountByEmail($this->authService->getAccount());
+
+        return false;
     }
 }

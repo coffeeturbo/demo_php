@@ -13,8 +13,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->integerNode('email_code_life_time')
-                    ->defaultValue(100)
+                ->integerNode('email_code_life_time_min')
+                    ->defaultValue(1440)
                 ->end()
             ->end()
             ;

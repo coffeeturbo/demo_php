@@ -16,6 +16,6 @@ class AuthExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $container->setParameter('auth.email_code_life_time', $config['email_code_life_time']);
+        $container->setParameter('auth.email_code_life_time_min', $config['email_code_life_time_min']);
     }
 }

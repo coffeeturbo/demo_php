@@ -33,11 +33,10 @@ class SendMailController extends Controller
     {
         try {
 
-            $code = rand(1000,9999);
+            $code = rand(1000, 9999);
 
             $confirmService = $this->get('auth.service.email_confirmation_service');
             $sended = $confirmService->send($code);
-
 
             if($sended === 0) throw new \Exception("message not sended");
 
@@ -91,7 +90,7 @@ class SendMailController extends Controller
         }
 
         return new JsonResponse([
-            'confirmation_sended' => true
+            'success' => true
         ]);
 
     }

@@ -1,2 +1,2 @@
 auth:
-  email_code_life_time: 50
+  email_code_life_time_min: 1440

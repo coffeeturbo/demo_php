@@ -27,19 +27,24 @@ class Confirmation
     }
 
 
-    public function setExpires($expires)
+    public function setExpires(\DateTime $expires)
     {
         $this->expires = $expires;
 
         return $this;
     }
 
-    public function getExpires()
+    public function isExpired()
+    {
+        return $this->expires < new \DateTime('NOW');
+    }
+
+    public function getExpires(): \DateTime
     {
         return $this->expires;
     }
 
-    public function setUpdated($updated)
+    public function setUpdated(\DateTime $updated)
     {
         $this->updated = $updated;
 
