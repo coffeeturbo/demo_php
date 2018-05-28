@@ -49,7 +49,6 @@ class EmailConfirmationService
     {
         $confirmation = new Confirmation($this->authService->getAccount(), $code);
 
-        // один день todo брать это число из конфига
         $emailCodeLifeTime = sprintf('PT%sM', $this->emailCodeLifeTimeMin);
         $expires = (new \DateTime())->add(new \DateInterval($emailCodeLifeTime));
         $confirmation
