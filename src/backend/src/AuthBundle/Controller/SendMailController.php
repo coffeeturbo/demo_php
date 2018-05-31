@@ -32,26 +32,21 @@ class SendMailController extends Controller
     public function sendMailAction(Request $request)
     {
         try {
-
-            $code = rand(1000, 9999);
-
-            $confirmUrl =  sprintf('%s/confirm-email?code=%s', $request->getSchemeAndHttpHost(), $code);
-
             $confirmService = $this->get('auth.service.email_confirmation_service');
-            $confirmService->send($code, $confirmUrl);
-            $confirmService->createConfirmation($code);
 
 
-        } catch(AccessDeniedHttpException $e){
+            $confirmUrl =  "{$request->getSchemeAndHttpHost()}/confirm-email?code=";
+
+            $confirmService->generateConfirmation($confirmUrl);
+
+        } catch(AccessDeniedHttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
-        }
-
-        catch(\Exception $e){
+        } catch(\Exception $e) {
             return new ErrorJsonResponse($e->getMessage(), $e->getTrace());
         }
 
         return new JsonResponse([
-            'confirmation_sended' => true
+            'confirmation_sended' => true,
         ]);
 
     }
@@ -73,12 +68,14 @@ class SendMailController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function confirmEmailByCodeAction($code)
+    public function confirmEmailByCodeAction($code, Request $request)
     {
         try {
             $confirmService = $this->get('auth.service.email_confirmation_service');
 
-            $sended = $confirmService->activateCode($code);
+            $confirmUrl =  "{$request->getSchemeAndHttpHost()}/confirm-email?code=";
+
+            $sended = $confirmService->activateCode($code, $confirmUrl);
 
             if($sended === 0) throw new \Exception("message not sended");
 
