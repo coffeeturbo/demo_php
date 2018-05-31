@@ -23,6 +23,9 @@ AuthBundle\Entity\Confirmation:
     code:
       type: integer
       nullable: false
+    wasted:
+      type: boolean
+      nullable: false
 
   manyToOne:
     account:

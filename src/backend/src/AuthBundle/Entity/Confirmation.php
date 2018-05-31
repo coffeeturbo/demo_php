@@ -13,19 +13,20 @@ class Confirmation
     private $isConfirmed;
     private $account;
     private $code;
+    private $wasted;
 
     public function __construct(Account $account, int $code)
     {
         $this->account = $account;
         $this->code = $code;
         $this->isConfirmed = false;
+        $this->wasted = false;
     }
 
     public function getId()
     {
         return $this->id;
     }
-
 
     public function setExpires(\DateTime $expires)
     {
@@ -105,6 +106,17 @@ class Confirmation
     public function setCode(int $code)
     {
         $this->code = $code;
+        return $this;
+    }
+
+    public function isWasted(): bool
+    {
+        return $this->wasted;
+    }
+
+    public function setWasted(bool $wasted)
+    {
+        $this->wasted = $wasted;
         return $this;
     }
 }

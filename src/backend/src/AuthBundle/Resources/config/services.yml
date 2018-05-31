@@ -20,6 +20,7 @@ services:
           - '@app.mailer.default'
           - '@auth.repository.confirmation_repository'
           - '%auth.email_code_life_time_min%'
+          - '%mailer_email_no_reply%'
 
     auth.repository.confirmation_repository:
         class: AuthBundle\Repository\ConfirmationRepository

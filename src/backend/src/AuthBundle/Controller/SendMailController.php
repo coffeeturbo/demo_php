@@ -35,11 +35,10 @@ class SendMailController extends Controller
 
             $code = rand(1000, 9999);
 
+            $confirmUrl =  sprintf('%s/confirm-email?code=%s', $request->getSchemeAndHttpHost(), $code);
+
             $confirmService = $this->get('auth.service.email_confirmation_service');
-            $sended = $confirmService->send($code);
-
-            if($sended === 0) throw new \Exception("message not sended");
-
+            $confirmService->send($code, $confirmUrl);
             $confirmService->createConfirmation($code);
 
 
