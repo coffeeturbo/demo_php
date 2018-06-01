@@ -19,7 +19,7 @@ div
         img.avatar(*ngIf="post.profile.avatar", [src]="post.profile.avatar?.small?.public_path")
         small.name {{ post.profile.name }} 
           .created(*ngIf='post.created')
-            span {{ post.created | post_created }}
+            span {{ post.created | date_created }}
             tooltip(*ngIf="pl.isPlatformBrowser()") {{ post.created | date }}
 
   h1.title(*ngIf="!hasSiblings")
