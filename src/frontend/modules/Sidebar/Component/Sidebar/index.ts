@@ -7,6 +7,8 @@ import {Config} from "../../../../app/config";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Device} from "../../../Application/Service/DeviceService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
+import {NoticeService} from "../../../Notice/Service/NoticeService";
+import {NoticeType} from "../../../Notice/Entity/NoticeType";
 
 @Component({
     selector: "sidebar",
@@ -21,6 +23,7 @@ export class SidebarComponent implements AfterViewInit {
     public product_name: string = Config.product_name;
     public translateX: number = 0;
     public backdropOpatity: number = 0.7;
+    public showNotifications = false;
 
     constructor(
         public pl: PlatformService,
@@ -28,9 +31,9 @@ export class SidebarComponent implements AfterViewInit {
         public auth: AuthService,
         public profile: ProfileService,
         public settingsModalService: SettingsModalService,
-        private renderer: Renderer2
-    ) {
-    }
+        private renderer: Renderer2,
+        private noticeService: NoticeService
+    ) {}
     
     ngAfterViewInit() {
         if(this.device.isMobile()) {
@@ -38,6 +41,11 @@ export class SidebarComponent implements AfterViewInit {
             this.renderer.listen(this.aside.nativeElement, 'panstart', () => this.panStart());
             this.renderer.listen(this.aside.nativeElement, 'panend', (e) => this.panEnd(e));
         }
+        
+    }
+    
+    public getUnreadNotifications() {
+        return this.noticeService.getNotifications().filter((notice) => !notice.readed).length;
     }
     
     private pan(e) {
@@ -70,5 +78,11 @@ export class SidebarComponent implements AfterViewInit {
                 this.service.hide()
             }
         }
+    }
+    
+    public scrollToEnd() {
+        setTimeout(() => {
+            this.aside.nativeElement.scrollTop = this.aside.nativeElement.scrollHeight
+        });
     }
 }
