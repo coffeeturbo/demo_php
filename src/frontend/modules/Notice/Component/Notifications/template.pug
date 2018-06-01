@@ -1,4 +1,4 @@
-span(*ngIf="unreadNotifications.length == 0") Новые уведомления отсутствуют
+span(*ngIf="unreadNotifications.length == 0 && !showReaded") Новые уведомления отсутствуют
 ul(*ngIf="unreadNotifications.length > 0")
   li(
     *ngFor="let notice of unreadNotifications",
@@ -43,11 +43,4 @@ ul(*ngIf="showReaded && readNotifications.length > 0")
       span([innerHTML] = "sanitizer.bypassSecurityTrustHtml(notice.message)")
       time {{ notice.created | date_created }}
 
-button.btn-material.secondary(*ngIf="readNotifications.length > 0", (click)="showReaded = !showReaded") {{showReaded ?  "Hide archive" : "Show archive" }} 
-
-//modal(*ngIf="activeNotice", (on-close)="removeActiveNotice()")
-//  modal-header
-//  modal-body
-//    .debug {{ activeNotice | json }}
-//  modal-footer
-//    .fa.fa-trash((click)="noticeService.removeNotice(notice)")
+button.btn-material.secondary(*ngIf="readNotifications.length > 0", (click)="showReaded = !showReaded; scrollIntoView()") {{showReaded ?  "Hide archive" : "Show archive" }}

@@ -15,6 +15,8 @@ import {TokenService} from "./TokenService";
 import {ChangePasswordRequest} from "../Http/Request/ChangePasswordRequest";
 import {ChangePasswordResponse} from "../Http/Response/ChangePasswordResponse";
 import {PlatformService} from "../../Application/Service/PlatformService";
+import {NoticeService} from "../../Notice/Service/NoticeService";
+import {NoticeType} from "../../Notice/Entity/NoticeType";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -42,7 +44,8 @@ export class AuthService implements AuthServiceInterface
         private rest: AuthRESTService,
         private oAuth: OAuthService,
         public tokenService: TokenService,
-        public pl: PlatformService
+        public pl: PlatformService,
+        public noticeService: NoticeService
     ) {
         this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
@@ -84,7 +87,11 @@ export class AuthService implements AuthServiceInterface
     public signUp(body: SignUpRequest): Observable<TokenResponse>
     {
         this.returnUrl = "/";
-        return this.handleTokenResponse(this.rest.signUp(body));
+        return this.handleTokenResponse(this.rest.signUp(body).do(() => {
+            /*@TODO: move text in to config */
+            this.noticeService.addNotice("Thank you for register!", NoticeType.Normal);
+            this.noticeService.addNotice("For extended rights, <a routerLink='/settings'>confirm your phone and email.<a/>", NoticeType.Success);
+        }));
     }
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse>

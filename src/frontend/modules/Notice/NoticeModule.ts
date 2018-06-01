@@ -2,7 +2,6 @@ import {NgModule} from "@angular/core";
 
 import {NoticeService} from "./Service/NoticeService";
 import {CommonModule} from "../Common/CommonModule";
-import {NoticeRoute} from "./Route/NoticeRoute";
 import {NotificationsComponent} from "./Component/Notifications";
 
 @NgModule({
@@ -10,7 +9,6 @@ import {NotificationsComponent} from "./Component/Notifications";
         CommonModule,
     ],
     declarations: [
-        NoticeRoute,
         NotificationsComponent
     ],
     providers: [

@@ -16,6 +16,7 @@ import {CanActivateService} from "./Service/CanActivateService";
 import {OAuthService} from "./Service/OAuthService";
 import {TokenService, TokenServiceConfig} from "./Service/TokenService";
 import {Config} from "../../app/config";
+import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import {Config} from "../../app/config";
         SignInRoute,
         SignUpRoute,
         SocialButtonsComponent,
+        ConfirmEmailFormComponent
     ],
     providers: [
         AuthRESTService,
@@ -42,6 +44,9 @@ import {Config} from "../../app/config";
                 refreshTokenKey: Config.auth.refresh_token_key
             }
         }
+    ],
+    exports: [
+        ConfirmEmailFormComponent
     ]
 })
 export class AuthModule {}

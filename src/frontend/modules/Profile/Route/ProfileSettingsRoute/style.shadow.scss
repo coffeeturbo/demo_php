@@ -15,7 +15,7 @@
   }
 }
 
-.error {
+.error, .success {
   position: absolute;
   right: 0;
   top: calc(50% - 1px);
@@ -45,7 +45,7 @@
 input.ng-dirty.ng-invalid.ng-touched ~ .error{
   color: material-color("red", "800");
 
-  .fa{
+  .fa, a{
     color: material-color("red", "800");
   }
 }

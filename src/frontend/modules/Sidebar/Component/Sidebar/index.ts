@@ -31,8 +31,8 @@ export class SidebarComponent implements AfterViewInit {
         public auth: AuthService,
         public profile: ProfileService,
         public settingsModalService: SettingsModalService,
-        private renderer: Renderer2,
-        private noticeService: NoticeService
+        public noticeService: NoticeService,
+        private renderer: Renderer2
     ) {}
     
     ngAfterViewInit() {

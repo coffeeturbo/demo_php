@@ -7,6 +7,9 @@ import {Profile} from "../../Entity/Profile";
 import {Observable} from "rxjs";
 import {Config} from "../../../../app/config";
 import {AuthService} from "../../../Auth/Service/AuthService";
+import {TokenService} from "../../../Auth/Service/TokenService";
+import {CanActivateService} from "../../../Auth/Service/CanActivateService";
+import {AuthRESTService} from "../../../Auth/Service/AuthRESTService";
 
 @Component({
     templateUrl: "./template.pug",
@@ -19,6 +22,7 @@ export class ProfileSettingsRoute {
     public constraints = Config.profile.constraints;
     public config = Config;
     public showChangePasswordForm: boolean = false;
+    public showConfirmEmailModal: boolean = false;
     public form: FormGroup = new FormGroup({
         editProfileGroup: new FormGroup({
             name: new FormControl(this.profile.name, Validators.required),
@@ -45,7 +49,10 @@ export class ProfileSettingsRoute {
         private route: ActivatedRoute,
         private router: Router,
         private profileService: ProfileService,
-        private authService: AuthService
+        private authService: AuthService,
+        public tokenService: TokenService,
+        public authRESTService: AuthRESTService,
+        public canActivateService: CanActivateService
     ) {}
     
     ngOnInit() {
@@ -119,4 +126,13 @@ export class ProfileSettingsRoute {
         this.form.reset(this.defaultValues);
         this.submitted = false;
     }
+
+    public isEmailVerifed(): boolean {
+        return this.canActivateService.canActivateByRole(["ROLE_EMAIL_VERIFED"]);
+    }
+
+    public sendEmailVerificationCode(): void {
+        this.authRESTService.sendEmailVerificationCode().subscribe(() => this.showConfirmEmailModal = true)
+    }
+    
 }

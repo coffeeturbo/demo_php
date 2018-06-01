@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {NoticeService} from "../../Service/NoticeService";
 import {Notice} from "../../Entity/Notice";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -13,6 +13,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 export class NotificationsComponent {
 
     public activeNotice: Notice;
+    public showReaded: boolean = false;
 
     public form: FormGroup = new FormGroup({
         message: new FormControl(null),
@@ -22,7 +23,7 @@ export class NotificationsComponent {
     public unreadNotifications = this.getNotifications(false);
     public readNotifications = this.getNotifications(true);
 
-    constructor(public noticeService: NoticeService, public sanitizer: DomSanitizer){
+    constructor(public noticeService: NoticeService, public sanitizer: DomSanitizer, public el: ElementRef){
     }
 
     public toggleActiveNotice(notice: Notice, markAsRead: boolean = true) {
@@ -47,5 +48,9 @@ export class NotificationsComponent {
         }
         
         return notifications;
+    }
+    
+    scrollIntoView() {
+        setTimeout(()=> this.el.nativeElement.scrollIntoView());
     }
 }
