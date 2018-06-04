@@ -15,7 +15,7 @@ services:
 
     auth.service.email_confirmation_service:
         class: AuthBundle\Service\EmailConfirmationService
-        arguments: ['@auth.service', '@app.mailer.default', '@auth.repository.confirmation_repository']
+        arguments: ['@auth.service', '@mailer', '@auth.repository.confirmation_repository']
 
     auth.repository.confirmation_repository:
         class: AuthBundle\Repository\ConfirmationRepository

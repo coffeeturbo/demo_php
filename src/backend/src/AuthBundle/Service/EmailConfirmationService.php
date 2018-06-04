@@ -32,7 +32,8 @@ class EmailConfirmationService
 
         $swiftMessage = new \Swift_Message($titleText);
 
-        $swiftMessage->setFrom('send@example.com')
+        $swiftMessage
+            ->setFrom('no-reply@topicoff.com') // @TODO: Вынести в конфиг
             ->setTo($mailTo)
             ->setBody($message);
 

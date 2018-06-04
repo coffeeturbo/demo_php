@@ -119,5 +119,5 @@ composer.lock
 
 .idea
 Vagrantfile
-jet.conf
+docker/nginx/conf.d/*.conf
 package-lock.json
