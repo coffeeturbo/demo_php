@@ -22,6 +22,7 @@ import {ProfileBackdropActionsComponent} from "./Component/ProfileBackdropAction
 import {FeedModule} from "../Feed/FeedModule";
 import {ProfileFeedRequestResolver} from "./Service/ProfileFeedRequestResolver";
 import {ProfileAvatarComponent} from "./Component/ProfileAvatar";
+import {AuthModule} from "../Auth/AuthModule";
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import {ProfileAvatarComponent} from "./Component/ProfileAvatar";
         FormsModule,
         RouterModule,
         FeedModule,
+        AuthModule,
         ReactiveFormsModule
     ],
     declarations: [

@@ -12,7 +12,7 @@ small.author
     img.avatar(*ngIf="comment.profile.avatar", [src]="comment.profile.avatar?.small?.public_path")
     .name {{ comment.profile.name }}
   .created(*ngIf='comment.created')
-    span {{ comment.created | comment_created }}
+    span {{ comment.created | date_created }}
     tooltip(*ngIf="pl.isPlatformBrowser()") {{ comment.created | date }}
 
 section.content

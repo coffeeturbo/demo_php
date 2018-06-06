@@ -9,6 +9,7 @@ import {AttachmentService} from "../../Attachment/Service/AttachmentService";
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
 import * as getSlug from "speakingurl";
 import {PostUpdateRequest} from "../Http/Request/PostUpdateRequest";
+import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 
 @Injectable()
 export class PostService {
@@ -19,7 +20,8 @@ export class PostService {
     constructor(
         private rest: PostRESTService, 
         private voteRest: VoteRESTService,
-        private attachmentService: AttachmentService
+        private attachmentService: AttachmentService,
+        public transferState: TransferState
     ) {}
 
     public get(postId: number): Observable<Post> 
@@ -29,7 +31,7 @@ export class PostService {
             postObservable = this.getFromCache(postId);
         } catch (e) {
             postObservable = this.rest.getById(postId)
-                // .do(post => this.saveToCache(post))
+                .do(post => this.saveToCache(post))
         }
         
         return postObservable
@@ -70,7 +72,7 @@ export class PostService {
         }
         
         return voteObservable
-            // .do(newPost => this.replaceInCache(oldPost, newPost))
+            .do(newPost => this.replaceInCache(oldPost, newPost))
         ;
     }
 
@@ -82,6 +84,13 @@ export class PostService {
     private getFromCache(postId: number): Observable<Post>
     {
         let post: Post = this.posts.filter((post) => post.id == postId).shift();
+
+        let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + postId);
+
+        if(this.transferState.hasKey(postStateKey)) {
+            post = this.transferState.get(postStateKey, null as Post);
+        }
+        
         if (!post) {
             throw new Error(`Post with id "${postId}" is not cached`);
         }
@@ -92,6 +101,9 @@ export class PostService {
     private saveToCache(post: Post): void
     {
         this.posts.push(post);
+        let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + post.id);
+        
+        this.transferState.set(postStateKey, post as Post)
     }
 
     private replaceInCache(oldPost: Post, newPost: Post): void
@@ -99,6 +111,8 @@ export class PostService {
         let index: number = this.posts.indexOf(oldPost);
         if (index != -1) {
             this.posts[index] = newPost;
+            let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + newPost.id);
+            this.transferState.set(postStateKey, newPost as Post);
         } else throw new Error(`${index} not found in cache file`);
     }
 }

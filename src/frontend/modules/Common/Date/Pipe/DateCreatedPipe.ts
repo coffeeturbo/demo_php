@@ -3,9 +3,9 @@ import {Locale, TranslationService} from "@angular-addons/translate";
 import * as moment from "moment";
 
 @Pipe({
-    name: "comment_created",
+    name: "date_created",
 })
-export class CommentCreatedPipe implements PipeTransform {
+export class DateCreatedPipe implements PipeTransform {
     constructor(private translationService: TranslationService) {}
     transform(value: string) {
         let locale: Locale = this.translationService.getLocale();

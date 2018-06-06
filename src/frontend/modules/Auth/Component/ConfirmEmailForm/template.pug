@@ -1,0 +1,12 @@
+form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()", chrome-autofill-fix)
+  .material-field
+    i.fa.fa-key.fa-lg.fa-fw
+    .input-box
+      input#verificationCode(ng-detect-empty-input, type="text", formControlName="verification_code")
+      hr
+      label.material-label(for="verificationCode") {{ 'Code' | translate }}
+      
+  .controls
+    button.btn-material.primary(type="submit", [disabled]="!form.valid")
+      span {{"Confirm email" | translate }}
+      

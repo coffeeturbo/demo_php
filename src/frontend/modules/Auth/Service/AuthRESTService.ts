@@ -49,4 +49,23 @@ export class AuthRESTService
             .post<TokenResponse>(url, changePasswordRequest, {withCredentials: true})
         ;
     }
+    
+    public sendEmailVerificationCode() 
+    {
+        let url = "/protected/auth/send-confirm";
+
+        return this.http
+            .post<{/*@TODO*/}>(url, null, {withCredentials: true})
+        ;
+    }    
+    public confirmEmail(code: string) 
+    {
+        let url = `/protected/auth/confirm-mail/${code}`;
+
+        return this.http
+            .get<{/*@TODO*/}>(url, {withCredentials: true})
+        ;
+    }
+    
+    
 }

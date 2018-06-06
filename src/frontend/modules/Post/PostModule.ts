@@ -13,7 +13,6 @@ import {CommonModule} from "../Common/CommonModule";
 import {AttachmentModule} from "../Attachment/AttachmentModule";
 import {PostCreateButtonComponent} from "./Component/PostCreateButton";
 import {PostComponent} from "./Component/Post";
-import {PostCreatedPipe} from "./Pipe/PostCreatedPipe";
 import {PostService} from "./Service/PostService";
 import {PostTextFormat} from "./Pipe/PostTextFormat";
 import {PostFormLoadingComponent} from "./Component/PostFormLoading";
@@ -39,7 +38,6 @@ import {CanDeactivatePostFormRoute} from "./Service/CanDeactivatePostFormRoute";
         PostFormLoadingComponent,
         PostRoute,
         PostFormRoute,
-        PostCreatedPipe,
         PostTextFormat
     ],
     providers: [

@@ -146,7 +146,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
         let attachment = new FormGroup({
             type: new FormControl(type || AttachmentType.text),
             value: new FormControl(value || null, Validators.required),
-            entity: new FormControl(entity || null)
+            entity: new FormControl(!value && entity ? entity : null)
         });
 
         this.attachments.push(attachment);
@@ -199,7 +199,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
 
         this.form.value.attachments.forEach(attachment => {
             let attachmentObservable: Observable<Attachment<AttachmentImage | AttachmentText | AttachmentVideo>>;
-            
+
             if(attachment.entity) {
                 return attachmentsObservable.push(Observable.of(attachment.entity)); 
             } else {
@@ -238,7 +238,9 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             .finally(() => this.submitted = true)
             .subscribe((post) => {
                 this.router.navigate(["/post", post.id]);
-                localStorage.removeItem("post-form");
+                if(this.pl.isPlatformBrowser()) {
+                    localStorage.removeItem("post-form");
+                }
             }, () => this.isLoading = false)
         ;
     }

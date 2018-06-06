@@ -1,7 +1,6 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Scheduler, Subscription} from "rxjs";
-import {tokenNotExpired} from "angular2-jwt";
 
 import {AuthRESTService} from "./AuthRESTService";
 import {SignInRequest} from "../Http/Request/SignInRequest";
@@ -15,6 +14,9 @@ import {OAuthService} from "./OAuthService";
 import {TokenService} from "./TokenService";
 import {ChangePasswordRequest} from "../Http/Request/ChangePasswordRequest";
 import {ChangePasswordResponse} from "../Http/Response/ChangePasswordResponse";
+import {PlatformService} from "../../Application/Service/PlatformService";
+import {NoticeService} from "../../Notice/Service/NoticeService";
+import {NoticeType} from "../../Notice/Entity/NoticeType";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -41,7 +43,9 @@ export class AuthService implements AuthServiceInterface
         private route: ActivatedRoute,
         private rest: AuthRESTService,
         private oAuth: OAuthService,
-        public tokenService: TokenService
+        public tokenService: TokenService,
+        public pl: PlatformService,
+        public noticeService: NoticeService
     ) {
         this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
@@ -49,10 +53,13 @@ export class AuthService implements AuthServiceInterface
 
                 if(tokenResponse.refresh_token) {
                     this.tokenService.saveRefreshToken(tokenResponse.refresh_token);
-                    this.addTokenExpirationSchedule();
+                    
+                    if(pl.isPlatformBrowser()) {
+                        this.addTokenExpirationSchedule();
+                    }
                 }
 
-                if (this.returnUrl) {
+                if (pl.isPlatformBrowser() && this.returnUrl) {
                     this.router.navigateByUrl(this.returnUrl);
                 }
             }
@@ -62,7 +69,7 @@ export class AuthService implements AuthServiceInterface
 
     public isSignedIn(): boolean
     {
-        return this.tokenService.tokenNotExpired();
+        return !this.tokenService.isTokenExpired();
     }
 
     public getRoles(): Roles
@@ -80,7 +87,11 @@ export class AuthService implements AuthServiceInterface
     public signUp(body: SignUpRequest): Observable<TokenResponse>
     {
         this.returnUrl = "/";
-        return this.handleTokenResponse(this.rest.signUp(body));
+        return this.handleTokenResponse(this.rest.signUp(body).do(() => {
+            /*@TODO: move text in to config */
+            this.noticeService.addNotice("Thank you for register!", NoticeType.Normal);
+            this.noticeService.addNotice("For extended rights, <a routerLink='/settings'>confirm your phone and email.<a/>", NoticeType.Success);
+        }));
     }
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse>
@@ -114,14 +125,20 @@ export class AuthService implements AuthServiceInterface
 
     public addTokenExpirationSchedule(): void
     {
-        if (this.tokenService.isTokenExist()) {
-            let offset: number = 5000;  // Make it 5 sec before token expired
-            let delay = this.tokenService.getTokenExpTime() - offset;
-            this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
-
+        if(!this.tokenService.isTokenExist()) return;  
+        
+        let offset: number = 5000;  // Make it 5 sec before token expired
+        let delay = this.tokenService.getTokenExpTime() - offset;
+        this.tokenExpirationSchedule.unsubscribe(); // remove all previous schedulers
+        
+        if(this.pl.isPlatformBrowser()) {
             this.tokenExpirationSchedule = Scheduler.queue.schedule(() => {
                 this.refreshToken({"refresh_token": this.tokenService.getRefreshToken()});
             }, delay);
+        }
+        
+        if(this.pl.isPlatformServer() && this.tokenService.getTokenExpTime() < 0) {
+            this.refreshToken({"refresh_token": this.tokenService.getRefreshToken()});
         }
     }
 

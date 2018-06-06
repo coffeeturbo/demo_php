@@ -7,7 +7,7 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     i.fa.fa-chevron-left
   section
     h4 {{"Collections" | translate }}
-    a(routerLink="/", routerLinkActive="active", [routerLinkActiveOptions]="{ exact: true }")
+    a(routerLink="/hot", routerLinkActive="active", [routerLinkActiveOptions]="{ exact: true }")
       i.fa.fa-fw.fa-lg.fa-fire
       span {{ "Hot" | translate }} 
     a(routerLink="/best", routerLinkActive="active")
@@ -36,7 +36,15 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
 
 
   .flex-space
-
+  div(*ngIf="showNotifications")
+    .notifications
+      header((click)="showNotifications = false")
+        // @TODO Translate
+        span Уведомления
+        .flex-space
+        .fa.fa-angle-down
+      notifications
+      
   footer
     // @TODO Implement!
     //a
@@ -44,9 +52,8 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     .flex-space
     a((click)="settingsModalService.show()")
       i.fa.fa-cog
-    // @TODO Implement!
-    //a
-    //  i.fa.fa-bell-o
-    //  .counter 1
+    a(*ngIf="noticeService.getNotifications().length > 0", (click)="showNotifications = true; scrollToEnd()")
+      i.fa.fa-bell-o
+      .counter(*ngIf="getUnreadNotifications() > 0") {{ getUnreadNotifications() }}
         
 .backdrop(#backdrop, [ngClass]="service.state", [style.opacity]="backdropOpatity", *ngIf="device.isMobile()")

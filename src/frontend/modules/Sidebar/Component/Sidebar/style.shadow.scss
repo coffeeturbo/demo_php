@@ -25,6 +25,7 @@ aside {
 
   &:hover {
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   &.hidden {
@@ -58,7 +59,7 @@ aside {
     flex-shrink: 0;
   }
 
-  header {
+  > header {
     padding: 15px 27px;
     margin-bottom: 10px;
     display: flex;
@@ -112,15 +113,43 @@ aside {
       }
     }
   }
+  
+  .notifications {
+    background: #424242;
+    //position: absolute;
+    //left: 0;
+    //bottom: 55px;
+    width: 100%;
+    max-height: calc(100% - 55px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    
+    header {
+      padding: 15px;
+      width: calc(100% - 30px);
+      display: flex;
+      cursor: pointer;
+      color:#fff;
+      flex-shrink: 0;
+      
+      &:hover {
+        background: material-color($secondary_material, "900");
+      }
+    }
+  }
 
   footer {
     background: material-color($secondary_material, '800');
     display: flex;
     flex-shrink: 0;
     font-size: 1.6em;
-    justify-content:flex-end;
+    justify-content: flex-end;
     position: relative;
-    margin-top:10px;
+    //margin-top: 10px;
+
     > a {
       padding: 15px;
       color: material-color($secondary_material, '50');

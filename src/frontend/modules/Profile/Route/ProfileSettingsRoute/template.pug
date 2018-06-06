@@ -1,10 +1,33 @@
 .profile-settings
   loader(*ngIf="disabled")
   form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
-    //input(style="display:none", type="text", name="fakeusernameremembered")
-    //input(style="display:none", type="password", name="fakepasswordremembered")
+
+    h2 {{ 'Account settings' | translate }}
+    br
+
+    .material-field
+      i.fa.fa-lg.fa-fw.fa-at
+      .input-box
+        input#username(
+          type="text",
+          [ngClass]="{'ng-dirty ng-invalid ng-touched': !isEmailVerifed()}",
+          [disabled]="true",
+          value="{{tokenService.decodeToken().username}}"
+        )
+        hr
+        label.material-label(for="username") {{ 'Email' | translate }}
+        .error(*ngIf="!isEmailVerifed()")
+          a((click)="sendEmailVerificationCode()")
+            i.fa.fa-exclamation-circle
+            span {{"Confirm mail" | translate }} 
+        .success(*ngIf="isEmailVerifed()")
+          i.fa.fa-check-circle
+          span {{"Confirmed" | translate }} 
+
+    br
     h2 {{ 'General settings' | translate }}
     br
+
     ng-container(formGroupName="editProfileGroup")
       .material-field 
         i.fa.fa-lg.fa-fw.fa-address-card-o
@@ -90,7 +113,11 @@
         .fa.fa-sign-in
         span {{"Save" | translate }}
 
-//.debug changePasswordGroup: {{ form.controls.changePasswordGroup.errors | json }}
-//.debug password: {{ form.controls.changePasswordGroup.controls.password.errors | json }}
-//.debug old_password: {{ form.controls.changePasswordGroup.controls.old_password.errors | json }}
-//.debug password_confirm: {{ form.controls.changePasswordGroup.controls.password_confirm.errors | json }}
+modal(*ngIf="showConfirmEmailModal", (on-close)="showConfirmEmailModal = false")
+  modal-header {{ "Confirmation email address" | translate }}
+  modal-body
+    p We send protection code to 
+      b {{tokenService.decodeToken().username}}.
+    p Please check your email, and enter code below.
+    br
+    confirm-email-form((onSuccess)="showConfirmEmailModal = false")

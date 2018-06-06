@@ -19,7 +19,7 @@ div
         img.avatar(*ngIf="post.profile.avatar", [src]="post.profile.avatar?.small?.public_path")
         small.name {{ post.profile.name }} 
           .created(*ngIf='post.created')
-            span {{ post.created | post_created }}
+            span {{ post.created | date_created }}
             tooltip(*ngIf="pl.isPlatformBrowser()") {{ post.created | date }}
 
   h1.title(*ngIf="!hasSiblings")
@@ -41,8 +41,8 @@ div
       //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
 // @TODO: Translate
-.expand(*ngIf="!minimized && pl.isPlatformBrowser() && isShorten", (click)="isExpand = true") 
-  small Читать далее...
+.expand(*ngIf="!minimized && pl.isPlatformBrowser() && isShorten", (click)="isExpand = true")
+  |{{ "Read more" | translate }}
 
 .footer
   .btn-material.secondary.vote.positive([class.active]="post.votes.state=='positive'", (click)='vote("positive")')
