@@ -47,7 +47,7 @@ class RecoverPasswordByEmailController extends Controller
 
             if(is_null($account)) throw new AccessDeniedHttpException('this email is not found');
 
-            $service->generateEmailMessage($data['url'], $account->getEmail());
+            $service->generateEmailMessage($data['url'], $account);
 
         } catch(\Exception $exception){
             return new ErrorJsonResponse($exception->getMessage());

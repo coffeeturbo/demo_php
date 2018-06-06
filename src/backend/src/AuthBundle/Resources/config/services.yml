@@ -31,7 +31,6 @@ services:
     auth.service.passord_recovery_service:
       class: AuthBundle\Service\PasswordRecoverService
       arguments:
-        - '@auth.service'
         - '@mailer'
         - '@auth.repository.confirmation_repository'
         - '%auth.email_code_life_time_min%'
