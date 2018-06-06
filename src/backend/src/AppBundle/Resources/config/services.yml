@@ -3,3 +3,12 @@ services:
         public: true
         class: AppBundle\Service\ValidateRequestService
         arguments: ['@form.factory']
+
+
+    app.swiftmailer.mailer.default.transport:
+        class:     Swift_SmtpTransport
+        arguments: ['/usr/sbin/sendmail -t']
+
+    app.mailer.default:
+        class: Swift_Mailer
+        arguments: ['@app.swiftmailer.mailer.default.transport']

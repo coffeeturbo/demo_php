@@ -17,7 +17,7 @@ services:
         class: AuthBundle\Service\EmailConfirmationService
         arguments:
           - '@auth.service'
-          - '@app.mailer.default'
+          - '@mailer'
           - '@auth.repository.confirmation_repository'
           - '%auth.email_code_life_time_min%'
           - '%mailer_email_no_reply%'
@@ -32,7 +32,7 @@ services:
       class: AuthBundle\Service\PasswordRecoverService
       arguments:
         - '@auth.service'
-        - '@app.mailer.default'
+        - '@mailer'
         - '@auth.repository.confirmation_repository'
         - '%auth.email_code_life_time_min%'
         - '%mailer_email_no_reply%'
