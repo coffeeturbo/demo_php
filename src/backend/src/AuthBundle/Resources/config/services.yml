@@ -27,3 +27,12 @@ services:
         factory: ['@doctrine.orm.entity_manager', 'getRepository']
         arguments:
           - AuthBundle\Entity\Confirmation
+
+    auth.service.passord_recovery_service:
+      class: AuthBundle\Service\PasswordRecoverService
+      arguments:
+        - '@auth.service'
+        - '@app.mailer.default'
+        - '@auth.repository.confirmation_repository'
+        - '%auth.email_code_life_time_min%'
+        - '%mailer_email_no_reply%'

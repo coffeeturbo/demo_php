@@ -15,7 +15,7 @@ class Confirmation
     private $code;
     private $wasted;
 
-    public function __construct(Account $account, int $code)
+    public function __construct(Account $account, string $code)
     {
         $this->account = $account;
         $this->code = $code;

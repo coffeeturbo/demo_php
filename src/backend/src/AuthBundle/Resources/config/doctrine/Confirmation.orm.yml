@@ -21,7 +21,7 @@ AuthBundle\Entity\Confirmation:
       type: boolean
       nullable: false
     code:
-      type: integer
+      type: string
       nullable: false
     wasted:
       type: boolean

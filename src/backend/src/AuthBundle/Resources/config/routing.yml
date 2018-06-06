@@ -21,3 +21,15 @@ refresh_token:
   defaults: 
    _controller: AuthBundle:RefreshToken:refresh 
   methods: [POST]
+
+email_password_recovery:
+  path: /password-recovery/email-send
+  defaults:
+    _controller: AuthBundle:RecoverPasswordByEmail:requestRestorationEmail
+  methods: [ PUT ]
+
+email_password_recover_mail:
+  path: /password-recovery/email-recover/confirm
+  defaults:
+    _controller: AuthBundle:RecoverPasswordByEmail:confirmRestorationEmail
+  methods: [ POST ]
