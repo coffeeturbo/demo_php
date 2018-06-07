@@ -7,6 +7,7 @@ import {TokenService} from "../../Service/TokenService";
 import {TokenResponse} from "../../Http/Response/TokenResponse";
 import {NoticeService} from "../../../Notice/Service/NoticeService";
 import {NoticeType} from "../../../Notice/Entity/NoticeType";
+import {TranslationService} from "@angular-addons/translate/index";
 
 @Component({
     selector: "confirm-email-form",
@@ -23,7 +24,8 @@ export class ConfirmEmailFormComponent {
         private authRESTSerice: AuthRESTService,
         private authService: AuthService,
         private tokenService: TokenService,
-        private noticeService: NoticeService
+        private noticeService: NoticeService,
+        public translationService: TranslationService
     ) {}
 
     submit() {
@@ -32,7 +34,7 @@ export class ConfirmEmailFormComponent {
             .subscribe((response: TokenResponse) => {
                 this.authService.addTokenExpirationSchedule();
                 // @TODO: Move text in to config
-                this.noticeService.addNotice("Your email confirmed. Now you can voting and much more!", NoticeType.Success);
+                this.noticeService.addNotice(this.translationService.translate("Your email confirmed. Now you can voting and much more!"), NoticeType.Success);
                 this.onSuccess.emit();
             })
         ;

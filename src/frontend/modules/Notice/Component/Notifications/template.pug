@@ -1,46 +1,22 @@
-span(*ngIf="unreadNotifications.length == 0 && !showReaded") Новые уведомления отсутствуют
-ul(*ngIf="unreadNotifications.length > 0")
-  li(
-    *ngFor="let notice of unreadNotifications",
-    [class.normal]="notice.type == 0",
-    [class.success]="notice.type == 1",
-    [class.danger]="notice.type == 2",
-    [class.warning]="notice.type == 3",
-    [class.custom]="notice.type == 4",
-    [class.readed]="notice.readed",
-    [class.active]="notice === activeNotice",
-    (click)="toggleActiveNotice(notice)"
+.emptyMessage(*ngIf="unreadNotifications.length == 0 && !showReaded") Новые уведомления отсутствуют
+
+section(*ngIf="unreadNotifications.length > 0")
+  notice(
+    *ngFor="let notice of unreadNotifications", 
+    [notice]="notice",
+    (onActivate)="toggleActiveNotice($event)", 
+    [active]="notice === activeNotice"
   )
-    .fa.fa-fw.fa-circle-o(*ngIf="notice.type == 0")
-    .fa.fa-fw.fa-check-circle(*ngIf="notice.type == 1")
-    .fa.fa-fw.fa-times-circle(*ngIf="notice.type == 2")
-    .fa.fa-fw.fa-exclamation-triangle(*ngIf="notice.type == 3")
-    .fa.fa-fw(*ngIf="notice.type == 4 && notice.icon", [ngClass]="notice.icon")
-    div
-      span([innerHTML] = "sanitizer.bypassSecurityTrustHtml(notice.message)")
-      
-      time {{ notice.created | date_created }}
 
-
-ul(*ngIf="showReaded && readNotifications.length > 0")
-  li(
-    *ngFor="let notice of readNotifications",
-    [class.normal]="notice.type == 0",
-    [class.success]="notice.type == 1",
-    [class.danger]="notice.type == 2",
-    [class.warning]="notice.type == 3",
-    [class.custom]="notice.type == 4",
-    [class.readed]="notice.readed",
-    [class.active]="notice === activeNotice",
-    (click)="toggleActiveNotice(notice)"
+section(*ngIf="showReaded && readNotifications.length > 0")
+  notice(
+    *ngFor="let notice of readNotifications", 
+    [notice]="notice",
+    (onActivate)="toggleActiveNotice($event)", 
+    [active]="notice === activeNotice"
   )
-    .fa.fa-fw.fa-circle-o(*ngIf="notice.type == 0")
-    .fa.fa-fw.fa-check-circle(*ngIf="notice.type == 1")
-    .fa.fa-fw.fa-times-circle(*ngIf="notice.type == 2")
-    .fa.fa-fw.fa-exclamation-triangle(*ngIf="notice.type == 3")
-    .fa.fa-fw(*ngIf="notice.type == 4 && notice.icon", [ngClass]="notice.icon")
-    div
-      span([innerHTML] = "sanitizer.bypassSecurityTrustHtml(notice.message)")
-      time {{ notice.created | date_created }}
 
-button.btn-material.secondary(*ngIf="readNotifications.length > 0", (click)="showReaded = !showReaded; scrollIntoView()") {{showReaded ?  "Hide archive" : "Show archive" }}
+button.btn-material.secondary(
+  *ngIf="readNotifications.length > 0", 
+  (click)="showReaded = !showReaded; scrollIntoView()"
+) {{ (showReaded ?  "Hide archive" : "Show archive") | translate }}

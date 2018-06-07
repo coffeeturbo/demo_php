@@ -5,75 +5,13 @@
   width: 100%;
   font-weight: normal;
   color: $font_color_light;
-  >span {
+
+  .emptyMessage {
     padding: 10px 2.8em;
     line-height: 1.5em;
-    display: block;
     text-align: center;
     color: material-color($secondary_material,"600");
-    font-size: $small_size
-  }
-  ul {
-    width: 100%;
-  }
-
-  li {
-    padding: 15px 10px;
-    transition: opacity 500ms, background 300ms;
-    width: calc(100% - 20px);
-    display: flex;
-    cursor: pointer;
-
-    &:hover {
-      background: material-color($secondary_material, '900');
-    }
-
-    &.readed > * {
-      opacity: .7;
-    }
-
-    &.success .fa {
-      color: material-color("light-green", "500");
-    }
-    &.danger .fa {
-      color: material-color("red", "500");
-    }
-    &.warning .fa {
-      color: material-color("orange", "500");
-    }
-
-    > .fa {
-      font-size: 1.6em;
-      margin-right: .5em;
-      flex-shrink: 0;
-    }
-
-    > div {
-      span {
-        line-height: 13px;
-        max-height: 2em;
-        overflow: hidden;
-        font-size: $small_size;
-        display: block;
-        transition: max-height 300ms ease-in-out;
-      }
-
-      /deep/ a {
-        color: material-color("cyan", 'a200');
-        text-decoration: underline;
-      }
-
-      time {
-        font-size: $small_size;
-        color: material-color($secondary_material, "700");
-        display: block;
-        margin-top: 0.5em;
-      }
-    }
-
-    &.active > div span {
-      max-height: 10em;
-    }
+    font-size: $small_size;
   }
 
   button {

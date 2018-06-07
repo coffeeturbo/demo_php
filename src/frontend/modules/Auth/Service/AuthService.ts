@@ -1,5 +1,6 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
+import {TranslationService} from "@angular-addons/translate";
 import {Observable, Scheduler, Subscription} from "rxjs";
 
 import {AuthRESTService} from "./AuthRESTService";
@@ -45,7 +46,8 @@ export class AuthService implements AuthServiceInterface
         private oAuth: OAuthService,
         public tokenService: TokenService,
         public pl: PlatformService,
-        public noticeService: NoticeService
+        public noticeService: NoticeService,
+        public translationService: TranslationService
     ) {
         this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
@@ -89,8 +91,8 @@ export class AuthService implements AuthServiceInterface
         this.returnUrl = "/";
         return this.handleTokenResponse(this.rest.signUp(body).do(() => {
             /*@TODO: move text in to config */
-            this.noticeService.addNotice("Thank you for register!", NoticeType.Normal);
-            this.noticeService.addNotice("For extended rights, <a routerLink='/settings'>confirm your phone and email.<a/>", NoticeType.Success);
+            this.noticeService.addNotice(this.translationService.translate("Thank you for register!"), NoticeType.Normal);
+            this.noticeService.addNotice(this.translationService.translate("Please confirm your email at the <a href='/settings'>profile settings<a/>."), NoticeType.Success);
         }));
     }
 

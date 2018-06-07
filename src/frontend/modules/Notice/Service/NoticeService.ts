@@ -10,17 +10,14 @@ import {NoticeType} from "../Entity/NoticeType";
 export class NoticeService {
     
     private noticeKey = "notice";
-    public notifications: Notifications = [];
+    public notifications: Notifications = this.readNotifications();
     public allowedTags = ['a', 'b', 'em', 'strong', 'i', 'u', 'p', 'strike', 'blockquote'];
     
-    constructor(private pl: PlatformService)
-    {
-        this.notifications = this.readNotifications(); 
-    }
+    constructor(private pl: PlatformService) {}
     
     public addNotice(message: string, type: NoticeType, icon?: string): Notice 
     {
-        let id = this.notifications.length > 0 ? this.notifications[this.notifications.length-1].id : 0; 
+        let id = this.notifications.length > 0 ? this.notifications[this.notifications.length-1].id + 1 : 0;
         let notice: Notice = {id, message, type, created: new Date()};
         
         if(icon) notice.icon = icon; 
@@ -31,6 +28,11 @@ export class NoticeService {
         this.saveNotifications();
 
         return notice;
+    }
+    
+    public restoreNotice(notice: Notice, index: number) {
+        this.notifications.splice(index,0, notice);
+        this.saveNotifications();
     }
 
     public removeNotice(notice: Notice): void 

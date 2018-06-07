@@ -8,7 +8,6 @@ import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Device} from "../../../Application/Service/DeviceService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {NoticeService} from "../../../Notice/Service/NoticeService";
-import {NoticeType} from "../../../Notice/Entity/NoticeType";
 
 @Component({
     selector: "sidebar",

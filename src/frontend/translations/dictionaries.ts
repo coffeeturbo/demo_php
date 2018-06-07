@@ -7,6 +7,7 @@ import {PostLocaleRU} from "../modules/Post/Dictionaries/PostLocaleRU";
 import {FeedLocaleRU} from "../modules/Feed/Dictionaries/FeedLocaleRU";
 import {CommentLocaleRU} from "../modules/Comment/Dictionaries/CommentLocaleRU";
 import {AttachmentLocaleRU} from "../modules/Attachment/Dictionaries/AttachmentLocaleRU";
+import {NoticeLocaleRU} from "../modules/Notice/Dictionaries/NoticeLocaleRU";
 
 export const dictionaries: Dictionaries = {
     "RU": [
@@ -15,6 +16,7 @@ export const dictionaries: Dictionaries = {
         AttachmentLocaleRU,
         CommentLocaleRU,
         FeedLocaleRU,
+        NoticeLocaleRU,
         ProfileLocaleRU,
         PostLocaleRU,
         SettingsLocaleRU

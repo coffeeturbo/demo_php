@@ -18,6 +18,7 @@ import {MaterialFormModule} from "./MaterialForm/MaterialFormModule";
 import {ReactiveFormsModule} from "@angular/forms";
 import {ChromeAutoFillModule} from "./ChromeAutoFill/ChromeAutoFillModule";
 import {DateModule} from "./Date/DateModule";
+import {ClickOutModule} from "./ClickOut/ClickOutModule";
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import {DateModule} from "./Date/DateModule";
         PluralizeModule,
         PalleteModule,
         NotImplementedModule,
-        DateModule
+        DateModule,
+        ClickOutModule
     ]
 })
 export class CommonModule {
