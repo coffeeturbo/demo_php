@@ -9,7 +9,7 @@ export class ClickOutDirective {
     @Output() clickOut = new EventEmitter<MouseEvent>();
 
     @HostListener('document:click', ['$event', '$event.target'])
-    public onClick(event: MouseEvent, target: HTMLElement): void {
+    public onClick(event, target): void {
         if (!target) return;
 
         const clickedInside = this.el.nativeElement.contains(target);
