@@ -3,4 +3,4 @@
   .fa.fa-circle-o-notch.fa-spin(*ngIf="!isVideoContainerHidden")
   .duration {{ duration }}
     
-iframe(*ngIf="!isVideoContainerHidden", [src]="videoUrl")
+iframe(*ngIf="!isVideoContainerHidden", [src]="videoUrl", allowfullscreen="allowfullscreen")
