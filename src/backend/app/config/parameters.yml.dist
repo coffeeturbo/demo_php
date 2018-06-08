@@ -30,3 +30,11 @@ parameters:
     hwi_oauth_vk_secret: ''
     hwi_oauth_facebook_id: ''
     hwi_oauth_facebook_secret: ''
+
+
+    mailer_email_no_reply: no-reply@topicoff.com
+    post_info_posts:
+        1:
+          id: 13
+        2:
+          id: 12

@@ -54,7 +54,7 @@ class PasswordRecoverService
 
         $swiftMessage->setFrom($this->emailNoReply)
             ->setTo($email)
-            ->setBody($message);
+            ->setBody($message, 'text/html');
 
         return $this->mailer->send($swiftMessage);
     }

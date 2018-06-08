@@ -79,7 +79,9 @@ class EmailConfirmationService
 
         $swiftMessage->setFrom($this->emailNoReply)
             ->setTo($mailTo)
-            ->setBody($message);
+            ->setBody($message, 'text/html')
+//        ->setFormat()
+        ;
 
         return $swiftMessage;
     }
