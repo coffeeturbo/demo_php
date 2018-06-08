@@ -1,6 +1,7 @@
 export const AuthLocaleRU = {
     "Auto sign out after 1 hour": "Система автоматически выйдет через 1 час",
     "or sign in with": "или войти с помощью",
+    "or you can": "или вы можете",
     "Not my PC": "Чужой компьютер",
     "Sign in with another account": "Войти под другим аккаунтом",
     "Enter your name": "Как вас зовут?",
@@ -11,7 +12,8 @@ export const AuthLocaleRU = {
     "New user registration": "Регистрация нового пользователя",
     "The password must contain at least 8 characters, including numbers, upper and lower case letters" : "Пароль должен содержать не менее 8 символов, включая цифры, прописные и строчные буквы",
     "Passwords do not match": "Введенные пароли не совпадают",
+    "Restore password": "Восстановить пароль",
     "Thank you for register!": "Спасибо за регистрацию!",
     "Please confirm your email at the <a href='/settings'>profile settings<a/>.": "Пожалйста подтвердите свою почту в <a href='/settings'>настройках профиля<a/>.",
-    "Your email confirmed. Now you can voting and much more!": "Ваша почта подтвеждена. Теперь вы можете оценивать посты и многон другое!",
+    "Your email confirmed. Now you can voting and much more!": "Ваша почта подтвеждена. Теперь вы можете оценивать посты и многое другое!",
 };
