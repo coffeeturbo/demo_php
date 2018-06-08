@@ -1,0 +1,16 @@
+ng-container(*ngIf="!removed")
+  .icon.fa.fa-fw([ngClass]="getCustomClass()")
+  .message((click)="onActivate.emit(notice)")
+    span([innerHTML] = "sanitizer.bypassSecurityTrustHtml(notice.message)")
+    time {{ notice.created | date_created }}
+  .dropdown((clickOut)="hideMenu()", (click)="showMenu = true")
+    button.fa.fa-ellipsis-v
+    ul(*ngIf="showMenu")
+      li((click)="removeNotice()") {{"Delete" | translate }}
+        
+ng-container(*ngIf="removed")
+  .trash.fa.fa-fw.fa-trash-o
+  .message
+    span {{"Notification is hidden" | translate}}.
+      br
+      a((click)="restoreNotice()") {{ "Rollback" | translate }}.
