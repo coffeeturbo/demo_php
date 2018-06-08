@@ -34,7 +34,3 @@ services:
     ports: ["8000:8000"]
     volumes:
       - ./src:/opt/jet
-  maildev:
-      image: djfarrelly/maildev
-      ports:
-       - "8081:80"
