@@ -1,0 +1,116 @@
+@import '../../../../assets/styles/global';
+
+:host {
+  padding: 15px 10px;
+  transition: opacity 500ms, background 300ms;
+  width: calc(100% - 20px);
+  display: flex;
+  align-items: flex-start;
+
+  &:hover {
+    background: material-color($secondary_material, '900');
+
+    .dropdown {
+      display: block;
+    }
+  }
+
+  .dropdown {
+    //display: none;
+    position: relative;
+    button {
+      padding: 5px 10px;
+      margin-top: -5px;
+      font-size: .9em;
+      border-radius: 50%;
+      color: $font_color_light;
+      
+      &:hover {
+        background: material-color($secondary_material, '800');
+      }
+    }
+
+    ul {
+      position: absolute;
+      right:0;
+      top:0;
+      background: #fff;
+      box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+      white-space: nowrap;
+      color: material-color($primary_material, "800");
+      li {
+        padding: 10px;
+        cursor: pointer;
+        
+        &:hover {
+          background: material-color($secondary_material, '100');
+        }
+      }
+    }
+  }
+  
+  &.normal .icon {
+    &:before { content: "\F10C"; }
+  }
+
+  &.success .icon {
+    color: material-color("light-green", "500");
+    
+    &:before { content: "\F058"; }
+  }
+  
+  &.danger .icon {
+    color: material-color("red", "500");
+    
+    &:before { content: "\F057"; }
+  }
+  
+  &.warning .icon {
+    color: material-color("orange", "500");
+
+    &:before { content: "\F071"; }
+  }
+
+  .icon, .trash {
+    font-size: 1.6em;
+    margin-right: .5em;
+    flex-shrink: 0;
+  }
+
+  .trash {
+    color: material-color($secondary_material, "600");
+  }
+
+  .message {
+    flex-grow: 1;
+    cursor: pointer;
+    
+    span {
+      line-height: 1.1em;
+      max-height: 2.2em;
+      overflow: hidden;
+      font-size: $small_size;
+      display: block;
+      transition: max-height 300ms ease-in-out;
+    }
+
+    /deep/ a {
+      color: material-color("cyan", 'a200');
+      
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+
+    time {
+      font-size: $small_size;
+      color: material-color($secondary_material, "700");
+      display: block;
+      margin-top: 0.5em;
+    }
+  }
+
+  &.active > div span {
+    max-height: 10em;
+  }
+}
