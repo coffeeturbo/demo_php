@@ -25,6 +25,7 @@ export const LocaleRU = {
   "Feed":         "Лента",
   "Gender":       "Пол",
   "Hot":          "В тренде",
+  "Hide":         "Скрыть",
   "Like":         "Мне нравится",
   "Loading":      "Загрузка",
   "Locale":       "Язык",

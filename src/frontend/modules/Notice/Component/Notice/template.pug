@@ -6,7 +6,7 @@ ng-container(*ngIf="!removed")
   .dropdown((clickOut)="hideMenu()", (click)="showMenu = true")
     button.fa.fa-ellipsis-v
     ul(*ngIf="showMenu")
-      li((click)="removeNotice()") {{"Delete" | translate }}
+      li((click)="removeNotice()") {{"Hide" | translate }}
         
 ng-container(*ngIf="removed")
   .trash.fa.fa-fw.fa-trash-o
