@@ -1,6 +1,4 @@
-import {Component, Inject, Injector, Optional} from "@angular/core";
-import {RESPONSE} from "@nguniversal/express-engine/tokens";
-import {Response} from "express";
+import {Component} from "@angular/core";
 
 import {PlatformService} from "../../Service/PlatformService";
 
@@ -9,15 +7,9 @@ import {PlatformService} from "../../Service/PlatformService";
 })
 export class PageNotFoundRoute {
 
-    constructor(
-        private pl: PlatformService,
-        private injector: Injector,
-        @Optional() @Inject(RESPONSE) private res: Response) 
-    {}
+    constructor(private pl: PlatformService) {}
 
     ngOnInit() {
-        if (this.pl.isPlatformServer()) {
-            this.res.status(404);
-        }
+        this.pl.setPageStatus(404);
     }    
 }

@@ -4,7 +4,7 @@ export interface Profile {
     id: number;
     account_id: number;
     alias: string;
-    birth_date: string;
+    birth_date: string | null;
     created: string;
     gender: Gender;
     name: string;

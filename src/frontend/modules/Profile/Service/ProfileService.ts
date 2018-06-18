@@ -61,6 +61,7 @@ export class ProfileService implements ProfileServiceInterface{
             profileObservable = profileResponseObservable
                 .map(profileResponse => profileResponse.entity)
                 .do(profile => this.saveToCache(profile, path))
+                .catch(() => Observable.of(null))
             ;
         }
 

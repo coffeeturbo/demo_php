@@ -1,16 +1,17 @@
 import {Component} from "@angular/core";
 
-import {PlatformService} from "../../Service/PlatformService";
+import {PlatformService} from "../../../Application/Service/PlatformService";
 
 @Component({
+    selector: "profile-not-found",
     templateUrl: "./template.pug",
     styleUrls: ["./style.shadow.scss"]
 })
+export class ProfileNotFoundComponent {
 
-export class ForbiddenRoute {
     constructor(private pl: PlatformService) {}
 
     ngOnInit() {
-        this.pl.setPageStatus(403);
+        this.pl.setPageStatus(404);
     }
 }
