@@ -7,9 +7,6 @@ import {SignInFormComponent} from "./Component/SignInForm";
 import {SignUpFormComponent} from "./Component/SignUpForm";
 import {SocialButtonsComponent} from "./Component/SocialButtons";
 
-import {SignInRoute} from "./Route/SignInRoute";
-import {SignUpRoute} from "./Route/SignUpRoute";
-
 import {AuthRESTService} from "./Service/AuthRESTService";
 import {AuthService} from "./Service/AuthService";
 import {CanActivateService} from "./Service/CanActivateService";
@@ -19,6 +16,7 @@ import {Config} from "../../app/config";
 import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
 import {SignInFormModalComponent} from "./Component/SignInFormModal";
 import {AuthModalsService} from "./Service/AuthModalsService";
+import {SignUpFormModalComponent} from "./Component/SignUpFormModal";
 
 @NgModule({
     imports: [
@@ -28,11 +26,10 @@ import {AuthModalsService} from "./Service/AuthModalsService";
     declarations: [
         SignInFormComponent,
         SignUpFormComponent,
-        SignInRoute,
-        SignUpRoute,
         SocialButtonsComponent,
         ConfirmEmailFormComponent,
-        SignInFormModalComponent
+        SignInFormModalComponent,
+        SignUpFormModalComponent
     ],
     providers: [
         AuthRESTService,
@@ -51,6 +48,7 @@ import {AuthModalsService} from "./Service/AuthModalsService";
     ],
     exports: [
         SignInFormModalComponent,
+        SignUpFormModalComponent,
         ConfirmEmailFormComponent
     ]
 })

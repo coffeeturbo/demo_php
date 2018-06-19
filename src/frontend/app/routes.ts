@@ -2,7 +2,6 @@ import {CanActivateService} from "../modules/Auth/Service/CanActivateService";
 import {ForbiddenRoute} from "../modules/Application/Route/ForbiddenRoute";
 import {PageNotFoundRoute} from "../modules/Application/Route/PageNotFoundRoute";
 import {ProfileRoute} from "../modules/Profile/Route/ProfileRoute";
-import {SignUpRoute} from "../modules/Auth/Route/SignUpRoute";
 import {ProfileSettingsRoute} from "../modules/Profile/Route/ProfileSettingsRoute";
 import {JetRoutes} from "../modules/Application/Entity/JetRoute";
 import {ProfileResolver} from "../modules/Profile/Service/ProfileResolver";
@@ -119,11 +118,6 @@ export const appRoutes: JetRoutes = [
             feed: SearchFeedResolver,
             feedRequest: SearchRequestResolver
         }
-    },
-    { // Страница регистрации
-        path: 'register',
-        component: SignUpRoute,
-        data: { title: 'Registration'}
     },
     { // Новости профиля
         path: 'feed',

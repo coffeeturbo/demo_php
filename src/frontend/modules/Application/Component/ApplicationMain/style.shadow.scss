@@ -11,7 +11,7 @@
 
   @include mq($until: tablet) {
     top: 60px;
-    max-height: calc(100vh - 98px);
+    max-height: calc(100vh - 100px);
   }
 
   @include mq($from: desktop) {
