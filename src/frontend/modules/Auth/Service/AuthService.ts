@@ -18,6 +18,8 @@ import {ChangePasswordResponse} from "../Http/Response/ChangePasswordResponse";
 import {PlatformService} from "../../Application/Service/PlatformService";
 import {NoticeService} from "../../Notice/Service/NoticeService";
 import {NoticeType} from "../../Notice/Entity/NoticeType";
+import {AuthModalsService} from "./AuthModalsService";
+import {AuthModals} from "../Entity/AuthModals";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -37,7 +39,6 @@ export class AuthService implements AuthServiceInterface
     public onAuthFailure = new EventEmitter<ResponseFailure>();
 
     private tokenExpirationSchedule: Subscription = new Subscription();
-    private returnUrl: string = "/";
 
     constructor(
         private router: Router,
@@ -47,7 +48,8 @@ export class AuthService implements AuthServiceInterface
         public tokenService: TokenService,
         public pl: PlatformService,
         public noticeService: NoticeService,
-        public translationService: TranslationService
+        public translationService: TranslationService,
+        public authModalsService: AuthModalsService
     ) {
         this.onAuthSuccess.subscribe(
             (tokenResponse: TokenResponse) => {
@@ -61,9 +63,7 @@ export class AuthService implements AuthServiceInterface
                     }
                 }
 
-                if (pl.isPlatformBrowser() && this.returnUrl) {
-                    this.router.navigateByUrl(this.returnUrl);
-                }
+                this.authModalsService.reset();
             }
         );
         this.onAuthFailure.subscribe(() => this.signOut())
@@ -82,13 +82,11 @@ export class AuthService implements AuthServiceInterface
 
     public signIn(body: SignInRequest): Observable<TokenResponse>
     {
-        this.returnUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.rest.signIn(body));
     }
 
     public signUp(body: SignUpRequest): Observable<TokenResponse>
     {
-        this.returnUrl = "/";
         return this.handleTokenResponse(this.rest.signUp(body).do(() => {
             /*@TODO: move text in to config */
             this.noticeService.addNotice(this.translationService.translate("Thank you for register!"), NoticeType.Normal);
@@ -98,7 +96,6 @@ export class AuthService implements AuthServiceInterface
 
     public refreshToken(body: RefreshTokenRequest): Observable<TokenResponse>
     {
-        this.returnUrl = null;
         return this.handleTokenResponse(this.rest.refreshToken(body));
     }
     
@@ -109,13 +106,11 @@ export class AuthService implements AuthServiceInterface
 
     public connectVK(): Observable<TokenResponse>
     {
-        this.returnUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.oAuth.connectVK());
     }
 
     public connectFacebook(): Observable<TokenResponse>
     {
-        this.returnUrl = this.route.data["returnUrl"] || "/";
         return this.handleTokenResponse(this.oAuth.connectFacebook());
     }
 

@@ -20,18 +20,25 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
         | {{"Not my PC" | translate }} 
         .fa.fa-question-circle(title="{{'Auto sign out after 1 hour' | translate}}")
 
-          
   .controls(*ngIf="showControls")
-    button.btn-material.secondary(type="button", routerLink="/register")
-      .fa.fa-user-plus
-      span {{"Registration" | translate }}
     button.btn-material.primary(type="submit", [disabled]="!form.valid")
       .fa.fa-sign-in
       span {{"Sign in" | translate }}
-  br
+
+
   //.hr-box
   //  .hr-title {{"or sign in with" | translate }}
   //  hr
   //
   //.controls.center
   //  social-buttons((onConnect)="disabled = true; fail = false", (onComplete)="disabled = false", (onFail)="fail = true")
+
+  .hr-box
+    .hr-title {{"or you can" | translate }}
+    hr
+  
+  .controls(*ngIf="showControls")
+    button.btn-material.secondary(type="button", routerLink="/register")
+      small {{"Register" | translate }}
+    button.btn-material.secondary(type="button", routerLink="/register")
+      small {{"Restore password" | translate }}

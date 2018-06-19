@@ -1,6 +1,7 @@
 @import '../../../../assets/styles/global.scss';
 
-.loading-indicator {
+:host {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;

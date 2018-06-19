@@ -17,6 +17,8 @@ import {OAuthService} from "./Service/OAuthService";
 import {TokenService, TokenServiceConfig} from "./Service/TokenService";
 import {Config} from "../../app/config";
 import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
+import {SignInFormModalComponent} from "./Component/SignInFormModal";
+import {AuthModalsService} from "./Service/AuthModalsService";
 
 @NgModule({
     imports: [
@@ -29,7 +31,8 @@ import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
         SignInRoute,
         SignUpRoute,
         SocialButtonsComponent,
-        ConfirmEmailFormComponent
+        ConfirmEmailFormComponent,
+        SignInFormModalComponent
     ],
     providers: [
         AuthRESTService,
@@ -37,6 +40,7 @@ import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
         OAuthService,
         CanActivateService,
         TokenService,
+        AuthModalsService,
         {
             provide: TokenServiceConfig,
             useValue: {
@@ -46,6 +50,7 @@ import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
         }
     ],
     exports: [
+        SignInFormModalComponent,
         ConfirmEmailFormComponent
     ]
 })

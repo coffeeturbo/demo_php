@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 
 import {SettingsModalService} from "../../Service/SettingsModalService";
 
@@ -8,4 +8,6 @@ import {SettingsModalService} from "../../Service/SettingsModalService";
 })
 export class SettingsModalComponent {
     constructor(public settingsModalService: SettingsModalService) {}
+
+    @Output("on-close") onClose = new EventEmitter<void>();
 }

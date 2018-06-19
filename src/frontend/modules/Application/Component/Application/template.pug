@@ -23,7 +23,7 @@
             i.fa.fa-2x.fa-user-circle
             span {{"Profile" | translate}}
           profile-tooltip(*ngIf="isProfileTooltipVisible", (onClose)="isProfileTooltipVisible = false")
-      a(*ngIf="!auth.isSignedIn()", routerLink="/login")
+      a(*ngIf="!auth.isSignedIn()", (click)="authModalsService.show(AuthModals.signIn)")
         i.fa.fa-2x.fa-sign-in
         span {{"Sign in" | translate}}  
   .search-results(*ngIf="autocomplete.length > 0 && searchInputControl.valid")
@@ -37,6 +37,7 @@ application-main
 
 ng-container(*ngIf="pl.isPlatformBrowser()")
   //post-create-button(*ngIf="auth.isSignedIn()", routerLink="/post/add", routerLinkActive="hidden")  
-  application-loading-bar
+  application-loading-bar(loading-bar)
   application-scroll-button(*ngIf="!device.isMobile()")
-  settings-modal
+  settings-modal(*ngIf="settingsModalService.isVisible", (on-close)="settingsModalService.hide()")
+  sign-in-modal(*ngIf="authModalsService.isVisible(AuthModals.signIn)", (on-close)="authModalsService.hide(AuthModals.signIn)")

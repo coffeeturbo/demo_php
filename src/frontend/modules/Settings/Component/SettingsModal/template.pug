@@ -1,4 +1,4 @@
-modal(width="330px", (on-close)="settingsModalService.hide()", *ngIf="settingsModalService.isVisible")
+modal(width="330px", (on-close)='onClose.emit()')
   modal-header {{"Settings" | translate }}
   modal-body
     settings

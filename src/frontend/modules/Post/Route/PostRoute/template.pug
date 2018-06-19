@@ -21,6 +21,6 @@ section.comments(#commentsEl)
     a.btn-material.primary(routerLink="/register")
       span {{"Registration" | translate }}
 
-    a.btn-material.primary(routerLink="/login")
+    a.btn-material.primary((click)="authModalsService.show(AuthModals.signIn)")
       span Войти
   
