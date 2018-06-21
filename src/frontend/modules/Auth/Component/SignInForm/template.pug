@@ -1,4 +1,11 @@
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()", chrome-autofill-fix)
+  ng-container(*ngIf="form.hasError('denied')")
+    .errors
+      i.fa.fa-exclamation-circle
+      ul
+        // @TODO: translate!
+        li Неверные данные!
+    br
   .material-field
     i.fa.fa-user.fa-lg.fa-fw
     .input-box
@@ -40,5 +47,5 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
   .controls.center
     button.btn-material.secondary(type="button", (click)="authModalsService.show(AuthModals.signUp)")
       small {{"Register" | translate }}
-    button.btn-material.secondary(type="button", (click)="authModalsService.show(AuthModals.signUp)")
+    button.btn-material.secondary(type="button", (click)="authModalsService.show(AuthModals.recoverPasswordByEmail)")
       small {{"Restore password" | translate }}
