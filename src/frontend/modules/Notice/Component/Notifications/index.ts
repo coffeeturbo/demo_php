@@ -14,6 +14,7 @@ export class NotificationsComponent {
 
     public activeNotice: Notice;
     public showReaded: boolean = false;
+    private notifications = this.noticeService.getNotifications().reverse();
 
     public form: FormGroup = new FormGroup({
         message: new FormControl(null),
@@ -41,7 +42,7 @@ export class NotificationsComponent {
 
     
     getNotifications(readed?:boolean) {
-        let notifications = this.noticeService.getNotifications().reverse();
+        let notifications = this.notifications;
         
         if(typeof readed === 'boolean') {
             notifications = notifications.filter(notice => !!notice.readed === readed)
