@@ -19,7 +19,8 @@ import {PlatformService} from "../../Application/Service/PlatformService";
 import {NoticeService} from "../../Notice/Service/NoticeService";
 import {NoticeType} from "../../Notice/Entity/NoticeType";
 import {AuthModalsService} from "./AuthModalsService";
-import {AuthModals} from "../Entity/AuthModals";
+import {RecoverPasswordByEmailRequest} from "../Http/Request/RecoverPasswordByEmailRequest";
+import {RecoverPasswordByEmailConfirm} from "../Http/Request/RecoverPasswordByEmailConfirm";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -102,6 +103,16 @@ export class AuthService implements AuthServiceInterface
     public changePassword(body: ChangePasswordRequest): Observable<ChangePasswordResponse>
     {
         return this.rest.changePassword(body);
+    }
+    
+    public recoverPasswordByEmail(recoverPasswordByEmail: RecoverPasswordByEmailRequest): Observable<{/*@TODO*/}>
+    {
+        return this.rest.recoverPasswordByEmail(recoverPasswordByEmail);
+    }
+
+    public recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm: RecoverPasswordByEmailConfirm): Observable<TokenResponse>
+    {
+        return this.handleTokenResponse(this.rest.recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm));
     }
 
     public connectVK(): Observable<TokenResponse>

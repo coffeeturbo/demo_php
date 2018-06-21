@@ -17,6 +17,9 @@ import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
 import {SignInFormModalComponent} from "./Component/SignInFormModal";
 import {AuthModalsService} from "./Service/AuthModalsService";
 import {SignUpFormModalComponent} from "./Component/SignUpFormModal";
+import {RecoverPasswordByEmailFormComponent} from "./Component/RecoverPasswordByEmailForm";
+import {RecoverPasswordByEmailFormModalComponent} from "./Component/RecoverPasswordByEmailFormModal";
+import {RecoverPasswordByEmailRoute} from "./Routes/RecoverPasswordByEmailRoute";
 
 @NgModule({
     imports: [
@@ -29,7 +32,10 @@ import {SignUpFormModalComponent} from "./Component/SignUpFormModal";
         SocialButtonsComponent,
         ConfirmEmailFormComponent,
         SignInFormModalComponent,
-        SignUpFormModalComponent
+        SignUpFormModalComponent,
+        RecoverPasswordByEmailFormComponent,
+        RecoverPasswordByEmailFormModalComponent,
+        RecoverPasswordByEmailRoute
     ],
     providers: [
         AuthRESTService,
@@ -49,7 +55,8 @@ import {SignUpFormModalComponent} from "./Component/SignUpFormModal";
     exports: [
         SignInFormModalComponent,
         SignUpFormModalComponent,
-        ConfirmEmailFormComponent
+        ConfirmEmailFormComponent,
+        RecoverPasswordByEmailFormModalComponent
     ]
 })
 export class AuthModule {}

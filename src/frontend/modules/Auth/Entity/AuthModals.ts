@@ -4,4 +4,5 @@ export enum AuthModals
 {
     signIn = <any>"sign-in",
     signUp = <any>"sign-up",
+    recoverPasswordByEmail = <any>"recover-password-by-email",
 }
