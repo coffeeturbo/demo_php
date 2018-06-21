@@ -19,6 +19,7 @@ import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
 import {ProfileFeedRequestResolver} from "../modules/Profile/Service/ProfileFeedRequestResolver";
 import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver";
 import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResolver";
+import {RecoverPasswordByEmailRoute} from "../modules/Auth/Routes/RecoverPasswordByEmailRoute";
 import {SearchFeedResolver} from "../modules/Search/Service/SearchFeedResolver";
 import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequestResolver";
 import {SearchRoute} from "../modules/Search/Route/SerachRoute";
@@ -28,6 +29,15 @@ export const appRoutes: JetRoutes = [
     {
         path: '',
         component: FeedRoute,
+        children: [
+            {
+                path: "recover-password/:code",
+                component: RecoverPasswordByEmailRoute,
+                data: {
+                    title: "Password recovery",
+                }
+            }
+        ],
         data: {
             title: 'Hot',
             description: 'Hot',
