@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {RecoverPasswordByEmailFormComponent, RecoverPasswordByEmailStep} from "../../Component/RecoverPasswordByEmailForm";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     templateUrl: './template.pug',
@@ -10,5 +10,7 @@ export class RecoverPasswordByEmailRoute {
     public RecoverPasswordByEmailStep = RecoverPasswordByEmailStep;
     @ViewChild(RecoverPasswordByEmailFormComponent) recoverPasswordByEmailFormComponent: RecoverPasswordByEmailFormComponent;
 
-    constructor(public route: ActivatedRoute){}
+    constructor(public route: ActivatedRoute, public router: Router){
+        
+    }
 }

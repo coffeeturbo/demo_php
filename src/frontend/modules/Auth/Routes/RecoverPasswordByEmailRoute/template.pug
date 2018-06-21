@@ -1,4 +1,4 @@
-modal(width="370px", [ngClass]="{shake: recoverPasswordByEmailFormComponent.fail}", [close-mode]="0", [animation]="false")
+modal(width="370px", [ngClass]="{shake: recoverPasswordByEmailFormComponent.fail}", [animation]="false", (on-close)="router.navigate(['.'], {relativeTo: route.parent})")
   loader(*ngIf="recoverPasswordByEmailFormComponent.disabled")
   modal-header {{'Recover password by email' | translate}}
   modal-body
