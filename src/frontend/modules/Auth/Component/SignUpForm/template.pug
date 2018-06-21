@@ -1,34 +1,41 @@
-//@DOTO finish material labels
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()")
-  .errors(*ngIf="form.hasError('conflict')")
-    i.fa.fa-exclamation-circle
-    ul
-      li Пользователь с таким email уже существует!
+  ng-container(*ngIf="form.hasError('conflict')")
+    .errors
+      i.fa.fa-exclamation-circle
+      ul
+        // @TODO: translate!
+        li Пользователь с таким email уже существует!
+    br
   .material-field
     i.fa.fa-lg.fa-fw.fa-address-card-o
     .input-box
-      input(type="text", formControlName="name", placeholder="{{'Enter your name' | translate }}", ng-auto-focus)
+      input#signUpName(ng-detect-empty-input, type="text", formControlName="name", ng-auto-focus)
       hr
+      label.material-label(for="signUpName") {{'Enter your name' | translate }}
   .material-field
     i.fa.fa-at.fa-lg.fa-fw
     .input-box
-      input(type="text", formControlName="email", placeholder="{{'Enter your email' | translate }}", ng-auto-focus)
+      input#signUpEmail(ng-detect-empty-input, type="text", formControlName="email")
       hr
-  
+      label.material-label(for="signUpEmail") {{'Enter your email' | translate }}
+
   .material-field
     i.fa.fa-lock.fa-lg.fa-fw
     .input-box
-      input(type="{{isPasswordHidden?'password':'text'}}", formControlName="password", placeholder="{{'Enter password' | translate }}")
+      input#signUpPassword(ng-detect-empty-input, type="{{isPasswordHidden?'password':'text'}}", formControlName="password")
       hr
+      label.material-label(for="signUpPassword") {{'Enter password' | translate }}
       tooltip(*ngIf="form.controls['password'].touched && form.controls['password'].invalid")
         small {{ config.account.constraints.password.invalid_message | translate }}
     i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
   .material-field
     i.fa.fa-lg.fa-fw
     .input-box
-      input(type="password", formControlName="password_confirm", placeholder="{{'Confirm password' | translate}}")
+      input#signUpPasswordConfirm(ng-detect-empty-input, type="password", formControlName="password_confirm")
       hr
-      tooltip(*ngIf="form.hasError('not_equal_passwords') && form.controls['password_confirm'].touched")
+      label.material-label(for="signUpPasswordConfirm") {{'Confirm password' | translate }}
+
+  tooltip(*ngIf="form.hasError('not_equal_passwords') && form.controls['password_confirm'].touched")
         small {{"Passwords do not match" | translate }}
 
   .controls
