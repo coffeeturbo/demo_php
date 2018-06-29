@@ -121,5 +121,5 @@ hwi_oauth:
             authorization_url:   "https://www.facebook.com/v2.7/dialog/oauth?display=popup"
             
 gesdinet_jwt_refresh_token:
-    ttl: 2592000           
+    ttl: 2592000
     user_provider: fos_user.user_provider.username_email

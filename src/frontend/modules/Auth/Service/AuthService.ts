@@ -38,6 +38,7 @@ export class AuthService implements AuthServiceInterface
 {
     public onAuthSuccess = new EventEmitter<TokenResponse>();
     public onAuthFailure = new EventEmitter<ResponseFailure>();
+    public onAuthComplete = new EventEmitter<null>();
 
     private tokenExpirationSchedule: Subscription = new Subscription();
 
@@ -154,7 +155,9 @@ export class AuthService implements AuthServiceInterface
     {
         observableTokenResponse = observableTokenResponse.share();
 
-        observableTokenResponse.subscribe(
+        observableTokenResponse
+            .finally(() => this.onAuthComplete.emit())
+            .subscribe(
             (tokenResponse: TokenResponse) => this.onAuthSuccess.emit(tokenResponse),
             (tokenResponseFailure: ResponseFailure) => this.onAuthFailure.emit(tokenResponseFailure)
         );

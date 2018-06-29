@@ -26,10 +26,10 @@ export class StartupService {
                 }
             }
 
-            let onAuthSuccess = new EventEmitter<void>(); // Отдельный event, т.к. вызываем complete, завершающий его. а нам не нужно что бы основной event завершался
-            authService.onAuthSuccess.subscribe(() => onAuthSuccess.complete());
+            let onAuthComplete = new EventEmitter<void>(); // Отдельный event, т.к. вызываем complete, завершающий его. а нам не нужно что бы основной event завершался
+            authService.onAuthComplete.subscribe(() => onAuthComplete.complete());
 
-            this.promises.push(onAuthSuccess.toPromise());
+            this.promises.push(onAuthComplete.toPromise());
         }
 
         authService.addTokenExpirationSchedule();
