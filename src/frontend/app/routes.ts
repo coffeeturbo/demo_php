@@ -126,7 +126,8 @@ export const appRoutes: JetRoutes = [
         data: { title: 'Search' },
         resolve: {
             feed: SearchFeedResolver,
-            feedRequest: SearchRequestResolver
+            feedRequest: SearchRequestResolver,
+            title: SearchTitleResolver
         }
     },
     { // Новости профиля
