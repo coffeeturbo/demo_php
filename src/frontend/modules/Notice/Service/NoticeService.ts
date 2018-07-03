@@ -5,6 +5,7 @@ import {PlatformService} from "../../Application/Service/PlatformService";
 import {Notice} from "../Entity/Notice";
 import {Notifications} from "../Entity/Notifications";
 import {NoticeType} from "../Entity/NoticeType";
+import {FaviconService} from "../../Application/Service/FaviconService";
 
 @Injectable()
 export class NoticeService {
@@ -13,7 +14,8 @@ export class NoticeService {
     public notifications: Notifications = this.readNotifications();
     public allowedTags = ['a', 'b', 'em', 'strong', 'i', 'u', 'p', 'strike', 'blockquote'];
     
-    constructor(private pl: PlatformService) {}
+    constructor(private pl: PlatformService, private faviconService: FaviconService) {
+    }
     
     public addNotice(message: string, type: NoticeType, icon?: string): Notice 
     {
@@ -25,6 +27,7 @@ export class NoticeService {
         notice.message = striptags(notice.message, this.allowedTags);
         
         this.notifications.push(notice);
+        this.faviconService.setUnreadFavicon();
         this.saveNotifications();
 
         return notice;
@@ -63,5 +66,4 @@ export class NoticeService {
             localStorage.setItem(this.noticeKey, JSON.stringify(this.notifications));
         }
     }
-    
 }

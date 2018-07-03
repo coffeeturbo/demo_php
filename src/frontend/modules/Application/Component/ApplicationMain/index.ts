@@ -5,7 +5,7 @@ import {ApplicationScrollService} from "../../Service/ApplicationScrollService";
 
 @Component({
     selector: 'application-main',
-    template: '<router-outlet></router-outlet>',
+    template: '<ng-content></ng-content>',
     styleUrls: ['./style.shadow.scss']
 })
 

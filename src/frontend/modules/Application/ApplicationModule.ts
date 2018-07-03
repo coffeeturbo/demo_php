@@ -92,6 +92,7 @@ export class HammerConfig extends HammerGestureConfig  {
         RouteHelperService,
         ApplicationScrollService,
         PlatformService,
+        FaviconService,
         {
             provide: LOCALE_ID,
             useFactory: LocaleFactory,

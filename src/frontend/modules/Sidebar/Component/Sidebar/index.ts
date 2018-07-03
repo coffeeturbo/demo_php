@@ -8,6 +8,7 @@ import {ProfileService} from "../../../Profile/Service/ProfileService";
 import {Device} from "../../../Application/Service/DeviceService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {NoticeService} from "../../../Notice/Service/NoticeService";
+import {FaviconService} from "../../../Application/Service/FaviconService";
 
 @Component({
     selector: "sidebar",
@@ -31,7 +32,8 @@ export class SidebarComponent implements AfterViewInit {
         public profile: ProfileService,
         public settingsModalService: SettingsModalService,
         public noticeService: NoticeService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private faviconService: FaviconService
     ) {}
     
     ngAfterViewInit() {
@@ -79,9 +81,9 @@ export class SidebarComponent implements AfterViewInit {
         }
     }
     
-    public scrollToEnd() {
-        setTimeout(() => {
-            this.aside.nativeElement.scrollTop = this.aside.nativeElement.scrollHeight
-        });
+    public showNotificationsModal() {
+        this.showNotifications = true; 
+        this.faviconService.resetFavicon();
+        setTimeout(() => this.aside.nativeElement.scrollTop = this.aside.nativeElement.scrollHeight);
     }
 }

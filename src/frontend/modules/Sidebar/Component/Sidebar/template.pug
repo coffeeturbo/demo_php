@@ -52,7 +52,7 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     .flex-space
     a((click)="settingsModalService.show()")
       i.fa.fa-cog
-    a(*ngIf="noticeService.getNotifications().length > 0", (click)="showNotifications = true; scrollToEnd()")
+    a(*ngIf="noticeService.getNotifications().length > 0", (click)="showNotificationsModal()")
       i.fa.fa-bell-o
       .counter(*ngIf="getUnreadNotifications() > 0") {{ getUnreadNotifications() }}
         
