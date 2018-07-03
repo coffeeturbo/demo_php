@@ -6,6 +6,7 @@ use AuthBundle\Entity\Confirmation;
 use AuthBundle\Entity\PasswordRecoverConfirmationType;
 use AuthBundle\Repository\ConfirmationRepository;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class PasswordRecoverService
 {
@@ -30,25 +31,24 @@ class PasswordRecoverService
     public function generateEmailMessage(string $backUrl, Account $account)
     {
 
-        if($this->hasActiveConfirmation($account)) throw new AccessDeniedHttpException("token already exists");
+        if($this->hasActiveConfirmation($account)) throw new ConflictHttpException("token already exists");
 
         $code = md5(uniqid((string)rand(0,999999)));
 
-        $link = $this->generateRecoverLink($backUrl, $code);
-
-        $this->sendMessage($link, $account->getEmail());
+        $this->sendMessage($code, $backUrl, $account->getEmail());
         $this->createConfirmation($code, $account);
     }
 
 
-    private function sendMessage($backUrl, string $email)
+    private function sendMessage($code, $backUrl, string $email)
     {
 
         $titleText = "TopicOff.com | Код подтверждания";
 
         $message = "Это ссылка восстановления пароля ";
+        $message .= $this->generateRecoverLink($backUrl, $code);
 
-        $message.= $backUrl;
+        $message .= sprintf("<br>или скопируйте этот код: <b>%s</b><br>", $code);
 
         $swiftMessage = new \Swift_Message($titleText);
 
@@ -84,7 +84,7 @@ class PasswordRecoverService
     {
         $url = ($backUrl . $code);
 
-        $path = "<a target='_blank' href='" . $url . "'>$url</a>";
+        $path = "<a target='_blank' href='" . $url . "'>ПОДТВЕРДИТЬ</a>";
 
         return $path;
     }

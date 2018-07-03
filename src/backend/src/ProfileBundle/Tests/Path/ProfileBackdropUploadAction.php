@@ -8,7 +8,7 @@ use ProfileBundle\Tests\ProfileController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProfileBackdropUploadActionTest extends ProfileController
+class ProfileBackdropUploadAction extends ProfileController
 {
 
     protected $filePath1600x400 = __DIR__ . '/../../Resources/backdrop/1600x400.jpg';

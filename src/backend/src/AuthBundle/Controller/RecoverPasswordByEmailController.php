@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class RecoverPasswordByEmailController extends Controller
 {
@@ -29,8 +31,10 @@ class RecoverPasswordByEmailController extends Controller
      *  output = {"class" = "AuthBundle\Response\SuccessAuthResponse"},
      *  statusCodes = {
      *      200 = "Успешная смена пароля",
+     *      400 = "url cannot be null",
      *      401 = "неавторизован",
-     *      403 = "неправильный пароль",
+     *      403 = "token already exists",
+     *      409 = "email not found",
      *  }
      * )
      * @param Request $request
@@ -47,10 +51,16 @@ class RecoverPasswordByEmailController extends Controller
 
             if(is_null($account)) throw new AccessDeniedHttpException('this email is not found');
 
+            if(strlen($data['url'])<1) throw new BadRequestHttpException("url cannot be null");
+
             $service->generateEmailMessage($data['url'], $account);
 
+        } catch(BadRequestHttpException | ConflictHttpException $exception){
+            return new ErrorJsonResponse($exception->getMessage(), [], $exception->getStatusCode());
+        } catch(AccessDeniedHttpException $exception){
+            return new ErrorJsonResponse($exception->getMessage(), [], $exception->getStatusCode());
         } catch(\Exception $exception){
-            return new ErrorJsonResponse($exception->getMessage());
+            return new ErrorJsonResponse($exception->getMessage(),$exception->getTrace());
         }
 
         return new JsonResponse([
