@@ -21,6 +21,7 @@ import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver
 import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResolver";
 import {RecoverPasswordByEmailRoute} from "../modules/Auth/Routes/RecoverPasswordByEmailRoute";
 import {SearchFeedResolver} from "../modules/Search/Service/SearchFeedResolver";
+import {SearchTitleResolver} from "../modules/Search/Service/SearchTitleResolver";
 import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequestResolver";
 import {SearchRoute} from "../modules/Search/Route/SerachRoute";
 import {CanDeactivatePostFormRoute} from "../modules/Post/Service/CanDeactivatePostFormRoute";
