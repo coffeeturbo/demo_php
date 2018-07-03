@@ -1,4 +1,4 @@
-import {Injectable, Optional} from '@angular/core';
+import {forwardRef, Inject, Injectable, Injector, Optional} from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from "rxjs/Observable";
 import {RESTConfig} from "../Config/RESTConfig";
@@ -15,9 +15,9 @@ export class RESTInterceptor implements HttpInterceptor
 
     constructor(
         @Optional() config: RESTConfig, 
-        private tokenService: TokenService, 
+        private tokenService: TokenService,
         private authModalsService: AuthModalsService,
-        private authService: AuthService
+        private injector: Injector
     ) {
         this.path = config.path || "";
         this.tokenKey = config.tokenKey || this.tokenKey;
@@ -37,8 +37,9 @@ export class RESTInterceptor implements HttpInterceptor
                 let error: ResponseFailure = httpErrorResponse.error;
                 switch (error.code) {
                     case 401:
+                        let authService = this.injector.get(AuthService);
                         if(this.tokenService.isTokenExist()) {
-                            return this.authService
+                            return authService
                                 .refreshToken({"refresh_token": this.tokenService.getRefreshToken()})
                                 .flatMap(() => {
                                     req = req.clone({
@@ -48,7 +49,7 @@ export class RESTInterceptor implements HttpInterceptor
                                     return next.handle(req);
                                 });
                         } else {
-                            this.authService.onAuthFailure.emit(error);
+                            authService.onAuthFailure.emit(error);
                             return Observable.throw(error);
                         }
                     default: return Observable.throw(error);

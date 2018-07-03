@@ -34,6 +34,8 @@ import {VoteModule} from "../Vote/VoteModule";
 import {TagModule} from "../Tag/TagModule";
 import {ShareModule} from "../Share/ShareModule";
 import {PlatformService} from "./Service/PlatformService";
+import {FaviconService} from "./Service/FaviconService";
+import {NoticeModule} from "../Notice/NoticeModule";
 import {SerachModule} from "../Search/SerachModule";
 
 registerLocaleData(localeRu);
@@ -75,7 +77,9 @@ export class HammerConfig extends HammerGestureConfig  {
         VoteModule,
         CommonModule,
         ShareModule,
+        HomeModule,
         SerachModule,
+        NoticeModule,
         RESTModule.init(Config.uri.api, Config.auth.token_key)
     ],
     declarations: [
