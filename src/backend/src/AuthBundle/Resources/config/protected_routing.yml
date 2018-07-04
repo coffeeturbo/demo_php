@@ -9,11 +9,11 @@ change_password:
 confirm_mail_send_code:
   path: /send-confirm
   defaults:
-    _controller: AuthBundle:SendMail:sendMail
+    _controller: AuthBundle:ConfirmMail:sendMail
   methods: [ POST ]
 
 confirm_mail_by_code:
   path: /confirm-mail/{code}
   defaults:
-    _controller: AuthBundle:SendMail:confirmEmailByCode
+    _controller: AuthBundle:ConfirmMail:confirmEmailByCode
   methods: [ GET ]
