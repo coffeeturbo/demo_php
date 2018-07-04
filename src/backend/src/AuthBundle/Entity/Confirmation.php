@@ -35,7 +35,7 @@ class Confirmation
         return $this;
     }
 
-    public function isExpired()
+    public function isExpired(): bool
     {
         return $this->expires < new \DateTime('NOW');
     }

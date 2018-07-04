@@ -6,7 +6,6 @@ use AuthBundle\Entity\Confirmation;
 use AuthBundle\Entity\PasswordRecoverConfirmationType;
 use AuthBundle\Repository\ConfirmationRepository;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class PasswordRecoverService
 {
@@ -31,7 +30,9 @@ class PasswordRecoverService
     public function generateEmailMessage(string $backUrl, Account $account)
     {
 
-        if($this->hasActiveConfirmation($account)) throw new ConflictHttpException("token already exists");
+        if($confirmation = $this->getActiveConfirmation($account)){
+            $this->confirmationRepository->wasteConfirmation($confirmation);
+        }
 
         $code = md5(uniqid((string)rand(0,999999)));
 
@@ -87,6 +88,24 @@ class PasswordRecoverService
         $path = "<a target='_blank' href='" . $url . "'>ПОДТВЕРДИТЬ</a>";
 
         return $path;
+    }
+
+    private function getActiveConfirmation(Account $account): ?Confirmation
+    {
+        // TODO добпвить проверку на злоупотребление 10 токенов на день
+        $wastedConfirmations = $this->confirmationRepository->countWastedConfirmation($account);
+
+        if($wastedConfirmations > 5)
+            throw new AccessDeniedHttpException("количество запросов восстановления пароля превышено");
+
+        /** @var Confirmation $confirmation */
+        $confirmation = $this->confirmationRepository->findOneBy([
+            'account' => $account,
+            'wasted' => false,
+            'type' => PasswordRecoverConfirmationType::INT_CODE
+        ]);
+
+        return $confirmation;
     }
 
     private function hasActiveConfirmation(Account $account): bool
