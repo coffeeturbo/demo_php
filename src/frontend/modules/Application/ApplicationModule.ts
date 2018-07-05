@@ -77,7 +77,6 @@ export class HammerConfig extends HammerGestureConfig  {
         VoteModule,
         CommonModule,
         ShareModule,
-        HomeModule,
         SerachModule,
         NoticeModule,
         RESTModule.init(Config.uri.api, Config.auth.token_key)
