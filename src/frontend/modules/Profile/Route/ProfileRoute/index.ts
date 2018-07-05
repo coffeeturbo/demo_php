@@ -45,10 +45,6 @@ export class ProfileRoute {
             }
         });
     }
-
-    // public update() { @TODO: 18.06.18 remove at next commit 
-    //     this.profile = this.route.snapshot.data["profile"];
-    // }
     
     public translate(string: string) {
         return this.translationService.translate(string);

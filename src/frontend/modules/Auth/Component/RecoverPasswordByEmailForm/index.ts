@@ -6,6 +6,7 @@ import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
 import {AuthService} from "../../Service/AuthService";
 import {NoticeService} from "../../../Notice/Service/NoticeService";
 import {NoticeType} from "../../../Notice/Entity/NoticeType";
+import {TranslationService} from "@angular-addons/translate/index";
 
 @Component({
     selector: 'recover-password-by-email-form',
@@ -36,7 +37,7 @@ export class RecoverPasswordByEmailFormComponent {
         }
     });
 
-    constructor(private authService: AuthService, private noticeService: NoticeService) {
+    constructor(private authService: AuthService, private noticeService: NoticeService, private translationService: TranslationService) {
     }
 
     ngOnInit() {
@@ -72,8 +73,7 @@ export class RecoverPasswordByEmailFormComponent {
         this.authService.recoverPasswordByEmailConfirm(this.changePasswordForm.value)
             .finally(() => this.disabled = false)
             .subscribe(() => {
-                    // @TODO: translate!
-                    this.noticeService.addNotice("Пароль успешно изменен! Для удобства мы уже авторизовали вас на сайте.", NoticeType.Success)
+                    this.noticeService.addNotice(this.translationService.translate("Password changed successfully! For your convenience, we have already authorized you."), NoticeType.Success)
                 }, (error: ResponseFailure) => {
                     this.fail = true;
                     switch (error.code) {

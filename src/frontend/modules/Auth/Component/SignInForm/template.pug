@@ -3,8 +3,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
     .errors
       i.fa.fa-exclamation-circle
       ul
-        // @TODO: translate!
-        li Неверные данные!
+        li {{ "Incorrect data!" | translate }}
     br
   .material-field
     i.fa.fa-user.fa-lg.fa-fw

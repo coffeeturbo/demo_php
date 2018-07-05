@@ -40,7 +40,7 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     .notifications
       header((click)="showNotifications = false")
         // @TODO Translate
-        span Уведомления
+        span {{"Notifications" | translate }}
         .flex-space
         .fa.fa-angle-down
       notifications

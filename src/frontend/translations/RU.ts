@@ -34,6 +34,7 @@ export const LocaleRU = {
   "Expand":       "Развернуть",
   "Name":         "Имя",
   "New":          "Свежее",
+  "Notifications":"Уведомления",
   "News":         "Новости",
   "No":           "Нет", 
   "Not implemented": "В разработке", 
