@@ -4,8 +4,6 @@ change_password:
    _controller: AuthBundle:ChangePassword:changePassword
   methods: [ POST ]
 
-
-
 confirm_mail_send_code:
   path: /send-confirm
   defaults:
