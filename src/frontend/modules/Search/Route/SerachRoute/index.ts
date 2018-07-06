@@ -7,6 +7,7 @@ import {FeedService} from "../../../Feed/Service/FeedService";
 import {SearchRESTService} from "../../Service/SearchRESTService";
 import {Observable} from "rxjs/Observable";
 import {RouteHelperService} from "../../../Application/Service/RouteHelperService";
+import {FeedCacheService} from "../../../Feed/Service/FeedCacheService";
 
 @Component({
     templateUrl: './template.pug',
@@ -21,10 +22,11 @@ export class SearchRoute extends FeedRoute {
         public route: ActivatedRoute, 
         public router: Router, 
         public feedService: FeedService,
+        public feedCacheService: FeedCacheService,
         public routeHelper: RouteHelperService,
         public searchService: SearchRESTService
     ) {
-        super(route, feedService, routeHelper);
+        super(route, feedService, feedCacheService, routeHelper);
         
         this.route.params.subscribe(data => this.searchInputControl.patchValue(data["path"]))
     }

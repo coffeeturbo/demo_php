@@ -52,6 +52,7 @@ export const Config: ConfigInterface = {
         "constraints": {
             "alias": {
                 "min_length": 3,
+                // @TODO: alias can't be int!!!
                 "match": '^[a-zA-Z0-9\\._]+$'
             },
             "avatar": {

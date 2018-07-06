@@ -16,33 +16,27 @@ export class FeedCacheService {
 
     public saveFeed(feedRequest: GetFeedRequest, observable: Observable<Feed>): void
     {
-        this.cache.push({feedRequest, observable});
+        try {
+            let cache = this.get(feedRequest);
+            this.cache[this.cache.indexOf(cache)] = {feedRequest, observable}; 
+        } catch (e) {
+            this.cache.push({feedRequest, observable});
+        }
     }
     
-    public saveScroll(feedRequest: GetFeedRequest, scroll: number)
+    public saveScroll(feedRequest: GetFeedRequest, scroll: number) : void
     {
-        let cache = this.cache.find(
-            item => JSON.stringify(item.feedRequest) == JSON.stringify(feedRequest)
-        );
-
-        if(!cache) {
-            throw new Error(`Feed is not cached`);
-        }
+        let cache = this.get(feedRequest);
 
         cache.scroll = scroll;
     }
     
-    public addToFeed(feedRequest: GetFeedRequest, feed: Feed) 
+    public addToFeed(feedRequest: GetFeedRequest, feed: Feed) : void 
     {
         delete feedRequest.cursor;
         
-        let cache = this.cache.find(
-            item => JSON.stringify(item.feedRequest) == JSON.stringify(feedRequest)
-        );
-
-        if(cache) {
-            cache.observable = cache.observable.flatMap(oldFeed => [oldFeed.concat(feed)])
-        }
+        let cache = this.get(feedRequest);
+        cache.observable = cache.observable.flatMap(oldFeed => [oldFeed.concat(feed)]);
     }
     
     public getScroll(feedRequest: GetFeedRequest): number

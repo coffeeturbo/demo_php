@@ -20,21 +20,13 @@ export class PostService {
     constructor(
         private rest: PostRESTService, 
         private voteRest: VoteRESTService,
-        private attachmentService: AttachmentService,
         public transferState: TransferState
     ) {}
 
     public get(postId: number): Observable<Post> 
     {
-        let postObservable: Observable<Post>;
-        try {
-            postObservable = this.getFromCache(postId);
-        } catch (e) {
-            postObservable = this.rest.getById(postId)
-                .do(post => this.saveToCache(post))
-        }
-        
-        return postObservable
+        return this.getFromCache(postId)
+            .catch(() => this.rest.getById(postId).do(post => this.saveToCache(post)))
             .do(post => this.onPostResolve.emit(post))
         ;
     }
@@ -92,7 +84,7 @@ export class PostService {
         }
         
         if (!post) {
-            throw new Error(`Post with id "${postId}" is not cached`);
+            return Observable.throw(`Post with id "${postId}" is not cached`);
         }
 
         return Observable.of(post).delay(1); // delay kostil' for angular resolver...
@@ -106,13 +98,17 @@ export class PostService {
         this.transferState.set(postStateKey, post as Post)
     }
 
-    private replaceInCache(oldPost: Post, newPost: Post): void
+    private replaceInCache(oldPost: Post, newPost: Post): Observable<Post>
     {
         let index: number = this.posts.indexOf(oldPost);
         if (index != -1) {
             this.posts[index] = newPost;
             let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + newPost.id);
             this.transferState.set(postStateKey, newPost as Post);
-        } else throw new Error(`${index} not found in cache file`);
+            
+            return Observable.of(newPost).delay(1);
+        } else{
+            Observable.throw(`${index} not found in cache file`);
+        } 
     }
 }
