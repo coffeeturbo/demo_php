@@ -129,6 +129,7 @@ class RecoverPasswordByEmailController extends Controller
             $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);
             $event = new AuthenticationSuccessEvent(['token' => $token], $account, new Response());
 
+            $this->get('gesdinet.jwtrefreshtoken.send_token')->attachRefreshToken($event);
         } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
         }
