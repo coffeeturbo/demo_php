@@ -28,6 +28,11 @@ class PostController extends Controller
     public function createAction(Request $request)
     {
         try {
+            if( !$this->isGranted('ROLE_EMAIL_VERIFED')){
+                throw new AccessDeniedHttpException("У вас нет доступа к данному пути подтвердите аккаунт");
+            }
+
+
             $data = $this->get('app.validate_request')->getData($request, PostFormType::class);
 
             $post = $this->get('post.form.handler.create_post_data_handler')->handle($data);
@@ -93,6 +98,10 @@ class PostController extends Controller
     public function updateAction(Request $request)
     {
         try {
+            if(!$this->isGranted('ROLE_EMAIL_VERIFED')){
+                throw new AccessDeniedHttpException("У вас нет доступа к данному пути подтвердите аккаунт");
+            }
+
             $data = $this->get('app.validate_request')->getData($request, PostFormType::class);
 
             $post = $this->get('post.form.handler.create_post_data_handler')->handle($data);
