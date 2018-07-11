@@ -139,10 +139,6 @@ export class ProfileService implements ProfileServiceInterface{
     
     public isOwn(profile: Profile): boolean
     {
-        // if(!this.auth.isSignedIn()) {
-        //     return false;
-        // }
-
         try {
             let tokenData: Token = this.tokenService.decodeToken();
             return this.isOwnProfileExist() && tokenData.profile_id == profile.id;
@@ -153,10 +149,6 @@ export class ProfileService implements ProfileServiceInterface{
     
     public isOwnProfileExist(): boolean
     {
-        // if(!this.auth.isSignedIn()) {
-        //     return false;
-        // }
-        
         try {
             let tokenData: Token = this.tokenService.decodeToken();
             return !!tokenData.profile_alias || !!tokenData.profile_id;

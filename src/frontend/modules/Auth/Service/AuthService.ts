@@ -21,6 +21,7 @@ import {NoticeType} from "../../Notice/Entity/NoticeType";
 import {AuthModalsService} from "./AuthModalsService";
 import {RecoverPasswordByEmailRequest} from "../Http/Request/RecoverPasswordByEmailRequest";
 import {RecoverPasswordByEmailConfirm} from "../Http/Request/RecoverPasswordByEmailConfirm";
+import {Config} from "../../../app/config";
 
 export interface AuthServiceInterface {
     isSignedIn(): boolean;
@@ -41,6 +42,7 @@ export class AuthService implements AuthServiceInterface
     public onAuthComplete = new EventEmitter<null>();
 
     private tokenExpirationSchedule: Subscription = new Subscription();
+    private messages = Config.auth.messages;
 
     constructor(
         private router: Router,
@@ -90,9 +92,8 @@ export class AuthService implements AuthServiceInterface
     public signUp(body: SignUpRequest): Observable<TokenResponse>
     {
         return this.handleTokenResponse(this.rest.signUp(body).do(() => {
-            /*@TODO: move text in to config */
-            this.noticeService.addNotice(this.translationService.translate("Thank you for register!"), NoticeType.Normal);
-            this.noticeService.addNotice(this.translationService.translate("Please confirm your email at the <a href='/settings'>profile settings<a/>."), NoticeType.Success);
+            this.noticeService.addNotice(this.translationService.translate(this.messages.registered), NoticeType.Normal);
+            this.noticeService.addNotice(this.translationService.translate(this.messages.comfirming), NoticeType.Warning);
         }));
     }
 
@@ -104,6 +105,12 @@ export class AuthService implements AuthServiceInterface
     public changePassword(body: ChangePasswordRequest): Observable<ChangePasswordResponse>
     {
         return this.rest.changePassword(body);
+    }
+
+    public confirmEmail(code: string): Observable<TokenResponse>
+    {
+        return this.handleTokenResponse(this.rest.confirmEmail(code))
+            .do(() => this.noticeService.addNotice(this.translationService.translate(this.messages.confirmed), NoticeType.Success));
     }
     
     public recoverPasswordByEmail(recoverPasswordByEmail: RecoverPasswordByEmailRequest): Observable<{/*@TODO*/}>

@@ -17,7 +17,7 @@ export const AuthLocaleRU = {
     "Passwords do not match": "Введенные пароли не совпадают",
     "Restore password": "Восстановить пароль",
     "Thank you for register!": "Спасибо за регистрацию!",
-    "Please confirm your email at the <a href='/settings'>profile settings<a/>.": "Пожалйста подтвердите свою почту в <a href='/settings'>настройках профиля<a/>.",
+    "Please confirm your email at the <a href='/settings'>profile settings</a>.": "Пожалйста подтвердите свою почту в <a href='/settings'>настройках профиля</a>.",
     "Your email confirmed. Now you can voting and much more!": "Ваша почта подтвеждена. Теперь вы можете оценивать посты и многое другое!",
     "Password changed successfully! For your convenience, we have already authorized you.": "Пароль успешно изменен! Для удобства мы уже авторизовали вас.",
 };

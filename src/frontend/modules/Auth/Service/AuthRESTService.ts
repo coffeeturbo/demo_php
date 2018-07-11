@@ -61,12 +61,12 @@ export class AuthRESTService
         ;
     }
 
-    public confirmEmail(code: string): Observable<{/*@TODO*/}>
+    public confirmEmail(code: string): Observable<TokenResponse>
     {
         let url = `/protected/auth/confirm-mail/${code}`;
 
         return this.http
-            .get<{/*@TODO*/}>(url, {withCredentials: true})
+            .get<TokenResponse>(url, {withCredentials: true})
         ;
     }
     
