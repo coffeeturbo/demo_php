@@ -15,7 +15,6 @@ class FeedController extends Controller
      * @ApiDoc(
      *  section="Feed",
      *  description="Получаем посты",
-     *  authentication=true,
      * )
      *
      */
