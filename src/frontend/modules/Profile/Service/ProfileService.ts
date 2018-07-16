@@ -61,7 +61,7 @@ export class ProfileService implements ProfileServiceInterface{
                     return Observable.of(profile);
                 }
             })
-            ;
+        ;
     }
 
     public checkAlias(alias: string): Observable<CheckAliasResponse>

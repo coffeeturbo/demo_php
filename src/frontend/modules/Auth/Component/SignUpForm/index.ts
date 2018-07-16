@@ -1,4 +1,4 @@
-import {Component, HostListener, Input} from "@angular/core";
+import {Component, HostListener} from "@angular/core";
 import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 
 import {AuthService} from "../../Service/AuthService";
@@ -53,7 +53,8 @@ export class SignUpFormComponent {
                     }
                     
                     this.fail = true;
-                });
+                })
+            ;
         }
     }
 }

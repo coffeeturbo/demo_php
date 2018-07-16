@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Autocomplete} from "../Entity/Autocomplete";
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
 import {SearchRequest} from "../Http/Request/SerachRequest";
 import {Feed} from "../../Feed/Entity/Feed";
 

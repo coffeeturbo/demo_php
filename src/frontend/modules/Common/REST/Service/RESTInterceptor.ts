@@ -1,4 +1,4 @@
-import {forwardRef, Inject, Injectable, Injector, Optional} from '@angular/core';
+import {Injectable, Injector, Optional} from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {Observable} from "rxjs/Observable";
 import {RESTConfig} from "../Config/RESTConfig";
@@ -10,8 +10,8 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 @Injectable()
 export class RESTInterceptor implements HttpInterceptor
 {
-    private path: string = "";
-    private tokenKey: string = "token";
+    private readonly path: string = "";
+    private readonly tokenKey: string = "token";
 
     constructor(
         @Optional() config: RESTConfig, 
