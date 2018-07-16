@@ -5,7 +5,6 @@ import {PostRESTService} from "./PostRESTService";
 import {Post} from "../Entity/Post";
 import {VoteState} from "../../Vote/Entity/Vote";
 import {VoteRESTService} from "../../Vote/Service/VoteRESTService";
-import {AttachmentService} from "../../Attachment/Service/AttachmentService";
 import {PostCreateRequest} from "../Http/Request/PostCreateRequest";
 import * as getSlug from "speakingurl";
 import {PostUpdateRequest} from "../Http/Request/PostUpdateRequest";
@@ -15,7 +14,6 @@ import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 export class PostService {
     private posts: Post[] = [];
     public onPostResolve = new EventEmitter<Post>(true);
-    
     
     constructor(
         private rest: PostRESTService, 
@@ -34,11 +32,18 @@ export class PostService {
     public create(postCreateRequest: PostCreateRequest): Observable<Post>
     {
         return this.rest.create(postCreateRequest)
+            .do(post => this.saveToCache(post))
+        ;
     }
 
     public update(postUpdateRequest: PostUpdateRequest): Observable<Post>
     {
         return this.rest.update(postUpdateRequest)
+            .flatMap(newPost => this.getFromCache(newPost.id)
+                .do(oldPost => this.replaceInCache(oldPost, newPost)) // Try replace from cache
+                .catch(() => Observable.of(newPost).do(post => this.saveToCache(post))) // If an error while getting from the cache - let's caching
+            )
+        ;
     }
 
     public favorite(post: Post): Observable<Post>
