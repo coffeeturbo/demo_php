@@ -1,6 +1,6 @@
 import {Inject, Injectable, Optional} from "@angular/core";
 import {Token} from "../Entity/Token";
-import {JwtHelper} from "angular2-jwt";
+import * as jwtDecode from "jwt-decode";
 import * as Cookies from 'universal-cookie';
 import {RESPONSE} from "@nguniversal/express-engine/tokens";
 import {Response} from "express";
@@ -70,13 +70,11 @@ export class TokenService {
 
     public decodeToken(): Token
     {
-        let jwtHelper: JwtHelper = new JwtHelper();
-        return jwtHelper.decodeToken(this.getToken() || "");
+        return jwtDecode(this.getToken() || "");
     }
     
     public isTokenExpired() : boolean
     {
-        let jwtHelper: JwtHelper = new JwtHelper();
-        return !this.getToken() || jwtHelper.isTokenExpired(this.getToken());
+        return !this.getToken() || this.getTokenExpTime() < 0
     }
 }
