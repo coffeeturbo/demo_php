@@ -13,22 +13,29 @@ class AddRatingOrder implements AddOrderInterface
         $builder->addOrderBy('p.created', $criteria->getDirection());
         if($postId = $criteria->getCursor()){
 
+            $post = $builder->getEntityManager()->getRepository('PostBundle:Post')->getPostById($postId);
+
             // desc
             switch(strtolower($criteria->getDirection())){
                 case 'desc':
-                    $builder->andWhere('p.id < :pid');
+                    $builder->andWhere('p.created < :created');
+                    $builder->andWhere('p.votesRating <= :rating');
                     break;
                 case 'asc':
-                    $builder->andWhere('p.id > :pid');
+                    $builder->andWhere('p.created > :created');
+                    $builder->andWhere('p.votesRating => :rating');
                     break;
 
                 default: {
-                    $builder->andWhere('p.id < :pid');
+                    $builder->andWhere('p.created < :created');
+                    $builder->andWhere('p.votesRating <= :rating');
                 }
-
             }
             $builder
-                ->setParameter('pid', $postId);
+                ->setParameters([
+                    'created' => $post->getCreated(),
+                    'rating' => $post->getVotesRating()
+                ]);
         }
     }
 
