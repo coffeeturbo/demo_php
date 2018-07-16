@@ -1,4 +1,4 @@
-modal([width]="'330px'", [close-mode]="closeMode", [ngClass]="{shake: signInForm.fail}", (on-close)='close()')
+modal(width="370px", [ngClass]="{shake: signInForm.fail}", (on-close)='onClose.emit()')
   loader(*ngIf="signInForm.disabled")
   modal-header {{'Login to the resource' | translate}}
   modal-body

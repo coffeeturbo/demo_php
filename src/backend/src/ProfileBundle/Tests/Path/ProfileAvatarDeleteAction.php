@@ -8,7 +8,7 @@ use ProfileBundle\Tests\ProfileController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProfileAvatarDeleteActionTest extends ProfileController
+class ProfileAvatarDeleteAction extends ProfileController
 {
     protected $fixtures;
 

@@ -4,6 +4,7 @@ export type Role =
     "ROLE_PHONE_VERIFED" |
     "ROLE_EMAIL_VERIFED" |
     "ROLE_VERIFED" |
-    "ROLE_USER"
+    "ROLE_USER" | 
+    "ROLE_ADMIN"
 ;
 export type Roles = Role[];

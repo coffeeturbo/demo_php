@@ -5,6 +5,7 @@ import {Feed} from "../../Entity/Feed";
 import {FeedService} from "../../Service/FeedService";
 import {Observable} from "rxjs/Observable";
 import {RouteHelperService} from "../../../Application/Service/RouteHelperService";
+import {FeedCacheService} from "../../Service/FeedCacheService";
 
 @Component({
     templateUrl: "./template.pug",
@@ -18,6 +19,7 @@ export class FeedRoute implements OnInit {
     constructor(
         public route: ActivatedRoute,
         public feedService: FeedService,
+        public feedCacheService: FeedCacheService,
         public routeHelper: RouteHelperService
     ) {}
 
@@ -46,11 +48,18 @@ export class FeedRoute implements OnInit {
 
         let delay = new Date(Date.now() + 500);
         this.isLoading = true;
-        this.feedService
+        
+        let feedObservable = this.feedService
             .get(10, this.route.snapshot.data.feedRequest)
             .delayWhen(() => Observable.timer(delay))
             .finally(() => this.isLoading = false)
-            .subscribe((feed) => this.feed = feed)
+            .publishReplay(1)
+            .refCount()
         ;
+        
+        feedObservable.subscribe((feed) => this.feed = feed);
+
+        this.feedCacheService.saveFeed(this.route.snapshot.data.feedRequest, feedObservable)
+        
     }
 }

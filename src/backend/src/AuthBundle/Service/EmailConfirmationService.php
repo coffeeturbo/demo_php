@@ -80,7 +80,6 @@ class EmailConfirmationService
         $swiftMessage->setFrom($this->emailNoReply)
             ->setTo($mailTo)
             ->setBody($message, 'text/html')
-//        ->setFormat()
         ;
 
         return $swiftMessage;
@@ -116,8 +115,11 @@ class EmailConfirmationService
        $confirmation = $this->confirmationRepository->findOneBy([
            'account' => $this->authService->getAccount(),
            'isConfirmed' => false,
-           'wasted' => false
+           'wasted' => false,
+           'code' => $code,
+           'type' => EmailConfirmationType::INT_CODE
        ]);
+
 
         if(!$confirmation) {
             throw new NotFoundHttpException("no code was found");

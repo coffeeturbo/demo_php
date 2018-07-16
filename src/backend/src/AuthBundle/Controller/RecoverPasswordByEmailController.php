@@ -2,11 +2,13 @@
 namespace AuthBundle\Controller;
 
 use AccountBundle\Entity\Account;
+use AppBundle\Exception\BadRestRequestHttpException;
 use AppBundle\Http\ErrorJsonResponse;
 use AuthBundle\Entity\Confirmation;
 use AuthBundle\Entity\PasswordRecoverConfirmationType;
 use AuthBundle\Form\ConfirmPasswordRecoveryType;
 use AuthBundle\Form\EmailPasswordRecoveryType;
+use Http\Client\Exception\HttpException;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,6 +16,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RecoverPasswordByEmailController extends Controller
 {
@@ -29,8 +34,10 @@ class RecoverPasswordByEmailController extends Controller
      *  output = {"class" = "AuthBundle\Response\SuccessAuthResponse"},
      *  statusCodes = {
      *      200 = "Успешная смена пароля",
-     *      401 = "неавторизован",
-     *      403 = "неправильный пароль",
+     *      400 = "url cannot be null",
+     *      403 = "превышено количество запросов",
+     *      404 = "email not found",
+     *      409 = "token already exists",
      *  }
      * )
      * @param Request $request
@@ -43,14 +50,20 @@ class RecoverPasswordByEmailController extends Controller
             $service = $this->get('auth.service.passord_recovery_service');
 
             /** @var Account $account */
-            $account = $this->get('account.repository')->findOneBy(['email'=> $data['email']]);
-
-            if(is_null($account)) throw new AccessDeniedHttpException('this email is not found');
+            $account = $this->get('account.repository')->findOneByEmail($data['email']);
 
             $service->generateEmailMessage($data['url'], $account);
 
+        } catch(BadRequestHttpException
+        | ConflictHttpException
+        | AccessDeniedHttpException
+        | NotFoundHttpException
+        | HttpException
+        | BadRestRequestHttpException
+        $exception) {
+            return new ErrorJsonResponse($exception->getMessage(), [], $exception->getStatusCode());
         } catch(\Exception $exception){
-            return new ErrorJsonResponse($exception->getMessage());
+            return new ErrorJsonResponse($exception->getMessage(),$exception->getTrace());
         }
 
         return new JsonResponse([
@@ -70,9 +83,9 @@ class RecoverPasswordByEmailController extends Controller
      *  input = {"class" = "AuthBundle\Form\ConfirmPasswordRecoveryType", "name"  = ""},
      *  output = {"class" = "AuthBundle\Response\SuccessAuthResponse"},
      *  statusCodes = {
-     *      200 = "Успешная смена пароля",
-     *      401 = "неавторизован",
+     *      200 = "Успешно подтвержден",
      *      403 = "неправильный пароль",
+     *      404 = "неправильный пароль",
      *  }
      * )
      * @param Request $request
@@ -113,13 +126,15 @@ class RecoverPasswordByEmailController extends Controller
 
             $this->get('fos_user.util.user_manipulator')->changePassword($account->getUsername(), $newPassword);
 
-        }catch(\Exception $e){
+            $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);
+            $event = new AuthenticationSuccessEvent(['token' => $token], $account, new Response());
+
+            $this->get('gesdinet.jwtrefreshtoken.send_token')->attachRefreshToken($event);
+        } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage());
         }
 
 
-        $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);
-        $event = new AuthenticationSuccessEvent(['token' => $token], $account, new Response());
 
         return $this->forward('AuthBundle:RenderToken:render', $event->getData());
     }

@@ -18,7 +18,6 @@ doctype html
     button(type="button", (click)="exec('formatBlock', 'h3')", [class.active]="state('formatBlock', 'h3')")
       .fa.fa-fw.fa-header
   .linkInput(*ngIf="isLinkInputActive")
-    // @TODO implement target="blank" !
     input(#linkInput, ng-auto-focus, type="text", (keydown.enter)="deactivateLinkInput(); execCreateLinkTargetBlank($event.target.value);", placeholder="{{'Paste link and press enter' | translate}}")
     button(type="button", (click)='deactivateLinkInput()')
       .fa.fa-times

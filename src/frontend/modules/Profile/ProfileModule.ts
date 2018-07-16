@@ -23,6 +23,7 @@ import {FeedModule} from "../Feed/FeedModule";
 import {ProfileFeedRequestResolver} from "./Service/ProfileFeedRequestResolver";
 import {ProfileAvatarComponent} from "./Component/ProfileAvatar";
 import {AuthModule} from "../Auth/AuthModule";
+import {ProfileNotFoundComponent} from "./Component/ProfileNotFound";
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {AuthModule} from "../Auth/AuthModule";
         ProfileRoute,
         ProfileSettingsRoute,
         ProfileAvatarRoute,
+        ProfileNotFoundComponent,
         ProfileDateCreatedPipe,
         ProfileBirthdayPipe
     ],

@@ -5,7 +5,6 @@ import 'rxjs/add/operator/do';
 
 import {Profile} from "../Entity/Profile";
 import {ProfileRESTService} from "./ProfileRESTService";
-import {ProfileResponse} from "../Http/Response/ProfileResponse";
 import {Token} from "../../Auth/Entity/Token";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {AuthService} from "../../Auth/Service/AuthService";
@@ -43,30 +42,12 @@ export class ProfileService implements ProfileServiceInterface{
 
     public get(path: string): Observable<Profile> 
     {
-        let profileObservable: Observable<Profile>;
-        try {
-            profileObservable = this.getFromCache(path);
-        } catch (e) {
-            let profileResponseObservable: Observable<ProfileResponse>;
-
-            switch (this.getPathType(path)) {
-                case "id":
-                    profileResponseObservable = this.rest.getById(+path);
-                    break;
-                case "alias":
-                    profileResponseObservable = this.rest.getByAlias(path);
-                    break;
-            }
-
-            profileObservable = profileResponseObservable
-                .map(profileResponse => profileResponse.entity)
-                .do(profile => this.saveToCache(profile, path))
-            ;
-        }
-
-        return profileObservable.do(profile => this.onProfileResolve.emit(profile));
+        return this.getFromCache(path)
+            .catch(() => this.getByPath(path).do(profile => this.saveToCache(profile, path)))
+            .do(profile => this.onProfileResolve.emit(profile));
     }
     
+   
     public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile> {
         return this.rest.update(profile.id, request)
             .map(profileResponse => profileResponse.entity)
@@ -80,7 +61,7 @@ export class ProfileService implements ProfileServiceInterface{
                     return Observable.of(profile);
                 }
             })
-            ;
+        ;
     }
 
     public checkAlias(alias: string): Observable<CheckAliasResponse>
@@ -158,10 +139,6 @@ export class ProfileService implements ProfileServiceInterface{
     
     public isOwn(profile: Profile): boolean
     {
-        // if(!this.auth.isSignedIn()) {
-        //     return false;
-        // }
-
         try {
             let tokenData: Token = this.tokenService.decodeToken();
             return this.isOwnProfileExist() && tokenData.profile_id == profile.id;
@@ -172,10 +149,6 @@ export class ProfileService implements ProfileServiceInterface{
     
     public isOwnProfileExist(): boolean
     {
-        // if(!this.auth.isSignedIn()) {
-        //     return false;
-        // }
-        
         try {
             let tokenData: Token = this.tokenService.decodeToken();
             return !!tokenData.profile_alias || !!tokenData.profile_id;
@@ -204,7 +177,8 @@ export class ProfileService implements ProfileServiceInterface{
         }
         
         if (!profile) {
-            throw new Error(`Profile with path "${path}" is not cached`);
+            return Observable.throw(`Profile with path "${path}" is not cached`);
+            // throw new Error(`Profile with path "${path}" is not cached`);
         }
 
         return Observable.of(profile).delay(1); // delay kostil' for angular resolver...
@@ -229,6 +203,14 @@ export class ProfileService implements ProfileServiceInterface{
     private getPathType(path: string): PathType
     {
         return /^\d+$/.test(path) ? "id" : "alias";
+    }
+
+    private getByPath(path: string): Observable<Profile>
+    {
+        switch (this.getPathType(path)) {
+            case "id": return this.rest.getById(+path).map(profileResponse => profileResponse.entity);
+            case "alias": return this.rest.getByAlias(path).map(profileResponse => profileResponse.entity);
+        }
     }
 }
 

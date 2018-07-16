@@ -1,4 +1,10 @@
 form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$event.preventDefault()", chrome-autofill-fix)
+  ng-container(*ngIf="form.hasError('denied')")
+    .errors
+      i.fa.fa-exclamation-circle
+      ul
+        li {{ "Incorrect data!" | translate }}
+    br
   .material-field
     i.fa.fa-user.fa-lg.fa-fw
     .input-box
@@ -20,18 +26,25 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
         | {{"Not my PC" | translate }} 
         .fa.fa-question-circle(title="{{'Auto sign out after 1 hour' | translate}}")
 
-          
-  .controls(*ngIf="showControls")
-    button.btn-material.secondary(type="button", routerLink="/register")
-      .fa.fa-user-plus
-      span {{"Registration" | translate }}
+  .controls
     button.btn-material.primary(type="submit", [disabled]="!form.valid")
       .fa.fa-sign-in
       span {{"Sign in" | translate }}
-  br
+
+
   //.hr-box
   //  .hr-title {{"or sign in with" | translate }}
   //  hr
   //
   //.controls.center
   //  social-buttons((onConnect)="disabled = true; fail = false", (onComplete)="disabled = false", (onFail)="fail = true")
+
+  .hr-box
+    .hr-title {{"or you can" | translate }}
+    hr
+  
+  .controls.center
+    button.btn-material.secondary(type="button", (click)="authModalsService.show(AuthModals.signUp)")
+      small {{"Register" | translate }}
+    button.btn-material.secondary(type="button", (click)="authModalsService.show(AuthModals.recoverPasswordByEmail)")
+      small {{"Restore password" | translate }}

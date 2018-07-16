@@ -41,3 +41,11 @@ vote_comment_delete:
   defaults: { _controller: VoteBundle:CommentVote:voteRemove }
   requirements:
     commentId: \d+
+
+vote_profile:
+  methods: [ GET ]
+  path: /profile/{profile_id}/type/{type}
+  defaults: { _controller: VoteBundle:ProfileVotes:getVotes }
+  requirements:
+    profile_id: \d+
+    type: \d+

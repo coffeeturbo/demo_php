@@ -24,7 +24,7 @@ services:
     build: ./docker/php
     stdin_open: true
     volumes: 
-      - ./docker/php/ssmtp/jet.ini:/usr/local/etc/php/conf.d/jet.ini:ro
+      - ./docker/php/conf.d/jet.ini:/usr/local/etc/php/conf.d/jet.ini:ro
       - ./src:/opt/jet
     depends_on: [mysql]
 

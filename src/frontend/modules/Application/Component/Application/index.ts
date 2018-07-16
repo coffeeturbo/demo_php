@@ -14,6 +14,9 @@ import {SearchRESTService} from "../../../Search/Service/SearchRESTService";
 import {FormControl, Validators} from "@angular/forms";
 import {Autocomplete} from "../../../Search/Entity/Autocomplete";
 import {PostService} from "../../../Post/Service/PostService";
+import {AuthModals} from "../../../Auth/Entity/AuthModals";
+import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
+import {SettingsModalService} from "../../../Settings/Service/SettingsModalService";
 
 @Component({
     selector: "application",
@@ -23,6 +26,7 @@ import {PostService} from "../../../Post/Service/PostService";
 export class ApplicationComponent {
     @HostBinding("class") className: string = "";
     public device = Device;
+    public AuthModals = AuthModals;
     public isProfileTooltipVisible = false;
     public autocomplete: Autocomplete[] = [];
     public searchInputControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
@@ -31,13 +35,15 @@ export class ApplicationComponent {
         public router: Router,
         public sidebar: SidebarService,
         public auth: AuthService,
+        public authModalsService: AuthModalsService,
         public profile: ProfileService,
         public pl: PlatformService,
+        public postService: PostService,
+        public settingsModalService: SettingsModalService,
         private appScrollService: ApplicationScrollService,
         private routeHelper: RouteHelperService,
         private loadingBarEvents: LoadingBarEvents,
         private searchService: SearchRESTService,
-        private postService: PostService
     ) {
         loadingBarEvents.onChangeState
             .map((loadingBar: LoadingBar) => loadingBar.state)

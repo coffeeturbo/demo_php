@@ -1,8 +1,10 @@
-import {Component, HostListener, Input} from "@angular/core";
+import {Component, HostListener} from "@angular/core";
 import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 
 import {AuthService} from "../../Service/AuthService";
 import {Config} from "../../../../app/config";
+import {AuthModals} from "../../Entity/AuthModals";
+import {AuthModalsService} from "../../Service/AuthModalsService";
 
 
 @Component({
@@ -13,8 +15,8 @@ import {Config} from "../../../../app/config";
 
 export class SignUpFormComponent {
     public config = Config;
+    public AuthModals = AuthModals;
 
-    @Input("show-controls") showControls: boolean = true;
     public isPasswordHidden: boolean = true;
     public disabled: boolean = false;
     public fail: boolean = false;
@@ -29,7 +31,7 @@ export class SignUpFormComponent {
         }
     });
 
-    constructor(private authService: AuthService) {}
+    constructor(public authModalsService: AuthModalsService, private authService: AuthService) {}
 
     @HostListener('document:keyup.enter')
     public submit(): void {
@@ -51,7 +53,8 @@ export class SignUpFormComponent {
                     }
                     
                     this.fail = true;
-                });
+                })
+            ;
         }
     }
 }

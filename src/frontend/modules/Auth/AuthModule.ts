@@ -7,9 +7,6 @@ import {SignInFormComponent} from "./Component/SignInForm";
 import {SignUpFormComponent} from "./Component/SignUpForm";
 import {SocialButtonsComponent} from "./Component/SocialButtons";
 
-import {SignInRoute} from "./Route/SignInRoute";
-import {SignUpRoute} from "./Route/SignUpRoute";
-
 import {AuthRESTService} from "./Service/AuthRESTService";
 import {AuthService} from "./Service/AuthService";
 import {CanActivateService} from "./Service/CanActivateService";
@@ -17,6 +14,12 @@ import {OAuthService} from "./Service/OAuthService";
 import {TokenService, TokenServiceConfig} from "./Service/TokenService";
 import {Config} from "../../app/config";
 import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
+import {SignInFormModalComponent} from "./Component/SignInFormModal";
+import {AuthModalsService} from "./Service/AuthModalsService";
+import {SignUpFormModalComponent} from "./Component/SignUpFormModal";
+import {RecoverPasswordByEmailFormComponent} from "./Component/RecoverPasswordByEmailForm";
+import {RecoverPasswordByEmailFormModalComponent} from "./Component/RecoverPasswordByEmailFormModal";
+import {RecoverPasswordByEmailRoute} from "./Routes/RecoverPasswordByEmailRoute";
 
 @NgModule({
     imports: [
@@ -26,10 +29,13 @@ import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
     declarations: [
         SignInFormComponent,
         SignUpFormComponent,
-        SignInRoute,
-        SignUpRoute,
         SocialButtonsComponent,
-        ConfirmEmailFormComponent
+        ConfirmEmailFormComponent,
+        SignInFormModalComponent,
+        SignUpFormModalComponent,
+        RecoverPasswordByEmailFormComponent,
+        RecoverPasswordByEmailFormModalComponent,
+        RecoverPasswordByEmailRoute
     ],
     providers: [
         AuthRESTService,
@@ -37,6 +43,7 @@ import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
         OAuthService,
         CanActivateService,
         TokenService,
+        AuthModalsService,
         {
             provide: TokenServiceConfig,
             useValue: {
@@ -46,7 +53,10 @@ import {ConfirmEmailFormComponent} from "./Component/ConfirmEmailForm";
         }
     ],
     exports: [
-        ConfirmEmailFormComponent
+        SignInFormModalComponent,
+        SignUpFormModalComponent,
+        ConfirmEmailFormComponent,
+        RecoverPasswordByEmailFormModalComponent
     ]
 })
 export class AuthModule {}

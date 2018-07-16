@@ -15,7 +15,7 @@ export class ProfileFeedRequestResolver implements Resolve<GetFeedRequest> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GetFeedRequest> {
         return this.profileService.onProfileResolve
             .first()
-            .map(profile => ({profile: profile.id}))
+            .map(profile => (profile ? {profile: profile.id} : null))
             .do(feedRequest => this.feedRequestService.onFeedRequestResolve.emit(feedRequest))
         ;
     }

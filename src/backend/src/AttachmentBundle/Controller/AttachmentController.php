@@ -70,7 +70,7 @@ class AttachmentController extends Controller
         $attachmentStrategy = $this->get('attachment.service.strategy.image_attachment_strategy');
 
         $image = $this->get('image.service')
-                    ->generateImage($file->getRealPath(), null, $attachmentStrategy);
+                    ->generateImage($file->getRealPath(), 'def', $attachmentStrategy);
 
         $attachmentService = $this->get('attachment.service.attachment_service');
 

@@ -1,0 +1,54 @@
+ng-container([ngSwitch]="step")
+  form.material-form([formGroup]="sendEmailForm", (ngSubmit)="sendEmail()", (keydown.enter)="$event.preventDefault()", *ngSwitchCase="RecoverPasswordByEmailStep.sendEmail")
+    ng-container(*ngIf="sendEmailForm.hasError('unknown')")
+      .errors
+        i.fa.fa-exclamation-circle
+        ul
+          // @TODO: translate and extend!
+          li Неизвестная ошибка, попробуйте позже.
+      br
+    .material-field
+      i.fa.fa-user.fa-lg.fa-fw
+      .input-box
+        input#email(ng-detect-empty-input, type="text", formControlName="email")
+        hr
+        label.material-label(for="email") {{ 'Email' | translate }}
+  
+    .controls
+      button.btn-material.primary(type="submit", [disabled]="!sendEmailForm.valid")
+        span {{"Send" | translate }}
+
+  form.material-form([formGroup]="changePasswordForm", (ngSubmit)="changePassword()", (keydown.enter)="$event.preventDefault()", *ngSwitchCase="RecoverPasswordByEmailStep.changePassword")
+    ng-container(*ngIf="changePasswordForm.hasError('unknown')")
+      .errors
+        i.fa.fa-exclamation-circle
+        ul
+          // @TODO: translate and extend!
+          li Неизвестная ошибка, попробуйте позже.
+        br
+    .material-field(*ngIf="!code")
+      i.fa.fa-key.fa-lg.fa-fw
+      .input-box
+        input#code(ng-detect-empty-input, type="text", formControlName="code")
+        hr
+        label.material-label(for="code") {{ 'Code from email letter' | translate }}
+
+    .material-field
+      i.fa.fa-lock.fa-lg.fa-fw
+      .input-box
+        input(type="{{isPasswordHidden?'password':'text'}}", autocomplete="new-password", formControlName="password", placeholder="{{'Enter new password' | translate }}")
+        hr
+        tooltip(*ngIf="changePasswordForm.controls['password'].touched && changePasswordForm.controls['password'].invalid")
+          small {{ config.account.constraints.password.invalid_message | translate }}
+      i.fa.fa-eye.show-password(*ngIf="changePasswordForm.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
+    .material-field
+      i.fa.fa-lg.fa-fw
+      .input-box
+        input(type="password", formControlName="password_confirm", autocomplete="new-password", placeholder="{{'Confirm password' | translate}}")
+        hr
+        tooltip(*ngIf="changePasswordForm.hasError('not_equal_passwords') && changePasswordForm.controls['password_confirm'].touched")
+          small {{"Passwords do not match" | translate }}      
+    
+    .controls
+      button.btn-material.primary(type="submit", [disabled]="!changePasswordForm.valid")
+        span {{"Send" | translate }}

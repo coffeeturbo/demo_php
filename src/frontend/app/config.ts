@@ -26,7 +26,12 @@ export const Config: ConfigInterface = {
     },
     "auth": {
         "token_key": "token",
-        "refresh_token_key": "refresh_token"
+        "refresh_token_key": "refresh_token",
+        "messages": {
+            "confirmed": "Your email confirmed. Now you can voting and much more!",
+            "comfirming": "Please confirm your email at the <a href='/settings'>profile settings</a>.",
+            "registered": "Thank you for register!"
+        }
     },
     "applications" : {
         "metrika" : {
@@ -52,6 +57,7 @@ export const Config: ConfigInterface = {
         "constraints": {
             "alias": {
                 "min_length": 3,
+                // @TODO: alias can't be int!!!
                 "match": '^[a-zA-Z0-9\\._]+$'
             },
             "avatar": {
@@ -99,7 +105,12 @@ interface ConfigInterface {
     };
     auth: {
         token_key: string,
-        refresh_token_key: string
+        refresh_token_key: string,
+        messages: {
+            confirmed: string,
+            comfirming: string,
+            registered: string
+        }
     };
     account: {
         constraints: {

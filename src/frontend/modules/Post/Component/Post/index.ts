@@ -1,7 +1,4 @@
-import {
-    AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit,
-    Renderer2
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostBinding, HostListener, Input, OnDestroy, Renderer2} from '@angular/core';
 import {Router} from "@angular/router";
 import {TranslationService} from "@angular-addons/translate";
 import * as getSlug from "speakingurl";
@@ -13,8 +10,10 @@ import {ApplicationScrollService} from "../../../Application/Service/Application
 import {VoteState} from "../../../Vote/Entity/Vote";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {ProfileService} from "../../../Profile/Service/ProfileService";
-import {Subscription} from "rxjs/Subscription";
+import {Subscription} from "rxjs";
 import {PlatformService} from "../../../Application/Service/PlatformService";
+import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
+import {AuthModals} from "../../../Auth/Entity/AuthModals";
 
 @Component({
     selector: 'post',
@@ -47,6 +46,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
 
     constructor(
         private authService: AuthService,
+        private authModalsService: AuthModalsService,
         public render: Renderer2,
         public el: ElementRef,
         public appScrollService: ApplicationScrollService,
@@ -99,7 +99,7 @@ export class PostComponent implements AfterViewInit, OnDestroy {
 
     public vote(state: VoteState) {
         if (!this.authService.isSignedIn()) {
-            this.router.navigate(["login"]);
+            this.authModalsService.show(AuthModals.signIn);
         } else if (!this.voteInProgress && this.post.votes.state !== state) {
             this.post.votes.rating += state === "positive" ? 1 : -1;
 

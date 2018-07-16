@@ -40,14 +40,10 @@ export class ProfileRoute {
             this.feed = data.profileFeed;
 
             // Preload fullsize avatar
-            if(this.profile.avatar && pl.isPlatformBrowser()) {
+            if(this.profile && this.profile.avatar && pl.isPlatformBrowser()) {
                 (new Image()).src = this.profile.avatar.origin.public_path;
             }
         });
-    }
-
-    public update() {
-        this.profile = this.route.snapshot.data["profile"];
     }
     
     public translate(string: string) {

@@ -1,13 +1,7 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
-import {AuthRESTService} from "../../Service/AuthRESTService";
 import {AuthService} from "../../Service/AuthService";
-import {TokenService} from "../../Service/TokenService";
-import {TokenResponse} from "../../Http/Response/TokenResponse";
-import {NoticeService} from "../../../Notice/Service/NoticeService";
-import {NoticeType} from "../../../Notice/Entity/NoticeType";
-import {TranslationService} from "@angular-addons/translate/index";
 
 @Component({
     selector: "confirm-email-form",
@@ -20,23 +14,9 @@ export class ConfirmEmailFormComponent {
         verification_code: new FormControl(null, Validators.required),
     });
 
-    constructor(
-        private authRESTSerice: AuthRESTService,
-        private authService: AuthService,
-        private tokenService: TokenService,
-        private noticeService: NoticeService,
-        public translationService: TranslationService
-    ) {}
+    constructor(private authService: AuthService) {}
 
     submit() {
-        this.authRESTSerice.confirmEmail(this.form.value.verification_code)
-            .flatMap(() => this.authService.refreshToken({"refresh_token": this.tokenService.getRefreshToken()}))
-            .subscribe((response: TokenResponse) => {
-                this.authService.addTokenExpirationSchedule();
-                // @TODO: Move text in to config
-                this.noticeService.addNotice(this.translationService.translate("Your email confirmed. Now you can voting and much more!"), NoticeType.Success);
-                this.onSuccess.emit();
-            })
-        ;
+        this.authService.confirmEmail(this.form.value.verification_code).subscribe(() => this.onSuccess.emit());
     }
 }

@@ -2,7 +2,6 @@ import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {Observable} from "rxjs/Observable";
 
-import {GetFeedRequest} from "../../Feed/Http/Request/GetFeedRequest";
 import {FeedRequestService} from "../../Feed/Service/FeedRequestService";
 import {SearchRequest} from "../Http/Request/SerachRequest";
 

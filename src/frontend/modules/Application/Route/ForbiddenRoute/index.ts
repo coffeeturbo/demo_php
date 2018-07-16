@@ -1,8 +1,8 @@
-import {Component, Inject, Injector, Optional} from "@angular/core";
-import {RESPONSE} from "@nguniversal/express-engine/tokens";
-import {Response} from "express";
+import {Component} from "@angular/core";
 
 import {PlatformService} from "../../Service/PlatformService";
+import {AuthModals} from "../../../Auth/Entity/AuthModals";
+import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
 
 @Component({
     templateUrl: "./template.pug",
@@ -10,15 +10,10 @@ import {PlatformService} from "../../Service/PlatformService";
 })
 
 export class ForbiddenRoute {
-    constructor(
-        private pl: PlatformService,
-        private injector: Injector,
-        @Optional() @Inject(RESPONSE) private res: Response)
-    {}
+    public AuthModals = AuthModals;
+    constructor(public authModalsService: AuthModalsService, private pl: PlatformService) {}
 
     ngOnInit() {
-        if (this.pl.isPlatformServer()) {
-            this.res.status(403);
-        }
+        this.pl.setPageStatus(403);
     }
 }

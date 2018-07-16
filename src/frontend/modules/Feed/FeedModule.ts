@@ -34,6 +34,7 @@ import {FeedRequestService} from "./Service/FeedRequestService";
         FeedResolver
     ],
     exports: [
+        PostModule,
         FeedComponent,
         FeedRefreshButtonComponent
     ]

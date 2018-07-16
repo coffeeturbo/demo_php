@@ -8,6 +8,8 @@ import {TokenResponse} from "../Http/Response/TokenResponse";
 import {HttpClient} from "@angular/common/http";
 import {ChangePasswordRequest} from "../Http/Request/ChangePasswordRequest";
 import {ChangePasswordResponse} from "../Http/Response/ChangePasswordResponse";
+import {RecoverPasswordByEmailRequest} from "../Http/Request/RecoverPasswordByEmailRequest";
+import {RecoverPasswordByEmailConfirm} from "../Http/Request/RecoverPasswordByEmailConfirm";
 
 @Injectable()
 export class AuthRESTService
@@ -50,22 +52,39 @@ export class AuthRESTService
         ;
     }
     
-    public sendEmailVerificationCode() 
+    public sendEmailVerificationCode(): Observable<{/*@TODO*/}>
     {
         let url = "/protected/auth/send-confirm";
 
         return this.http
             .post<{/*@TODO*/}>(url, null, {withCredentials: true})
         ;
-    }    
-    public confirmEmail(code: string) 
+    }
+
+    public confirmEmail(code: string): Observable<TokenResponse>
     {
         let url = `/protected/auth/confirm-mail/${code}`;
 
         return this.http
-            .get<{/*@TODO*/}>(url, {withCredentials: true})
+            .get<TokenResponse>(url, {withCredentials: true})
         ;
     }
     
+    public recoverPasswordByEmail(recoverPasswordByEmail: RecoverPasswordByEmailRequest): Observable<{/*@TODO*/}>
+    {
+        let url = `/auth/password-recovery/email-send`;
+
+        return this.http
+            .put<{/*@TODO*/}>(url, recoverPasswordByEmail)
+        ;
+    }
     
+    public recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm: RecoverPasswordByEmailConfirm): Observable<TokenResponse>
+    {
+        let url = `/auth/password-recovery/email-recover/confirm`;
+        
+        return this.http
+            .post<TokenResponse>(url, recoverPasswordByEmailConfirm)
+        ;
+    }
 }

@@ -2,6 +2,7 @@
 namespace AuthBundle\Controller;
 
 use AppBundle\Http\ErrorJsonResponse;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -9,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class SendMailController extends Controller
+class ConfirmMailController extends Controller
 {
 
     /**
@@ -79,15 +80,17 @@ class SendMailController extends Controller
 
             if($sended === 0) throw new \Exception("message not sended");
 
+            $account = $this->getUser();
+            $token = $this->get('lexik_jwt_authentication.jwt_manager')->create($account);
+            $event = new AuthenticationSuccessEvent(['token' => $token], $account, new Response());
+
+            $this->get('gesdinet.jwtrefreshtoken.send_token')->attachRefreshToken($event);
         } catch(AccessDeniedHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         } catch(\Exception $e){
             return new ErrorJsonResponse($e->getMessage(), $e->getTrace());
         }
 
-        return new JsonResponse([
-            'success' => true
-        ]);
-
+        return $this->forward('AuthBundle:RenderToken:render', $event->getData());
     }
 }

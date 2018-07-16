@@ -3,10 +3,11 @@ import {Comment} from "../../Entity/Comment";
 import {AttachmentType} from "../../../Attachment/Entity/Attachment";
 import {AuthService} from "../../../Auth/Service/AuthService";
 import {VoteState} from "../../../Vote/Entity/Vote";
-import {Router} from "@angular/router";
 import {Post} from "../../../Post/Entity/Post";
 import {CommentService} from "../../Service/CommentService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
+import {AuthModals} from "../../../Auth/Entity/AuthModals";
+import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
 
 @Component({
     selector: 'comment',
@@ -31,7 +32,7 @@ export class CommentComponent implements OnInit {
         public auth: AuthService,
         private authService: AuthService,
         private commentService: CommentService,
-        private router: Router
+        private authModalsService: AuthModalsService
     ){}
 
     ngOnInit() {
@@ -52,7 +53,7 @@ export class CommentComponent implements OnInit {
 
     public vote(state: VoteState) {
         if (!this.authService.isSignedIn()) {
-            this.router.navigate(["login"]);
+            this.authModalsService.show(AuthModals.signIn);
         } else if (!this.voteInProgress && this.comment.votes.state !== state) {
             this.comment.votes.rating += state === "positive" ? 1 : -1;
 

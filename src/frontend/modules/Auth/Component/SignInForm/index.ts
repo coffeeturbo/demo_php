@@ -1,7 +1,10 @@
-import {Component, HostListener, Input} from "@angular/core";
+import {Component, HostListener} from "@angular/core";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 import {AuthService} from "../../Service/AuthService";
+import {AuthModalsService} from "../../Service/AuthModalsService";
+import {AuthModals} from "../../Entity/AuthModals";
+import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
 
 @Component({
     selector: "sign-in-form",
@@ -10,7 +13,7 @@ import {AuthService} from "../../Service/AuthService";
 })
 export class SignInFormComponent {
 
-    @Input("show-controls") showControls: boolean = true;
+    public AuthModals = AuthModals;
     public isPasswordHidden: boolean = true;
     public disabled: boolean = false;
     public fail: boolean = false;
@@ -20,7 +23,7 @@ export class SignInFormComponent {
         dont_remember: new FormControl(false)
     });
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService, public authModalsService: AuthModalsService) {}
 
     @HostListener('document:keydown.enter')
     public submit(): void {
@@ -36,9 +39,14 @@ export class SignInFormComponent {
                     dont_remember: formData.dont_remember
                 })
                 .finally(() => this.disabled = false)
-                .subscribe(null, () => {
+                .subscribe(null, (error: ResponseFailure) => {
                     this.fail = true;
-                    this.form.controls.password.reset();
+                    switch (error.code) {
+                        case 401 :
+                            this.form.controls.password.reset();
+                            this.form.setErrors({"denied": true}); 
+                        break;
+                    }
                 });
         }
     }

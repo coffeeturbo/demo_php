@@ -40,7 +40,6 @@ div
       attachment-video-youtube.attachment-video(*ngSwitchCase="AttachmentType.videoYoutube", [attachment]="attachment.content")
       //p(*ngSwitchCase="AttachmentType.videoYoutube", [innerHTML]="attachment.content.description | post_text_format|linky:{truncate:{length: 60}, stripPrefix: false}")
 
-// @TODO: Translate
 .expand(*ngIf="!minimized && pl.isPlatformBrowser() && isShorten", (click)="isExpand = true")
   |{{ "Read more" | translate }}
 
@@ -59,7 +58,6 @@ div
   .btn-material.secondary.for-desktop(*ngIf="pl.isPlatformBrowser()", (click)="isShareModalVisible = true")
     .fa.fa-bullhorn
     span {{"Share" | translate}}
-  // @TODO Implement
   button.btn-material.secondary.actions(
     *ngIf="pl.isPlatformBrowser() && profileService.isOwn(post.profile)",
     (click)='render.addClass(actions, "active")',

@@ -13,6 +13,10 @@ $arrow_size: 7;
   box-sizing: border-box;
   border-bottom: 1px solid #bdbdbd;
 
+  &:before {
+    content: ""; // Firefox fix height on input
+  }  
+  
   /deep/ a {
     color: material-color($primary_material, '600');
     text-decoration: underline;

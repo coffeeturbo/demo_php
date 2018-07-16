@@ -6,6 +6,7 @@ import {SearchRoute} from "./Route/SerachRoute";
 import {CommonModule} from "../Common/CommonModule";
 import {RouterModule} from "@angular/router";
 import {FeedModule} from "../Feed/FeedModule";
+import {SearchTitleResolver} from "./Service/SearchTitleResolver";
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import {FeedModule} from "../Feed/FeedModule";
     providers: [
         SearchRESTService,
         SearchFeedResolver,
-        SearchRequestResolver
+        SearchRequestResolver,
+        SearchTitleResolver
     ],
     declarations: [
         SearchRoute

@@ -3,17 +3,20 @@ import {ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, RouterState
 
 import {AuthService} from "./AuthService";
 import {Roles} from "../Entity/Role";
+import {AuthModalsService} from "./AuthModalsService";
+import {AuthModals} from "../Entity/AuthModals";
 
 @Injectable()
 export class CanActivateService implements CanActivate {
 
-    constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {}
+    constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute, private authModalsService: AuthModalsService) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
         this.route.data["returnUrl"] = state.url;
 
         if (!this.authService.isSignedIn()) {
-            this.router.navigate(["login"]);
+            this.router.navigate(["/"]);
+            this.authModalsService.show(AuthModals.signIn);
             return false;
         }
 

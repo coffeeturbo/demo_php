@@ -2,8 +2,6 @@ import {CanActivateService} from "../modules/Auth/Service/CanActivateService";
 import {ForbiddenRoute} from "../modules/Application/Route/ForbiddenRoute";
 import {PageNotFoundRoute} from "../modules/Application/Route/PageNotFoundRoute";
 import {ProfileRoute} from "../modules/Profile/Route/ProfileRoute";
-import {SignInRoute} from "../modules/Auth/Route/SignInRoute";
-import {SignUpRoute} from "../modules/Auth/Route/SignUpRoute";
 import {ProfileSettingsRoute} from "../modules/Profile/Route/ProfileSettingsRoute";
 import {JetRoutes} from "../modules/Application/Entity/JetRoute";
 import {ProfileResolver} from "../modules/Profile/Service/ProfileResolver";
@@ -21,7 +19,9 @@ import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
 import {ProfileFeedRequestResolver} from "../modules/Profile/Service/ProfileFeedRequestResolver";
 import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver";
 import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResolver";
+import {RecoverPasswordByEmailRoute} from "../modules/Auth/Routes/RecoverPasswordByEmailRoute";
 import {SearchFeedResolver} from "../modules/Search/Service/SearchFeedResolver";
+import {SearchTitleResolver} from "../modules/Search/Service/SearchTitleResolver";
 import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequestResolver";
 import {SearchRoute} from "../modules/Search/Route/SerachRoute";
 import {CanDeactivatePostFormRoute} from "../modules/Post/Service/CanDeactivatePostFormRoute";
@@ -30,6 +30,15 @@ export const appRoutes: JetRoutes = [
     {
         path: '',
         component: FeedRoute,
+        children: [
+            {
+                path: "recover-password/:code",
+                component: RecoverPasswordByEmailRoute,
+                data: {
+                    title: "Password recovery",
+                }
+            }
+        ],
         data: {
             title: 'Hot',
             description: 'Hot',
@@ -118,18 +127,9 @@ export const appRoutes: JetRoutes = [
         data: { title: 'Search' },
         resolve: {
             feed: SearchFeedResolver,
-            feedRequest: SearchRequestResolver
+            feedRequest: SearchRequestResolver,
+            title: SearchTitleResolver
         }
-    },
-    { // Страница авторизации
-        path: 'login',
-        component: SignInRoute,
-        data: { title: 'Login page', returnUrl: '/' }
-    },
-    { // Страница регистрации
-        path: 'register',
-        component: SignUpRoute,
-        data: { title: 'Registration', returnUrl: '/'}
     },
     { // Новости профиля
         path: 'feed',

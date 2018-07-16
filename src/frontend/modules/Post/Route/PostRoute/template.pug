@@ -18,9 +18,9 @@ section.comments(#commentsEl)
   ng-container(*ngIf="!auth.isSignedIn()") 
     h3 Только авторизованные пользователи могут оставлять комментарии 
     br
-    a.btn-material.primary(routerLink="/register")
+    a.btn-material.primary((click)="authModalsService.show(AuthModals.signUp)")
       span {{"Registration" | translate }}
 
-    a.btn-material.primary(routerLink="/login")
+    a.btn-material.primary((click)="authModalsService.show(AuthModals.signIn)")
       span Войти
   

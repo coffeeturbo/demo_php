@@ -225,10 +225,11 @@ export class PostFormRoute implements OnInit, AfterViewInit {
 
         Observable
             .combineLatest(attachmentsObservable)
-            .flatMap((attachments) => {
-                // Fck nelmio
+            .do(attachments => { // Fck nelmio
                 postRequest.attachments = JSON.stringify(attachments);
                 postRequest.tags = JSON.stringify(postRequest.tags);
+            })
+            .flatMap(() => {
                 if(this.isNew) {
                     return this.postService.create(<PostCreateRequest>postRequest);
                 } else {
@@ -236,8 +237,9 @@ export class PostFormRoute implements OnInit, AfterViewInit {
                 }
             })
             .finally(() => this.submitted = true)
-            .subscribe((post) => {
-                this.router.navigate(["/post", post.id]);
+            .subscribe(post => {
+                this.router.navigate([this.postService.getUrl(post.id, post.title)]);
+
                 if(this.pl.isPlatformBrowser()) {
                     localStorage.removeItem("post-form");
                 }
