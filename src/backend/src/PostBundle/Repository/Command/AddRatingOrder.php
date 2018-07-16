@@ -8,33 +8,27 @@ class AddRatingOrder implements AddOrderInterface
 {
     static public function addOrder(QueryBuilder $builder, FeedCriteria $criteria)
     {
+
         $builder->orderBy('p.votesRating', $criteria->getDirection());
-
+        $builder->addOrderBy('p.created', $criteria->getDirection());
         if($postId = $criteria->getCursor()){
-
-            $post = $builder->getEntityManager()->getRepository('PostBundle:Post')->getPostById($postId);
 
             // desc
             switch(strtolower($criteria->getDirection())){
                 case 'desc':
-                    $builder->andWhere('p.votesRating < :rating');
-                    $builder->andWhere('p.id < :id');
-
+                    $builder->andWhere('p.id < :pid');
                     break;
                 case 'asc':
-                    $builder->andWhere('p.votesRating > :rating');
-                    $builder->andWhere('p.id > :id');
+                    $builder->andWhere('p.id > :pid');
                     break;
 
                 default: {
-                    $builder->andWhere('p.votesRating < :rating');
-                    $builder->andWhere('p.id < :id');
+                    $builder->andWhere('p.id < :pid');
                 }
 
-
             }
-            $builder->setParameter('rating', $post->getVotesRating())
-                ->setParameter('id', $postId);
+            $builder
+                ->setParameter('pid', $postId);
         }
     }
 
