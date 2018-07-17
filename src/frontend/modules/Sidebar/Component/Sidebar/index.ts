@@ -24,6 +24,7 @@ export class SidebarComponent implements AfterViewInit {
     public translateX: number = 0;
     public backdropOpatity: number = 0.7;
     public showNotifications = false;
+    public showPromo = !!process.env && process.env.dotenv.SHOW_PROMO == 1;
 
     constructor(
         public pl: PlatformService,
