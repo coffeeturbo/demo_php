@@ -11,7 +11,8 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 export class RESTInterceptor implements HttpInterceptor
 {
     private readonly path: string = "";
-    private readonly tokenKey: string = "token";
+    private readonly tokenPrefix: string = "Bearer ";
+    private retry: number = 0;
 
     constructor(
         @Optional() config: RESTConfig, 
@@ -20,16 +21,14 @@ export class RESTInterceptor implements HttpInterceptor
         private injector: Injector
     ) {
         this.path = config.path || "";
-        this.tokenKey = config.tokenKey || this.tokenKey;
+        this.tokenPrefix = config.tokenPrefix || this.tokenPrefix;
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         req = req.clone({url: this.path + req.url});
 
         if (req.withCredentials && this.tokenService.isTokenExist()) {
-            req = req.clone({
-                headers: req.headers.set('Authorization', 'Bearer ' + this.tokenService.getToken())
-            });
+            req = this.authorizeRequest(req);
         }
 
         return next.handle(req)
@@ -38,17 +37,13 @@ export class RESTInterceptor implements HttpInterceptor
                 switch (error.code) {
                     case 401:
                         let authService = this.injector.get(AuthService);
-                        if(this.tokenService.isTokenExist()) {
+                        if(this.tokenService.isTokenExist() && ++this.retry < 3) { // recursion refresh token can by 401!
                             return authService
                                 .refreshToken({"refresh_token": this.tokenService.getRefreshToken()})
-                                .flatMap(() => {
-                                    req = req.clone({
-                                        headers: req.headers.set('Authorization', 'Bearer ' + this.tokenService.getToken())
-                                    });
-                                    
-                                    return next.handle(req);
-                                });
+                                .do(() => this.retry = 0)
+                                .flatMap(() => next.handle(this.authorizeRequest(req)));
                         } else {
+                            this.retry = 0;
                             authService.onAuthFailure.emit(error);
                             return Observable.throw(error);
                         }
@@ -56,5 +51,12 @@ export class RESTInterceptor implements HttpInterceptor
                 }
             }
         );
+    }
+    
+    private authorizeRequest(req: HttpRequest<any>) : HttpRequest<any>
+    {
+        return req.clone({
+            headers: req.headers.set('Authorization', this.tokenPrefix + this.tokenService.getToken())
+        })
     }
 }
