@@ -13,6 +13,7 @@ import {FeedRoute} from "../modules/Feed/Route/FeedRoute";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute";
 import {PostFormRoute} from "../modules/Post/Route/PostFormRoute";
+import {PostResolvers} from "../modules/Post/PostModule";
 import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
 import {FeedResolver} from "../modules/Feed/Service/FeedResolver";
 import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
@@ -113,7 +114,7 @@ export const appRoutes: JetRoutes = [
                 component: PostFormRoute,
                 canActivate: [CanActivateService],
                 canDeactivate: [CanDeactivatePostFormRoute],
-                data: {title: 'Add post'}
+                data: {title: 'Add post', allow: ["ROLE_PHONE_VERIFED"]}
             },
             {
                 path: ':path',
