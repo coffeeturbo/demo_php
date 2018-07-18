@@ -27,6 +27,7 @@ export const Config: ConfigInterface = {
     "auth": {
         "token_key": "token",
         "refresh_token_key": "refresh_token",
+        "token_prefix": "Bearer ",
         "messages": {
             "confirmed": "Your email confirmed. Now you can voting and much more!",
             "comfirming": "Please confirm your email at the <a href='/settings'>profile settings</a>.",
@@ -106,6 +107,7 @@ interface ConfigInterface {
     auth: {
         token_key: string,
         refresh_token_key: string,
+        token_prefix: string,
         messages: {
             confirmed: string,
             comfirming: string,

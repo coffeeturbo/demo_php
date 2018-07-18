@@ -16,6 +16,9 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     a(routerLink="/new", routerLinkActive="active")
       i.fa.fa-fw.fa-lg.fa-newspaper-o
       span {{ "New" | translate }} 
+    a(routerLink="/promo", routerLinkActive="active", *ngIf="showPromo")
+      i.fa.fa-fw.fa-lg.fa-certificate(style="color:#EF5350")
+      span(style="color: #EF5350") {{ "Дарим пиццу!" | translate }} 
 
     // @TODO: Implemt SubscribersFeed
     //a(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()", routerLink="/feed", routerLinkActive="active")
@@ -47,8 +50,8 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
       
   footer
     // @TODO Implement!
-    //a
-    //  i.fa.fa-info-circle
+    a
+      i.fa.fa-info-circle
     .flex-space
     a((click)="settingsModalService.show()")
       i.fa.fa-cog

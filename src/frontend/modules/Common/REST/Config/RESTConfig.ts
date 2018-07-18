@@ -1,5 +1,5 @@
 export class RESTConfig
 {
     path: string;
-    tokenKey?: string;
+    tokenPrefix?: string;
 }

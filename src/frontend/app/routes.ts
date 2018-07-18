@@ -73,6 +73,38 @@ export const appRoutes: JetRoutes = [
         }
     },
     {
+        path: 'promo',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "promo"
+        }
+    },
+    {
+        path: 'rules',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "rules"
+        }
+    },
+    {
+        path: 'ad',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "ad"
+        }
+    },
+    {
+        path: 'faq',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "faq"
+        }
+    },
+    {
         path: 'post',
         children: [
             { path: '', component: PageNotFoundRoute },
