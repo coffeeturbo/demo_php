@@ -114,7 +114,7 @@ export const appRoutes: JetRoutes = [
                 component: PostFormRoute,
                 canActivate: [CanActivateService],
                 canDeactivate: [CanDeactivatePostFormRoute],
-                data: {title: 'Add post', allow: ["ROLE_PHONE_VERIFED"]}
+                data: {title: 'Add post'}
             },
             {
                 path: ':path',
