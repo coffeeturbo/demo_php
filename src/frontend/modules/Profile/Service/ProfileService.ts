@@ -37,28 +37,32 @@ export class ProfileService implements ProfileServiceInterface{
         private auth: AuthService, 
         private tokenService: TokenService,
         private transferState: TransferState
-    ) {
-    }
+    ) {}
 
     public get(path: string): Observable<Profile> 
     {
         return this.getFromCache(path)
             .catch(() => this.getByPath(path).do(profile => this.saveToCache(profile, path)))
-            .do(profile => this.onProfileResolve.emit(profile));
+            .do(profile => this.onProfileResolve.emit(profile))
+        ;
     }
-    
    
-    public edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile> {
-        return this.rest.update(profile.id, request)
+    public edit(oldProfile: Profile, request: ProfileCreateUpdateRequest): Observable<Profile> 
+    {
+        return this.rest.update(oldProfile.id, request)
             .map(profileResponse => profileResponse.entity)
-            .do(profile => this.replaceInCache(oldProfile, profile))
-            .flatMap(profile => {
-                if (oldProfile.alias != profile.alias) {
+            .do(newProfile => {
+                if(this.isOwn(newProfile)) {
+                    this.replaceOwnProfileInCache(oldProfile, newProfile)
+                }
+            })
+            .flatMap(newProfile => {
+                if (oldProfile.alias != newProfile.alias) {
                     return this.auth.refreshToken({
                         "refresh_token": this.tokenService.getRefreshToken()
-                    }).map(() => profile);
+                    }).map(() => newProfile);
                 } else {
-                    return Observable.of(profile);
+                    return Observable.of(newProfile);
                 }
             })
         ;
@@ -74,7 +78,11 @@ export class ProfileService implements ProfileServiceInterface{
         let oldProfile = profile;
         return this.rest.uploadAvatar(profile.id, avatarUploadRequest)
             .map(profileResponse => profileResponse.entity)
-            .do(profile => this.replaceInCache(oldProfile, profile))
+            .do(profile => {
+                if(this.isOwn(profile)) {
+                    this.replaceOwnProfileInCache(oldProfile, profile)
+                }
+            })
     }
     
     public uploadBackdrop(profile: Profile, backdropUploadRequest: BackdropUploadRequest): Observable<Profile>
@@ -82,7 +90,11 @@ export class ProfileService implements ProfileServiceInterface{
         let oldProfile = profile;
         return this.rest.uploadBackdrop(profile.id, backdropUploadRequest)
             .map(profileResponse => profileResponse.entity)
-            .do(profile => this.replaceInCache(oldProfile, profile))
+            .do(profile => {
+                if(this.isOwn(profile)) {
+                    this.replaceOwnProfileInCache(oldProfile, profile)
+                }
+            })        
     }
     
     public backdropPresets(): Observable<BackdropPresetsResponse> {
@@ -104,7 +116,11 @@ export class ProfileService implements ProfileServiceInterface{
         let oldProfile = profile;
         return this.rest.setBackdropPreset(profile.id, preset["name"])
             .map(profileResponse => profileResponse.entity)
-            .do(profile => this.replaceInCache(oldProfile, profile))
+            .do(profile => {
+                if(this.isOwn(profile)) {
+                    this.replaceOwnProfileInCache(oldProfile, profile)
+                }
+            })        
     }
 
     public deleteBackdrop(profile: Profile): Observable<Profile>
@@ -112,7 +128,11 @@ export class ProfileService implements ProfileServiceInterface{
         let oldProfile = profile;
         return this.rest.deleteBackdrop(profile.id)
             .map(profileResponse => profileResponse.entity)
-            .do(profile => this.replaceInCache(oldProfile, profile))
+            .do(profile => {
+                if(this.isOwn(profile)) {
+                    this.replaceOwnProfileInCache(oldProfile, profile)
+                }
+            })        
     }
 
     public hasAvatar(profile: Profile) : boolean
@@ -157,10 +177,11 @@ export class ProfileService implements ProfileServiceInterface{
         }
     }
 
-    public getProfileFirstLetters(profile: Profile) {
+    public getProfileFirstLetters(profile: Profile): string
+    {
         return profile.name
             .split(" ")
-            .slice(0,2)
+            .slice(0, 2)
             .map(item => item.charAt(0).toUpperCase())
             .join(" ")
         ;
@@ -178,7 +199,6 @@ export class ProfileService implements ProfileServiceInterface{
         
         if (!profile) {
             return Observable.throw(`Profile with path "${path}" is not cached`);
-            // throw new Error(`Profile with path "${path}" is not cached`);
         }
 
         return Observable.of(profile).delay(1); // delay kostil' for angular resolver...
@@ -192,12 +212,24 @@ export class ProfileService implements ProfileServiceInterface{
         this.transferState.set(profileStateKey, profile as Profile)
     }
 
-    private replaceInCache(oldProfile: Profile, newProfile: Profile): void
+    private replaceOwnProfileInCache(oldProfile: Profile, newProfile: Profile): Observable<Profile>
     {
         let index: number = this.profiles.indexOf(oldProfile);
-        if (index != -1) {
-            this.profiles[this.profiles.indexOf(oldProfile)] = newProfile;
-        } else throw new Error(`${index} not found in cache file`);
+
+        if(!this.isOwn(newProfile)) {
+            return Observable.throw("Replace in cache failed. Reason: profile is not own");
+        }
+
+        if (!~index) {
+            console.error(`${index} not found in cache file`);
+            return Observable.throw(`${index} not found in cache file`);
+        }
+
+        this.profiles[index] = newProfile;
+        let profileStateKey: StateKey<Profile> = makeStateKey<Profile>("profile-" + this.getOwnProfilePath());
+        this.transferState.set(profileStateKey, newProfile as Profile);
+        
+        return Observable.of(newProfile);
     }
 
     private getPathType(path: string): PathType

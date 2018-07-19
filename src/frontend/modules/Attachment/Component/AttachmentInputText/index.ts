@@ -190,7 +190,7 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
         for (let item of htmlObject.querySelectorAll("*")) {
             let prohibitedAttributeNames=[];
             for(let attribute of item.attributes) {
-                if (allowedAttributes.indexOf(attribute.name) ==-1) {
+                if (!~allowedAttributes.indexOf(attribute.name)) {
                     prohibitedAttributeNames.push(attribute.name);
                 }
             }
