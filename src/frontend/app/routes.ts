@@ -114,7 +114,7 @@ export const appRoutes: JetRoutes = [
                 component: PostFormRoute,
                 canActivate: [CanActivateService],
                 canDeactivate: [CanDeactivatePostFormRoute],
-                data: {title: 'Add post'}
+                data: {title: 'Add post', allow: ["ROLE_ADMIN", "ROLE_EMAIL_VERIFED"], verificationType: "partially"}
             },
             {
                 path: ':path',
@@ -199,7 +199,7 @@ export const appRoutes: JetRoutes = [
     {
         path: 'forbidden',
         component: ForbiddenRoute,
-        data: { title: '403 - Access denied' }
+        data: { title: 'Access denied' }
     },
     {
         path: 'not-found',

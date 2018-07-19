@@ -8,10 +8,12 @@ import {FeedLocaleRU} from "../modules/Feed/Dictionaries/FeedLocaleRU";
 import {CommentLocaleRU} from "../modules/Comment/Dictionaries/CommentLocaleRU";
 import {AttachmentLocaleRU} from "../modules/Attachment/Dictionaries/AttachmentLocaleRU";
 import {NoticeLocaleRU} from "../modules/Notice/Dictionaries/NoticeLocaleRU";
+import {ApplicationLocaleRU} from "../modules/Application/Dictionaries/ApplicationLocaleRU";
 
 export const dictionaries: Dictionaries = {
     "RU": [
         LocaleRU,
+        ApplicationLocaleRU,
         AuthLocaleRU,
         AttachmentLocaleRU,
         CommentLocaleRU,
