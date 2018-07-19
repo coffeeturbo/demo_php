@@ -13,7 +13,7 @@ export const AuthLocaleRU = {
     "Code from email letter": "Код из письма на вашей почте",
     "Login to the resource": "Вход на ресурс",
     "New user registration": "Регистрация нового пользователя",
-    "The password must contain at least 8 characters, including numbers, upper and lower case letters" : "Пароль должен содержать не менее 8 символов, включая цифры, прописные и строчные буквы",
+    "The password must contain at least 8 characters, including numbers, upper and lower case letters" : "Пароль должен содержать не менее 8 символов, включая цифры, прописные и строчные латинские буквы",
     "Passwords do not match": "Введенные пароли не совпадают",
     "Restore password": "Восстановить пароль",
     "Thank you for register!": "Спасибо за регистрацию!",

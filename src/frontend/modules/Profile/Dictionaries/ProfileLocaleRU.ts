@@ -17,6 +17,7 @@ export const ProfileLocaleRU = {
     "Invalid format": "Неверный формат",
     "Add post": "Добавить пост",
     "Add image": "Добавить изображение",
+    "Custom image": "Своё изображение",
     "Profile not found": "Профиль не найден",
     "Drag the image": "Перемещение изображения",
     "Perhaps you used an invalid link or profile has been deleted": "Возможно, вы воспользовались недействительной ссылкой или профиль был удален",

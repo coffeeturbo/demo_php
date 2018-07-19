@@ -96,12 +96,13 @@ export class ProfileSettingsRoute {
         this.submitted = true;
         if (this.form.valid && !this.disabled) {
             this.disabled = true;
-            let profile = Object.assign(JSON.parse(JSON.stringify(this.profile)), this.form.value.editProfileGroup);
             let observables = [];
 
             if (!this.form.controls.editProfileGroup.pristine) {
-                observables.push(this.profileService.edit(profile, this.form.value.editProfileGroup, this.profile))
-
+                observables.push(
+                    this.profileService.edit(this.profile, this.form.value.editProfileGroup)
+                        .do(profile => this.profile = profile)
+                )
             }
 
             let changePasswordGroup: FormGroup = <FormGroup>this.form.controls.changePasswordGroup;

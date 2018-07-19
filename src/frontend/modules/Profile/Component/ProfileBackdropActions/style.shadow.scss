@@ -47,18 +47,15 @@ li {
 button.delete {
   color: material-color("red", "500");
   display: flex;
-  align-items:center;
+  justify-content: center;
+  padding-right: 10px;
   
   :hover {
     background: material-color("red", "50");
   }
 
-  .fa {
-    vertical-align: middle;
-    
-    & + * {
-      margin-left: 5px;
-    }
+  .fa, div {
+    margin-right: .5em;
   }
 
   div {
@@ -66,7 +63,7 @@ button.delete {
     vertical-align: middle;
     overflow: hidden;
     white-space: nowrap;
-    animation: confirmShow 300ms both;
+    animation: confirmShow 600ms both;
   }
 
   &.confirm {
@@ -80,12 +77,12 @@ button.delete {
 
 @keyframes confirmShow {
   from {
-    width: 0;
+    max-width: 0;
     display: none
   }
 
   to {
-    width: 88px;
+    max-width: 150px;
     display: block
   }
 }

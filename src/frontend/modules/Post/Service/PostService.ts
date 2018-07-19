@@ -106,14 +106,15 @@ export class PostService {
     private replaceInCache(oldPost: Post, newPost: Post): Observable<Post>
     {
         let index: number = this.posts.indexOf(oldPost);
-        if (index != -1) {
-            this.posts[index] = newPost;
-            let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + newPost.id);
-            this.transferState.set(postStateKey, newPost as Post);
-            
-            return Observable.of(newPost).delay(1);
-        } else{
-            Observable.throw(`${index} not found in cache file`);
-        } 
+
+        if (!~index) {
+            return Observable.throw(`${index} not found in cache file`);
+        }
+        
+        this.posts[index] = newPost;
+        let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + newPost.id);
+        this.transferState.set(postStateKey, newPost as Post);
+        
+        return Observable.of(newPost);
     }
 }
