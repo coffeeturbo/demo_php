@@ -31,7 +31,8 @@ export const Config: ConfigInterface = {
         "messages": {
             "confirmed": "Your email confirmed. Now you can voting and much more!",
             "comfirming": "Please confirm your email at the <a href='/settings'>profile settings</a>.",
-            "registered": "Thank you for register!"
+            "registered": "Thank you for register!",
+            "restored": "Password changed successfully! For your convenience, we have already authorized you."
         }
     },
     "applications" : {
@@ -111,7 +112,8 @@ interface ConfigInterface {
         messages: {
             confirmed: string,
             comfirming: string,
-            registered: string
+            registered: string,
+            restored: string
         }
     };
     account: {

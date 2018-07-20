@@ -4,15 +4,11 @@ import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/for
 import {Config} from "../../../../app/config";
 import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
 import {AuthService} from "../../Service/AuthService";
-import {NoticeService} from "../../../Notice/Service/NoticeService";
-import {NoticeType} from "../../../Notice/Entity/NoticeType";
-import {TranslationService} from "@angular-addons/translate/index";
 
 @Component({
     selector: 'recover-password-by-email-form',
     templateUrl: './template.pug',
 })
-
 export class RecoverPasswordByEmailFormComponent {
     @Input() code: string;
     @Input() step: RecoverPasswordByEmailStep = RecoverPasswordByEmailStep.sendEmail;
@@ -37,8 +33,7 @@ export class RecoverPasswordByEmailFormComponent {
         }
     });
 
-    constructor(private authService: AuthService, private noticeService: NoticeService, private translationService: TranslationService) {
-    }
+    constructor(private authService: AuthService) {}
 
     ngOnInit() {
         if (typeof window != 'undefined') {
@@ -72,18 +67,16 @@ export class RecoverPasswordByEmailFormComponent {
         this.fail = false;
         this.authService.recoverPasswordByEmailConfirm(this.changePasswordForm.value)
             .finally(() => this.disabled = false)
-            .subscribe(() => {
-                    this.noticeService.addNotice(this.translationService.translate("Password changed successfully! For your convenience, we have already authorized you."), NoticeType.Success)
-                }, (error: ResponseFailure) => {
-                    this.fail = true;
-                    switch (error.code) {
-                        default :
-                            this.changePasswordForm.setErrors({"unknown": true});
-                            break;
-                    }
-                    console.log(`Error ${error.code}. ${error.message}. Try again.`); // @TODO better handle errors
+            .subscribe(null, (error: ResponseFailure) => {
+                this.fail = true;
+                switch (error.code) {
+                    default :
+                        this.changePasswordForm.setErrors({"unknown": true});
+                        break;
                 }
-            )
+                console.log(`Error ${error.code}. ${error.message}. Try again.`); // @TODO better handle errors
+            })
+        ;
     }
 }
 

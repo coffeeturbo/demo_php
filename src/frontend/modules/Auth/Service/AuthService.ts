@@ -120,7 +120,9 @@ export class AuthService implements AuthServiceInterface
 
     public recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm: RecoverPasswordByEmailConfirm): Observable<TokenResponse>
     {
-        return this.handleTokenResponse(this.rest.recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm));
+        return this.handleTokenResponse(this.rest.recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm)
+            .do(()=> this.noticeService.addNotice(this.translationService.translate(this.messages.restored), NoticeType.Success))
+        );
     }
 
     public connectVK(): Observable<TokenResponse>
