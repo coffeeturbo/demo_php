@@ -7,8 +7,10 @@ use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use VoteBundle\Entity\Vote;
+use VoteBundle\Entity\VoteContentType\VoteContentType;
 use VoteBundle\Entity\VoteContentType\VoteContentTypeComment;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
+use VoteBundle\Entity\VoteType\VoteType;
 
 class VoteRepository extends EntityRepository
 {
@@ -66,6 +68,38 @@ class VoteRepository extends EntityRepository
         }
 
         return $votes;
+    }
+
+    public function getVotesByProfile(Profile $profile, VoteType $type = null, VoteContentType $contentType = null)
+    {
+        try{
+
+            $criteria = [
+                'profile' => $profile->getId(),
+            ];
+
+            if($type)
+                $criteria = array_merge($criteria, ['type' => $type->getIntCode()]);
+
+            if($contentType)
+                $criteria = array_merge($criteria, ['contentType' => $contentType->getIntCode()]);
+
+            $votes = $this->findBy($criteria);
+
+            $postIds = array_map(function(Vote $vote){
+                return $vote->getContentId();
+            }, $votes);
+
+            $postRep = $this->getEntityManager()->getRepository(Post::class);
+
+            $posts = $postRep->findBy(['id' => $postIds]);
+
+
+        } catch(NoResultException $e){
+            return new NotFoundHttpException();
+        }
+
+        return $posts;
     }
 
 

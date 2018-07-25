@@ -42,5 +42,4 @@ class FeedController extends Controller
 
         return new SuccessPostsResponse($posts);
     }
-
 }

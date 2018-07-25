@@ -87,7 +87,7 @@ class Vote implements VoteEntity
     {
         return $this->contentId;
     }
-    /*
+
     public function getContentType(): VoteContentType
     {
         return VoteContentType::createFromIntCode($this->contentType);
@@ -99,7 +99,7 @@ class Vote implements VoteEntity
         return $this;
     }
 
-    public function setContentId(int $contentId): self
+    /*public function setContentId(int $contentId): self
     {
         $this->contentId = $contentId;
         return $this;

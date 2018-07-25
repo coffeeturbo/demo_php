@@ -1,12 +1,10 @@
 <?php
 namespace PostBundle\Response;
 
-use AttachmentBundle\Response\SuccessAttachmentsResponse;
 use PostBundle\Entity\Post;
-use ProfileBundle\Response\SuccessProfileResponse;
+use PostBundle\Formatter\PostFormatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use TagBundle\Response\SuccessTagsResponse;
 
 class SuccessPostResponse extends JsonResponse implements \JsonSerializable
 {
@@ -24,24 +22,7 @@ class SuccessPostResponse extends JsonResponse implements \JsonSerializable
     {
         $post = $this->entity ?? $this->createMockEntity();
 
-        return [
-            'id' => $post->getId(),
-            'title' => $post->getTitle(),
-            'created' => $post->getCreated()->format(\DateTime::W3C),
-            'updated' => $post->getUpdated()->format(\DateTime::W3C),
-            'tags'  => (new SuccessTagsResponse($post->getTags()->toArray()))->jsonSerialize(),
-            'attachments' =>  (new SuccessAttachmentsResponse($post->getAttachments()))->jsonSerialize(),
-            'profile' => (new SuccessProfileResponse($post->getProfile()))->jsonSerialize()['entity'],
-
-            'comments_total' => $post->getCommentsTotal(),
-
-            'votes' => [
-                'state' =>  $post->getVote() ? $post->getVote()->getType()->getStringCode() :'none',
-                'rating' => $post->getVotesRating(),
-                'positive' => $post->getVotesPositive(),
-                'negative' => $post->getVotesNegative()
-            ],
-        ];
+        return (new PostFormatter($post))->format();
     }
 
 

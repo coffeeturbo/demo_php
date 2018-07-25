@@ -10,6 +10,7 @@ use VoteBundle\Entity\Vote;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
 use VoteBundle\Entity\VoteContentType\VoteContentTypeComment;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
+use VoteBundle\Entity\VoteType\VoteType;
 use VoteBundle\Entity\VoteType\VoteTypeNegative;
 use VoteBundle\Entity\VoteType\VoteTypePositive;
 use VoteBundle\Event\VoteEvent;
@@ -240,16 +241,11 @@ class VoteService
 
     private function arrayCommentDecorator(array &$comments, $profile)
     {
-
-
         $commentIds = array_map(function($comment){
             return $comment['id'];
         }, $comments);
 
-
-
         $votes = $this->voteRepository->getVotesByCommentIds($commentIds, $profile);
-
 
         array_walk($comments, function(array &$comment) use ($votes){
             /** @var Vote $vote */
@@ -263,7 +259,21 @@ class VoteService
                 }
             }
         });
+    }
 
 
+    public function getVotedContent(Profile $profile, VoteType $type = null, VoteContentType $contentType = null)
+    {
+        switch($contentType->getIntCode()){
+            case VoteContentTypeComment::INT_CODE:
+                return $this->voteRepository->getVotesByProfile($profile, $type, $contentType);
+            break;
+
+            case VoteContentTypePost::INT_CODE:
+                return $this->voteRepository->getVotesByProfile($profile, $type, $contentType);
+            break;
+
+            default: throw new \Exception("unknown int content type");
+        }
     }
 }

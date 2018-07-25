@@ -109,14 +109,15 @@ class RecoverPasswordByEmailController extends Controller
             ]);
 
 
-            if(!is_null($confirmation)) {
-                $confirmation->setConfirmed();
-            } else {
-                $confirmation->setWasted(true);
+            if(is_null($confirmation)) throw  new AccessDeniedHttpException("code not valid");
 
-                $confirmationRepository->save($confirmation);
-                throw  new AccessDeniedHttpException("code not valid");
+
+            if($confirmation->isExpired()){
+                // перегенирировать
+                // $confirmationRepository->wasteConfirmation($confirmation);
             }
+
+            $confirmation->setConfirmed();
 
             $confirmation->setWasted(true);
 
