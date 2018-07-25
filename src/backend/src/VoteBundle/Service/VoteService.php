@@ -183,6 +183,11 @@ class VoteService
 
         $votes = $this->voteRepository->getVotesByPostIds($postIds, $profile);
 
+        $this->attachVotesToPosts($posts, $votes);
+    }
+
+    public function attachVotesToPosts($posts, $votes)
+    {
         array_walk($posts, function(Post $post) use ($votes){
             /** @var Vote $vote */
             foreach($votes as $vote) {

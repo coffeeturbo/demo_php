@@ -38,8 +38,6 @@ class ProfileVotesController extends Controller
 
             $voteContent = $this->get('vote.service.vote_service')->getVotedContent($profile, $voteType, $contentType);
 
-//            dump($voteContent);
-
             $formatter = new VotedContentFormatter($voteContent);
 
         } catch(NoResultException $e){

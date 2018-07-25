@@ -70,6 +70,7 @@ class VoteRepository extends EntityRepository
         return $votes;
     }
 
+
     public function getVotesByProfile(Profile $profile, VoteType $type = null, VoteContentType $contentType = null)
     {
         try{
@@ -94,6 +95,15 @@ class VoteRepository extends EntityRepository
 
             $posts = $postRep->findBy(['id' => $postIds]);
 
+            array_walk($posts, function(Post $post) use ($votes){
+                /** @var Vote $vote */
+                foreach($votes as $vote) {
+                    if($post->getId() === $vote->getContentId()){
+                        $post->setVote($vote);
+                        break;
+                    }
+                }
+            });
 
         } catch(NoResultException $e){
             return new NotFoundHttpException();

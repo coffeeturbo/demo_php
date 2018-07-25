@@ -135,8 +135,6 @@ class RecoverPasswordByEmailController extends Controller
             return new ErrorJsonResponse($e->getMessage());
         }
 
-
-
         return $this->forward('AuthBundle:RenderToken:render', $event->getData());
     }
 }
