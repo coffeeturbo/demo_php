@@ -52,5 +52,3 @@ vote_profile:
     limit: \d+
     cursor: \d+
     profile: \d+
-    sort: "id|rating|hot"
-    direction: ASC|DESC
