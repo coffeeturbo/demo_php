@@ -21,6 +21,8 @@ import {PostCommentsResolver} from "./Service/PostCommentsResolver";
 import {ShareModule} from "../Share/ShareModule";
 import {CanDeactivatePostFormRoute} from "./Service/CanDeactivatePostFormRoute";
 import {PostNotFoundComponent} from "./Component/PostNotFound";
+import {PostIdResolver} from "./Service/PostIdResolver";
+import {InfoPostRESTService} from "./Service/InfoPostRESTService";
 
 @NgModule({
     imports: [
@@ -44,10 +46,12 @@ import {PostNotFoundComponent} from "./Component/PostNotFound";
     ],
     providers: [
         PostRESTService,
+        InfoPostRESTService,
         PostService,
         PostResolver,
         PostCommentsResolver,
         PostTitleResolver,
+        PostIdResolver,
         CanDeactivatePostFormRoute
     ],
     exports: [
@@ -57,3 +61,10 @@ import {PostNotFoundComponent} from "./Component/PostNotFound";
     ]
 })
 export class PostModule {}
+
+export const PostResolvers = {
+    post: PostResolver,
+    comments: PostCommentsResolver,
+    title: PostTitleResolver,
+    description: PostTitleResolver
+};

@@ -13,6 +13,7 @@ import {FeedRoute} from "../modules/Feed/Route/FeedRoute";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute";
 import {PostFormRoute} from "../modules/Post/Route/PostFormRoute";
+import {PostResolvers} from "../modules/Post/PostModule";
 import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
 import {FeedResolver} from "../modules/Feed/Service/FeedResolver";
 import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
@@ -73,6 +74,38 @@ export const appRoutes: JetRoutes = [
         }
     },
     {
+        path: 'promo',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "promo"
+        }
+    },
+    {
+        path: 'rules',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "rules"
+        }
+    },
+    {
+        path: 'ad',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "ad"
+        }
+    },
+    {
+        path: 'faq',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {
+            postAlias: "faq"
+        }
+    },
+    {
         path: 'post',
         children: [
             { path: '', component: PageNotFoundRoute },
@@ -81,7 +114,7 @@ export const appRoutes: JetRoutes = [
                 component: PostFormRoute,
                 canActivate: [CanActivateService],
                 canDeactivate: [CanDeactivatePostFormRoute],
-                data: {title: 'Add post'}
+                data: {title: 'Add post', allow: ["ROLE_ADMIN", "ROLE_EMAIL_VERIFED"], verificationType: "partially"}
             },
             {
                 path: ':path',
@@ -166,7 +199,7 @@ export const appRoutes: JetRoutes = [
     {
         path: 'forbidden',
         component: ForbiddenRoute,
-        data: { title: '403 - Access denied' }
+        data: { title: 'Access denied' }
     },
     {
         path: 'not-found',

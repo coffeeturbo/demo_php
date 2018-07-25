@@ -24,6 +24,8 @@ export class SidebarComponent implements AfterViewInit {
     public translateX: number = 0;
     public backdropOpatity: number = 0.7;
     public showNotifications = false;
+    public showPromo = !!process.env && process.env.dotenv.SHOW_PROMO == 1;
+    public isCounterBounce = false;
 
     constructor(
         public pl: PlatformService,
@@ -34,7 +36,12 @@ export class SidebarComponent implements AfterViewInit {
         public noticeService: NoticeService,
         private renderer: Renderer2,
         private faviconService: FaviconService
-    ) {}
+    ) {
+        this.noticeService.onAddNotice
+            .do(() => this.isCounterBounce = true)
+            .delay(1000)
+            .subscribe(() => this.isCounterBounce = false)
+    }
     
     ngAfterViewInit() {
         if(this.device.isMobile()) {

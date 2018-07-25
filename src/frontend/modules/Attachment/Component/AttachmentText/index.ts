@@ -13,7 +13,7 @@ export class AttachmentTextComponent implements AfterViewInit {
         this.el.nativeElement.innerHTML = this.text.replace(/\n/g, "<br/>");
 
         for (let a of this.el.nativeElement.getElementsByTagName('a')) {
-            if( location.host != a.host ) {
+            if(typeof window != 'undefined' && window.location.host != a.host ) {
                 a.setAttribute('target', '_blank');
             }
         }

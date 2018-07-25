@@ -20,15 +20,19 @@ export class CanActivateService implements CanActivate {
             return false;
         }
 
-        if (route.data.hasOwnProperty("allow") && !this.canActivateByRole(route.data.allow)) {
-            this.router.navigate(["forbidden"]);
+        if (route.data.hasOwnProperty("allow") && !this.canActivateByRole(route.data.allow, route.data.verificationType === "full" || false)) {
+            this.router.navigate(["forbidden"], { queryParams:  {requiredRoles: JSON.stringify(this.getDiffRoles(route.data.allow))} });
             return false;
         } else {
             return true;
         }
     }
 
-    canActivateByRole(roles: Roles): boolean {
-        return this.authService.getRoles().filter(n => roles.indexOf(n) !== -1).length > 0
+    canActivateByRole(roles: Roles, full: boolean = false): boolean {
+        return this.authService.getRoles().filter(n => !!~roles.indexOf(n)).length >= (full ? roles.length : 1);
+    }
+    
+    getDiffRoles(roles: Roles) {
+        return roles.filter(n => !~this.authService.getRoles().indexOf(n));
     }
 }

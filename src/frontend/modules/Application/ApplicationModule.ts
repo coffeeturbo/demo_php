@@ -79,7 +79,7 @@ export class HammerConfig extends HammerGestureConfig  {
         ShareModule,
         SerachModule,
         NoticeModule,
-        RESTModule.init(Config.uri.api, Config.auth.token_key)
+        RESTModule.init(Config.uri.api, Config.auth.token_prefix)
     ],
     declarations: [
         ApplicationComponent,
@@ -92,6 +92,7 @@ export class HammerConfig extends HammerGestureConfig  {
     ],
     providers: [
         StartupService,
+        SoundService,
         RouteHelperService,
         ApplicationScrollService,
         PlatformService,

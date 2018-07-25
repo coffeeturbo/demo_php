@@ -45,7 +45,7 @@ module.exports = {
                 }
             },
             { // FontAwesome
-                test: /\.(jpg|png|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                test: /\.(jpg|png|ttf|eot|svg|mp3)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 loader: "file-loader"
             },
             {

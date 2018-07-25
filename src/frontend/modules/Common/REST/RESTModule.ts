@@ -17,7 +17,7 @@ import {RESTConfig} from "./Config/RESTConfig";
     declarations: []
 })
 export class RESTModule {
-    static init(path: string, tokenKey?: string): ModuleWithProviders {
+    static init(path: string, tokenPrefix?: string): ModuleWithProviders {
         return {
             ngModule: RESTModule,
             providers: [
@@ -25,7 +25,7 @@ export class RESTModule {
                     provide: RESTConfig,
                     useValue: {
                         path: path,
-                        tokenKey: tokenKey
+                        tokenPrefix: tokenPrefix
                     }
                 }
             ]

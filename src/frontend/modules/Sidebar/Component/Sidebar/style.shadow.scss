@@ -116,9 +116,6 @@ aside {
   
   .notifications {
     background: #424242;
-    //position: absolute;
-    //left: 0;
-    //bottom: 55px;
     width: 100%;
     max-height: calc(100% - 55px);
     overflow-y: auto;
@@ -174,7 +171,12 @@ aside {
         line-height: 16px;
         color: material-color($primary_material, '700');
         font-weight: bold;
-        border: 2px material-color($secondary_material, '800') solid;  
+        border: 2px material-color($secondary_material, '800') solid;
+
+        &.bounce {
+          animation: bounce cubic-bezier(0.4, 0.0, 0.2, 1) 1s both infinite;
+          transform-origin: center bottom;
+        }
       }
     }
   }

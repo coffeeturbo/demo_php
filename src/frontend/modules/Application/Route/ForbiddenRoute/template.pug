@@ -8,8 +8,16 @@
     path.c(d='M302.7 335.2c0-26.9-21.8-48.7-48.7-48.7s-48.7 21.8-48.7 48.7c0 16.6 8.3 31.2 21 40l-16.9 62h89.3l-16.9-62C294.4 366.4 302.7 351.8 302.7 335.2z')
 
 
-  h2.title {{"Error" | translate}} {{"403 - Access denied" | translate}} 
+  h2.title {{"Access denied" | translate}} 
 
-  button.btn-material.secondary((click)="authModalsService.show(AuthModals.signIn)")
+  button.btn-material.secondary(*ngIf="!requiredRoles", (click)="authModalsService.show(AuthModals.signIn)")
     i.fa.fa-sign-in
     span {{"Sign in with another account" | translate }}
+    
+  ng-container(*ngIf="checkRole('ROLE_EMAIL_VERIFED')")
+    p {{ "Confirm your email to access this page" | translate }}
+    a.btn-material.secondary(routerLink="/settings")
+      i.fa.fa-check-square-o
+      span {{"Confirm mail" | translate }}
+    
+    

@@ -8,6 +8,7 @@ export interface JetRoute extends Route {
         [name: string]: any;
         title?: string;
         allow?: Roles;
+        verificationType?: "full" | "partially"; // all roles in must be at account or only their part
     }
 }
 
