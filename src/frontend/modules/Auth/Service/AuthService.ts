@@ -93,7 +93,7 @@ export class AuthService implements AuthServiceInterface
     {
         return this.handleTokenResponse(this.rest.signUp(body).do(() => {
             this.noticeService.addNotice(this.translationService.translate(this.messages.registered), NoticeType.Normal);
-            this.noticeService.addNotice(this.translationService.translate(this.messages.comfirming), NoticeType.Warning);
+            this.noticeService.addNotice(this.translationService.translate(this.messages.confirming), NoticeType.Warning);
         }));
     }
 

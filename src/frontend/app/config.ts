@@ -30,7 +30,7 @@ export const Config: ConfigInterface = {
         "token_prefix": "Bearer ",
         "messages": {
             "confirmed": "Your email confirmed. Now you can voting and much more!",
-            "comfirming": "Please confirm your email at the <a href='/settings'>profile settings</a>.",
+            "confirming": "Please confirm your email at the <a href='/settings'>profile settings</a>.",
             "registered": "Thank you for register!",
             "restored": "Password changed successfully! For your convenience, we have already authorized you."
         }
@@ -111,7 +111,7 @@ interface ConfigInterface {
         token_prefix: string,
         messages: {
             confirmed: string,
-            comfirming: string,
+            confirming: string,
             registered: string,
             restored: string
         }

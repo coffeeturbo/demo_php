@@ -92,6 +92,7 @@ export class HammerConfig extends HammerGestureConfig  {
     ],
     providers: [
         StartupService,
+        SoundService,
         RouteHelperService,
         ApplicationScrollService,
         PlatformService,

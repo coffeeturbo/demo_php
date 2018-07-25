@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import * as striptags from "striptags";
 
 import {PlatformService} from "../../Application/Service/PlatformService";
@@ -6,6 +6,7 @@ import {Notice} from "../Entity/Notice";
 import {Notifications} from "../Entity/Notifications";
 import {NoticeType} from "../Entity/NoticeType";
 import {FaviconService} from "../../Application/Service/FaviconService";
+import {SoundService} from "../../Application/Service/SoundService";
 
 @Injectable()
 export class NoticeService {
@@ -13,9 +14,9 @@ export class NoticeService {
     private noticeKey = "notice";
     public notifications: Notifications = this.readNotifications();
     public allowedTags = ['a', 'b', 'em', 'strong', 'i', 'u', 'p', 'strike', 'blockquote'];
+    public onAddNotice = new EventEmitter<Notice>();
     
-    constructor(private pl: PlatformService, private faviconService: FaviconService) {
-    }
+    constructor(private pl: PlatformService, private faviconService: FaviconService, private soundService: SoundService) {}
     
     public addNotice(message: string, type: NoticeType, icon?: string): Notice 
     {
@@ -27,6 +28,14 @@ export class NoticeService {
         notice.message = striptags(notice.message, this.allowedTags);
         
         this.notifications.push(notice);
+        this.onAddNotice.emit(notice);
+
+        if(NoticeType.Danger === type) {
+            this.soundService.playErrorNotificationSound();
+        } else {
+            this.soundService.playNotificationSound();
+        }
+        
         this.faviconService.setUnreadFavicon();
         this.saveNotifications();
 
