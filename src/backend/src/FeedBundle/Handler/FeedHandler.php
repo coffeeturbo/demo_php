@@ -1,10 +1,11 @@
 <?php
 namespace FeedBundle\Handler;
 
+use AppBundle\Handler\RequestHandler;
 use FeedBundle\Criteria\FeedCriteria;
 use Symfony\Component\HttpFoundation\Request;
 
-class FeedHandler
+class FeedHandler implements RequestHandler
 {
     private $criteria;
 

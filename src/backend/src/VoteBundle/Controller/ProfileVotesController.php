@@ -6,9 +6,9 @@ use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use VoteBundle\Entity\VoteContentType\VoteContentType;
-use VoteBundle\Entity\VoteType\VoteType;
+use Symfony\Component\HttpFoundation\Request;
 use VoteBundle\Formatter\VotedContentFormatter;
+use VoteBundle\Handler\VotedContentHandler;
 
 class ProfileVotesController extends Controller
 {
@@ -27,16 +27,16 @@ class ProfileVotesController extends Controller
      * )
      *
      */
-    public function getVotesAction($vote_type, $content_type)
+    public function getVotesAction(Request $request)
     {
         try {
 
-            $profile = $this->get('profile.service')->getCurrentProfile();
+            $criteria = (new VotedContentHandler($request))->getCriteria();
 
-            $voteType = VoteType::createFromStringCode($vote_type);
-            $contentType = VoteContentType::createFromStringCode($content_type);
+            $profileId = $this->get('profile.service')->getCurrentProfile()->getId();
+            if(!$criteria->getProfileId()) $criteria->setProfileId($profileId);
 
-            $voteContent = $this->get('vote.service.vote_service')->getVotedContent($profile, $voteType, $contentType);
+            $voteContent = $this->get('vote.service.vote_service')->getVotedContent($criteria);
 
             $formatter = new VotedContentFormatter($voteContent);
 
@@ -47,8 +47,6 @@ class ProfileVotesController extends Controller
         }
 
 
-
         return new JsonResponse($formatter->format());
-
     }
 }

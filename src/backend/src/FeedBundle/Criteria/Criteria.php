@@ -29,11 +29,20 @@ abstract class Criteria
         return $this->order;
     }
 
+    public function setOrder(string $order)
+    {
+        $this->order = $order;
+    }
+
+    public function setDirection(string $direction)
+    {
+        $this->direction = $direction;
+    }
+
     public function getDirection(): string
     {
         return $this->direction;
     }
-
 
     public function getCursor()
     {

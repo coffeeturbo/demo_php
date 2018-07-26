@@ -6,11 +6,11 @@ use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use VoteBundle\Criteria\VoteContentCriteria;
 use VoteBundle\Entity\Vote;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
 use VoteBundle\Entity\VoteContentType\VoteContentTypeComment;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
-use VoteBundle\Entity\VoteType\VoteType;
 use VoteBundle\Entity\VoteType\VoteTypeNegative;
 use VoteBundle\Entity\VoteType\VoteTypePositive;
 use VoteBundle\Event\VoteEvent;
@@ -267,15 +267,15 @@ class VoteService
     }
 
 
-    public function getVotedContent(Profile $profile, VoteType $type = null, VoteContentType $contentType = null)
+    public function getVotedContent(VoteContentCriteria $contentCriteria)
     {
-        switch($contentType->getIntCode()){
+        switch($contentCriteria->getContentType()->getIntCode()){
             case VoteContentTypeComment::INT_CODE:
-                return $this->voteRepository->getVotesByProfile($profile, $type, $contentType);
+                return $this->voteRepository->getVotedContentByCriteria($contentCriteria);
             break;
 
             case VoteContentTypePost::INT_CODE:
-                return $this->voteRepository->getVotesByProfile($profile, $type, $contentType);
+                return $this->voteRepository->getVotedContentByCriteria($contentCriteria);
             break;
 
             default: throw new \Exception("unknown int content type");

@@ -6,11 +6,10 @@ use Doctrine\ORM\NoResultException;
 use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use VoteBundle\Criteria\VoteContentCriteria;
 use VoteBundle\Entity\Vote;
-use VoteBundle\Entity\VoteContentType\VoteContentType;
 use VoteBundle\Entity\VoteContentType\VoteContentTypeComment;
 use VoteBundle\Entity\VoteContentType\VoteContentTypePost;
-use VoteBundle\Entity\VoteType\VoteType;
 
 class VoteRepository extends EntityRepository
 {
@@ -71,18 +70,18 @@ class VoteRepository extends EntityRepository
     }
 
 
-    public function getVotesByProfile(Profile $profile, VoteType $type = null, VoteContentType $contentType = null)
+    public function getVotedContentByCriteria(VoteContentCriteria $contentCriteria)
     {
         try{
 
             $criteria = [
-                'profile' => $profile->getId(),
+                'profile' => $contentCriteria->getProfileId(),
             ];
 
-            if($type)
+            if($type=$contentCriteria->getVoteType())
                 $criteria = array_merge($criteria, ['type' => $type->getIntCode()]);
 
-            if($contentType)
+            if($contentType = $contentCriteria->getContentType())
                 $criteria = array_merge($criteria, ['contentType' => $contentType->getIntCode()]);
 
             $votes = $this->findBy($criteria);

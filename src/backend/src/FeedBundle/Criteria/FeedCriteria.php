@@ -16,7 +16,13 @@ class FeedCriteria extends Criteria
     private $profileId;
     private $tags;
 
-    public function __construct(int $limit, $cursor, string $order, string $direction, $dateFrom = null, $dateTo = null, $profileId = null, array $tags = null)
+    public function __construct(int $limit, $cursor,
+                                string $order,
+                                string $direction,
+                                \DateTime $dateFrom = null,
+                                \DateTime $dateTo = null,
+                                $profileId = null,
+                                array $tags = null)
     {
         parent::__construct($limit, $cursor);
 
