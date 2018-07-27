@@ -1,0 +1,15 @@
+@import "../../../../assets/styles/global";
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: material-color("blue-grey", "500");
+  height: calc(100vh - 108px);
+
+  .logo {
+    color: material-color("blue-grey", "300");
+    font-size: 6rem;
+  }
+}

@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 
 import {PostRESTService} from "./PostRESTService";
@@ -13,7 +13,6 @@ import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 @Injectable()
 export class PostService {
     private posts: Post[] = [];
-    public onPostResolve = new EventEmitter<Post>(true);
     
     constructor(
         private rest: PostRESTService, 
@@ -25,7 +24,6 @@ export class PostService {
     {
         return this.getFromCache(postId)
             .catch(() => this.rest.getById(postId).do(post => this.saveToCache(post)))
-            .do(post => this.onPostResolve.emit(post))
         ;
     }
     
@@ -89,7 +87,7 @@ export class PostService {
         }
         
         if (!post) {
-            return Observable.throw(`Post with id "${postId}" is not cached`);
+            return Observable.throw(`Post with id "${postId}" is not cached`); 
         }
 
         return Observable.of(post).delay(1); // delay kostil' for angular resolver...
