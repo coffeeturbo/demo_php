@@ -22,17 +22,6 @@ class Configuration implements ConfigurationInterface
                 ->integerNode('max_attachments_limit')
                     ->defaultValue(100)
                 ->end()
-                ->arrayNode('info')
-                    ->children()
-                        ->arrayNode('posts')
-                            ->prototype('array')
-                                ->children()
-                                    ->scalarNode('id')->end()
-                                ->end()
-                            ->end()
-                        ->end()
-                    ->end()
-                ->end()
             ->end()
             ;
 

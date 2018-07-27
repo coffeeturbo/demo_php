@@ -19,7 +19,5 @@ class PostExtension extends Extension
         $container->setParameter('post.min_tags_limit', $config['min_tags_limit']);
         $container->setParameter('post.max_tags_limit', $config['max_tags_limit']);
         $container->setParameter('post.max_attachments_limit', $config['max_attachments_limit']);
-
-        $container->setParameter('post.info.posts', $config['info']['posts']);
     }
 }

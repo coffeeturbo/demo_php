@@ -21,26 +21,22 @@ class InfoPostsController extends Controller
      *
      * @param Request $request
      */
-    public function getAction()
+    public function getAction($type)
     {
         try {
 
             // проеряем есть ли в контейнере данный аргумент
             $postsIds = $this->container->hasParameter('post_info_posts')
                 ? $postsIds = $this->container->getParameter('post_info_posts')
-                : $this->getParameter('post.info.posts') ;
+                : [];
 
-            $posts = [];
-            $ids = array_map(function(array $infoPost){
-                return $infoPost['id'];
-            }, $postsIds);
+            if(!isset($postsIds[$type]))throw new NotFoundHttpException(sprintf('key %s not found', $type));
 
-            if(count($ids)>1) {
-                $posts = $this->get('post.service')->getPostRepository()->getPostsByIds($ids);
-            }
+            $ids[] = $postsIds[$type];
+            $posts = $this->get('post.service')->getPostRepository()->getPostsByIds($ids);
 
         } catch(NotFoundHttpException $e){
-            return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
+            return new ErrorJsonResponse($e->getMessage(), $e->getTrace(), $e->getStatusCode());
         } catch(BadRestRequestHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch(AccessDeniedHttpException $e){
