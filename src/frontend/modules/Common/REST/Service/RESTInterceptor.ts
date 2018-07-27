@@ -6,6 +6,7 @@ import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
 import {TokenService} from "../../../Auth/Service/TokenService";
 import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
 import {AuthService} from "../../../Auth/Service/AuthService";
+import {HttpCodes} from "../../../Application/Entity/HttpCodes";
 
 @Injectable()
 export class RESTInterceptor implements HttpInterceptor
@@ -35,7 +36,7 @@ export class RESTInterceptor implements HttpInterceptor
             .catch((httpErrorResponse: HttpErrorResponse) => {
                 let error: ResponseFailure = httpErrorResponse.error;
                 switch (error.code) {
-                    case 401:
+                    case HttpCodes.Unauthorized:
                         let authService = this.injector.get(AuthService);
                         if(this.tokenService.isTokenExist() && ++this.retry < 3) { // recursion refresh token can by 401!
                             return authService

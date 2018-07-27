@@ -5,6 +5,7 @@ import {AuthService} from "../../Service/AuthService";
 import {AuthModalsService} from "../../Service/AuthModalsService";
 import {AuthModals} from "../../Entity/AuthModals";
 import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
+import {HttpCodes} from "../../../Application/Entity/HttpCodes";
 
 @Component({
     selector: "sign-in-form",
@@ -42,7 +43,7 @@ export class SignInFormComponent {
                 .subscribe(null, (error: ResponseFailure) => {
                     this.fail = true;
                     switch (error.code) {
-                        case 401 :
+                        case HttpCodes.Unauthorized:
                             this.form.controls.password.reset();
                             this.form.setErrors({"denied": true}); 
                         break;

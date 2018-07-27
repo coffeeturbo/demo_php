@@ -5,6 +5,7 @@ import {AuthService} from "../../Service/AuthService";
 import {Config} from "../../../../app/config";
 import {AuthModals} from "../../Entity/AuthModals";
 import {AuthModalsService} from "../../Service/AuthModalsService";
+import {HttpCodes} from "../../../Application/Entity/HttpCodes";
 
 
 @Component({
@@ -49,7 +50,7 @@ export class SignUpFormComponent {
                 .finally(() => this.disabled = false)
                 .subscribe(null, error => {
                     switch (error.code) {
-                        case 409 : this.form.setErrors({"conflict": true}); break;        
+                        case HttpCodes.Conflict: this.form.setErrors({"conflict": true}); break;        
                     }
                     
                     this.fail = true;

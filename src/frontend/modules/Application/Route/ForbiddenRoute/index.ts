@@ -5,6 +5,7 @@ import {AuthModals} from "../../../Auth/Entity/AuthModals";
 import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
 import {ActivatedRoute} from "@angular/router";
 import {Role, Roles} from "../../../Auth/Entity/Role";
+import {HttpCodes} from "../../Entity/HttpCodes";
 
 @Component({
     templateUrl: "./template.pug",
@@ -21,7 +22,7 @@ export class ForbiddenRoute {
     }
 
     ngOnInit() {
-        this.pl.setPageStatus(403);
+        this.pl.setPageStatus(HttpCodes.Forbidden);
     }
     
     public checkRole(role: Role): boolean {

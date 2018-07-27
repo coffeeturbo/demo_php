@@ -1,5 +1,7 @@
+import {HttpCodes} from "../Entity/HttpCodes";
+
 export interface ResponseFailure {
-    code: number,
+    code: HttpCodes,
     message: string,
     errors?: { [param: string]: string }
 }
