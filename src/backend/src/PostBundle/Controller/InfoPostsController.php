@@ -36,7 +36,7 @@ class InfoPostsController extends Controller
             $posts = $this->get('post.service')->getPostRepository()->getPostsByIds($ids);
 
         } catch(NotFoundHttpException $e){
-            return new ErrorJsonResponse($e->getMessage(), $e->getTrace(), $e->getStatusCode());
+            return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         } catch(BadRestRequestHttpException $e){
             return new ErrorJsonResponse($e->getMessage(), $e->getErrors(), $e->getStatusCode());
         } catch(AccessDeniedHttpException $e){

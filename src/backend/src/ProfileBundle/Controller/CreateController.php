@@ -58,8 +58,12 @@ class CreateController extends Controller
     /**
      * @ApiDoc(
      *  section="Profile",
-     *  description= "Проверка свободел ли alias",
+     *  description= "Проверка свободен ли alias",
      *  output = {"class" = "ProfileBundle\Response\CheckAliasResponse"},
+     *  statusCodes = {
+     *      200 = "alias свободен",
+     *      423 = "alias занят",
+     *  }
      * )
      *
      * @param string $alias
