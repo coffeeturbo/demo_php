@@ -25,11 +25,11 @@ export class SignUpFormComponent {
         name: new FormControl("", Validators.required),
         email: new FormControl("", Validators.email),
         password: new FormControl("", Validators.pattern(new RegExp(this.config.account.constraints.password.match))),
-        password_confirm: new FormControl("", Validators.required)
-    }, (form: FormGroup) => {
-        if (form.value.password !== form.value.password_confirm) {
-            return <ValidationErrors>{not_equal_passwords: true};
-        }
+        password_confirm: new FormControl("", (password_confirm: FormControl) => {
+            if (password_confirm.root.get('password') && password_confirm.root.get('password').value !== password_confirm.value) {
+                return <ValidationErrors>{not_equal_passwords: true};
+            }
+        })
     });
 
     constructor(public authModalsService: AuthModalsService, private authService: AuthService) {}
