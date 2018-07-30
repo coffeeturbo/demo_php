@@ -43,3 +43,7 @@ import {FeedNotFoundComponent} from "./Component/FeedNotFound";
     ]
 })
 export class FeedModule {} 
+
+export const FeedResolvers = {
+    feed: FeedResolver
+};

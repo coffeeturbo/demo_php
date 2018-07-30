@@ -8,7 +8,6 @@ import {ProfileResolver} from "../modules/Profile/Service/ProfileResolver";
 import {ProfileTitleResolver} from "../modules/Profile/Service/ProfileTitleResolver";
 import {PostRoute} from "../modules/Post/Route/PostRoute";
 import {PostResolver} from "../modules/Post/Service/PostResolver";
-import {PostTitleResolver} from "../modules/Post/Service/PostTitleResolver";
 import {FeedRoute} from "../modules/Feed/Route/FeedRoute";
 import {FeedProfileRoute} from "../modules/Feed/Route/FeedProfileRoute";
 import {ProfileAvatarRoute} from "../modules/Profile/Route/ProfileAvatarRoute";
@@ -18,7 +17,7 @@ import {TagTitleResolver} from "../modules/Tag/Service/TagTitleResolver";
 import {FeedResolver} from "../modules/Feed/Service/FeedResolver";
 import {GetFeedRequest} from "../modules/Feed/Http/Request/GetFeedRequest";
 import {ProfileFeedRequestResolver} from "../modules/Profile/Service/ProfileFeedRequestResolver";
-import {PostCommentsResolver} from "../modules/Post/Service/PostCommentsResolver";
+import {FeedResolvers} from "../modules/Feed/FeedModule";
 import {TagFeedRequestResolver} from "../modules/Tag/Service/TagFeedRequestResolver";
 import {RecoverPasswordByEmailRoute} from "../modules/Auth/Routes/RecoverPasswordByEmailRoute";
 import {SearchFeedResolver} from "../modules/Search/Service/SearchFeedResolver";
@@ -45,9 +44,7 @@ export const appRoutes: JetRoutes = [
             description: 'Hot',
             feedRequest: <GetFeedRequest>{sort: "hot"}
         },
-        resolve: {
-            feed: FeedResolver,
-        }
+        resolve: FeedResolvers
     },
     {
         path: 'new',
@@ -57,9 +54,8 @@ export const appRoutes: JetRoutes = [
             description: 'New',
             feedRequest: <GetFeedRequest>{sort: "id"}
         },
-        resolve: {
-            feed: FeedResolver,
-        }
+        resolve: FeedResolvers
+        
     },
     {
         path: 'best',
@@ -69,95 +65,76 @@ export const appRoutes: JetRoutes = [
             description: 'Best',
             feedRequest: <GetFeedRequest>{sort: "rating"}
         },
-        resolve: {
-            feed: FeedResolver,
-        }
+        resolve: FeedResolvers,
     },
     {
         path: 'promo',
         component: PostRoute,
         resolve: PostResolvers,
-        data: {
-            postAlias: "promo"
-        }
+        data: {postAlias: "promo"}
     },
     {
         path: 'rules',
         component: PostRoute,
         resolve: PostResolvers,
-        data: {
-            postAlias: "rules"
-        }
+        data: {postAlias: "rules"}
     },
     {
         path: 'ad',
         component: PostRoute,
         resolve: PostResolvers,
-        data: {
-            postAlias: "ad"
-        }
+        data: {postAlias: "ad"}
     },
     {
         path: 'faq',
         component: PostRoute,
         resolve: PostResolvers,
-        data: {
-            postAlias: "faq"
-        }
+        data: {postAlias: "faq"}
     },
     {
-        path: 'post',
-        children: [
-            { path: '', component: PageNotFoundRoute },
-            {
-                path: 'add',
-                component: PostFormRoute,
-                canActivate: [CanActivateService],
-                canDeactivate: [CanDeactivatePostFormRoute],
-                data: {title: 'Add post', allow: ["ROLE_ADMIN", "ROLE_EMAIL_VERIFED"], verificationType: "partially"}
-            },
-            {
-                path: ':path',
-                component: PostRoute,
-                resolve: {
-                    post: PostResolver,
-                    comments: PostCommentsResolver,
-                    title: PostTitleResolver,
-                    description: PostTitleResolver
-                }
-            },
-            {
-                path: ':path/edit',
-                component: PostFormRoute,
-                canActivate: [CanActivateService],
-                canDeactivate: [CanDeactivatePostFormRoute],
-                data: {
-                    title: 'Edit post',
-                },
-                resolve: {
-                    post: PostResolver
-                }
-            }
-        ]
+        path: 'post/add',
+        component: PostFormRoute,
+        canActivate: [CanActivateService],
+        canDeactivate: [CanDeactivatePostFormRoute],
+        data: {title: 'Add post', allow: ["ROLE_ADMIN", "ROLE_EMAIL_VERIFED"], verificationType: "partially"}
+    },
+    {
+        path: 'post/:path',
+        component: PostRoute,
+        resolve: PostResolvers
+    },
+    {
+        path: 'post/:path/edit',
+        component: PostFormRoute,
+        canActivate: [CanActivateService],
+        canDeactivate: [CanDeactivatePostFormRoute],
+        data: {
+            title: 'Edit post',
+        },
+        resolve: {
+            post: PostResolver
+        }
     },
     {
         path: 'tag/:path',
         component: FeedRoute,
         resolve: {
-            feed: FeedResolver,
-            feedRequest: TagFeedRequestResolver,
-            title: TagTitleResolver,
+            ...FeedResolvers, 
+            ...{
+                feedRequest: TagFeedRequestResolver,
+                title: TagTitleResolver
+            }
         }
     },
     {
         path: 'search',
-        data: { title: 'Search' },
+        data: {title: 'Search'},
         component: SearchRoute
     },
     {
         path: 'search/:path',
         component: SearchRoute,
-        data: { title: 'Search' },
+        data: {title: 'Search'},
         resolve: {
             feed: SearchFeedResolver,
             feedRequest: SearchRequestResolver,
@@ -168,24 +145,24 @@ export const appRoutes: JetRoutes = [
         path: 'feed',
         component: FeedProfileRoute,
         canActivate: [CanActivateService],
-        data: { title: 'News', allow: ["ROLE_CREATED"]},
+        data: {title: 'News', allow: ["ROLE_CREATED"]},
     },
     { // Настройки профиля
         path: 'settings',
         component: ProfileSettingsRoute,
         canActivate: [CanActivateService],
-        resolve: { profile: ProfileResolver },
-        data: { title: 'Settings', allow: ["ROLE_CREATED"] }
+        resolve: {profile: ProfileResolver},
+        data: {title: 'Settings', allow: ["ROLE_CREATED"]}
     },
     { // Страница профиля (редирект на новости если не указан id профиля)
         path: 'profile',
         children: [
-            { path: '', redirectTo: '/feed', pathMatch: 'full' },
+            {path: '', redirectTo: '/feed', pathMatch: 'full'},
             {
                 path: ':path',
                 component: ProfileRoute,
                 children: [
-                    { path: 'avatar', component: ProfileAvatarRoute }
+                    {path: 'avatar', component: ProfileAvatarRoute}
                 ],
                 resolve: { 
                     profile: ProfileResolver,
@@ -199,16 +176,16 @@ export const appRoutes: JetRoutes = [
     {
         path: 'forbidden',
         component: ForbiddenRoute,
-        data: { title: 'Access denied' }
+        data: {title: 'Access denied'}
     },
     {
         path: 'not-found',
         component: PageNotFoundRoute,
-        data: { title: '404 - Now found' }
+        data: {title: '404 - Now found'}
     },
     {
         path: '**',
         component: PageNotFoundRoute,
-        data: { title: '404 - Now found' }
+        data: {title: '404 - Now found'}
     }
 ];

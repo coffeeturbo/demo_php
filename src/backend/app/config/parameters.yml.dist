@@ -36,3 +36,4 @@ parameters:
     post_info_posts:
         promo: 1
         rules: 2
+        terms: 4
