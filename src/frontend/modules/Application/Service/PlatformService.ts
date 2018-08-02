@@ -3,6 +3,7 @@ import {Injectable} from "@angular/core";
 import {isPlatformBrowser, isPlatformServer} from '@angular/common';
 import {RESPONSE} from "@nguniversal/express-engine/tokens";
 import {Response} from "express";
+import {HttpCodes} from "../Entity/HttpCodes";
 
 @Injectable()
 export class PlatformService {
@@ -20,9 +21,9 @@ export class PlatformService {
         return isPlatformServer(this.platformId)
     }
     
-    public setPageStatus(status: number) {
+    public setPageStatus(httpCode: HttpCodes) {
         if (this.isPlatformServer()) {
-            this.res.status(status);
+            this.res.status(httpCode);
         }
     }
 }

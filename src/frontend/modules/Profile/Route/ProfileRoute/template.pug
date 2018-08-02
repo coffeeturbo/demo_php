@@ -15,11 +15,10 @@ ng-container(*ngIf="profile")
           profile-avatar([profile]="profile", [size]="'medium'", href="avatar")
           button(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()", (onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
-          h1
-            | {{profile.name}}
-            span.fa-stack
-              i.fa.fa-certificate.fa-stack-1x
-              i.fa.fa-check.fa-stack-1x
+          h1 {{profile.name}}
+            //span.fa-stack
+            //  i.fa.fa-certificate.fa-stack-1x
+            //  i.fa.fa-check.fa-stack-1x
           span(*ngIf="profile.alias") @{{profile.alias}}
 
   .profile-info

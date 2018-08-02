@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {ProfileResponse} from "../Http/Response/ProfileResponse";
-import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
+import {Response} from "../../Application/Http/Response";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
 import {BackdropPresetsResponse} from "../Http/Response/BackdropPresetsResponse";
@@ -58,11 +58,11 @@ export class ProfileRESTService
         ;
     }
 
-    public checkAlias(alias: string): Observable<CheckAliasResponse>
+    public checkAlias(alias: string): Observable<Response>
     {
         let url = `/profile/${alias}/check`;
         return this.http
-            .get<CheckAliasResponse>(url)
+            .get<Response>(url)
         ;
     }
 

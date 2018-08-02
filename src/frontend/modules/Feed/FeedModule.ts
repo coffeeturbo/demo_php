@@ -12,6 +12,7 @@ import {FeedResolver} from "./Service/FeedResolver";
 import {FeedCacheService} from "./Service/FeedCacheService";
 import {FeedRefreshButtonComponent} from "./Component/FeedRefreshButton";
 import {FeedRequestService} from "./Service/FeedRequestService";
+import {FeedNotFoundComponent} from "./Component/FeedNotFound";
 
 @NgModule({
     imports: [
@@ -24,6 +25,7 @@ import {FeedRequestService} from "./Service/FeedRequestService";
         FeedRoute,
 
         FeedComponent,
+        FeedNotFoundComponent,
         FeedRefreshButtonComponent
     ],
     providers: [
@@ -36,7 +38,12 @@ import {FeedRequestService} from "./Service/FeedRequestService";
     exports: [
         PostModule,
         FeedComponent,
+        FeedNotFoundComponent,
         FeedRefreshButtonComponent
     ]
 })
 export class FeedModule {} 
+
+export const FeedResolvers = {
+    feed: FeedResolver
+};

@@ -1,26 +1,28 @@
 doctype html
-post([post]="route.snapshot.data.post")
-section.comments(#commentsEl)
-  header 
-    h2 {{"Comments" | translate }}
-    // @TODO Implement!
-    //button
-    //  i.fa.fa-refresh
-    .flex-space
-    // @TODO Implement!
-    //.rate
-    //  span {{"Order by" | translate }}
-    //  button([class.active]="orderCommentsBy == 'date'", (click)="orderCommentsBy = 'date'") {{"date" | translate }}
-    //  button([class.active]="orderCommentsBy == 'rate'", (click)="orderCommentsBy = 'rate'") {{"rating" | translate }}
-    
-  comment(*ngFor="let comment of route.snapshot.data.comments;", [comment]="comment", [post]="route.snapshot.data.post")
-  comment-form(*ngIf="auth.isSignedIn()", [post]="route.snapshot.data.post")
-  ng-container(*ngIf="!auth.isSignedIn()") 
-    h3 Только авторизованные пользователи могут оставлять комментарии 
-    br
-    a.btn-material.primary((click)="authModalsService.show(AuthModals.signUp)")
-      span {{"Registration" | translate }}
-
-    a.btn-material.primary((click)="authModalsService.show(AuthModals.signIn)")
-      span Войти
+ng-container(*ngIf="route.snapshot.data.post")
+  post([post]="route.snapshot.data.post")
+  section.comments(#commentsEl)
+    header 
+      h2 {{"Comments" | translate }}
+      // @TODO Implement!
+      //button
+      //  i.fa.fa-refresh
+      .flex-space
+      // @TODO Implement!
+      //.rate
+      //  span {{"Order by" | translate }}
+      //  button([class.active]="orderCommentsBy == 'date'", (click)="orderCommentsBy = 'date'") {{"date" | translate }}
+      //  button([class.active]="orderCommentsBy == 'rate'", (click)="orderCommentsBy = 'rate'") {{"rating" | translate }}
+      
+    comment(*ngFor="let comment of route.snapshot.data.comments;", [comment]="comment", [post]="route.snapshot.data.post")
+    comment-form(*ngIf="auth.isSignedIn()", [post]="route.snapshot.data.post")
+    ng-container(*ngIf="!auth.isSignedIn()") 
+      h3 Только авторизованные пользователи могут оставлять комментарии 
+      br
+      a.btn-material.primary((click)="authModalsService.show(AuthModals.signUp)")
+        span {{"Registration" | translate }}
   
+      a.btn-material.primary((click)="authModalsService.show(AuthModals.signIn)")
+        span Войти
+
+post-not-found(*ngIf="!route.snapshot.data.post")

@@ -10,6 +10,7 @@ import {AuthService} from "../../../Auth/Service/AuthService";
 import {TokenService} from "../../../Auth/Service/TokenService";
 import {CanActivateService} from "../../../Auth/Service/CanActivateService";
 import {AuthRESTService} from "../../../Auth/Service/AuthRESTService";
+import {ResponseFailure} from "../../../Application/Http/ResponseFailure";
 
 @Component({
     templateUrl: "./template.pug",
@@ -85,8 +86,7 @@ export class ProfileSettingsRoute {
         }
 
         return this.profileService.checkAlias(aliasControl.value)
-            .filter((checkAliasResponse) => !checkAliasResponse.available)
-            .map(() => <ValidationErrors>{"alias_unavailable": true})
+            .catch(()=> Observable.of(<ValidationErrors>{"alias_unavailable": true}))
             .toPromise() // Конвертируем в promise потому что без этого form.valid всегда false (wtf?)
         ;
     }

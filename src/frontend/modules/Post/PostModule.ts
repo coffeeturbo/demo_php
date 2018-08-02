@@ -63,6 +63,7 @@ import {InfoPostRESTService} from "./Service/InfoPostRESTService";
 export class PostModule {}
 
 export const PostResolvers = {
+    postId: PostIdResolver,
     post: PostResolver,
     comments: PostCommentsResolver,
     title: PostTitleResolver,

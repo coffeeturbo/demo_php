@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -8,7 +8,7 @@ import {ProfileRESTService} from "./ProfileRESTService";
 import {Token} from "../../Auth/Entity/Token";
 import {ProfileCreateUpdateRequest} from "../Http/Request/ProfileCreateUpdateRequest";
 import {AuthService} from "../../Auth/Service/AuthService";
-import {CheckAliasResponse} from "../Http/Response/CheckAliasResponse";
+import {Response} from "../../Application/Http/Response";
 import {AvatarUploadRequest} from "../Http/Request/AvatarUploadRequest";
 import {BackdropUploadRequest} from "../Http/Request/BackdropUploadRequest";
 import {BackdropPreset, BackdropPresets} from "../Entity/BackdropPreset";
@@ -19,7 +19,7 @@ import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 interface ProfileServiceInterface {
     get(path: string): Observable<Profile>;
     edit(profile: Profile, request: ProfileCreateUpdateRequest, oldProfile: Profile): Observable<Profile>;
-    checkAlias(alias: string): Observable<CheckAliasResponse>;
+    checkAlias(alias: string): Observable<Response>;
     getOwnProfilePath(): string;
     getOwnProfile(): Observable<Profile>;
     isOwn(profile: Profile): boolean;
@@ -30,7 +30,6 @@ interface ProfileServiceInterface {
 export class ProfileService implements ProfileServiceInterface{
     private profiles: Profile[] = [];
     private presets: BackdropPresets;
-    public onProfileResolve = new EventEmitter<Profile>(true);
 
     constructor(
         private rest: ProfileRESTService, 
@@ -43,7 +42,6 @@ export class ProfileService implements ProfileServiceInterface{
     {
         return this.getFromCache(path)
             .catch(() => this.getByPath(path).do(profile => this.saveToCache(profile, path)))
-            .do(profile => this.onProfileResolve.emit(profile))
         ;
     }
    
@@ -68,7 +66,7 @@ export class ProfileService implements ProfileServiceInterface{
         ;
     }
 
-    public checkAlias(alias: string): Observable<CheckAliasResponse>
+    public checkAlias(alias: string): Observable<Response>
     {
         return this.rest.checkAlias(alias);
     }

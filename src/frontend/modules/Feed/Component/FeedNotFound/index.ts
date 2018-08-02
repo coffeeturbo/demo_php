@@ -4,11 +4,11 @@ import {PlatformService} from "../../../Application/Service/PlatformService";
 import {HttpCodes} from "../../../Application/Entity/HttpCodes";
 
 @Component({
-    selector: "profile-not-found",
+    selector: "feed-not-found",
     templateUrl: "./template.pug",
     styleUrls: ["./style.shadow.scss"]
 })
-export class ProfileNotFoundComponent {
+export class FeedNotFoundComponent {
 
     constructor(private pl: PlatformService) {}
 
