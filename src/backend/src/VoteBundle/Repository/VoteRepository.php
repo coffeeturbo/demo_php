@@ -143,8 +143,6 @@ class VoteRepository extends EntityRepository
 
             $votes = $this->getByCriteria($contentCriteria);
 
-            dump($votes);
-
             $postIds = array_map(function(Vote $vote){
                 return $vote->getContentId();
             }, $votes);
