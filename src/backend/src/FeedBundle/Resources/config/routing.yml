@@ -11,3 +11,4 @@ feed:
     sort: "id|rating|hot"
     direction: ASC|DESC
     tags: "*"
+    vote_type: "all|positive|negative"

@@ -13,6 +13,8 @@ abstract class VoteType
                 return  new VoteTypePositive();
             case VoteTypeNegative::STRING_CODE:
                 return new VoteTypeNegative();
+            case VoteTypeAll::STRING_CODE:
+                return new VoteTypeAll();
             default:
                 throw new \Exception(sprintf('Unknown string code %s', $code));
         }
@@ -25,6 +27,8 @@ abstract class VoteType
                 return new VoteTypePositive();
             case VoteTypeNegative::INT_CODE:
                 return  new VoteTypeNegative();
+            case VoteTypeAll::INT_CODE:
+                return  new VoteTypeAll();
             default:
                 throw new \Exception(sprintf('Unknown int code %s', $code));
         }

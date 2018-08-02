@@ -1,6 +1,8 @@
 <?php
 namespace FeedBundle\Criteria;
 
+use VoteBundle\Entity\VoteType\VoteType;
+
 class FeedCriteria extends Criteria
 {
 
@@ -15,6 +17,10 @@ class FeedCriteria extends Criteria
     private $endDate;
     private $profileId;
     private $tags;
+    private $voteType;
+
+
+
 
     public function __construct(int $limit, $cursor,
                                 string $order,
@@ -22,7 +28,9 @@ class FeedCriteria extends Criteria
                                 \DateTime $dateFrom = null,
                                 \DateTime $dateTo = null,
                                 $profileId = null,
-                                array $tags = null)
+                                array $tags = null,
+                                VoteType $voteType= null
+    )
     {
         parent::__construct($limit, $cursor);
 
@@ -32,6 +40,7 @@ class FeedCriteria extends Criteria
         $this->endDate = $dateTo;
         $this->profileId = $profileId;
         $this->tags = $tags;
+        $this->voteType = $voteType;
     }
 
     public function getProfileId()
@@ -87,6 +96,17 @@ class FeedCriteria extends Criteria
     public function getTags(): ?array
     {
         return $this->tags;
+    }
+
+    public function getVoteType(): ?VoteType
+    {
+        return $this->voteType;
+    }
+
+    public function setVoteType(VoteType $voteType)
+    {
+        $this->voteType = $voteType;
+        return $this;
     }
 
 }

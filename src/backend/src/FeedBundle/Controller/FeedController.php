@@ -37,7 +37,7 @@ class FeedController extends Controller
         } catch(NotFoundHttpException $e){
             return new ErrorJsonResponse($e->getMessage(),[], $e->getStatusCode());
         } catch(\Exception $e){
-            return new ErrorJsonResponse($e->getMessage(), []);
+            return new ErrorJsonResponse($e->getMessage(), $e->getTrace());
         }
 
         return new SuccessPostsResponse($posts);

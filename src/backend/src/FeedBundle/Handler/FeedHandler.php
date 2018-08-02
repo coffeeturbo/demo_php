@@ -4,6 +4,7 @@ namespace FeedBundle\Handler;
 use AppBundle\Handler\RequestHandler;
 use FeedBundle\Criteria\FeedCriteria;
 use Symfony\Component\HttpFoundation\Request;
+use VoteBundle\Entity\VoteType\VoteType;
 
 class FeedHandler implements RequestHandler
 {
@@ -27,7 +28,11 @@ class FeedHandler implements RequestHandler
         $dateFrom = $request->get('dateFrom') ? new \DateTime($request->get('dateFrom')) : null;
         $dateTo = $request->get('dateTo')? new \DateTime($request->get('dateTo')) : null;
 
-        $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction, $dateFrom, $dateTo, $profile, $tags);
+        $voteType = !is_null( $request->get('vote_type') )
+            ? VoteType::createFromStringCode($request->get('vote_type'))
+            : null;
+
+        $this->criteria = new FeedCriteria($limit, $cursor, $order, $direction, $dateFrom, $dateTo, $profile, $tags,$voteType);
     }
 
     public function getCriteria(): FeedCriteria

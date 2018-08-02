@@ -1,6 +1,8 @@
 <?php
 namespace VoteBundle\Entity;
 
+use AppBundle\Entity\ModifyDateEntityInterface;
+use AppBundle\Entity\ModifyDateEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use ProfileBundle\Entity\Profile;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
@@ -8,17 +10,20 @@ use VoteBundle\Entity\VoteType\VoteType;
 use VoteBundle\Vote\VoteableEntity;
 use VoteBundle\Vote\VoteEntity;
 
-class Vote implements VoteEntity
+class Vote implements VoteEntity, ModifyDateEntityInterface
 {
+    use ModifyDateEntityTrait;
+
     private $id;
     private $type;
     private $profile;
 
     private $contentType;
     private $contentId;
-
-
     private $voteableEntity;
+
+
+
 
     public function __construct(Profile $profile, VoteableEntity $entity, VoteType $type = null)
     {
