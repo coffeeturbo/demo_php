@@ -116,8 +116,8 @@
 modal(*ngIf="showConfirmEmailModal", (on-close)="showConfirmEmailModal = false")
   modal-header {{ "Confirmation email address" | translate }}
   modal-body
-    p We send protection code to 
+    p {{ "We send protection code to" | translate }} 
       b {{tokenService.decodeToken().username}}.
-    p Please check your email, and enter code below.
+    p {{ "Please check your email, and enter code below" | translate }}.
     br
     confirm-email-form((onSuccess)="showConfirmEmailModal = false")

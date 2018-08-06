@@ -25,6 +25,7 @@ import {SearchTitleResolver} from "../modules/Search/Service/SearchTitleResolver
 import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequestResolver";
 import {SearchRoute} from "../modules/Search/Route/SerachRoute";
 import {CanDeactivatePostFormRoute} from "../modules/Post/Service/CanDeactivatePostFormRoute";
+import {VoteFeedRequestResolver} from "../modules/Vote/Service/VoteFeedRequestResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -120,10 +121,8 @@ export const appRoutes: JetRoutes = [
         component: FeedRoute,
         resolve: {
             ...FeedResolvers, 
-            ...{
-                feedRequest: TagFeedRequestResolver,
-                title: TagTitleResolver
-            }
+            feedRequest: TagFeedRequestResolver,
+            title: TagTitleResolver
         }
     },
     {
@@ -146,6 +145,24 @@ export const appRoutes: JetRoutes = [
         component: FeedProfileRoute,
         canActivate: [CanActivateService],
         data: {title: 'News', allow: ["ROLE_CREATED"]},
+    },
+    { // Лайки профиля
+        path: 'likes',
+        component: FeedRoute,
+        canActivate: [CanActivateService],
+        data: {
+            title: 'Likes',
+            description: 'Likes',
+            feedRequest: <GetFeedRequest>{
+                vote_type: "all",
+                sort: "rating"
+            }
+        },
+        resolve: {
+            ...FeedResolvers,
+            profile: ProfileResolver,
+            feedRequest: VoteFeedRequestResolver
+        }
     },
     { // Настройки профиля
         path: 'settings',

@@ -21,10 +21,10 @@ export class CropperDirective implements OnChanges {
         Observable
             .fromEvent(el.nativeElement, "load")
             .subscribe(() => {
-                if(this.cropper instanceof Cropper) {
+                if(this.cropper) {
                     this.cropper.replace(el.nativeElement.src);
                 } else {
-                    this.cropper = new Cropper(el.nativeElement, Object.assign(this.defaultOptions, this.options));
+                    this.cropper = new Cropper(el.nativeElement, {...this.defaultOptions, ...this.options});
                 }
             })
         ;

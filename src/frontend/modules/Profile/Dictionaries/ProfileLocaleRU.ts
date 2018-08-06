@@ -30,5 +30,8 @@ export const ProfileLocaleRU = {
     "Image must be no less than 1500 pixels wide and 200 pixels tall.": "Изображение должно иметь размер не меньше 1500 точек по ширине и 200 точек по высоте",
     "Image must be no more than 7 000 pixels tall and wide.": "Изображение должно иметь размер не больше 7 000 точек по каждой из сторон.",
     "Outrageously tall or wide photos won't work.": "Нельзя использовать фотографии, у которых одна из сторон в несколько раз превышает другую.",
-    "You can choose a profile link that is easier to memorize and looks better on business cards. Please use latin letters, numbers, or «_»": "Вы можете изменить короткий адрес Вашей страницы на более удобный и запоминающийся. Для этого введите имя страницы, состоящее из латинских букв, цифр или знаков «_»"
+    "You can choose a profile link that is easier to memorize and looks better on business cards. Please use latin letters, numbers, or «_»": "Вы можете изменить короткий адрес Вашей страницы на более удобный и запоминающийся. Для этого введите имя страницы, состоящее из латинских букв, цифр или знаков «_»",
+    "With us": "С нами",
+    "We send protection code to": "Мы отправили защитный код на",
+    "Please check your email, and enter code below": "Пожалуйста проверьте вашу почту и введите код ниже"
 };

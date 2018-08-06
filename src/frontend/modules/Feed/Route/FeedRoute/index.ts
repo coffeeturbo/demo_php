@@ -33,7 +33,7 @@ export class FeedRoute implements OnInit {
 
         this.isLoading = true;
         this.feedService
-            .get(10, Object.assign({}, this.route.snapshot.data.feedRequest, {cursor: cursor}))
+            .get(10, {...{}, ...this.route.snapshot.data.feedRequest, ...{cursor: cursor}})
             .finally(() => this.isLoading = false)
             .subscribe((feed) => {
                 this.isFeedEnd = feed.length < 10;
@@ -52,7 +52,7 @@ export class FeedRoute implements OnInit {
         let feedObservable = this.feedService
             .get(10, this.route.snapshot.data.feedRequest)
             .delayWhen(() => Observable.timer(delay))
-            .finally(() => this.isLoading = false)
+            .finally(() => this.isFeedEnd = this.isLoading = false)
             .publishReplay(1)
             .refCount()
         ;

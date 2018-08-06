@@ -139,6 +139,10 @@ export class AuthService implements AuthServiceInterface
     {
         this.tokenService.removeTokens();
         this.tokenExpirationSchedule.unsubscribe();
+        
+        if(this.route.snapshot.firstChild.routeConfig.canActivate) {
+            this.router.navigate(["/"]);
+        }
     }
 
     public addTokenExpirationSchedule(): void
