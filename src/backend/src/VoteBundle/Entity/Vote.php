@@ -31,6 +31,7 @@ class Vote implements VoteEntity, ModifyDateEntityInterface
         $this->setVoteableEntity($entity);
 
         $this->type =  isset($type) ? $type->getIntCode() : null;
+        $this->setCreated(new \DateTime());
     }
 
     public function getVoteableEntity(): VoteableEntity

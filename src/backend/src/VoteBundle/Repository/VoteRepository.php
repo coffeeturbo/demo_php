@@ -78,22 +78,30 @@ class VoteRepository extends EntityRepository
 
         // todo тут не доделал
 
-        $qb->orderBy('p.id', $criteria->getDirection());
+        $qb->orderBy('p.created', $criteria->getDirection());
+
+
 
         if($cursor = $criteria->getCursor()){
             // desc
+
+
+            $vote = $this->getEntityManager()->getRepository('VoteBundle:Vote')->find($cursor);
+
             switch(strtolower($criteria->getDirection())){
                 case 'desc':
-                    $qb->andWhere('p.id < :cursor');
+                    $qb->andWhere('p.created < :created');
                     break;
                 case 'asc':
-                    $qb->andWhere('p.id > :cursor');
+                    $qb->andWhere('p.created < :created');
                     break;
 
                 default:
-                    $qb->andWhere('p.id < :cursor');
+                    $qb->andWhere('p.created < :created');
 
             }
+
+            $qb->setParameter('created', $vote->getCreated());
             $qb->setParameter('cursor', $cursor);
         }
 
@@ -143,12 +151,15 @@ class VoteRepository extends EntityRepository
 
             $votes = $this->getByCriteria($contentCriteria);
 
+            // находим посты к лайкам
             $postIds = array_map(function(Vote $vote){
                 return $vote->getContentId();
             }, $votes);
 
             $postRep = $this->getEntityManager()->getRepository(Post::class);
 
+
+            // прикрепляем лайки к постам
             $posts = $postRep->findBy(['id' => $postIds]);
 
             array_walk($posts, function(Post $post) use ($votes){
