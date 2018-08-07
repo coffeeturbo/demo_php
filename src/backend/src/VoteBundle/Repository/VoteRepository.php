@@ -81,11 +81,9 @@ class VoteRepository extends EntityRepository
         $qb->orderBy('p.id', $criteria->getDirection());
 
 
-
         if($cursor = $criteria->getCursor()){
             // desc
-            $vote = $this->getEntityManager()
-                ->getRepository('VoteBundle:Vote')->find($cursor);
+            $vote = $this->getVoteByProfileAndPost($criteria->getProfileId(), $cursor);
 
             switch(strtolower($criteria->getDirection())){
                 case 'desc':
@@ -99,9 +97,7 @@ class VoteRepository extends EntityRepository
                     $qb->andWhere('p.id < :cursor');
 
             }
-
-//            $qb->setParameter('created', $vote->getCreated());
-            $qb->setParameter('cursor', $cursor);
+            $qb->setParameter('cursor', $vote->getId());
         }
 
 
@@ -227,6 +223,15 @@ class VoteRepository extends EntityRepository
         }
 
         return $posts;
+    }
+
+
+    public function getVoteByProfileAndPost(int $profileId, $postId): ?Vote
+    {
+        return $this->findOneBy([
+            'profile' => $profileId,
+            'contentId' => $postId
+        ]);
     }
 
 
