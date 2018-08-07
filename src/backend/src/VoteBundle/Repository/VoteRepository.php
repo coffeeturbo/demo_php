@@ -78,30 +78,29 @@ class VoteRepository extends EntityRepository
 
         // todo тут не доделал
 
-        $qb->orderBy('p.created', $criteria->getDirection());
+        $qb->orderBy('p.id', $criteria->getDirection());
 
 
 
         if($cursor = $criteria->getCursor()){
             // desc
-
-
-            $vote = $this->getEntityManager()->getRepository('VoteBundle:Vote')->find($cursor);
+            $vote = $this->getEntityManager()
+                ->getRepository('VoteBundle:Vote')->find($cursor);
 
             switch(strtolower($criteria->getDirection())){
                 case 'desc':
-                    $qb->andWhere('p.created < :created');
+                    $qb->andWhere('p.id < :cursor');
                     break;
                 case 'asc':
-                    $qb->andWhere('p.created < :created');
+                    $qb->andWhere('p.id < :cursor');
                     break;
 
                 default:
-                    $qb->andWhere('p.created < :created');
+                    $qb->andWhere('p.id < :cursor');
 
             }
 
-            $qb->setParameter('created', $vote->getCreated());
+//            $qb->setParameter('created', $vote->getCreated());
             $qb->setParameter('cursor', $cursor);
         }
 
@@ -156,13 +155,23 @@ class VoteRepository extends EntityRepository
                 return $vote->getContentId();
             }, $votes);
 
+
+
             $postRep = $this->getEntityManager()->getRepository(Post::class);
 
 
             // прикрепляем лайки к постам
             $posts = $postRep->findBy(['id' => $postIds]);
 
-            array_walk($posts, function(Post $post) use ($votes){
+            // формируем массив постов в том порядке в котором лайкнуты посты
+            $postsByIds = array_map(function($id) use ($posts){
+                foreach($posts as $dbPost){
+                    /** @var $dbPost Post */
+                    if($id === $dbPost->getId()) return $dbPost;
+                }
+            }, $postIds);
+
+            array_walk($postsByIds, function(Post $post) use ($votes){
                 /** @var Vote $vote */
                 foreach($votes as $vote) {
                     if($post->getId() === $vote->getContentId()){
@@ -176,7 +185,7 @@ class VoteRepository extends EntityRepository
             return new NotFoundHttpException();
         }
 
-        return $posts;
+        return $postsByIds;
     }
 
     public function getVotedContentByCriteria(FeedCriteria $contentCriteria)
