@@ -90,7 +90,7 @@ class VoteRepository extends EntityRepository
                     $qb->andWhere('p.id < :cursor');
                     break;
                 case 'asc':
-                    $qb->andWhere('p.id < :cursor');
+                    $qb->andWhere('p.id > :cursor');
                     break;
 
                 default:
