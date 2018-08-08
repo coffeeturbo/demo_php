@@ -152,11 +152,7 @@ export const appRoutes: JetRoutes = [
         canActivate: [CanActivateService],
         data: {
             title: 'Likes',
-            description: 'Likes',
-            feedRequest: <GetFeedRequest>{
-                vote_type: "all",
-                sort: "rating"
-            }
+            description: 'Likes'
         },
         resolve: {
             ...FeedResolvers,
