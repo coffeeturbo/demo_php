@@ -14,7 +14,8 @@ export class VoteFeedRequestResolver implements Resolve<GetFeedRequest> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<GetFeedRequest> {
         return this.profileResolver.onResolve
             .first()
-            .map(profile => (profile ? {profile: profile.id} : null))
+            .map(profile => (profile ? {profile: profile.id} : {}))
+            .map(feedRequest => <GetFeedRequest>{...feedRequest, ...{vote_type: "all", sort: "rating"}})
             .do(feedRequest => this.feedRequestService.onFeedRequestResolve.emit(feedRequest))
         ;
     }
