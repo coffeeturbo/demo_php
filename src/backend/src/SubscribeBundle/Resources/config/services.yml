@@ -1,0 +1,14 @@
+services:
+
+  subscribe.repository.subscribe_repository:
+    class: SubscribeBundle\Repository\SubscribeRepository
+    factory: ['@doctrine.orm.entity_manager', 'getRepository']
+    arguments:
+      - SubscribeBundle\Entity\Subscribe
+
+  subscribe.service.subscribe_service:
+    public: true
+    class: SubscribeBundle\Service\SubscribeService
+    arguments:
+       - '@profile.service'
+       - '@subscribe.repository.subscribe_repository'

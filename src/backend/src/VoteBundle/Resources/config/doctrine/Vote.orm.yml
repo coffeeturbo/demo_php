@@ -19,8 +19,8 @@ VoteBundle\Entity\Vote:
       type: integer
       nullable: false
     created:
-          type: datetime
-          nullable: true
+      type: datetime
+      nullable: true
     updated:
       type: datetime
       nullable: true
