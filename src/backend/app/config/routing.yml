@@ -76,4 +76,4 @@ search:
 
 subscribe_protected:
   resource: '@SubscribeBundle/Resources/config/routing_protected.yml'
-  prefix: '/subscribe'
+  prefix: '/protected/subscribe'
