@@ -19,6 +19,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {ChromeAutoFillModule} from "./ChromeAutoFill/ChromeAutoFillModule";
 import {DateModule} from "./Date/DateModule";
 import {ClickOutModule} from "./ClickOut/ClickOutModule";
+import {ConfirmationModule} from "./Confirmation/ConfirmationModule";
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import {ClickOutModule} from "./ClickOut/ClickOutModule";
         CropperModule,
         CapitalizeModule,
         ChromeAutoFillModule,
+        ConfirmationModule,
         NgCommonModule,
         LoadingBoxModule,
         LoadingBarModule,
