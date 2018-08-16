@@ -4,6 +4,7 @@ namespace SubscribeBundle\Controller;
 use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use SubscribeBundle\Formatter\SubscribeFormatter;
+use SubscribeBundle\Formatter\SubscribesFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
@@ -40,7 +41,7 @@ class ProfileSubscribeController extends Controller
     /**
      * @ApiDoc(
      *  section="Subscribe",
-     *  description= "Подписаться на профиль",
+     *  description= "Отписаться от профиля",
      *  authentication=true,
      * )
      *
@@ -59,5 +60,31 @@ class ProfileSubscribeController extends Controller
         }
 
         return new JsonResponse(['success'=> true]);
+    }
+
+
+    /**
+     * @ApiDoc(
+     *  section="Subscribe",
+     *  description= "Получить подписки текущего профиля",
+     *  authentication=true,
+     * )
+     *
+     */
+    public function listSubscribesAction()
+    {
+        try {
+            $subscribes = $this->get('subscribe.service.subscribe_service')->listSubscribes();
+
+
+        }
+        catch(ConflictHttpException
+        | NotFoundHttpException $e){
+            return new ErrorJsonResponse($e->getMessage(), $e->getTrace(), $e->getStatusCode());
+        } catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage());
+        }
+
+        return new JsonResponse((new SubscribesFormatter($subscribes))->format());
     }
 }

@@ -12,3 +12,11 @@ services:
     arguments:
        - '@profile.service'
        - '@subscribe.repository.subscribe_repository'
+       - '@event_dispatcher'
+
+  subscribe.event_listener.update_subscribers_total_listener:
+      class: SubscribeBundle\Event\UpdateSubscribersTotalListener
+      tags:
+        - { name: kernel.event_subscriber }
+      arguments:
+        - "@subscribe.service.subscribe_service"

@@ -38,6 +38,12 @@ ProfileBundle\Entity\Profile:
       nullable: false
       options:
         default: 0
+    subscribersTotal:
+      column: subscribers_total
+      type: bigint
+      nullable: false
+      options:
+        default: 0
   manyToOne:
     account:
       targetEntity: AccountBundle\Entity\Account
