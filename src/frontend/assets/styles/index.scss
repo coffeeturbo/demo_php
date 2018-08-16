@@ -72,11 +72,12 @@ h4 { font-size: $h4_size; }
 small { font-size: $small_size; }
 
 // Use it for
-// ------- Tile with hr ---------
+// ------- Title with hr ---------
 .hr-box {
   position: relative;
   text-align: center;
   margin: 10px 0;
+  line-height: 1em;
 
   .hr-title {
     color: material-color("grey", "400");
