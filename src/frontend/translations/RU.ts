@@ -62,6 +62,8 @@ export const LocaleRU = {
   "Subscriptions":"Подписки",
   "Subscribers":  "Подписчики",
   "Subscribe":    "Подписаться",
+  "Unsubscribe":  "Отписаться",
+  "Subscribed":   "Подписан",
   "Tags":         "Тэги",
   "Text":         "Текст",
   "Image":        "Изображение",

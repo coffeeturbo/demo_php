@@ -1,0 +1,14 @@
+ng-container(*ngIf="profile")
+  ng-container(*ngIf="!subscribeLoading")
+    button.btn-material.primary(*ngIf="!profile.subscription", (click)="subscribe()") {{ "Subscribe" | translate }} &nbsp; {{ "9" }}
+    button.btn-material.primary(*ngIf="profile.subscription", (click)="showUnsubscribeModal = true") {{ "Subscribed" | translate }} &nbsp; {{ "9" }}
+  button.btn-material.primary(*ngIf="subscribeLoading", [disabled]="true") {{ "Loading" | translate }}
+  
+  
+  modal(*ngIf="showUnsubscribeModal", [animation]="false", (on-close)="showUnsubscribeModal = false")
+    modal-header {{ "Unsubscribing" | translate }}
+    modal-body
+      p {{ "Unsubscribe from the" | translate }} 
+        b {{ profile.name }}?
+    modal-footer
+      confirmation((onConfirm)="unsubscribe()", (onReject)="showUnsubscribeModal = false", [confirmButtonTitle]="'Unsubscribe' | translate")

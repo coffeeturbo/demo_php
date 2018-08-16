@@ -65,9 +65,11 @@
     position: absolute;
     background: #fff;
     top: 100%;
-    width: 100%;
+    width: calc(100% - 40px);
     display: flex;
+    align-items: center;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.38);
+    padding: 0 20px;
 
     .avatar {
       position: absolute;
@@ -123,7 +125,6 @@
     figcaption {
       padding: 10px;
       padding-left: 10px + 150px + 8px;
-      margin-left: 20px;
 
       @include mq($until: tablet) {
         padding-left: 10px + 100px + 8px;
@@ -153,10 +154,11 @@
   }
 }
 
-.profile-info{
+.profile-info {
   display: flex;
   flex-direction: column;
   align-items: center;
+  line-height: 1.5em;
 
   section {
     width: 100%;
@@ -165,5 +167,24 @@
     padding: 20px;
     margin: 20px 0;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+    
+    .flex {
+      display: flex;
+      justify-content: center;
+      line-height: 1;
+      
+      p {
+        padding-right: 20px;
+        text-align: center;
+        
+        span {
+          font-size: $h1_size;
+        }
+      }
+
+      div {
+        text-align: center;
+      }
+    }
   }
 }

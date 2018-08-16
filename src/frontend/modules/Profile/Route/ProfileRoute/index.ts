@@ -12,6 +12,7 @@ import {ProfileBackdropActionsHelper} from "../../Component/ProfileBackdropActio
 import {Feed} from "../../../Feed/Entity/Feed";
 import {FeedService} from "../../../Feed/Service/FeedService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
+import {Gender} from "../../Entity/Gender";
 
 @Component({
     templateUrl: "./template.pug",
@@ -24,6 +25,7 @@ export class ProfileRoute {
     public disabled: boolean = false;
     public isLoading: boolean = false;
     public isFeedEnd: boolean = false;
+    public Gender = Gender;
 
     constructor(
         private route: ActivatedRoute, 

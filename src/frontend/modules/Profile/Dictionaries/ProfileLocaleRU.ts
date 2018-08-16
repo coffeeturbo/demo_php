@@ -20,6 +20,8 @@ export const ProfileLocaleRU = {
     "Custom image": "Своё изображение",
     "Profile not found": "Профиль не найден",
     "Drag the image": "Перемещение изображения",
+    "Unsubscribing": "Отказ от подписки",
+    "Unsubscribe from the": "Отказаться от подписки на пользователя",
     "Perhaps you used an invalid link or profile has been deleted": "Возможно, вы воспользовались недействительной ссылкой или профиль был удален",
     "If you increase the screen resolution, some areas can be cropped": "При увеличении разрешения экрана некоторые участки могут быть обрезаны",
     "Now select area for your profile miniature": "Выбрите область для маленьких фотографий",

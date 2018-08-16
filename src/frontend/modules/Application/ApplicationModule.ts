@@ -73,6 +73,7 @@ export class HammerConfig extends HammerGestureConfig  {
         ProfileModule,
         SettingsModule,
         SidebarModule,
+        SubscribeModule,
         TagModule,
         VoteModule,
         CommonModule,

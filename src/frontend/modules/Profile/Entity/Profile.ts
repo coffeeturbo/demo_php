@@ -1,4 +1,5 @@
 import {Gender} from "./Gender";
+import {Subscription} from "../../Subscribe/Entity/Subscription";
 
 export interface Profile {
     id: number;
@@ -12,6 +13,7 @@ export interface Profile {
     verified: boolean;
     avatar: ProfileAvatar;
     backdrop: Image;
+    subscription?: Subscription;
 }
 
 type ProfileAvatar = {
