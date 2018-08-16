@@ -17,4 +17,4 @@ profile_check_alias:
   defaults: { _controller: ProfileBundle:Create:checkAlias }
   methods: [ GET ]
   requirements:
-    alias: '\w+'
+    alias: '[\w\.]+'
