@@ -23,6 +23,7 @@ class ArrayProfileFormatter extends Formatter
             'verified'   => $this->resource['verified'],
             'created'    => $this->resource['created']->format(\DateTime::W3C),
             'rating'     => isset($this->resource['votesRating']) ? $this->resource['votesRating'] : null,
+            'subscribers_total' => $this->resource['subscribers_total']
         ];
     }
 

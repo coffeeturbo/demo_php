@@ -1,11 +1,13 @@
 <?php
 namespace SubscribeBundle\Service;
 
+use ProfileBundle\Entity\Profile;
 use ProfileBundle\Service\ProfileService;
 use SubscribeBundle\Entity\Subscribe;
 use SubscribeBundle\Entity\SubscribeType\SubscribeProfileType;
 use SubscribeBundle\Event\SubscribeEvent;
 use SubscribeBundle\Repository\SubscribeRepository;
+use SubscribeBundle\Subscribe\SubscribeAble;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,6 +27,20 @@ class SubscribeService
         $this->eventDispatcher = $dispatcher;
     }
 
+
+    public function checkSubscribed(SubscribeAble $subscribeAbleEntity)
+    {
+        if($subscribeAbleEntity instanceof Profile){
+            /** @var Subscribe $subscribe */
+            $subscribe = $this->subscribeRepository->findOneBy([
+                'type' => SubscribeProfileType::INT_CODE,
+                'profile' => $this->profileService->getCurrentProfile(),
+                'targetId' => $subscribeAbleEntity->getId()
+            ]);
+
+            if($subscribe) $subscribeAbleEntity->setSubscribe($subscribe);
+        }
+    }
 
     public function profileSubscribe(int $profileId)
     {
