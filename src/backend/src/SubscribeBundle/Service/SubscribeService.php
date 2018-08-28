@@ -92,11 +92,24 @@ class SubscribeService
         return true;
     }
 
-    public function listSubscribes()
+    public function listProfileSubscribes()
     {
         $profile = $this->profileService->getCurrentProfile();
 
-        return $this->subscribeRepository->findBy(['profile' => $profile]);
+        $subscribes = $this->subscribeRepository->findBy([
+            'profile' => $profile,
+            'type' => SubscribeProfileType::INT_CODE
+        ]);
+
+        $profileIds = array_map(function(Subscribe $subscribe){
+            return $subscribe->getTargetId();
+        }, $subscribes);
+
+
+
+        $profiles = $this->profileService->getProfileRepository()->findBy(['id'=> $profileIds]);
+
+        return $profiles;
     }
 
     public function updateSubscribedTarget(Subscribe $subscribe)
