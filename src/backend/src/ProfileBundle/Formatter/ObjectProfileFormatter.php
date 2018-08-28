@@ -23,7 +23,7 @@ class ObjectProfileFormatter extends Formatter
                 'verified'   => $this->resource->isVerified(),
                 'created'    => $this->resource->getCreated()->format(\DateTime::W3C),
                 'rating'     => $this->resource->getVotesRating(),
-
+                'subscribers_total' => $this->resource->getSubscribersTotal()
             ];
         }
     }

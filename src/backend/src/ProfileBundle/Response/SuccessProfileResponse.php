@@ -4,6 +4,7 @@ namespace ProfileBundle\Response;
 
 use AccountBundle\Entity\Account;
 use ProfileBundle\Entity\Profile;
+use ProfileBundle\Formatter\ProfileFormatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +33,13 @@ class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
                 'birth_date' => $profile->getBirthDate() ? $profile->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT) : null,
                 'verified' => $profile->isVerified(),
                 'created' => $profile->getCreated()->format(\DateTime::W3C),
-                'rating' => $profile->getVotesRating()
+                'rating' => $profile->getVotesRating(),
+                'subscribers_total' => $profile->getSubscribersTotal(),
+
+                'subscribe' => [
+                    'status' => !is_null($profile->getSubscribe()) ? true : false
+                ]
+
             ]
         ];
     }
