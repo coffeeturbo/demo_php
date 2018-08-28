@@ -165,11 +165,12 @@ class ProfileService
         return $this->profileRepository->delete($profile);
     }
 
-    public function getCurrentProfile(): Profile
+    public function getCurrentProfile(): ?Profile
     {
         $account = $this->authService->getAccount();
-
-        return $this->profileRepository->getCurrentProfileByAccount($account);
+        if($account instanceof Account)
+            return $this->profileRepository->getCurrentProfileByAccount($account);
+        return null;
     }
 
 
