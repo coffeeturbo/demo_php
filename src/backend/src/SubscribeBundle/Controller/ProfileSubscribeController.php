@@ -3,6 +3,8 @@ namespace SubscribeBundle\Controller;
 
 use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use ProfileBundle\Formatter\ProfileFormatter;
+use SubscribeBundle\Entity\Subscribe;
 use SubscribeBundle\Formatter\SubscribeFormatter;
 use SubscribeBundle\Formatter\SubscribesFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -77,6 +79,10 @@ class ProfileSubscribeController extends Controller
             $subscribes = $this->get('subscribe.service.subscribe_service')->listSubscribes();
 
 
+            $profiles = array_map(function(Subscribe $subscribe){
+                return (new ProfileFormatter($subscribe->getProfile()))->format();
+            },$subscribes);
+
         }
         catch(ConflictHttpException
         | NotFoundHttpException $e){
@@ -85,6 +91,6 @@ class ProfileSubscribeController extends Controller
             return new ErrorJsonResponse($e->getMessage());
         }
 
-        return new JsonResponse((new SubscribesFormatter($subscribes))->format());
+        return new JsonResponse($profiles);
     }
 }
