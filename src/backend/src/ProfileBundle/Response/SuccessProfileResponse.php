@@ -34,10 +34,10 @@ class SuccessProfileResponse extends JsonResponse implements \JsonSerializable
                 'verified' => $profile->isVerified(),
                 'created' => $profile->getCreated()->format(\DateTime::W3C),
                 'rating' => $profile->getVotesRating(),
-                'subscribers_total' => $profile->getSubscribersTotal(),
 
                 'subscribe' => [
-                    'status' => !is_null($profile->getSubscribe()) ? true : false
+                    'status' => !is_null($profile->getSubscribe()) ? true : false,
+                    'subscribers_total' => $profile->getSubscribersTotal(),
                 ]
 
             ]
