@@ -30,7 +30,7 @@ class SubscribeService
 
     public function checkSubscribed(SubscribeAble $subscribeAbleEntity)
     {
-        if($subscribeAbleEntity instanceof Profile){
+        if($subscribeAbleEntity instanceof Profile && $this->profileService->getCurrentProfile()){
             /** @var Subscribe $subscribe */
             $subscribe = $this->subscribeRepository->findOneBy([
                 'type' => SubscribeProfileType::INT_CODE,
