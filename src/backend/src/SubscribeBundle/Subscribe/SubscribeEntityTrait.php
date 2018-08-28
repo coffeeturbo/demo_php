@@ -6,7 +6,7 @@ use SubscribeBundle\Entity\Subscribe;
 trait SubscribeEntityTrait
 {
 
-    private $subscribersTotal;
+    private $subscribersTotal = 0;
 
     private $subscribe;
 
