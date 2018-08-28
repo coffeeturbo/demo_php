@@ -19,7 +19,7 @@ class ObjectProfileFormatter extends Formatter
                 'alias'      => $this->resource->getAlias(),
 //                'avatar'     => (new AvatarFormatter($this->resource->getAvatarCollection()))->format(),
 //                'backdrop'   => (new ImageFormatter($this->resource->getBackdrop()))->format(),
-                'birth_date' => $this->resource->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT),
+                'birth_date' => $this->resource->getBirthDate()?$this->resource->getBirthDate()->format(Profile::BIRTH_DATE_FORMAT): null,
                 'verified'   => $this->resource->isVerified(),
                 'created'    => $this->resource->getCreated()->format(\DateTime::W3C),
                 'rating'     => $this->resource->getVotesRating(),

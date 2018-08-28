@@ -3,10 +3,8 @@ namespace SubscribeBundle\Controller;
 
 use AppBundle\Http\ErrorJsonResponse;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use ProfileBundle\Formatter\ProfileFormatter;
-use SubscribeBundle\Entity\Subscribe;
+use ProfileBundle\Formatter\ProfilesFormatter;
 use SubscribeBundle\Formatter\SubscribeFormatter;
-use SubscribeBundle\Formatter\SubscribesFormatter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
@@ -76,12 +74,7 @@ class ProfileSubscribeController extends Controller
     public function listSubscribesAction()
     {
         try {
-            $subscribes = $this->get('subscribe.service.subscribe_service')->listSubscribes();
-
-
-            $profiles = array_map(function(Subscribe $subscribe){
-                return (new ProfileFormatter($subscribe->getProfile()))->format();
-            },$subscribes);
+            $subscribes = $this->get('subscribe.service.subscribe_service')->listProfileSubscribes();
 
         }
         catch(ConflictHttpException
@@ -91,6 +84,6 @@ class ProfileSubscribeController extends Controller
             return new ErrorJsonResponse($e->getMessage());
         }
 
-        return new JsonResponse($profiles);
+        return new JsonResponse((new ProfilesFormatter($subscribes))->format());
     }
 }
