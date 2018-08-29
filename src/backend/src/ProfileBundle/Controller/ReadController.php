@@ -31,10 +31,7 @@ class ReadController extends Controller
             $profile = $this->get('profile.service')->getById($id);
 
             // проверяем подписаны ли на профайл ищем подписку профиля на профиль
-
             $this->get('subscribe.service.subscribe_service')->checkSubscribed($profile);
-
-
 
         } catch (HttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
@@ -61,6 +58,7 @@ class ReadController extends Controller
     {
         try {
             $profile = $this->get('profile.service')->getByAlias($alias);
+            $this->get('subscribe.service.subscribe_service')->checkSubscribed($profile);
         } catch (HttpException $e) {
             return new ErrorJsonResponse($e->getMessage(), [], $e->getStatusCode());
         }
