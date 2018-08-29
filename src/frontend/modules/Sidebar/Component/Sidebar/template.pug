@@ -16,7 +16,7 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
     a(routerLink="/new", routerLinkActive="active")
       i.fa.fa-fw.fa-lg.fa-newspaper-o
       span {{ "New" | translate }} 
-    a(routerLink="/likes", routerLinkActive="active", *ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
+    a(routerLink="/likes", routerLinkActive="active", *ngIf="auth.isSignedIn() && profileService.isOwnProfileExist()")
       i.fa.fa-fw.fa-lg.fa-thumbs-up
       span {{ "Favorites" | translate }} 
     a(routerLink="/promo", routerLinkActive="active", *ngIf="showPromo")
@@ -24,21 +24,44 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
       span(style="color: #EF5350") {{ "Дарим пиццу!" | translate }} 
 
     // @TODO: Implemt SubscribersFeed
-    //a(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()", routerLink="/feed", routerLinkActive="active")
+    //a(*ngIf="auth.isSignedIn() && profileService.isOwnProfileExist()", routerLink="/feed", routerLinkActive="active")
     //  i.fa.fa-fw.fa-lg.fa-list-alt
     //  span {{ "Feed" | translate }} 
     
-  //ng-container(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
+  //ng-container(*ngIf="auth.isSignedIn() && profileService.isOwnProfileExist()")
   //  hr
   //  section
   //    h4 {{"Subscriptions" | translate }}
-  ng-container(*ngIf="auth.isSignedIn() && profile.isOwnProfileExist()")
+  ng-container(*ngIf="auth.isSignedIn() && profileService.isOwnProfileExist()")
     hr
     section
       h4 {{"Actions" | translate }}
       a(routerLink="/post/add", routerLinkActive="active")
         i.fa.fa-fw.fa-lg.fa-pencil
         span {{ "Add post" | translate }} 
+    
+    ng-container(*ngIf="(subscribeService.subscribeProfileList)?.length")
+      hr
+      section
+        h4 {{"Subscriptions" | translate }}
+        
+        a(*ngFor="let profile of subscribeService.subscribeProfileList", [routerLink]="['/profile', profile.alias || profile.id]")
+          profile-avatar([profile]="profile", size="small", [style.width.px]="24", [style.height.px]="24", [style.line-height.px]="24")
+          span {{ profile.name }}
+          
+          
+  hr
+  section
+    small
+      a(routerLink="/terms") {{ "Terms" | translate }}  
+      a(routerLink="/privacy") {{ "Privacy" | translate }}  
+      a(routerLink="/ad") {{ "AD" | translate }} 
+      a(routerLink="/about") {{ "About" | translate }}
+      
+    small
+      span © {{ year }} {{ product_name }}
+
+  br
 
 
   .flex-space

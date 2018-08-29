@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostBinding, Input} from '@angular/core';
 import {Profile, ProfileAvatarSizes} from "../../Entity/Profile";
 import {PalleteService} from "../../../Common/Pallete/Service/PalleteService";
 import {ProfileService} from "../../Service/ProfileService";
+import {RouterLink} from "@angular/router";
 
 @Component({
     selector: 'profile-avatar',
@@ -10,9 +11,15 @@ import {ProfileService} from "../../Service/ProfileService";
 })
 export class ProfileAvatarComponent {
     @Input() profile: Profile;
-    @Input() href: string;
+    @Input() href: any[] | string;
     @Input() size: ProfileAvatarSizes = "medium";
     @Input() showMock: boolean = true;
+    @Input() round: boolean = true;
+    
+    @HostBinding('style.border-radius.%')
+    get getBorderRadius() {
+        return this.round ? 50 : 0;
+    }
     
     constructor(
         public palleteService: PalleteService,

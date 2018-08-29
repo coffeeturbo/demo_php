@@ -12,7 +12,7 @@ ng-container(*ngIf="profile")
 
       figure(*ngIf="backdropHelper.disabled()")
         .avatar
-          profile-avatar([profile]="profile", [size]="'medium'", href="avatar")
+          profile-avatar([profile]="profile", size='medium', href="avatar", [round]="false")
           button(*ngIf="profileService.isOwn(profile) && pl.isPlatformBrowser()", (onChange)="avatarHelper.setData($event.image, $event.src)", cropper-browse) {{ "Change" | translate }}
         figcaption
           h1 {{profile.name}}
@@ -35,8 +35,8 @@ ng-container(*ngIf="profile")
           span {{ profile.rating | number }} 
           small {{ "Rating" | translate | lowercase}}
         p(*ngIf="true")
-          span {{ "10" | number }} 
-          small {{ "3" | number | pluralize:false:translate("subscriber"):translate("subscribers"):translate("subscribers1")}}
+          span {{ profile.subscribe.subscribers_total | number }} 
+          small {{ profile.subscribe.subscribers_total | number | pluralize:false:translate("subscriber"):translate("subscribers"):translate("subscribers1")}}
         
         p(*ngIf="true")
           span {{ "9" | number }} 

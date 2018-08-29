@@ -6,24 +6,28 @@ import {Profile} from "../../Profile/Entity/Profile";
 
 @Injectable()
 export class SubscribeService {
+    
+    public subscribeProfileList: Profile[];
+    
     constructor(private rest: SubscribeRESTService) {}
 
-    public subscribe(profileId: number): Observable<Response>
+    public subscribe(profile: Profile): Observable<Response>
     {
-        return this.rest.subscribe(profileId);
+        this.subscribeProfileList.unshift(profile);
+        return this.rest.subscribe(profile.id);
     }
 
-    public unsubscribe(profileId: number): Observable<Response>
+    public unsubscribe(profile: Profile): Observable<Response>
     {
-        return this.rest.unsubscribe(profileId);
+        let index = this.subscribeProfileList.findIndex(profile => profile == profile);
+        this.subscribeProfileList.splice(index,1);
+        return this.rest.unsubscribe(profile.id);
     }
     
-    public toggle(profile: Profile): Observable<Response>
+    public getProfileList(): Observable<Profile[]>
     {
-        if(profile.subscription) {
-            return this.rest.unsubscribe(profile.id);
-        } else {
-            return this.rest.subscribe(profile.id);
-        }
+        return this.rest.getProfileList()
+            .do(subscribeProfileList => this.subscribeProfileList = subscribeProfileList)
+        ;
     }
 }

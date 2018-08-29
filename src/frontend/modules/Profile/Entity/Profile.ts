@@ -1,5 +1,4 @@
 import {Gender} from "./Gender";
-import {Subscription} from "../../Subscribe/Entity/Subscription";
 
 export interface Profile {
     id: number;
@@ -13,7 +12,10 @@ export interface Profile {
     verified: boolean;
     avatar: ProfileAvatar;
     backdrop: Image;
-    subscription?: Subscription;
+    subscribe: {
+        status: boolean;
+        subscribers_total: number;
+    }
 }
 
 type ProfileAvatar = {
@@ -28,4 +30,5 @@ export type ProfileAvatarSizes = "small" | "medium" | "cropped" | "origin";
 interface Image {
     public_path: string;
     storage_path: string;
+    name: string;
 }

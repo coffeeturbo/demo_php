@@ -62,7 +62,8 @@ import {ProfileSubscribeComponent} from "./Component/ProfileSubscribe";
         ProfileBackdropActionsHelper
     ],
     exports: [
-        ProfileDropdownComponent
+        ProfileDropdownComponent,
+        ProfileAvatarComponent
     ]
 })
 export class ProfileModule {

@@ -15,6 +15,14 @@ aside {
   font-weight: 500;
   cursor: default;
 
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: material-color($secondary_material, "400");
+  }
+  
   @include mq($until: tablet) {
     top: 0;
     height: 100vh;
@@ -83,24 +91,31 @@ aside {
     h3 {
       flex-grow: 1;
     }
-
   }
+  
   section {
     h4 {
       color: material-color($secondary_material, '500');
     }
 
     > * {
-      display: block;
+      display: flex;
+      align-items: center;
       padding: 15px 27px;
       color: material-color($secondary_material, '900');
     }
+    small > * {
+      color: material-color($secondary_material, '600');
+      margin-right: 1em;
+    }
+    
 
     > a {
+      * + * {
+        margin-left: 15px;
+      }
+      
       .fa {
-        & + * {
-          margin-left: 15px;
-        }
         color: material-color($secondary_material, '600');
       }
 
@@ -144,8 +159,8 @@ aside {
     flex-shrink: 0;
     font-size: 1.6em;
     justify-content: flex-end;
-    position: relative;
-    //margin-top: 10px;
+    position: sticky;
+    bottom: 0;
 
     > a {
       padding: 15px;

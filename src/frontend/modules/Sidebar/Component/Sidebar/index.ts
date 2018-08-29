@@ -9,6 +9,7 @@ import {Device} from "../../../Application/Service/DeviceService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {NoticeService} from "../../../Notice/Service/NoticeService";
 import {FaviconService} from "../../../Application/Service/FaviconService";
+import {SubscribeService} from "../../../Subscribe/Service/SubscribeService";
 
 @Component({
     selector: "sidebar",
@@ -26,12 +27,14 @@ export class SidebarComponent implements AfterViewInit {
     public showNotifications = false;
     public showPromo = !!process.env && process.env.dotenv.SHOW_PROMO == 1;
     public isCounterBounce = false;
+    public year = (new Date()).getFullYear();
 
     constructor(
         public pl: PlatformService,
         public service: SidebarService,
         public auth: AuthService,
-        public profile: ProfileService,
+        public profileService: ProfileService,
+        public subscribeService: SubscribeService,
         public settingsModalService: SettingsModalService,
         public noticeService: NoticeService,
         private renderer: Renderer2,
@@ -41,6 +44,10 @@ export class SidebarComponent implements AfterViewInit {
             .do(() => this.isCounterBounce = true)
             .delay(1000)
             .subscribe(() => this.isCounterBounce = false)
+    }
+
+    ngOnInit() {
+         this.subscribeService.getProfileList().subscribe();
     }
     
     ngAfterViewInit() {

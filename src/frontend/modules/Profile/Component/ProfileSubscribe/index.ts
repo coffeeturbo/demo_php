@@ -9,29 +9,20 @@ import {SubscribeService} from "../../../Subscribe/Service/SubscribeService";
 
 export class ProfileSubscribeComponent {
     @Input() profile: Profile;
-    public subscribeLoading: boolean = false;
     public showUnsubscribeModal: boolean = false;
 
     constructor(public subscribeService: SubscribeService) {}
     
     public subscribe() {
-        this.subscribeLoading = true;
-        this.subscribeService.subscribe(this.profile.id)
-            .finally(()=> {
-                this.profile.subscription = true;
-                this.subscribeLoading = false;
-            })
-            .subscribe();
+        this.profile.subscribe.subscribers_total++;
+        this.profile.subscribe.status = true;
+        this.subscribeService.subscribe(this.profile).subscribe();
     }
 
     public unsubscribe() {
-        this.subscribeLoading = true;
+        this.profile.subscribe.subscribers_total--;
+        this.profile.subscribe.status = false;
         this.showUnsubscribeModal = false;
-        this.subscribeService.unsubscribe(this.profile.id)
-            .finally(()=> {
-                this.profile.subscription = false;
-                this.subscribeLoading = false;
-            })
-            .subscribe();
+        this.subscribeService.unsubscribe(this.profile).subscribe();
     }
 }

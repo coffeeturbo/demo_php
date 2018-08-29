@@ -19,7 +19,7 @@ export class ProfileRESTService
         let url = `/profile/${profileId}/get-by-id`;
 
         return this.http
-            .get<ProfileResponse>(url)
+            .get<ProfileResponse>(url, {withCredentials: true})
         ;
     }
 
@@ -27,7 +27,7 @@ export class ProfileRESTService
     {
         let url = `/profile/${profileAlias}/get-by-alias`;
         return this.http
-            .get<ProfileResponse>(url)
+            .get<ProfileResponse>(url, {withCredentials: true})
         ;
     }
 
