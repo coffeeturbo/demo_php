@@ -19,7 +19,7 @@ export class SubscribeService {
 
     public unsubscribe(profile: Profile): Observable<Response>
     {
-        let index = this.subscribeProfileList.findIndex(profile => profile == profile);
+        let index = this.subscribeProfileList.findIndex(subscribeProfile => subscribeProfile.id == profile.id);
         this.subscribeProfileList.splice(index,1);
         return this.rest.unsubscribe(profile.id);
     }
