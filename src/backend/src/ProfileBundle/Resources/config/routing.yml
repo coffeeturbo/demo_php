@@ -10,7 +10,7 @@ profile_get_by_alias:
   defaults: { _controller: ProfileBundle:Read:getByAlias }
   methods: [ GET ]
   requirements:
-    alias: '[0-9a-z_]+'
+    alias: '[\w\.]+'
 
 profile_check_alias:
   path: '{alias}/check'
