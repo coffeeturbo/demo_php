@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Profile} from "../../Entity/Profile";
-import {SubscribeService} from "../../../Subscribe/Service/SubscribeService";
+import {SubscriptionService} from "../../../Subscription/Service/SubscriptionService";
 
 @Component({
     selector: 'profile-subscribe',
@@ -11,18 +11,18 @@ export class ProfileSubscribeComponent {
     @Input() profile: Profile;
     public showUnsubscribeModal: boolean = false;
 
-    constructor(public subscribeService: SubscribeService) {}
+    constructor(public subscriptionService: SubscriptionService) {}
     
     public subscribe() {
         this.profile.subscribe.subscribers_total++;
         this.profile.subscribe.status = true;
-        this.subscribeService.subscribe(this.profile).subscribe();
+        this.subscriptionService.subscribe(this.profile).subscribe();
     }
 
     public unsubscribe() {
         this.profile.subscribe.subscribers_total--;
         this.profile.subscribe.status = false;
         this.showUnsubscribeModal = false;
-        this.subscribeService.unsubscribe(this.profile).subscribe();
+        this.subscriptionService.unsubscribe(this.profile).subscribe();
     }
 }

@@ -1,0 +1,32 @@
+@import '../../../../assets/styles/global';
+
+:host {
+  padding: 0 !important;
+  display: block !important;
+
+  a {
+    display: flex;
+    align-items: center;
+    padding: 15px 27px;
+    color: material-color($secondary_material, '900');
+
+    &:hover {
+      background: material-color($secondary_material, '100');
+    }
+
+    &.active {
+      background: material-color($primary_material, '50');
+    }
+
+    > * {
+      flex-shrink: 0;
+    }
+
+    profile-avatar {
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      margin-right: 15px;
+    }
+  }
+}

@@ -40,15 +40,10 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
         i.fa.fa-fw.fa-lg.fa-pencil
         span {{ "Add post" | translate }} 
     
-    ng-container(*ngIf="(subscribeService.subscribeProfileList)?.length")
-      hr
-      section
-        h4 {{"Subscriptions" | translate }}
-        
-        a(*ngFor="let profile of subscribeService.subscribeProfileList", [routerLink]="['/profile', profile.alias || profile.id]")
-          profile-avatar([profile]="profile", size="small", [style.width.px]="24", [style.height.px]="24", [style.line-height.px]="24")
-          span {{ profile.name }}
-          
+    hr(*ngIf="(subscriptionService.subscriptionsProfiles)?.length")
+    section
+      h4(*ngIf="(subscriptionService.subscriptionsProfiles)?.length") {{"Subscriptions" | translate }}
+      sidebar-subscriptions-profiles
           
   hr
   section
@@ -57,12 +52,10 @@ aside(#aside, [ngClass]="service.state", [style.transform]="'translateX('+transl
       a(routerLink="/privacy") {{ "Privacy" | translate }}  
       a(routerLink="/ad") {{ "AD" | translate }} 
       a(routerLink="/about") {{ "About" | translate }}
+      a(routerLink="/faq") {{ "FAQ" | translate }}
       
     small
       span © {{ year }} {{ product_name }}
-
-  br
-
 
   .flex-space
   div(*ngIf="showNotifications")

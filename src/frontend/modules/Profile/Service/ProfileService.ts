@@ -38,11 +38,22 @@ export class ProfileService implements ProfileServiceInterface{
         private transferState: TransferState
     ) {}
 
-    public get(path: string): Observable<Profile> 
+    public get(path: string, fromCache: boolean = true): Observable<Profile> 
     {
+        let getByPath = this.getByPath(path).do(profile => this.saveToCache(profile, path));
+        
+        if(!fromCache) {
+            return getByPath;
+        }
+        
         return this.getFromCache(path)
-            .catch(() => this.getByPath(path).do(profile => this.saveToCache(profile, path)))
+            .catch(() => getByPath)
         ;
+    }
+    
+    public refresh(profile: Profile): Observable<Profile> 
+    {
+        return this.get(profile.id.toString(), false)
     }
    
     public edit(oldProfile: Profile, request: ProfileCreateUpdateRequest): Observable<Profile> 

@@ -75,10 +75,10 @@ export const appRoutes: JetRoutes = [
         data: {postAlias: "promo"}
     },
     {
-        path: 'rules',
+        path: 'terms',
         component: PostRoute,
         resolve: PostResolvers,
-        data: {postAlias: "rules"}
+        data: {postAlias: "terms"}
     },
     {
         path: 'ad',
@@ -87,10 +87,22 @@ export const appRoutes: JetRoutes = [
         data: {postAlias: "ad"}
     },
     {
+        path: 'privacy',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {postAlias: "privacy"}
+    },
+    {
         path: 'faq',
         component: PostRoute,
         resolve: PostResolvers,
         data: {postAlias: "faq"}
+    },
+    {
+        path: 'about',
+        component: PostRoute,
+        resolve: PostResolvers,
+        data: {postAlias: "about"}
     },
     {
         path: 'post/add',

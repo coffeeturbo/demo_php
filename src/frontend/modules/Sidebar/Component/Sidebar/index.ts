@@ -9,7 +9,7 @@ import {Device} from "../../../Application/Service/DeviceService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {NoticeService} from "../../../Notice/Service/NoticeService";
 import {FaviconService} from "../../../Application/Service/FaviconService";
-import {SubscribeService} from "../../../Subscribe/Service/SubscribeService";
+import {SubscriptionService} from "../../../Subscription/Service/SubscriptionService";
 
 @Component({
     selector: "sidebar",
@@ -34,7 +34,7 @@ export class SidebarComponent implements AfterViewInit {
         public service: SidebarService,
         public auth: AuthService,
         public profileService: ProfileService,
-        public subscribeService: SubscribeService,
+        public subscriptionService: SubscriptionService,
         public settingsModalService: SettingsModalService,
         public noticeService: NoticeService,
         private renderer: Renderer2,
@@ -46,10 +46,6 @@ export class SidebarComponent implements AfterViewInit {
             .subscribe(() => this.isCounterBounce = false)
     }
 
-    ngOnInit() {
-         this.subscribeService.getProfileList().subscribe();
-    }
-    
     ngAfterViewInit() {
         if(this.device.isMobile()) {
             this.renderer.listen(this.aside.nativeElement, 'pan', (e) => this.pan(e));

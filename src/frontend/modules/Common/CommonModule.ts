@@ -20,6 +20,7 @@ import {ChromeAutoFillModule} from "./ChromeAutoFill/ChromeAutoFillModule";
 import {DateModule} from "./Date/DateModule";
 import {ClickOutModule} from "./ClickOut/ClickOutModule";
 import {ConfirmationModule} from "./Confirmation/ConfirmationModule";
+import {TruncateModule} from "./Truncate/TruncateModule";
 
 @NgModule({
     imports: [
@@ -39,6 +40,7 @@ import {ConfirmationModule} from "./Confirmation/ConfirmationModule";
         MaterialFormModule,
         TooltipModule,
         TranslationModule,
+        TruncateModule,
         PluralizeModule,
         PalleteModule,
         NotImplementedModule,

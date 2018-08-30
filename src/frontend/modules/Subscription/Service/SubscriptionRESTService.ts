@@ -3,9 +3,10 @@ import {Observable} from "../../../node_modules/rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Response} from "../../Application/Http/Response";
 import {Profile} from "../../Profile/Entity/Profile";
+import {SubscriptionsProfiles} from "../Entity/SubscriptionsProfiles";
 
 @Injectable()
-export class SubscribeRESTService {
+export class SubscriptionRESTService {
 
     constructor(private http: HttpClient) {}
 
@@ -27,12 +28,12 @@ export class SubscribeRESTService {
         ;
     }
     
-    public getProfileList(): Observable<Profile[]>
+    public getProfileList(): Observable<SubscriptionsProfiles>
     {
         let url = `/protected/subscribe/profile/list`;
 
         return this.http
-            .get<Profile[]>(url, {withCredentials: true})
+            .get<SubscriptionsProfiles>(url, {withCredentials: true})
         ;
     }
 }

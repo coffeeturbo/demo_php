@@ -1,0 +1,8 @@
+a(
+  *ngFor="let profile of subscriptionService.subscriptionsProfiles", 
+  [routerLink]="['/profile', profile.alias || profile.id]", 
+  routerLinkActive="active", 
+  [title]="profile.name"
+)
+  profile-avatar([profile]="profile", size="small")
+  span {{ profile.name | truncate : 17 }}

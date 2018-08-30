@@ -26,7 +26,7 @@ ng-container(*ngIf="profile")
             ng-container(*ngIf='profile.created | datediff:"month"') {{profile.created | datediff:"month" | pluralize:translate("month"):translate("months"):translate("months1")}} 
             ng-container(*ngIf='profile.created | datediff:"day"') {{profile.created | datediff:"day" | pluralize:translate("day"):translate("days"):translate("days1")}}
         .flex-space
-        profile-subscribe(*ngIf="!profileService.isOwn(profile)", [profile]="profile")
+        profile-subscribe(*ngIf="!profileService.isOwn(profile) && authService.isSignedIn()", [profile]="profile")
 
   .profile-info
     section
