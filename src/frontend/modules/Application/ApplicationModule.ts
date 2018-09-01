@@ -39,7 +39,6 @@ import {NoticeModule} from "../Notice/NoticeModule";
 import {SoundService} from "./Service/SoundService";
 import {SubscriptionModule} from "../Subscription/SubscriptionModule";
 import {SerachModule} from "../Search/SerachModule";
-import {HomeModule} from "../Home/HomeModule";
 
 registerLocaleData(localeRu);
 

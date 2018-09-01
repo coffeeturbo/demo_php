@@ -25,7 +25,7 @@ export class SidebarComponent implements AfterViewInit {
     public translateX: number = 0;
     public backdropOpatity: number = 0.7;
     public showNotifications = false;
-    public showPromo = !!process.env && process.env.dotenv.SHOW_PROMO == 1;
+    public showPromo = !!process.env && !!process.env.dotenv && process.env.dotenv.SHOW_PROMO == 1;
     public isCounterBounce = false;
     public year = (new Date()).getFullYear();
 
