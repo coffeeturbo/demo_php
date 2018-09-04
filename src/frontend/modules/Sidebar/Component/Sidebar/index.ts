@@ -9,6 +9,7 @@ import {Device} from "../../../Application/Service/DeviceService";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {NoticeService} from "../../../Notice/Service/NoticeService";
 import {FaviconService} from "../../../Application/Service/FaviconService";
+import {SubscriptionService} from "../../../Subscription/Service/SubscriptionService";
 
 @Component({
     selector: "sidebar",
@@ -24,19 +25,27 @@ export class SidebarComponent implements AfterViewInit {
     public translateX: number = 0;
     public backdropOpatity: number = 0.7;
     public showNotifications = false;
-    public showPromo = !!process.env && process.env.dotenv.SHOW_PROMO == 1;
+    public showPromo = process.env.hasOwnProperty('dotenv') && process.env.dotenv.hasOwnProperty('SHOW_PROMO') && (<any>process.env.dotenv).SHOW_PROMO == 1;
+    public isCounterBounce = false;
+    public year = (new Date()).getFullYear();
 
     constructor(
         public pl: PlatformService,
         public service: SidebarService,
         public auth: AuthService,
-        public profile: ProfileService,
+        public profileService: ProfileService,
+        public subscriptionService: SubscriptionService,
         public settingsModalService: SettingsModalService,
         public noticeService: NoticeService,
         private renderer: Renderer2,
         private faviconService: FaviconService
-    ) {}
-    
+    ) {
+        this.noticeService.onAddNotice
+            .do(() => this.isCounterBounce = true)
+            .delay(1000)
+            .subscribe(() => this.isCounterBounce = false)
+    }
+
     ngAfterViewInit() {
         if(this.device.isMobile()) {
             this.renderer.listen(this.aside.nativeElement, 'pan', (e) => this.pan(e));

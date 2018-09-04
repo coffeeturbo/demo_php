@@ -6,6 +6,7 @@ use PostBundle\Entity\Post;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use VoteBundle\Criteria\VoteContentCriteria;
 use VoteBundle\Entity\Vote;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
 use VoteBundle\Entity\VoteContentType\VoteContentTypeComment;
@@ -182,6 +183,11 @@ class VoteService
 
         $votes = $this->voteRepository->getVotesByPostIds($postIds, $profile);
 
+        $this->attachVotesToPosts($posts, $votes);
+    }
+
+    public function attachVotesToPosts($posts, $votes)
+    {
         array_walk($posts, function(Post $post) use ($votes){
             /** @var Vote $vote */
             foreach($votes as $vote) {
@@ -240,16 +246,11 @@ class VoteService
 
     private function arrayCommentDecorator(array &$comments, $profile)
     {
-
-
         $commentIds = array_map(function($comment){
             return $comment['id'];
         }, $comments);
 
-
-
         $votes = $this->voteRepository->getVotesByCommentIds($commentIds, $profile);
-
 
         array_walk($comments, function(array &$comment) use ($votes){
             /** @var Vote $vote */
@@ -263,7 +264,21 @@ class VoteService
                 }
             }
         });
+    }
 
 
+    public function getVotedContent(VoteContentCriteria $contentCriteria)
+    {
+        switch($contentCriteria->getContentType()->getIntCode()){
+            case VoteContentTypeComment::INT_CODE:
+                return $this->voteRepository->getVotedContentByCriteria($contentCriteria);
+            break;
+
+            case VoteContentTypePost::INT_CODE:
+                return $this->voteRepository->getVotedContentByCriteria($contentCriteria);
+            break;
+
+            default: throw new \Exception("unknown int content type");
+        }
     }
 }

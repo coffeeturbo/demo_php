@@ -78,10 +78,6 @@ div
         a.disabled(title="В процессе разработки")
           .fa.fa-fw.fa-flag
           | {{"Report" | translate }}
-      li
-        a.disabled(title="В процессе разработки")
-          .fa.fa-fw.fa-bullhorn
-          | {{"Share" | translate }}
 modal(*ngIf="isShareModalVisible", [backdrop]="true", (on-close)="isShareModalVisible = false", [close-mode]="1", [animation]="false")
   modal-header Поделиться постом
   modal-body

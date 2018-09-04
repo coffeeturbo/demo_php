@@ -25,7 +25,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
       input#signUpPassword(ng-detect-empty-input, type="{{isPasswordHidden?'password':'text'}}", formControlName="password")
       hr
       label.material-label(for="signUpPassword") {{'Enter password' | translate }}
-      tooltip(*ngIf="form.controls['password'].touched && form.controls['password'].invalid")
+      tooltip(*ngIf="form.get('password').touched && form.get('password').invalid")
         small {{ config.account.constraints.password.invalid_message | translate }}
     i.fa.fa-eye.show-password(*ngIf="form.value['password']", (mouseenter)="isPasswordHidden = false", (mouseleave)="isPasswordHidden = true")
   .material-field
@@ -35,7 +35,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
       hr
       label.material-label(for="signUpPasswordConfirm") {{'Confirm password' | translate }}
 
-  tooltip(*ngIf="form.hasError('not_equal_passwords') && form.controls['password_confirm'].touched")
+      tooltip(*ngIf="form.get('password_confirm').hasError('not_equal_passwords') && form.controls['password_confirm'].touched")
         small {{"Passwords do not match" | translate }}
 
   .controls
@@ -45,12 +45,12 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
 
   br
 
-  .hr-box
-    .hr-title {{"or sign in with" | translate }}
-    hr
+  //.hr-box
+  //  .hr-title {{"or sign in with" | translate }}
+  //  hr
 
-  .controls.center
-    social-buttons((onConnect)="disabled = true; fail = false", (onComplete)="disabled = false", (onFail)="fail = true")
+  //.controls.center
+  //  social-buttons((onConnect)="disabled = true; fail = false", (onComplete)="disabled = false", (onFail)="fail = true")
 
   .hr-box
     .hr-title {{"or you can" | translate }}

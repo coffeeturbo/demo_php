@@ -34,7 +34,6 @@ parameters:
 
     mailer_email_no_reply: no-reply@topicoff.com
     post_info_posts:
-        1:
-          id: 13
-        2:
-          id: 12
+        promo: 1
+        rules: 2
+        terms: 4

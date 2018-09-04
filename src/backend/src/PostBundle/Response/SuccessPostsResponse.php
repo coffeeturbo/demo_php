@@ -2,6 +2,7 @@
 namespace PostBundle\Response;
 
 use PostBundle\Entity\Post;
+use PostBundle\Formatter\PostFormatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,7 +22,7 @@ class SuccessPostsResponse extends JsonResponse implements \JsonSerializable
         $posts = $this->entities ?? $this->createMockEntity();
 
         $entities = array_values(array_map(function (Post $post) {
-            return (new SuccessPostResponse($post))->jsonSerialize();
+            return (new PostFormatter($post))->format();
         }, $posts));
 
         return $entities;

@@ -11,6 +11,7 @@ class ArrayProfileFormatter extends Formatter
 {
     function format()
     {
+
         return [
             'id'         => $this->resource['id'],
             'account_id' => isset($this->resource['account']) ? $this->resource['account']['id']: null,
@@ -23,6 +24,7 @@ class ArrayProfileFormatter extends Formatter
             'verified'   => $this->resource['verified'],
             'created'    => $this->resource['created']->format(\DateTime::W3C),
             'rating'     => isset($this->resource['votesRating']) ? $this->resource['votesRating'] : null,
+            'subscribers_total' => $this->resource['subscribersTotal']
         ];
     }
 

@@ -56,9 +56,9 @@ export class AttachmentInputTextComponent implements ControlValueAccessor, OnCha
     }
 
     writeValue(value) {
-        if (value) {
+        //if (value) {
             this.value = striptags(value, this.allowedTags);
-        }
+        //}
     }
 
     ngOnChanges() {

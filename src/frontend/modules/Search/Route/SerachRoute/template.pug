@@ -21,4 +21,4 @@ feed(
   (onFeedLoad) = "loadFeed($event)",
   (onRefresh)="refresh()"
 )
-post-not-found(*ngIf="feed.length == 0 && route.snapshot.data.feedRequest")
+feed-not-found(*ngIf="feed.length == 0 && route.snapshot.data.feedRequest")

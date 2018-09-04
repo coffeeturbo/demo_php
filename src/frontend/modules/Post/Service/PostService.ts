@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 
 import {PostRESTService} from "./PostRESTService";
@@ -12,8 +12,6 @@ import {makeStateKey, StateKey, TransferState} from "@angular/platform-browser";
 
 @Injectable()
 export class PostService {
-    private posts: Post[] = [];
-    public onPostResolve = new EventEmitter<Post>(true);
     
     constructor(
         private rest: PostRESTService, 
@@ -25,7 +23,6 @@ export class PostService {
     {
         return this.getFromCache(postId)
             .catch(() => this.rest.getById(postId).do(post => this.saveToCache(post)))
-            .do(post => this.onPostResolve.emit(post))
         ;
     }
     
@@ -80,24 +77,18 @@ export class PostService {
 
     private getFromCache(postId: number): Observable<Post>
     {
-        let post: Post = this.posts.filter((post) => post.id == postId).shift();
-
         let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + postId);
 
         if(this.transferState.hasKey(postStateKey)) {
-            post = this.transferState.get(postStateKey, null as Post);
-        }
-        
-        if (!post) {
+            return Observable.of(this.transferState.get(postStateKey, null as Post));
+        } else {
             return Observable.throw(`Post with id "${postId}" is not cached`);
         }
 
-        return Observable.of(post).delay(1); // delay kostil' for angular resolver...
     }
 
     private saveToCache(post: Post): void
     {
-        this.posts.push(post);
         let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + post.id);
         
         this.transferState.set(postStateKey, post as Post)
@@ -105,14 +96,12 @@ export class PostService {
 
     private replaceInCache(oldPost: Post, newPost: Post): Observable<Post>
     {
-        let index: number = this.posts.indexOf(oldPost);
-
-        if (!~index) {
-            return Observable.throw(`${index} not found in cache file`);
-        }
-        
-        this.posts[index] = newPost;
         let postStateKey: StateKey<Post> = makeStateKey<Post>("post-" + newPost.id);
+
+        if (!this.transferState.hasKey(postStateKey)) {
+            return Observable.throw(`${newPost.id} not found in cache file`);
+        }
+
         this.transferState.set(postStateKey, newPost as Post);
         
         return Observable.of(newPost);

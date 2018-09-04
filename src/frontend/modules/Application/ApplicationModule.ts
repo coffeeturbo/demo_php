@@ -36,6 +36,8 @@ import {ShareModule} from "../Share/ShareModule";
 import {PlatformService} from "./Service/PlatformService";
 import {FaviconService} from "./Service/FaviconService";
 import {NoticeModule} from "../Notice/NoticeModule";
+import {SoundService} from "./Service/SoundService";
+import {SubscriptionModule} from "../Subscription/SubscriptionModule";
 import {SerachModule} from "../Search/SerachModule";
 
 registerLocaleData(localeRu);
@@ -73,6 +75,7 @@ export class HammerConfig extends HammerGestureConfig  {
         ProfileModule,
         SettingsModule,
         SidebarModule,
+        SubscriptionModule,
         TagModule,
         VoteModule,
         CommonModule,
@@ -92,6 +95,7 @@ export class HammerConfig extends HammerGestureConfig  {
     ],
     providers: [
         StartupService,
+        SoundService,
         RouteHelperService,
         ApplicationScrollService,
         PlatformService,

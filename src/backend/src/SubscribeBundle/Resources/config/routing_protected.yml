@@ -1,0 +1,18 @@
+subscribe_profile_subscribe:
+  path: profile/{id}/subscribe
+  defaults: { _controller: SubscribeBundle:ProfileSubscribe:subscribe}
+  methods: [ PUT ]
+  requirements:
+    id: \d+
+
+subscribe_profile_unsubscribe:
+  path: profile/{id}/unsubscribe
+  defaults: { _controller: SubscribeBundle:ProfileSubscribe:unSubscribe}
+  methods: [ DELETE ]
+  requirements:
+    id: \d+
+
+subscribe_profile_unsubscribes_list:
+  path: profile/list
+  defaults: { _controller: SubscribeBundle:ProfileSubscribe:listSubscribes}
+  methods: [ GET ]

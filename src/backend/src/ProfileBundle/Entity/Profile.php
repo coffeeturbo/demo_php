@@ -9,14 +9,16 @@ use ImageBundle\Image\BackdropEntity;
 use ImageBundle\Image\BackdropEntityTrait;
 use ProfileBundle\Entity\Profile\Gender;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
+use SubscribeBundle\Subscribe\SubscribeAble;
+use SubscribeBundle\Subscribe\SubscribeEntityTrait;
 use VoteBundle\Rating\RatingableEntity;
 use VoteBundle\Rating\RatingableEntityTrait;
 
-class Profile implements AvatarEntity, BackdropEntity, RatingableEntity
+class Profile implements AvatarEntity, BackdropEntity, RatingableEntity, SubscribeAble
 {
     const BIRTH_DATE_FORMAT = 'Y-m-d';
 
-    use AvatarEntityTrait, BackdropEntityTrait, RatingableEntityTrait;
+    use AvatarEntityTrait, BackdropEntityTrait, RatingableEntityTrait, SubscribeEntityTrait;
 
     private $id;
 
@@ -121,7 +123,6 @@ class Profile implements AvatarEntity, BackdropEntity, RatingableEntity
 
         return $this;
     }
-
 
     public function getName() : ?string
     {

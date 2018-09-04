@@ -1,6 +1,8 @@
 <?php
 namespace VoteBundle\Entity;
 
+use AppBundle\Entity\ModifyDateEntityInterface;
+use AppBundle\Entity\ModifyDateEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use ProfileBundle\Entity\Profile;
 use VoteBundle\Entity\VoteContentType\VoteContentType;
@@ -8,17 +10,20 @@ use VoteBundle\Entity\VoteType\VoteType;
 use VoteBundle\Vote\VoteableEntity;
 use VoteBundle\Vote\VoteEntity;
 
-class Vote implements VoteEntity
+class Vote implements VoteEntity, ModifyDateEntityInterface
 {
+    use ModifyDateEntityTrait;
+
     private $id;
     private $type;
     private $profile;
 
     private $contentType;
     private $contentId;
-
-
     private $voteableEntity;
+
+
+
 
     public function __construct(Profile $profile, VoteableEntity $entity, VoteType $type = null)
     {
@@ -26,6 +31,7 @@ class Vote implements VoteEntity
         $this->setVoteableEntity($entity);
 
         $this->type =  isset($type) ? $type->getIntCode() : null;
+        $this->setCreated(new \DateTime());
     }
 
     public function getVoteableEntity(): VoteableEntity
@@ -87,7 +93,7 @@ class Vote implements VoteEntity
     {
         return $this->contentId;
     }
-    /*
+
     public function getContentType(): VoteContentType
     {
         return VoteContentType::createFromIntCode($this->contentType);
@@ -99,7 +105,7 @@ class Vote implements VoteEntity
         return $this;
     }
 
-    public function setContentId(int $contentId): self
+    /*public function setContentId(int $contentId): self
     {
         $this->contentId = $contentId;
         return $this;

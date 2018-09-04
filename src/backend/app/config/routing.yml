@@ -73,3 +73,7 @@ protected_comment:
 search:
   resource: '@SearchBundle/Resources/config/routing.yml'
   prefix: '/search'
+
+subscribe_protected:
+  resource: '@SubscribeBundle/Resources/config/routing_protected.yml'
+  prefix: '/protected/subscribe'

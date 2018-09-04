@@ -18,6 +18,12 @@ VoteBundle\Entity\Vote:
       column: content_id
       type: integer
       nullable: false
+    created:
+      type: datetime
+      nullable: true
+    updated:
+      type: datetime
+      nullable: true
   manyToOne:
     profile:
       targetEntity: ProfileBundle\Entity\Profile

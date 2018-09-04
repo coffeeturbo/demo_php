@@ -22,7 +22,7 @@ export class FeedResolver implements Resolve<Feed> {
                 let feedResolver: Observable<Feed>;
         
                 try {
-                    feedResolver = this.feedCacheService.getFeed(feedRequest).delay(1);
+                    feedResolver = this.feedCacheService.getFeed(feedRequest);
                 } catch (e) {
                     let feedStateKey: StateKey<Feed> = makeStateKey<Feed>(objectHash(feedRequest));
                     

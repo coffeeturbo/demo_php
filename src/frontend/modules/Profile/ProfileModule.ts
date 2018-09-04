@@ -24,6 +24,7 @@ import {ProfileFeedRequestResolver} from "./Service/ProfileFeedRequestResolver";
 import {ProfileAvatarComponent} from "./Component/ProfileAvatar";
 import {AuthModule} from "../Auth/AuthModule";
 import {ProfileNotFoundComponent} from "./Component/ProfileNotFound";
+import {ProfileSubscribeComponent} from "./Component/ProfileSubscribe";
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import {ProfileNotFoundComponent} from "./Component/ProfileNotFound";
         ProfileAvatarCropperComponent,
         ProfileBackdropCropperComponent,
         ProfileBackdropActionsComponent,
+        ProfileSubscribeComponent,
         ProfileDropdownComponent,
         ProfileAvatarComponent,
         ProfileRoute,
@@ -60,7 +62,8 @@ import {ProfileNotFoundComponent} from "./Component/ProfileNotFound";
         ProfileBackdropActionsHelper
     ],
     exports: [
-        ProfileDropdownComponent
+        ProfileDropdownComponent,
+        ProfileAvatarComponent
     ]
 })
 export class ProfileModule {

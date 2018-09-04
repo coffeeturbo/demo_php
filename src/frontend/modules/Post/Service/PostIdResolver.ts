@@ -6,15 +6,21 @@ import {InfoPostRESTService} from "./InfoPostRESTService";
 @Injectable()
 export class PostIdResolver implements Resolve<number>{
 
+    public onResolve: Observable<number>;
+
     constructor(private infoPostRESTService: InfoPostRESTService){}
     
     resolve(route: ActivatedRouteSnapshot): Observable<number> {
         if(route.params["path"]) {
-            return Observable.of(route.params["path"].replace(/^.*?(\d+)$/g, '$1'));
+            this.onResolve = Observable.of(route.params["path"].replace(/^.*?(\d+)$/g, '$1'));
         } else if(route.data["postAlias"]) {
-            return this.infoPostRESTService.getInfoPostId(route.data["postAlias"]);
+            this.onResolve = this.infoPostRESTService.getInfoPostId(route.data["postAlias"])
+                .publishReplay(1)
+                .refCount();
         } else {
-            return Observable.throw("Missing param `path` in route or `postAlias` in data");
+            this.onResolve = Observable.throw("Missing param `path` in route or `postAlias` in data");
         }
+        
+        return this.onResolve;
     }
 }

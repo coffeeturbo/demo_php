@@ -1,0 +1,25 @@
+SubscribeBundle\Entity\Subscribe:
+  type: entity
+  repositoryClass: SubscribeBundle\Repository\SubscribeRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    type:
+      type: smallint
+      nullable: false
+    created:
+      type: datetime
+      nullable: false
+    targetId:
+      column: target_id
+      type: integer
+      nullable: false
+  manyToOne:
+    profile:
+      targetEntity: ProfileBundle\Entity\Profile
+      joinColumn:
+        name: profile_id
+        referencedColumnName: id

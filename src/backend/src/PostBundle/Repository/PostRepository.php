@@ -5,6 +5,8 @@ namespace PostBundle\Repository;
 use AttachmentBundle\Entity\Attachment;
 use Doctrine\ORM\NoResultException;
 use FeedBundle\Criteria\FeedCriteria;
+use FeedBundle\Strategy\HotFeedStrategy;
+use FeedBundle\Strategy\VotedFeedStrategy;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\Command\AddOrder;
 use PostBundle\Repository\Command\AddTags;
@@ -67,50 +69,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $posts;
     }
 
-
-    private function getHotPosts(FeedCriteria $criteria)
-    {
-        try {
-
-            $startDate = new \DateTime();
-            $startDate->sub(new \DateInterval('P900D'));
-            $criteria->setStartDate($startDate);
-
-
-            $where ='WHERE p.isDeleted = 0';
-
-            if($cursor = $criteria->getCursor()){
-                $where .= sprintf("AND p.id < %s", $cursor);
-            }
-
-            $q = sprintf("SELECT
-                            p,
-                        (
-                              (p.votesPositive + p.votesNegative) 
-                              / (CURRENT_TIMESTAMP() - (p.created))*3600
-                        ) AS rating_speed
-                        
-                        FROM %s p
-                        %s
-                        ORDER BY rating_speed DESC
-                        "
-                , Post::class, $where);
-
-            $q = $this->getEntityManager()->createQuery($q);
-
-            $q->setMaxResults($criteria->getLimit());
-
-
-        } catch(NoResultException $e){
-            throw new NotFoundHttpException(sprintf("no posts founded"));
-        }
-
-        // получаем из смешанного массива не смешанный
-
-        return array_map(function(array $post){
-            return $post[0];
-        }, $q->getResult());
-    }
 
     private function getPostsByCriteria(FeedCriteria $criteria)
     {
@@ -179,37 +137,25 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         // todo узкое место для рефакторинга
         $posts = [];
 
-        switch($criteria->getOrder()){
-            case 'hot':
-                $posts =  $this->getHotPosts($criteria);
-                break;
-            default:
-                $posts = $this->getPostsByCriteria($criteria);
+        if($voteType = $criteria->getVoteType()){
+
+            $strategy = new VotedFeedStrategy($criteria, $this);
+            $posts = $strategy->getPosts();
+        } else {
+            switch($criteria->getOrder()){
+                case 'hot':
+                    $strategy = new HotFeedStrategy($criteria, $this);
+                    $posts =  $strategy->getPosts();
+                    break;
+                default:
+                    $posts = $this->getPostsByCriteria($criteria);
+            }
         }
 
-        $postIds = array_map(function(Post $post){
-            return $post->getId();
-        }, $posts);
-
-        $qb = $this->createQueryBuilder('p')
-            ->select('p', 'tags', 'attachments')
-            ->leftJoin('p.tags', 'tags')
-            ->leftJoin('p.attachments', 'attachments')
-            ->where('p.id IN (:postIds)')
-            ->setParameter('postIds', $postIds)
-            ->addOrderBy('attachments.position', 'ASC');
-
-        $query =  $qb->getQuery();
-
-        $postsWithAttachments = $query->getResult();
-
-        array_merge_recursive( $posts, $postsWithAttachments);
-
-
-        return $posts;
+        return $this->getAttachmentsAndTagsByPosts($posts);
     }
 
-    public function getAttachmentsAndTagsByPosts(array $posts)
+    public function getAttachmentsAndTagsByPosts(array $posts): array
     {
         $postIds = array_map(function(Post $post){
             return $post->getId();
@@ -276,6 +222,11 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
             $em->flush($post);
         }
+    }
+
+    public function getEntityManager()
+    {
+        return parent::getEntityManager();
     }
 
 }

@@ -1,9 +1,14 @@
 <?php
 namespace VoteBundle\Controller;
 
+use AppBundle\Http\ErrorJsonResponse;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use VoteBundle\Formatter\VotedContentFormatter;
+use VoteBundle\Handler\VotedContentHandler;
 
 class ProfileVotesController extends Controller
 {
@@ -22,18 +27,26 @@ class ProfileVotesController extends Controller
      * )
      *
      */
-    public function getVotesAction($profile_id, $type)
+    public function getVotesAction(Request $request)
     {
         try {
-            
-        } catch(\Exception $e){
 
+            $criteria = (new VotedContentHandler($request))->getCriteria();
+
+            $profileId = $this->get('profile.service')->getCurrentProfile()->getId();
+            if(!$criteria->getProfileId()) $criteria->setProfileId($profileId);
+
+            $voteContent = $this->get('vote.service.vote_service')->getVotedContent($criteria);
+
+            $formatter = new VotedContentFormatter($voteContent);
+
+        } catch(NoResultException $e){
+            return new ErrorJsonResponse($e->getMessage(),$e->getTrace(), 404);
+        } catch(\Exception $e){
+            return new ErrorJsonResponse($e->getMessage());
         }
 
-        return new JsonResponse([
-            'profile_id' => $profile_id,
-            'type' => $type
-        ]);
 
+        return new JsonResponse($formatter->format());
     }
 }

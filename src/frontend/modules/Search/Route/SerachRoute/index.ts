@@ -38,7 +38,7 @@ export class SearchRoute extends FeedRoute {
         this.isLoading = true;
 
         this.searchService
-            .search(Object.assign({}, this.route.snapshot.data.feedRequest, {params: {cursor: cursor}}))
+            .search({...{}, ...this.route.snapshot.data.feedRequest, ...{params: {cursor: cursor}}})
             .finally(() => this.isLoading = false)
             .subscribe((feed) => {
                 this.isFeedEnd = feed.length < 10;

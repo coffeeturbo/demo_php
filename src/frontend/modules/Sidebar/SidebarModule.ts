@@ -6,15 +6,19 @@ import {SidebarComponent} from "./Component/Sidebar";
 import {SidebarService} from "./Service/SidebarService";
 import {CommonModule} from "../Common/CommonModule";
 import {NoticeModule} from "../Notice/NoticeModule";
+import {ProfileModule} from "../Profile/ProfileModule";
+import {SidebarSubscriptionsProfilesComponent} from "./Component/SidebarSubscriptionsProfiles";
 
 @NgModule({
     imports: [
         CommonModule,
         NoticeModule,
+        ProfileModule,
         RouterModule
     ],
     declarations: [
-        SidebarComponent
+        SidebarComponent,
+        SidebarSubscriptionsProfilesComponent
     ],
     providers: [
         SidebarService

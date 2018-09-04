@@ -10,12 +10,12 @@ profile_update:
   requirements:
     id: '\d+'
 
-profile_delete:
-  path: '{id}/delete'
-  defaults: { _controller: ProfileBundle:Delete:delete }
-  methods: [ DELETE ]
-  requirements:
-    id: '\d+'
+#profile_delete:
+#  path: '{id}/delete'
+#  defaults: { _controller: ProfileBundle:Delete:delete }
+#  methods: [ DELETE ]
+#  requirements:
+#    id: '\d+'
     
 profile_avatar_upload:
   path: '{id}/avatar/upload'

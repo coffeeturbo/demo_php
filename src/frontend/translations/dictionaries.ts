@@ -24,9 +24,11 @@ export const dictionaries: Dictionaries = {
         SettingsLocaleRU
     ],
     "EN": [{
-        "days1":    "days",
-        "months1":  "months",
-        "years1":   "years",
-        "comments1":   "comments",
+        "days1":        "days",
+        "months1":      "months",
+        "years1":       "years",
+        "comments1":    "comments",
+        "posts1":       "posts",
+        "subscribers1": "subscribers1",
     }]
 };

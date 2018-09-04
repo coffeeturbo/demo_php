@@ -4,6 +4,7 @@ export const AuthLocaleRU = {
     "or you can": "или вы можете",
     "Not my PC": "Чужой компьютер",
     "Incorrect data!": "Неверные данные!",
+    "Confirm email": "Подтвердить почту",
     "Sign in with another account": "Войти под другим аккаунтом",
     "Enter your name": "Как вас зовут?",
     "Enter your email": "Укажите Ваш Email",

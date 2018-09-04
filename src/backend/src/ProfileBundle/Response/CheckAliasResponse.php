@@ -4,20 +4,13 @@ namespace ProfileBundle\Response;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class CheckAliasResponse extends JsonResponse implements \JsonSerializable
+class CheckAliasResponse extends JsonResponse
 {
     private $available;
 
     function __construct(bool $available = true)
     {
         $this->available = $available;
-        parent::__construct(self::jsonSerialize());
-    }
-
-    public function jsonSerialize()
-    {
-        return [
-            "available" => $this->available
-        ];
+        parent::__construct(null, $available ? 200 : 423);
     }
 }

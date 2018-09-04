@@ -8,5 +8,5 @@ feed(
   (onFeedLoad) = "loadFeed($event)",
   (onRefresh)="refresh()"
 )
-post-not-found(*ngIf="feed.length == 0")
+feed-not-found(*ngIf="feed.length == 0")
 router-outlet

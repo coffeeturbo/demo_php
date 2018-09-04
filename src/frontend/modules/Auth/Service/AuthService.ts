@@ -93,7 +93,7 @@ export class AuthService implements AuthServiceInterface
     {
         return this.handleTokenResponse(this.rest.signUp(body).do(() => {
             this.noticeService.addNotice(this.translationService.translate(this.messages.registered), NoticeType.Normal);
-            this.noticeService.addNotice(this.translationService.translate(this.messages.comfirming), NoticeType.Warning);
+            this.noticeService.addNotice(this.translationService.translate(this.messages.confirming), NoticeType.Warning);
         }));
     }
 
@@ -120,7 +120,9 @@ export class AuthService implements AuthServiceInterface
 
     public recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm: RecoverPasswordByEmailConfirm): Observable<TokenResponse>
     {
-        return this.handleTokenResponse(this.rest.recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm));
+        return this.handleTokenResponse(this.rest.recoverPasswordByEmailConfirm(recoverPasswordByEmailConfirm)
+            .do(()=> this.noticeService.addNotice(this.translationService.translate(this.messages.restored), NoticeType.Success))
+        );
     }
 
     public connectVK(): Observable<TokenResponse>
@@ -137,6 +139,10 @@ export class AuthService implements AuthServiceInterface
     {
         this.tokenService.removeTokens();
         this.tokenExpirationSchedule.unsubscribe();
+        
+        if(this.route.snapshot.firstChild.routeConfig.canActivate) {
+            this.router.navigate(["/"]);
+        }
     }
 
     public addTokenExpirationSchedule(): void

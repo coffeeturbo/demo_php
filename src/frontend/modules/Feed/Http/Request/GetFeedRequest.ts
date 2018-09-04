@@ -9,5 +9,6 @@ export interface GetFeedRequest
     direction?: "ASC" | "DESC";
     tags?: string;
     query?: string;
+    vote_type?: "all" | "positive" | "negative"
     [key: string]: any;
 }

@@ -32,8 +32,8 @@ export class TokenService {
 
     public removeTokens(): void
     {
-        this.cookies.remove(this.tokenKey);
-        this.cookies.remove(this.refreshTokenKey);
+        this.cookies.remove(this.tokenKey, { path: '/' });
+        this.cookies.remove(this.refreshTokenKey, { path: '/' });
     }
 
     public saveToken(value: string): void
@@ -41,10 +41,10 @@ export class TokenService {
         let expires: Date = new Date(new Date().getTime() + 60 * 60 * 24 * 365 * 1000);
         
         if(this.res) {
-            this.res.cookie(this.tokenKey, value, {expires: expires});
+            this.res.cookie(this.tokenKey, value, {expires: expires, path: '/'});
         }
-        
-        this.cookies.set(this.tokenKey, value, {expires: expires});
+    
+        this.cookies.set(this.tokenKey, value, {expires: expires, path: '/'});
     }
 
     public saveRefreshToken(value: string): void
@@ -52,10 +52,10 @@ export class TokenService {
         let expires: Date = new Date(new Date().getTime() + 60 * 60 * 24 * 365 * 1000);
 
         if(this.res) {
-            this.res.cookie(this.refreshTokenKey, value, {expires: expires});
+            this.res.cookie(this.refreshTokenKey, value, {expires: expires, path: '/'});
         }
 
-        this.cookies.set(this.refreshTokenKey, value, {expires: expires});
+        this.cookies.set(this.refreshTokenKey, value, {expires: expires, path: '/'});
     }
 
     public getTokenExpTime(): number

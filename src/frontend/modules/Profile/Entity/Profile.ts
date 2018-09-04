@@ -12,6 +12,10 @@ export interface Profile {
     verified: boolean;
     avatar: ProfileAvatar;
     backdrop: Image;
+    subscribe: {
+        status: boolean;
+        subscribers_total: number;
+    }
 }
 
 type ProfileAvatar = {
@@ -26,4 +30,5 @@ export type ProfileAvatarSizes = "small" | "medium" | "cropped" | "origin";
 interface Image {
     public_path: string;
     storage_path: string;
+    name: string;
 }

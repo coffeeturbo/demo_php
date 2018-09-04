@@ -44,8 +44,11 @@ vote_comment_delete:
 
 vote_profile:
   methods: [ GET ]
-  path: /profile/{profile_id}/type/{type}
+  path: /profile/vote_type/{vote_type}/content_type/{content_type}/limit/{limit}
   defaults: { _controller: VoteBundle:ProfileVotes:getVotes }
   requirements:
-    profile_id: \d+
-    type: \d+
+    vote_type: "positive|negative"
+    content_type: "post|comment"
+    limit: \d+
+    cursor: \d+
+    profile: \d+
