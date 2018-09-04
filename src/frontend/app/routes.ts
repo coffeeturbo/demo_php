@@ -134,7 +134,7 @@ export const appRoutes: JetRoutes = [
         path: 'tag/:path',
         component: FeedRoute,
         resolve: {
-            ...FeedResolvers, 
+            feed: FeedResolver, 
             feedRequest: TagFeedRequestResolver,
             title: TagTitleResolver
         }
@@ -169,7 +169,7 @@ export const appRoutes: JetRoutes = [
             description: 'Likes'
         },
         resolve: {
-            ...FeedResolvers,
+            feed: FeedResolver,
             profile: ProfileResolver,
             feedRequest: VoteFeedRequestResolver
         }
