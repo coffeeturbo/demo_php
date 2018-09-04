@@ -99,7 +99,7 @@ class SubscribeService
         $subscribes = $this->subscribeRepository->findBy([
             'profile' => $profile,
             'type' => SubscribeProfileType::INT_CODE
-        ]);
+        ], ['id' => 'DESC']);
 
         $profileIds = array_map(function(Subscribe $subscribe){
             return $subscribe->getTargetId();
