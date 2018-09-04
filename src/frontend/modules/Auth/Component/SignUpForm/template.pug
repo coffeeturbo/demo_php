@@ -59,3 +59,15 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="$
   .controls.center
     button.btn-material.secondary(type="button", (click)="authModalsService.show(AuthModals.signIn)")
       small {{"Sign in" | translate }}
+
+  .hr-box
+    .hr-title
+    hr
+  small.details
+      i.fa.fa-info-circle
+      span {{"By clicking Sign In, you agree to our" | translate }} 
+      a(routerLink="/terms", target="_blank") {{"Terms of Use" | translate }}, 
+      span {{"and you have read our" | translate }} 
+      a(routerLink="/privacy", target="_blank") {{"Privacy Policy" | translate }}.
+  br
+      
