@@ -26,6 +26,7 @@ import {SearchRequestResolver} from "../modules/Search/Service/SearchFeedRequest
 import {SearchRoute} from "../modules/Search/Route/SerachRoute";
 import {CanDeactivatePostFormRoute} from "../modules/Post/Service/CanDeactivatePostFormRoute";
 import {VoteFeedRequestResolver} from "../modules/Vote/Service/VoteFeedRequestResolver";
+import {PostIdResolver} from "../modules/Post/Service/PostIdResolver";
 
 export const appRoutes: JetRoutes = [
     {
@@ -125,6 +126,7 @@ export const appRoutes: JetRoutes = [
             title: 'Edit post',
         },
         resolve: {
+            postId: PostIdResolver,
             post: PostResolver
         }
     },

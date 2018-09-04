@@ -28,7 +28,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         i.fa.fa-plus.fa-hover.fa-fw
         i.fa.fa-camera.fa-fw
 
-    button.btn-material.primary(type="submit", [disabled]="isLoading")
+    button.btn-material.primary(type="submit", [disabled]="isLoading || form.invalid")
       i.fa.fa-commenting.fa-fw
       span(*ngIf="!isLoading") {{"Send" | translate }}
       span(*ngIf="isLoading") {{"Loading" | translate }}

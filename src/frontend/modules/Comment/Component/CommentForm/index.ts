@@ -72,7 +72,7 @@ export class CommentFormComponent {
     }
 
     public handleEnterButton(e) {
-        // @DOTO! implement
+        // @TODO: implement
         console.log(e);
     }
 
