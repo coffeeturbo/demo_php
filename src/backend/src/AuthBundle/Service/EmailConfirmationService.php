@@ -68,7 +68,7 @@ class EmailConfirmationService
     {
         $mailTo = $this->authService->getAccount()->getEmail();
 
-        $titleText = "TopicOff.com | Код подтверждания";
+        $titleText = "TopicOff.com | Код подтверждения";
 
         $message = sprintf("Это код подтверждения регистрации: <b>%s</b>", $code);
 
