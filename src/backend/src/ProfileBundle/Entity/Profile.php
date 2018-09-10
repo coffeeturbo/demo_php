@@ -30,6 +30,8 @@ class Profile implements AvatarEntity, BackdropEntity, RatingableEntity, Subscri
     private $account;
 
     private $created;
+    private $postsTotal = 0;
+    private $commentsTotal = 0;
 
     public function __construct()
     {
@@ -127,5 +129,30 @@ class Profile implements AvatarEntity, BackdropEntity, RatingableEntity, Subscri
     public function getName() : ?string
     {
         return $this->name;
+    }
+
+    public function getPostsTotal() :int
+    {
+        return $this->postsTotal;
+    }
+
+
+    public function setPostsTotal(int $postsTotal)
+    {
+        $this->postsTotal = $postsTotal;
+        return $this;
+    }
+
+
+    public function getCommentsTotal(): int
+    {
+        return $this->commentsTotal;
+    }
+
+
+    public function setCommentsTotal(int $commentsTotal)
+    {
+        $this->commentsTotal = $commentsTotal;
+        return $this;
     }
 }

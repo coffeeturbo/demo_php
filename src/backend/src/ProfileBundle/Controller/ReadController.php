@@ -28,7 +28,15 @@ class ReadController extends Controller
     public function getByIdAction(int $id)
     {
         try {
+
             $profile = $this->get('profile.service')->getById($id);
+
+            // получаем количество постов у даного профиля
+            $this->get('post.service')->getPostRepository()->getProfileTotalPosts($profile);
+
+            // получаем количество комментариев
+            $this->get('comment.repository')->getProfileCommentsTotal($profile);
+
 
             // проверяем подписаны ли на профайл ищем подписку профиля на профиль
             $this->get('subscribe.service.subscribe_service')->checkSubscribed($profile);

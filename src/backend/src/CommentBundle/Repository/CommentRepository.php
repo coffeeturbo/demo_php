@@ -2,11 +2,11 @@
 namespace CommentBundle\Repository;
 
 use AttachmentBundle\Entity\Attachment;
-use AttachmentBundle\Service\FetchResource\Result;
 use CommentBundle\Entity\Comment;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentRepository extends EntityRepository
@@ -113,5 +113,19 @@ class CommentRepository extends EntityRepository
             $em->persist($comment);
         }
         $em->flush();
+    }
+
+    public function getProfileCommentsTotal(Profile $profile)
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('count(c.id)')
+            ->where('c.profile = :profile')
+            ->setParameter('profile', $profile)
+            ->getQuery()
+        ;
+
+        $result = $qb->getSingleScalarResult();
+
+        $profile->setCommentsTotal($result);
     }
 }

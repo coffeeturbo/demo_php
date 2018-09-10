@@ -135,6 +135,7 @@ class PostController extends Controller
      * @ApiDoc(
      *  section="Post",
      *  description="Удаляем пост по id",
+     *  authentication=true,
      * )
      *
      * @param Request $request

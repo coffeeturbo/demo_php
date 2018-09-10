@@ -10,6 +10,7 @@ use FeedBundle\Strategy\VotedFeedStrategy;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\Command\AddOrder;
 use PostBundle\Repository\Command\AddTags;
+use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TagBundle\Entity\Tag;
 
@@ -227,6 +228,20 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getEntityManager()
     {
         return parent::getEntityManager();
+    }
+
+
+    public function getProfileTotalPosts(Profile $profile)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->where('p.profile = :profile')
+            ->setParameter('profile', $profile)
+        ;
+
+        $posts = $qb->getQuery()->getSingleScalarResult();
+
+        $profile->setPostsTotal($posts);
     }
 
 }
