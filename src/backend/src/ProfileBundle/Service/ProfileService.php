@@ -8,6 +8,8 @@ use AvatarBundle\Parameter\UploadedImageParameter;
 use ProfileBundle\Entity\Profile;
 use ProfileBundle\Entity\Profile\Gender\NoneGender;
 use ProfileBundle\Event\ProfileCreatedEvent;
+use ProfileBundle\Event\ProfilePreCreatedEvent;
+use ProfileBundle\Event\ProfilePreUpdatedEvent;
 use ProfileBundle\Repository\ProfileRepository;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -87,6 +89,7 @@ class ProfileService
             );
         }
 
+        $this->eventDispatcher->dispatch(ProfilePreCreatedEvent::NAME, new ProfilePreCreatedEvent($profile));
         $this->save($profile);
         $this->eventDispatcher->dispatch(ProfileCreatedEvent::NAME, new ProfileCreatedEvent($profile));
 
@@ -107,6 +110,8 @@ class ProfileService
     public function update(Profile $profile): Profile
     {
         $this->checkAccessPermissions($profile);
+
+        $this->eventDispatcher->dispatch(ProfilePreUpdatedEvent::NAME, new ProfilePreUpdatedEvent($profile));
         $this->save($profile);
         return $profile;
     }
