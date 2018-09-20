@@ -244,4 +244,44 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         $profile->setPostsTotal($posts);
     }
 
+
+    public function getTopTagsWithCount($postId, $limit)
+    {
+
+        $postRep = $this->getEntityManager()
+            ->getRepository(Post::class);
+
+
+        $topTags = $postRep->createQueryBuilder('p')
+            ->select('tags.name, tags.id, count(tags) as total')
+            ->join('p.tags', 'tags')
+            ->where('p.id = :postId')
+            ->setParameter('postId', $postId)
+            ->groupBy('tags.id ')
+            ->orderBy('total', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $ids = array_map(function($tag){
+            return $tag['id'];
+        }, $topTags);
+
+
+        return $postRep->createQueryBuilder('p')
+            ->select('p')
+            ->join('p.tags', 'tags')
+            ->setMaxResults($limit)
+            ->where('tags.id IN (:tagsIds)')
+            ->andWhere('p.id != :pid')
+            ->setParameter('pid', $postId)
+            ->setParameter('tagsIds', $ids)
+            ->getQuery()
+            ->getResult()
+        ;
+
+
+    }
+
 }

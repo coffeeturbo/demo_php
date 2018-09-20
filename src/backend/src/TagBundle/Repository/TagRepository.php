@@ -2,9 +2,9 @@
 namespace TagBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use PostBundle\Entity\Post;
 use TagBundle\Entity\AbstractTaggable;
 use TagBundle\Entity\Tag;
-use TagBundle\Tag\TaggableEntityInterface;
 
 class TagRepository extends EntityRepository
 {
@@ -50,5 +50,25 @@ class TagRepository extends EntityRepository
             }
         }
 
+    }
+
+    public function getTopTagsWithCount($limit)
+    {
+
+        $postRep = $this->getEntityManager()
+            ->getRepository(Post::class);
+
+
+        $postRep->createQueryBuilder('p')
+            ->select('p','p.')
+            ->join('p.t','tags')
+        ;
+
+        return  $this->createQueryBuilder('t')
+            ->select('t.name, count(*)')
+            ->join('post.')
+            ->setMaxResults(5)
+            ->getQuery()->getResult()
+            ;
     }
 }

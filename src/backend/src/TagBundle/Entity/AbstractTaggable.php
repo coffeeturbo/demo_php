@@ -2,6 +2,7 @@
 namespace TagBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 use TagBundle\Tag\TagEntityInterface;
 use TagBundle\Tag\TaggableEntityInterface;
 
@@ -14,7 +15,7 @@ abstract class AbstractTaggable implements TaggableEntityInterface
         $this->tags = new ArrayCollection();
     }
 
-    public function getTags()
+    public function getTags():?PersistentCollection
     {
         return $this->tags;
     }
