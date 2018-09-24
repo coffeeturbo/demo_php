@@ -55,31 +55,6 @@ class PostService
 
     public function getSimilarPosts(int $id)
     {
-
         return $this->postRepository->getTopTagsWithCount($id, 10);
-
-
-//        $post = $this->postRepository->getPostById($id);
-
-
-        // получаем посты по тегам
-
-//        $tags = $post->getTags()->toArray();
-        // получаем теги с количеством
-
-        // получаем посты по тегам с наибольшим рейтингом
-
-
-//        $qb= $this->postRepository->getEntityManager()->createQueryBuilder();
-
-
-//        $qb->select('p')
-//            ->join('p');
-
-//        dump($tags);
-
-
     }
-
-
 }
