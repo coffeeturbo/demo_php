@@ -48,6 +48,22 @@ class Post extends AbstractTaggable
         $this->markUpdated();
     }
 
+    private $seo;
+
+
+    public function getSeo()
+    {
+        return $this->seo;
+    }
+
+
+    public function setSeo($seo)
+    {
+        $this->seo = $seo;
+        return $this;
+    }
+
+
     public function getId()
     {
         return $this->id;

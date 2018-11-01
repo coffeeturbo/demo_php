@@ -16,6 +16,9 @@ PostBundle\Entity\Post:
     title:
       type: string
       nullable: false
+    seo:
+      type: json_array
+      nullable: true
     votesRating:
       type: integer
       nullable: false

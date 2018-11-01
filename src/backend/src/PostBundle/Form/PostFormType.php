@@ -28,6 +28,7 @@ class PostFormType extends AbstractType
             ])
             ->add('tags', TextareaType::class, [
             ])
+            ->add('seo', TextType::class,[ 'required' => false])
             ->add('attachments', TextareaType::class)
         ;
     }

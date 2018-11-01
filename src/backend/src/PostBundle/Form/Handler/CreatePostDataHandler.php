@@ -46,6 +46,7 @@ class CreatePostDataHandler
         $post = $this->postRepository->find($data['id']);
 
         $post->setTitle($data['title']);
+        $post->setSeo($data['seo']);
         if($data['tags']) {
             $this->setTagsFromJson($post, $data['tags']);
         }
