@@ -29,9 +29,11 @@ class PostFormatter extends Formatter
                     'positive' => $this->resource->getVotesPositive(),
                     'negative' => $this->resource->getVotesNegative()
                 ],
-                'seo' => is_null($this->resource->getSeo())
-                    ? null
-                    : json_decode($this->resource->getSeo())
+
+
+                'seo' => $this->resource->getSeo()
+                    ? json_decode($this->resource->getSeo())
+                    : null
             ];
         }
     }
