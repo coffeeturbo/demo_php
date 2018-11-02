@@ -97,7 +97,21 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
         small(*ngIf="form.controls['tags'].hasError('required')") {{ "Tags are required" | translate }}.
 
   br
-        
+
+  ng-container(formGroupName="seo")
+    .material-field
+      .input-box
+        input#addPostSEOTitle(ng-detect-empty-input, type="text", formControlName="title")
+        hr
+        label.material-label(for="addPostSEOTitle") {{"SEO title" | translate }}
+    .material-field
+      .input-box
+        input#addPostSEODescription(ng-detect-empty-input, type="text", formControlName="description")
+        hr
+        label.material-label(for="addPostSEODescription") {{"SEO Description" | translate }}
+
+
+
   .controls
     label.material-field.clickable
       .input-box

@@ -77,6 +77,11 @@ export class AuthService implements AuthServiceInterface
     {
         return !this.tokenService.isTokenExpired();
     }
+    
+    public isAdmin(): boolean
+    {
+        return !!~this.getRoles().indexOf("ROLE_ADMIN");
+    }
 
     public getRoles(): Roles
     {
