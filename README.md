@@ -33,3 +33,6 @@ API docs are located at **/api/doc** route and provided via Swagger.
 ## Some usefull commands
 
 console assets:install /opt/jet/web --symlink созлаёт симлинк на паблик файлы в профилях
+
+При нехватки памяти для компосера
+php -d memory_limit=-1 /usr/local/bin/composer update

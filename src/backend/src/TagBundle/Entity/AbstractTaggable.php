@@ -15,7 +15,7 @@ abstract class AbstractTaggable implements TaggableEntityInterface
         $this->tags = new ArrayCollection();
     }
 
-    public function getTags():?PersistentCollection
+    public function getTags()
     {
         return $this->tags;
     }

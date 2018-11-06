@@ -71,7 +71,7 @@ class CreatePostDataHandler
 
         $newPost->setTitle($data['title']);
 
-
+        $newPost->setSeo($data['seo']);
         if($data['tags']) {
             $this->setTagsFromJson($newPost, $data['tags']);
         }

@@ -20,6 +20,9 @@
         <testsuite name="profile_bundle">
             <directory>src/ProfileBundle/Tests</directory>
         </testsuite>
+       <!-- <testsuite name="post_bundle">
+            <directory>src/PostBundle/Tests</directory>
+        </testsuite>-->
         <testsuite name="vote_bundle">
             <directory>src/VoteBundle/Tests</directory>
         </testsuite>

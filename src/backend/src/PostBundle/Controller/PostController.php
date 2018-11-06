@@ -7,6 +7,7 @@ use Doctrine\ORM\NoResultException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PostBundle\Form\PostFormType;
 use PostBundle\Response\SuccessPostResponse;
+use ProfileBundle\Entity\Profile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -39,6 +40,7 @@ class PostController extends Controller
 
             $account = $this->get('auth.service')->getAccount();
 
+            /** @var Profile $profile */
             $profile = $this->get('profile.repository')->getCurrentProfileByAccount($account);
 
             $post->setProfile($profile);
