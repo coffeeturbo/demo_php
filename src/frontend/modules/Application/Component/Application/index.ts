@@ -17,6 +17,8 @@ import {PostService} from "../../../Post/Service/PostService";
 import {AuthModals} from "../../../Auth/Entity/AuthModals";
 import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
 import {SettingsModalService} from "../../../Settings/Service/SettingsModalService";
+import {Meta} from "@angular/platform-browser";
+import {Config} from "../../../../app/config";
 
 @Component({
     selector: "application",
@@ -26,6 +28,7 @@ import {SettingsModalService} from "../../../Settings/Service/SettingsModalServi
 export class ApplicationComponent {
     @HostBinding("class") className: string = "";
     public device = Device;
+    public product_name: string = Config.product_name;
     public AuthModals = AuthModals;
     public isProfileTooltipVisible = false;
     public autocomplete: Autocomplete[] = [];
@@ -44,6 +47,7 @@ export class ApplicationComponent {
         private routeHelper: RouteHelperService,
         private loadingBarEvents: LoadingBarEvents,
         private searchService: SearchRESTService,
+        private metaService: Meta,
     ) {
         loadingBarEvents.onChangeState
             .map((loadingBar: LoadingBar) => loadingBar.state)
@@ -78,6 +82,8 @@ export class ApplicationComponent {
 
     public isSearching = false;
     ngOnInit() {
+        this.metaService.addTag({"name":"og:site_name", "content": this.product_name});
+        
         this.searchInputControl.valueChanges
             .do(() => this.isSearching = false)
             .debounceTime(300)

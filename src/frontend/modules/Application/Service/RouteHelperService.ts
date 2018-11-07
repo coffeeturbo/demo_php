@@ -24,6 +24,7 @@ export class RouteHelperService {
     private previousUrl: string;
     private currentUrl: string = this.location.path();
     public popState: PopStateEvent;
+    public host: string;
 
     constructor(
         private titleService: Title,
@@ -37,6 +38,12 @@ export class RouteHelperService {
         private pl: PlatformService,
         @Inject(DOCUMENT) private document
     ) {
+        if(process.env.hasOwnProperty('dotenv') && process.env.dotenv.hasOwnProperty('HOST')) {
+            this.host = process.env.dotenv.HOST;
+        } else if(typeof window != 'undefined') {
+            this.host = window.location.origin;
+        }
+        
         Observable
             .create((observer) => this.location.subscribe((data) => observer.next(data)))
             .map((popState: PopStateEvent) => {
@@ -94,6 +101,7 @@ export class RouteHelperService {
                 }
                 
                 this.titleService.setTitle(title);
+                this.metaService.addTag({"name": "og:title", "content": title});
             })
         ;
     }
