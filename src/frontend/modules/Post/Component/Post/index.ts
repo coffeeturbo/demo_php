@@ -17,6 +17,7 @@ import {AuthModals} from "../../../Auth/Entity/AuthModals";
 import {Meta} from "@angular/platform-browser";
 import {AttachmentImage} from "../../../Attachment/Entity/AttachmentImage";
 import {RouteHelperService} from "../../../Application/Service/RouteHelperService";
+import {AttachmentText} from "../../../Attachment/Entity/AttachmentText";
 
 @Component({
     selector: 'post',
@@ -86,13 +87,21 @@ export class PostComponent implements AfterViewInit, OnDestroy {
                 ;
             })
         ;
-        
+
         this.post.attachments
             .filter(attachment => attachment.type == AttachmentType.image)
             .forEach((attachment: Attachment<AttachmentImage>) => {
                 this.metaService.addTag({"name": "og:image", "content": this.routeHelperService.host + '/' + attachment.content.public_path});
             })
         ;
+        
+        let textAttachments = <Attachment<AttachmentText>[]>this.post.attachments
+            .filter(attachment => attachment.type == AttachmentType.text)
+        ;
+        
+        if(textAttachments.length > 0) {
+            this.metaService.addTag({"name": "og:description", "content": textAttachments[0].content.text.slice(0,200)});
+        }
     }
 
     ngOnDestroy() {
