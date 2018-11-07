@@ -9,7 +9,7 @@ import {SignUpRequest} from "../Http/Request/SignUpRequest";
 import {TokenResponse} from "../Http/Response/TokenResponse";
 import {RefreshTokenRequest} from "../Http/Request/RefreshTokenRequest";
 import {Token} from "../Entity/Token";
-import {Roles} from "../Entity/Role";
+import {Role, Roles} from "../Entity/Role";
 import {ResponseFailure} from "../../Application/Http/ResponseFailure";
 import {OAuthService} from "./OAuthService";
 import {TokenService} from "./TokenService";
@@ -80,7 +80,7 @@ export class AuthService implements AuthServiceInterface
     
     public isAdmin(): boolean
     {
-        return !!~this.getRoles().indexOf("ROLE_ADMIN");
+         return this.isSignedIn() && !!~this.getRoles().indexOf(<Role>"ROLE_ADMIN");
     }
 
     public getRoles(): Roles
