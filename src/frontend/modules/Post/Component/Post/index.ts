@@ -91,17 +91,24 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         this.post.attachments
             .filter(attachment => attachment.type == AttachmentType.image)
             .forEach((attachment: Attachment<AttachmentImage>) => {
-                this.metaService.addTag({"name": "og:image", "content": this.routeHelperService.host + '/' + attachment.content.public_path});
+                this.metaService.addTag({
+                    "name": "og:image",
+                    "content": this.routeHelperService.host + '/' + attachment.content.public_path
+                });
             })
         ;
-        
-        let textAttachments = <Attachment<AttachmentText>[]>this.post.attachments
+
+        let ogDescription: string = this.post.attachments
             .filter(attachment => attachment.type == AttachmentType.text)
+            .map((attachment: Attachment<AttachmentText>) => attachment.content.text)
+            .join(" ")
+            .slice(0, 200)
         ;
-        
-        if(textAttachments.length > 0) {
-            this.metaService.addTag({"name": "og:description", "content": textAttachments[0].content.text.slice(0,200)});
+
+        if (ogDescription.length > 0) {
+            this.metaService.addTag({"name": "og:description", "content": ogDescription});
         }
+        
     }
 
     ngOnDestroy() {
