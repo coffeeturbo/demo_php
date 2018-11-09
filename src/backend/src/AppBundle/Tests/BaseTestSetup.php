@@ -20,11 +20,14 @@ abstract class BaseTestSetup extends WebTestCase
     public function setUp()
     {
         $this->client = static::createClient();
+        // Удаляем базу и создаем
         $container = $this->getContainer();
+
 
         $this->em = $container->get('doctrine.orm.default_entity_manager');
 
         $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
+
 
         $schemaTool = new SchemaTool($this->em);
         $schemaTool->dropDatabase();

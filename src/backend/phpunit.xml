@@ -17,15 +17,15 @@
         <testsuite name="auth_bundle">
             <directory>src/AuthBundle/Tests</directory>
         </testsuite>
-        <testsuite name="profile_bundle">
+        <!--<testsuite name="profile_bundle">
             <directory>src/ProfileBundle/Tests</directory>
-        </testsuite>
+        </testsuite>-->
        <!-- <testsuite name="post_bundle">
             <directory>src/PostBundle/Tests</directory>
         </testsuite>-->
-        <testsuite name="vote_bundle">
+        <!--<testsuite name="vote_bundle">
             <directory>src/VoteBundle/Tests</directory>
-        </testsuite>
+        </testsuite>-->
     </testsuites>
 
     <filter>

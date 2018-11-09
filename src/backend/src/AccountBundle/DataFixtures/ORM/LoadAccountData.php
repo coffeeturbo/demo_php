@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use FOS\UserBundle\Model\User;
 use FOS\UserBundle\Model\UserManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -51,6 +52,7 @@ class LoadAccountData extends AbstractFixture
         $userManager = $this->container->get('fos_user.user_manager');
 
         foreach (self::$accountsData as $data) {
+            /** @var User $account */
             $account = $userManager->createUser();
             $account->setEnabled(true)
                 ->setPlainPassword($data['password'])

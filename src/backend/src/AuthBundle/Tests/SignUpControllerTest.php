@@ -1,24 +1,59 @@
 <?php
 namespace AuthBundle\Tests;
 
-use AppBundle\Tests\BaseTestSetup;
 use AccountBundle\DataFixtures\ORM\LoadAccountData;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class SignUpControllerTest extends BaseTestSetup
+class SignUpControllerTest extends WebTestCase
 {
 
-    protected static $application;
-    /** @var  LoadAccountData */
-    protected $fixtures;
+    private $client;
+    private $container;
+    private $em;
+
+    public function getEntityManager(): EntityManagerInterface{
+        if(is_null($this->em)){
+            $this->em= $this->getContainer()->get('doctrine.orm.default_entity_manager');
+        }
+        return $this->em;
+    }
+
+    public function getContainer()
+    {
+        if(is_null($this->container))
+            $this->container = $this->getClient()->getContainer();
+        return $this->container;
+    }
+
+    public function getClient()
+    {
+        if(is_null($this->client)){
+            $this->client = self::createClient();
+        }
+        return $this->client;
+    }
+
+
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->fixtures = $fixture = new LoadAccountData();
-        $this->fixtures->setContainer($this->container);
+        // чистим базу
+        $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
+        $schemaTool = new SchemaTool($this->getEntityManager());
+        $schemaTool->dropDatabase();
+        $schemaTool->createSchema($metadatas);
+
+
+        $fixture = new LoadAccountData();
+        $fixture->setContainer($this->getContainer());
         $fixture->load($this->em);
+
     }
+
 
     static protected function createSignUpClient(array $headers,string $body){
         $client = static::createClient();
@@ -41,37 +76,6 @@ class SignUpControllerTest extends BaseTestSetup
 
         $this->assertNotNull($token, 'Token null');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-    }
-
-
-    public function testBadAccountPassword400()
-    {
-        $accountData = $this->fixtures->getAccountDataByReference('success-account');
-
-        $client = static::createSignUpClient( [
-            'HTTP_ACCEPT' => 'application/json'
-        ], json_encode([
-            "name" => 'Adam Jons',
-            "email" => "21".$accountData['email'],
-            "password" => '26261Jj',
-        ]));
-
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
-    }
-
-    public function testUserExist409()
-    {
-        $accountData = $this->fixtures->getAccountDataByReference('success-account');
-
-        $client = static::createSignUpClient( [
-            'HTTP_ACCEPT' => 'application/json'
-        ], json_encode([
-            "name" => 'Adam Jons',
-            "email" => $accountData['email'],
-            "password" => $accountData['password'],
-        ]));
-
-        $this->assertEquals(409, $client->getResponse()->getStatusCode());
     }
 
 }
