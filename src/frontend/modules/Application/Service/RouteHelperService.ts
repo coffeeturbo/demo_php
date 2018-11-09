@@ -39,7 +39,7 @@ export class RouteHelperService {
         @Inject(DOCUMENT) private document
     ) {
         if(process.env.hasOwnProperty('dotenv') && process.env.dotenv.hasOwnProperty('HOST')) {
-            this.host = process.env.dotenv.HOST;
+            this.host = (<any>process.env.dotenv).HOST;
         } else if(typeof window != 'undefined') {
             this.host = window.location.origin;
         }
