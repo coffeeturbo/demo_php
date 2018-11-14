@@ -60,7 +60,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
     };
 
     constructor(
-        private authService: AuthService,
+        public authService: AuthService,
         private translationService: TranslationService,
         private attachmentService: AttachmentService,
         private tagRest: TagRESTService,
