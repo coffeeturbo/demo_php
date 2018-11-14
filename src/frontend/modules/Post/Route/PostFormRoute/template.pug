@@ -98,7 +98,7 @@ form.material-form([formGroup]="form", (ngSubmit)="submit()", (keydown.enter)="h
 
   br
 
-  ng-container(formGroupName="seo")
+  ng-container(formGroupName="seo", *ngIf="authService.isAdmin()")
     .material-field
       .input-box
         input#addPostSEOTitle(ng-detect-empty-input, type="text", formControlName="title")

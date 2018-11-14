@@ -19,6 +19,7 @@ import {Device} from "../../../Application/Service/DeviceService";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
 import {PostUpdateRequest} from "../../Http/Request/PostUpdateRequest";
 import {AttachmentService} from "../../../Attachment/Service/AttachmentService";
+import {AuthService} from "../../../Auth/Service/AuthService";
 
 @Component({
     templateUrl: './template.pug',
@@ -59,6 +60,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
     };
 
     constructor(
+        private authService: AuthService,
         private translationService: TranslationService,
         private attachmentService: AttachmentService,
         private tagRest: TagRESTService,
