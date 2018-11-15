@@ -108,12 +108,6 @@ class PostController extends Controller
 
             $post = $this->get('post.form.handler.create_post_data_handler')->handle($data);
 
-            $account = $this->get('auth.service')->getAccount();
-
-            $profile = $this->get('profile.repository')->getCurrentProfileByAccount($account);
-
-            $post->setProfile($profile);
-
             // todo тут проверка на время редактирование поста и администратора поста
             $this->get('post.service')->update($post);
 
