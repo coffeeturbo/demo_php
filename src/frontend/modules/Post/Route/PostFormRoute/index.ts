@@ -90,7 +90,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
                 });
 
                 if (postForm.attachments.length > 0) {
-                    postForm.attachments.map(attachment => this.addAttachment(attachment.type, attachment.value, attachment, false));
+                    postForm.attachments.forEach(attachment => this.addAttachment(attachment.type, attachment.value, attachment, false));
                 }
 
                 if (postForm.id) {
@@ -145,7 +145,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
 
     public addAttachment(type: AttachmentType, value?: any, entity?: Attachment<AttachmentImage | AttachmentText | AttachmentVideo>, markAsDirty: boolean = true) {
         
-        if(!value && entity) {
+        if(entity && entity.content) {
             switch (type) {
                 case AttachmentType.text :
                     value = (<Attachment<AttachmentText>>entity).content.text;
@@ -162,7 +162,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
         let attachment = new FormGroup({
             type: new FormControl(type || AttachmentType.text),
             value: new FormControl(value || null, Validators.required),
-            entity: new FormControl(!value && entity ? entity : null)
+            entity: new FormControl(entity && entity.content ? entity : null)
         });
 
         this.attachments.push(attachment);
