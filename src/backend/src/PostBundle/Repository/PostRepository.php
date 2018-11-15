@@ -10,6 +10,7 @@ use FeedBundle\Strategy\VotedFeedStrategy;
 use PostBundle\Entity\Post;
 use PostBundle\Repository\Command\AddOrder;
 use PostBundle\Repository\Command\AddTags;
+use ProfileBundle\Entity\Profile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TagBundle\Entity\Tag;
 
@@ -227,6 +228,60 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getEntityManager()
     {
         return parent::getEntityManager();
+    }
+
+
+    public function getProfileTotalPosts(Profile $profile)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->where('p.profile = :profile')
+            ->setParameter('profile', $profile)
+        ;
+
+        $posts = $qb->getQuery()->getSingleScalarResult();
+
+        $profile->setPostsTotal($posts);
+    }
+
+
+    public function getTopTagsWithCount($postId, $limit)
+    {
+
+        $postRep = $this->getEntityManager()
+            ->getRepository(Post::class);
+
+
+        $topTags = $postRep->createQueryBuilder('p')
+            ->select('tags.name, tags.id, count(tags) as total')
+            ->join('p.tags', 'tags')
+            ->where('p.id = :postId')
+            ->setParameter('postId', $postId)
+            ->groupBy('tags.id ')
+            ->orderBy('total', 'DESC')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $ids = array_map(function($tag){
+            return $tag['id'];
+        }, $topTags);
+
+
+        return $postRep->createQueryBuilder('p')
+            ->select('p')
+            ->join('p.tags', 'tags')
+            ->setMaxResults($limit)
+            ->where('tags.id IN (:tagsIds)')
+            ->andWhere('p.id != :pid')
+            ->setParameter('pid', $postId)
+            ->setParameter('tagsIds', $ids)
+            ->getQuery()
+            ->getResult()
+        ;
+
+
     }
 
 }

@@ -68,12 +68,12 @@ class EmailConfirmationService
     {
         $mailTo = $this->authService->getAccount()->getEmail();
 
-        $titleText = "TopicOff.com | Код подтверждания";
+        $titleText = "TopicOff.com | Код подтверждения";
 
         $message = sprintf("Это код подтверждения регистрации: <b>%s</b>", $code);
 
-        $message.= "<br>Также вы можете активировать ваш аккаунт перейдя по ссылке: <br>";
-        $message.= $this->generateConfirmLink($code, $confirmUrl);
+//        $message.= "<br>Также вы можете активировать ваш аккаунт перейдя по ссылке: <br>";
+//        $message.= $this->generateConfirmLink($code, $confirmUrl);
 
         $swiftMessage = new \Swift_Message($titleText);
 

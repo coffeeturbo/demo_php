@@ -9,7 +9,6 @@ profile_update:
   methods: [ PUT, PATCH ]
   requirements:
     id: '\d+'
-
 #profile_delete:
 #  path: '{id}/delete'
 #  defaults: { _controller: ProfileBundle:Delete:delete }

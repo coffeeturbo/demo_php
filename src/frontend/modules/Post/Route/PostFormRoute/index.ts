@@ -19,6 +19,7 @@ import {Device} from "../../../Application/Service/DeviceService";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
 import {PostUpdateRequest} from "../../Http/Request/PostUpdateRequest";
 import {AttachmentService} from "../../../Attachment/Service/AttachmentService";
+import {AuthService} from "../../../Auth/Service/AuthService";
 
 @Component({
     templateUrl: './template.pug',
@@ -47,7 +48,11 @@ export class PostFormRoute implements OnInit, AfterViewInit {
             Validators.minLength(this.config.tags.constraints.min_length),
             Validators.maxLength(this.config.title.constraints.max_length)
         ]),
-        attachments: this.attachments
+        attachments: this.attachments,
+        seo: new FormGroup({
+            title: new FormControl(),
+            description: new FormControl(),
+        })
     });
 
     public authorTag: Tag = {
@@ -55,6 +60,7 @@ export class PostFormRoute implements OnInit, AfterViewInit {
     };
 
     constructor(
+        public authService: AuthService,
         private translationService: TranslationService,
         private attachmentService: AttachmentService,
         private tagRest: TagRESTService,
@@ -100,6 +106,16 @@ export class PostFormRoute implements OnInit, AfterViewInit {
                 if (postForm.tags) {
                     this.form.controls.tags.setValue(postForm.tags);
                     this.form.controls.title.markAsPristine();
+                }
+
+                if(postForm.seo.title) {
+                    this.form.get("seo").get("title").setValue(postForm.seo.title);
+                    this.form.get("seo").get("title").markAsPristine();
+                }
+                
+                if(postForm.seo.description) {
+                    this.form.get("seo").get("description").setValue(postForm.seo.description);
+                    this.form.get("seo").get("description").markAsPristine();
                 }
             }
         } catch (e) {}
@@ -223,11 +239,17 @@ export class PostFormRoute implements OnInit, AfterViewInit {
 
         let postRequest: PostCreateRequest | PostUpdateRequest = this.form.value;
 
+        Object.keys(postRequest.seo)
+            .filter((k) => !postRequest.seo[k])
+            .forEach((k)=> delete postRequest.seo[k])
+        ;
+
         Observable
             .combineLatest(attachmentsObservable)
             .do(attachments => { // Fck nelmio
                 postRequest.attachments = JSON.stringify(attachments);
                 postRequest.tags = JSON.stringify(postRequest.tags);
+                postRequest.seo = JSON.stringify(postRequest.seo);
             })
             .flatMap(() => {
                 if(this.isNew) {

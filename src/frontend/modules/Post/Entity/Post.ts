@@ -17,4 +17,8 @@ export interface Post {
     votes: Vote;
     comments_total: number;
     favorite?: boolean;
+    seo?: {
+        title?:string,
+        description:string
+    };
 }

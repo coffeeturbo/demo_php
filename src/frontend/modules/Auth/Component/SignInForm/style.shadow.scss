@@ -9,3 +9,12 @@
     color: material-color($secondary_material, "600");
   }
 }
+
+.details {
+  color: material-color($secondary_material, "500");
+
+  a {
+    color: material-color($primary_material, "500");
+    text-decoration: underline;
+  }
+}

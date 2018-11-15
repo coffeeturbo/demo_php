@@ -3,7 +3,6 @@ namespace PostBundle\Service;
 
 use PostBundle\Entity\Post;
 use PostBundle\Repository\PostRepository;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class PostService
 {
@@ -54,5 +53,8 @@ class PostService
         return $post;
     }
 
-
+    public function getSimilarPosts(int $id)
+    {
+        return $this->postRepository->getTopTagsWithCount($id, 10);
+    }
 }

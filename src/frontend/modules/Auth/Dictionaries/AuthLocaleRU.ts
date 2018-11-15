@@ -21,4 +21,9 @@ export const AuthLocaleRU = {
     "Please confirm your email at the <a href='/settings'>profile settings</a>.": "Пожалйста подтвердите свою почту в <a href='/settings'>настройках профиля</a>.",
     "Your email confirmed. Now you can voting and much more!": "Ваша почта подтвеждена. Теперь вы можете оценивать посты и многое другое!",
     "Password changed successfully! For your convenience, we have already authorized you.": "Пароль успешно изменен! Для удобства мы уже авторизовали вас.",
+    "I agree to the terms of service and privacy ": "Пароль успешно изменен! Для удобства мы уже авторизовали вас.",
+    "By clicking Sign In, you agree to our": "Регистрируясь вы соглашаетесь с нашими",
+    "Terms of Use": "правилами пользования",
+    "and you have read our": "а также даете согласие на обработку",
+    "Privacy Policy": "персональных данных",
 };

@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProfileType extends AbstractType
@@ -34,7 +35,15 @@ class ProfileType extends AbstractType
                 ]
             ])
             ->add("alias", TextType::class, [
-                "required" => false
+                "required" => false,
+                    'constraints' =>  [
+                        new Regex(
+                            [
+                                'pattern' => '/(^[a-zA-Z]+[\w0-9-_]+$)/',
+                                'message' => 'alias not correct '
+                            ]
+                        )
+                    ]
             ])
             ->add("gender", ChoiceType::class, [
                 "choices" => [
@@ -43,7 +52,9 @@ class ProfileType extends AbstractType
                     new NoneGender(),
                 ],
                 "empty_data" => NoneGender::STRING_CODE,
-                "choice_value" => "stringCode", // будет использоваться метод getStringCode (см. http://symfony.com/doc/current/reference/forms/types/choice.html#choice-label) 
+                // будет использоваться метод getStringCode
+                // (см. http://symfony.com/doc/current/reference/forms/types/choice.html#choice-label)
+                "choice_value" => "stringCode",
                 "required" => false,
             ])
             ->add("birth_date", BirthdayType::class, [
@@ -56,11 +67,13 @@ class ProfileType extends AbstractType
                             $age = $birthDate->diff(new \DateTime())->y;
 
                             if ($age < $this->minAge) {
-                                $context->addViolation(sprintf("Unacceptable age `%s`. Yonger then ", $age, $this->minAge));
+                                $context->addViolation(
+                                    sprintf("Unacceptable age `%s`. Yonger then ", $age, $this->minAge));
                             }
 
                             if ($age > $this->maxAge) {
-                                $context->addViolation(sprintf("Unacceptable age `%s`. Older then %s", $age, $this->maxAge));
+                                $context->addViolation(
+                                    sprintf("Unacceptable age `%s`. Older then %s", $age, $this->maxAge));
                             }
                         }
                     })

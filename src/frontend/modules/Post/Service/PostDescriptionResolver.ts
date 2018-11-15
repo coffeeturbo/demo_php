@@ -5,15 +5,15 @@ import {Observable} from "rxjs";
 import {PostResolver} from "./PostResolver";
 
 @Injectable()
-export class PostTitleResolver implements Resolve<string> {
+export class PostDescriptionResolver implements Resolve<string> {
 
     constructor(private postResolver: PostResolver) {}
 
     resolve(): Observable<string> {
         return this.postResolver.onResolve
             .map(post => {
-                if(post.seo && post.seo.title) {
-                    return post.seo.title;
+                if(post.seo && post.seo.description) {
+                    return post.seo.description;
                 } else {
                     return post.title
                 }

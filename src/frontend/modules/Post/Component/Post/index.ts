@@ -5,7 +5,7 @@ import * as getSlug from "speakingurl";
 
 import {Post} from "../../Entity/Post";
 import {PostService} from "../../Service/PostService";
-import {AttachmentType} from "../../../Attachment/Entity/Attachment";
+import {Attachment, AttachmentType} from "../../../Attachment/Entity/Attachment";
 import {ApplicationScrollService} from "../../../Application/Service/ApplicationScrollService";
 import {VoteState} from "../../../Vote/Entity/Vote";
 import {AuthService} from "../../../Auth/Service/AuthService";
@@ -14,6 +14,10 @@ import {Subscription} from "rxjs";
 import {PlatformService} from "../../../Application/Service/PlatformService";
 import {AuthModalsService} from "../../../Auth/Service/AuthModalsService";
 import {AuthModals} from "../../../Auth/Entity/AuthModals";
+import {Meta} from "@angular/platform-browser";
+import {AttachmentImage} from "../../../Attachment/Entity/AttachmentImage";
+import {RouteHelperService} from "../../../Application/Service/RouteHelperService";
+import {AttachmentText} from "../../../Attachment/Entity/AttachmentText";
 
 @Component({
     selector: 'post',
@@ -54,8 +58,12 @@ export class PostComponent implements AfterViewInit, OnDestroy {
         public translationService: TranslationService,
         public profileService: ProfileService,
         public postService: PostService,
-        public router: Router
-    ) {}
+        public router: Router,
+        public routeHelperService: RouteHelperService,
+        public metaService: Meta,
+    ) {
+        this.metaService.addTag({"name": "og:type", "content": 'article'});
+    }
 
     ngAfterViewInit() {
         setTimeout(
@@ -79,6 +87,28 @@ export class PostComponent implements AfterViewInit, OnDestroy {
                 ;
             })
         ;
+
+        this.post.attachments
+            .filter(attachment => attachment.type == AttachmentType.image)
+            .forEach((attachment: Attachment<AttachmentImage>) => {
+                this.metaService.addTag({
+                    "name": "og:image",
+                    "content": this.routeHelperService.host + '/' + attachment.content.public_path
+                });
+            })
+        ;
+
+        let ogDescription: string = this.post.attachments
+            .filter(attachment => attachment.type == AttachmentType.text)
+            .map((attachment: Attachment<AttachmentText>) => attachment.content.text)
+            .join(" ")
+            .slice(0, 200)
+        ;
+
+        if (ogDescription.length > 0) {
+            this.metaService.addTag({"name": "og:description", "content": ogDescription});
+        }
+        
     }
 
     ngOnDestroy() {

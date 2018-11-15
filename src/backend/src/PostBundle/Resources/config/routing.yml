@@ -7,3 +7,10 @@ post_info_posts:
   path: 'info/type/{type}'
   methods: [ GET ]
   defaults: { _controller: PostBundle:InfoPosts:get }
+
+post_similar_posts_get:
+  path: 'similar/{post_id}/get-by-id'
+  methods: [ GET ]
+  defaults: { _controller: PostBundle:SimilarPost:getSimilarPosts }
+  requirements:
+    post_id: '\d+'

@@ -59,7 +59,7 @@ div
     .fa.fa-bullhorn
     span {{"Share" | translate}}
   button.btn-material.secondary.actions(
-    *ngIf="pl.isPlatformBrowser() && profileService.isOwn(post.profile)",
+    *ngIf="pl.isPlatformBrowser()",
     (click)='render.addClass(actions, "active")',
     (blur)='render.removeClass(actions, "active")'
   )
@@ -70,7 +70,7 @@ div
           .fa.fa-fw.fa-floppy-o(*ngIf="!post.favorite")
           .fa.fa-fw.fa-check(*ngIf="post.favorite")
           | {{(post.favorite ? "Saved" : "Save") | translate }}
-      li
+      li(*ngIf="profileService.isOwn(post.profile) || authService.isAdmin()")
         a((click)="edit()")
           .fa.fa-fw.fa-pencil
           | {{"Edit" | translate }}
