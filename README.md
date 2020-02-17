@@ -1,4 +1,7 @@
 # JET: Angular & Symfony application
+## социальная сеть аналог pikabu 
+
+
 ## Deploy
 
 #### Required to deploy:
