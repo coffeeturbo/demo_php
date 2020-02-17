@@ -67,7 +67,7 @@
     "sass-mq": "^3.3.2",
     "scroll": "^2.0.1",
     "scroll-into-view": "^1.9.1",
-    "serialize-javascript": "^1.3.0",
+    "serialize-javascript": "^3.0.0",
     "speakingurl": "^14.0.1",
     "striptags": "^2.2.1",
     "universal-cookie": "^2.1.2",
